@@ -1,4 +1,4 @@
-# Game Library Service
+# Game Library Service [![Build Status](https://travis-ci.org/xxjokerx/game-library-service.svg?branch=master)](https://travis-ci.org/xxjokerx/game-library-service)
 
 A tool for game libraries
 
@@ -6,7 +6,7 @@ A tool for game libraries
 
 The purpose is to create a tool for a french game-library. The project is designed around this particular client
 use cases but it should be flexible as well as documented enough to adapt to your own use cases.
-The project is composed by a REST service (this repo) and web client
+The project is composed by a REST service (this repo) and web client.
 
 ### Service's technologies
 
