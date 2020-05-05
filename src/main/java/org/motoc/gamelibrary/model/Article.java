@@ -22,7 +22,7 @@ public class Article {
 
     /**
      * <p>Chosen strategy is SEQUENCE</p>
-     * <a href>https://thoughts-on-java.org/jpa-generate-primary-keys/</href>
+     * <a href>https://thoughts-on-java.org/jpa-generate-primary-keys/</a>
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -34,9 +34,13 @@ public class Article {
 
     private LocalDateTime lastEditTime;
 
+    /**
+     * <p>Saved as TEXT type in postgres db</p>
+     * <a href>https://www.baeldung.com/jpa-annotation-postgresql-text-type</a>
+     */
     @Lob
     @Column(nullable = false)
-    private byte[] htmlContent;
+    private String htmlContent;
 
     private String shortDescription;
 
@@ -54,4 +58,28 @@ public class Article {
             inverseJoinColumns = { @JoinColumn(name = "fk_image") })
     private Set<Image> images = new HashSet<Image>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_article_author")
+    private ArticleAuthor articleAuthor;
+
+    // Helper methods
+    public void addKeyword(Keyword keyword) {
+        this.keywords.add(keyword);
+        keyword.getArticles().add(this);
+    }
+
+    public void removeKeyword(Keyword keyword) {
+        this.keywords.remove(keyword);
+        keyword.getArticles().remove(this);
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
+        image.getArticles().add(this);
+    }
+
+    public void removeImage(Image image) {
+        this.images.remove(image);
+        image.getArticles().remove(this);
+    }
 }

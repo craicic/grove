@@ -20,11 +20,10 @@ public class Keyword {
 
     /**
      * <p>Chosen strategy is SEQUENCE</p>
-     * <a href>https://thoughts-on-java.org/jpa-generate-primary-keys/</href>
+     * <a href>https://thoughts-on-java.org/jpa-generate-primary-keys/</a>
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
     private long id;
 
     @Column(nullable = false, unique = true)

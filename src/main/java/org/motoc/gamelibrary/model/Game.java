@@ -19,9 +19,12 @@ public class Game {
     private String Stuff;
     private String preparation;
     private String goal;
-    private byte[] coreRules;
-    private byte[] variant;
-    private byte[] ending;
+    //    blob
+    private String coreRules;
+    //    blob
+    private String variant;
+    //    blob
+    private String ending;
     private String nature;
     private String size;
     private boolean isBoardGame;
