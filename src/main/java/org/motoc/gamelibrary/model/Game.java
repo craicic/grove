@@ -23,7 +23,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     public Game coreGame;
 
     @Column(nullable = false)

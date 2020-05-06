@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A game, it describe a copy
@@ -27,11 +29,30 @@ public class GameCopy {
     private double price;
     private String location;
     private LocalDate dateOfPurchase;
+
+    @Column(nullable = false)
     private LocalDate registerDate;
+
+    @Column(nullable = false)
     private String wearCondition;
 
-    @ManyToOne
+    @Column(nullable = false)
+    private GeneralStateEnum generalState;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_game")
     private Game game;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_seller")
+    private Seller seller;
+
+    @OneToMany(mappedBy = "gameCopy")
+    private Set<Loan> loans = new HashSet<>();
+
+    public void addLoan(Loan loan) {
+        this.loans.add(loan);
+        loan.setGameCopy(this);
+    }
 
 }

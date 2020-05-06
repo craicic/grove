@@ -25,6 +25,10 @@ public class Author {
     private String firstName;
     private String lastName;
 
+    @OneToOne
+    @JoinColumn(name = "fk_contact")
+    private Contact contact;
+
     @ManyToMany(mappedBy = "authors")
     private Set<Game> games = new HashSet<>();
 

@@ -24,6 +24,10 @@ public class Category {
     private long id;
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category parent;
+
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
+
 }

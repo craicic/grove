@@ -27,6 +27,10 @@ public class Publisher {
     @OneToMany(mappedBy = "publisher")
     private Set<Game> games = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(name = "fk_contact")
+    private Contact contact;
+
     // Helper methods
     public void addGame(Game game) {
         this.games.add(game);

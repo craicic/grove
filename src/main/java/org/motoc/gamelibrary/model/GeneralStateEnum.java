@@ -1,7 +1,5 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.Data;
-
 /**
  * The general state of the game copy
  * ex : in activity, in repair, out of order
