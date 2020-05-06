@@ -10,12 +10,13 @@
     </parent>
     <groupId>org.motoc</groupId>
     <artifactId>game-library</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>Game Library Service</name>
     <description>A tool for game libraries - This is the REST service</description>
 
     <properties>
         <java.version>11</java.version>
+        <revision>0.0.1-SNAPSHOT</revision>
     </properties>
 
     <dependencies>

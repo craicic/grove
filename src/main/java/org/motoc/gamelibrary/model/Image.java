@@ -31,7 +31,10 @@ public class Image {
     @Column(nullable = false, unique = true)
     private String filePath;
 
-    @ManyToMany(mappedBy = "keywords")
+    @ManyToMany(mappedBy = "images")
     private Set<Article> articles = new HashSet<Article>();
+
+    @ManyToMany(mappedBy = "images")
+    private Set<Game> games = new HashSet<Game>();
 
 }
