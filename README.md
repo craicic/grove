@@ -13,3 +13,14 @@ The project is composed by a REST service (this repo) and web client.
 The project was set up with [Spring initializr](https://start.spring.io/).
 It will consume a PostgreSQL 9.6 database.
 The user session, login / logout, security and more are delegated to a [Keycloak](https://www.keycloak.org/) service.
+
+## Current version
+#### 0.0.1-SNAPSHOT - 1 May 2020
+Project structure is done.
+
+## Upcoming version
+#### 0.1.0-ALPHA
+Application's model with hibernate and constrains.
+
+## Changelog
+Empty
