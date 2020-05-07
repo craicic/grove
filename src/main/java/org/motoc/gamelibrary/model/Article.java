@@ -5,6 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,35 +32,41 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-
+    @NotNull(message = "Publication time cannot be null")
+    @PastOrPresent(message ="Publication time must be in the past or the present")
     @Column(nullable = false)
     private LocalDateTime publicationTime;
 
+    @PastOrPresent(message ="Last edit time must be in the past or the present")
     private LocalDateTime lastEditTime;
 
     /**
      * <p>Saved as TEXT type in postgres db</p>
      * <a href>https://www.baeldung.com/jpa-annotation-postgresql-text-type</a>
      */
+    @NotBlank(message = "Html content cannot be null or blank")
+    @Size(max = 15000, message = "Html content should not exceed 15000 characters")
     @Lob
     @Column(nullable = false)
     private String htmlContent;
 
+    @NotNull(message = "Short description cannot be null")
+    @Size(max = 255)
     private String shortDescription;
 
     @ManyToMany
     @JoinTable(
             name = "article_keyword",
-            joinColumns = { @JoinColumn(name = "fk_article") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_keyword") })
-    private Set<Keyword> keywords = new HashSet<Keyword>();
+            joinColumns = {@JoinColumn(name = "fk_article")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_keyword")})
+    private Set<Keyword> keywords = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
             name = "article_image",
-            joinColumns = { @JoinColumn(name = "fk_article") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_image") })
-    private Set<Image> images = new HashSet<Image>();
+            joinColumns = {@JoinColumn(name = "fk_article")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_image")})
+    private Set<Image> images = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_article_author")

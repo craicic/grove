@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.model;
+package org.motoc.gamelibrary.model.enumartion;
 
 /**
  * The general state of the game copy
@@ -7,6 +7,7 @@ package org.motoc.gamelibrary.model;
  * @author RouzicJ
  */
 public enum GeneralStateEnum {
+
 
     IN_ACTIVITY("En activité"),
     OUT_OF_ORDER("Hors service"),

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +24,15 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
+    @Size(max = 50, message = "First name should not exceed 50 characters")
+    @Column(length = 50)
     private String firstName;
+
+
+    @NotBlank(message = "Last name cannot be null or blank")
+    @Size(max = 50, message = "Last name should not exceed 50 characters")
+    @Column(nullable = false, length = 50)
     private String lastName;
 
     @OneToOne

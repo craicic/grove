@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
@@ -22,6 +24,9 @@ public class ArticleAuthor {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
+    @NotBlank(message = "User uuid cannot be null or blank")
+    @Size(max = 50, message = "User uuid should not exceed 50 characters")
+    @Column(nullable = false, length = 50)
     private String userUuid;
 
     @OneToMany(mappedBy = "articleAuthor")

@@ -3,8 +3,12 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.motoc.gamelibrary.model.enumartion.AgeEnum;
+import org.motoc.gamelibrary.validation.annotation.ConsistentNumberOfPlayer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,10 +17,12 @@ import java.util.Set;
  *
  * @author RouzicJ
  */
+@ConsistentNumberOfPlayer
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Game {
 
     @Id
@@ -26,29 +32,61 @@ public class Game {
     @ManyToOne(fetch = FetchType.LAZY)
     public Game coreGame;
 
+    @NotBlank(message = "Name cannot be null or blank")
     @Column(nullable = false)
     private String name;
+
+    @Size(max = 1000, message = "Description should not exceed 1000 characters")
+    @Column(length = 1000)
     private String description;
-    private String numberOfPlayers;
+
+    @Size(max = 20, message = "Description should not exceed 20 characters")
+    @Column(length = 20)
+    private String playTime;
+
+    @Size(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
+    private short minNumberOfPlayer;
+
+    @Size(min = 1, max = 100, message = "Max number of players must be between 1 and 100")
+    private short maxNumberOfPlayer;
 
     @Column(nullable = false)
-    private short ageMin;
-    private short ageMax;
+    private AgeEnum ageMin;
+    private AgeEnum ageMax;
 
-    private String Stuff;
+    @Size(max = 1000, message = "Stuff should not exceed 1000 characters")
+    @Column(length = 1000)
+    private String stuff;
+
+    @Size(max = 1000, message = "Preparation should not exceed 1000 characters")
+    @Column(length = 1000)
     private String preparation;
+
+    @Size(max = 1000, message = "Goal should not exceed 1000 characters")
+    @Column(length = 1000)
     private String goal;
+
+    @Size(max = 15000, message = "Core rules should not exceed 1000 characters")
     @Lob
     private String coreRules;
+
+    @Size(max = 15000, message = "Variant should not exceed 1000 characters")
     @Lob
     private String variant;
+
+    @Size(max = 15000, message = "Ending rules should not exceed 1000 characters")
     @Lob
     private String ending;
+
+    @Size(max = 50, message = "Nature rules should not exceed 50 characters")
+    @Column(length = 50)
     private String nature;
+
     private String size;
     @Column(nullable = false)
     private boolean isBoardGame;
-    private int editionNumber;
+
+    private String editionNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_product_line")
