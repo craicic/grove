@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "filePath"))
 public class Image {
 
     /**
@@ -28,13 +31,15 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "File path cannot be null or blank")
+    @Size(max = 255, message = "File path cannot exceed 255 characters")
+    @Column(nullable = false)
     private String filePath;
 
     @ManyToMany(mappedBy = "images")
-    private Set<Article> articles = new HashSet<Article>();
+    private Set<Article> articles = new HashSet<>();
 
     @ManyToMany(mappedBy = "images")
-    private Set<Game> games = new HashSet<Game>();
+    private Set<Game> games = new HashSet<>();
 
 }

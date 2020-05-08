@@ -3,7 +3,8 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.motoc.gamelibrary.model.enumartion.AgeEnum;
+import org.motoc.gamelibrary.model.enumartion.GameNatureEnum;
+import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.validation.annotation.ConsistentNumberOfPlayer;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.util.Set;
  * @author RouzicJ
  */
 @ConsistentNumberOfPlayer
+@ConsistentAgeRange
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,8 +31,11 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
+    /**
+     * Core game, if this game is an extension
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    public Game coreGame;
+    private Game coreGame;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Column(nullable = false)
@@ -45,49 +50,75 @@ public class Game {
     private String playTime;
 
     @Size(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
+    @Column(nullable = false)
     private short minNumberOfPlayer;
 
     @Size(min = 1, max = 100, message = "Max number of players must be between 1 and 100")
     private short maxNumberOfPlayer;
 
+    @Size(min = 1, max = 100, message = "Min age must be between 1 and 100")
     @Column(nullable = false)
-    private AgeEnum ageMin;
-    private AgeEnum ageMax;
+    private short ageMin;
 
+    @Size(min = 1, max = 100, message = "Max age must be between 1 and 100")
+    private short ageMax;
+
+    /**
+     * Stuff the game contains (parts, meeples, cards, etc...)
+     */
     @Size(max = 1000, message = "Stuff should not exceed 1000 characters")
     @Column(length = 1000)
     private String stuff;
 
-    @Size(max = 1000, message = "Preparation should not exceed 1000 characters")
-    @Column(length = 1000)
+    /**
+     * Description how to prepare stuff before the game starts
+     */
+    @Size(max = 15000, message = "Preparation should not exceed 15000 characters")
+    @Lob
     private String preparation;
 
+    /**
+     * Gaol = win condition
+     */
     @Size(max = 1000, message = "Goal should not exceed 1000 characters")
     @Column(length = 1000)
     private String goal;
 
-    @Size(max = 15000, message = "Core rules should not exceed 1000 characters")
+    @Size(max = 15000, message = "Core rules should not exceed 15000 characters")
     @Lob
     private String coreRules;
 
-    @Size(max = 15000, message = "Variant should not exceed 1000 characters")
+    /**
+     * Describes alternative version of the rules
+     */
+    @Size(max = 15000, message = "Variant should not exceed 15000 characters")
     @Lob
     private String variant;
 
-    @Size(max = 15000, message = "Ending rules should not exceed 1000 characters")
+    /**
+     * Generally describes the last turn and how to
+     */
+    @Size(max = 15000, message = "Ending rules should not exceed 15000 characters")
     @Lob
     private String ending;
 
+    /**
+     * An enumeration : toy, board game, wooden game, etc...
+     */
     @Size(max = 50, message = "Nature rules should not exceed 50 characters")
     @Column(length = 50)
-    private String nature;
+    private GameNatureEnum nature;
 
+    /**
+     * The size of the game
+     */
     private String size;
-    @Column(nullable = false)
-    private boolean isBoardGame;
 
     private String editionNumber;
 
+    /**
+     * The product line of the game, if the game is part of a 'collection'
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_product_line")
     private ProductLine productLine;
@@ -120,6 +151,7 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
+    // TODO add helper methods in other tables
     // Helper methods
     public void addImage(Image image) {
         this.images.add(image);

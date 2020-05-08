@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
@@ -16,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "tag"))
 public class Keyword {
 
     /**
@@ -26,7 +29,9 @@ public class Keyword {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Tag cannot be null or blank")
+    @Size(max = 50, message = "Tag cannot exceed 50 characters")
+    @Column(nullable = false, length = 50)
     private String tag;
 
     @ManyToMany(mappedBy = "keywords")
