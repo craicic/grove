@@ -37,4 +37,16 @@ public class Keyword {
     @ManyToMany(mappedBy = "keywords")
     private Set<Article> articles;
 
+    // Helper methods
+
+    public void addArticle(Article article) {
+        articles.add(article);
+        article.getKeywords().add(this);
+    }
+
+    public void removeArticle(Article article) {
+        articles.remove(article);
+        article.getKeywords().remove(this);
+    }
+
 }

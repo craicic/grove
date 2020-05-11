@@ -52,4 +52,5 @@ public class Contact {
 
     @OneToOne(mappedBy = "contact")
     private Seller seller;
+
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * The status of a loan
@@ -34,7 +35,16 @@ public class LoanStatus {
     @Column(nullable = false)
     private String description;
 
-    @OneToOne(mappedBy = "loanStatus")
-    private Loan loan;
+    @OneToMany(mappedBy = "loanStatus")
+    private Set<Loan> loans;
 
+    public void addLoan(Loan loan) {
+        this.loans.add(loan);
+        loan.setLoanStatus(this);
+    }
+
+    public void removeLoan(Loan loan) {
+        this.loans.remove(loan);
+        loan.setLoanStatus(null);
+    }
 }

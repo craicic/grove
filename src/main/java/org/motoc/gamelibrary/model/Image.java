@@ -42,4 +42,26 @@ public class Image {
     @ManyToMany(mappedBy = "images")
     private Set<Game> games = new HashSet<>();
 
+    // Helper methods
+
+    public void addArticle(Article article) {
+        articles.add(article);
+        article.getImages().add(this);
+    }
+
+    public void removeArticle(Article article) {
+        articles.remove(article);
+        article.getImages().remove(this);
+    }
+
+    public void addGame(Game game) {
+        games.add(game);
+        game.getImages().add(this);
+    }
+
+    public void removeGame(Game game) {
+        games.remove(game);
+        game.getImages().remove(this);
+    }
+
 }

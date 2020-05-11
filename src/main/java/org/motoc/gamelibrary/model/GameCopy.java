@@ -37,7 +37,7 @@ public class GameCopy {
     private BigDecimal price;
 
     /**
-     * The location of the game in the premises
+     * The location of the game in premises
      */
     @Size(max = 255, message = "Location cannot exceed 255 characters")
     private String location;
@@ -69,9 +69,27 @@ public class GameCopy {
     @OneToMany(mappedBy = "gameCopy")
     private Set<Loan> loans = new HashSet<>();
 
+    // Helper methods
+
     public void addLoan(Loan loan) {
         this.loans.add(loan);
         loan.setGameCopy(this);
     }
 
+    public void removeLoan(Loan loan) {
+        this.loans.remove(loan);
+        loan.setGameCopy(null);
+    }
+
+    public void addSeller(Seller seller) {
+        this.setSeller(seller);
+        seller.getGameCopies().add(this);
+    }
+
+    public void removeSeller(Seller seller) {
+        this.setSeller(null);
+        seller.getGameCopies().remove(this);
+    }
+
+    // addGame/removeGame methods are not needed because adding game is mandatory at the creation of this object
 }

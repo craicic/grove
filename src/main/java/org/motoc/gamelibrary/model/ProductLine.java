@@ -39,4 +39,10 @@ public class ProductLine {
         this.games.add(game);
         game.setProductLine(this);
     }
+
+    public void removeGame(Game game) {
+        this.games.remove(game);
+        game.setProductLine(null);
+    }
+
 }

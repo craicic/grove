@@ -44,8 +44,20 @@ public class Loan {
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_loan_status")
     private LoanStatus loanStatus;
+
+    // Helper methods
+
+    public void addLoanStatus(LoanStatus loanStatus) {
+        this.setLoanStatus(loanStatus);
+        loanStatus.getLoans().add(this);
+    }
+
+    public void removeLoanStatus(LoanStatus loanStatus) {
+        this.setLoanStatus(null);
+        loanStatus.getLoans().remove(loanStatus);
+    }
 
 }

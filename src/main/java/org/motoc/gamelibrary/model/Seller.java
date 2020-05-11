@@ -43,4 +43,21 @@ public class Seller {
         gameCopy.setSeller(this);
     }
 
+    public void removeGameCopy(GameCopy gameCopy) {
+        this.gameCopies.remove(gameCopy);
+        gameCopy.setSeller(null);
+    }
+
+    public void addContact(Contact contact) {
+        this.setContact(contact);
+        contact.setSeller(this);
+    }
+
+    /**
+     * This helper method is to use before deleting the contact of a publisher.
+     */
+    public void removeContact(Contact contact) {
+        this.setContact(null);
+        contact.setSeller(null);
+    }
 }

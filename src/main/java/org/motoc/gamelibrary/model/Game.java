@@ -187,4 +187,7 @@ public class Game {
         this.gameCopies.add(gameCopy);
         gameCopy.setGame(this);
     }
+
+    // I think removeGameCopy is not needed, because the relationship is not optional
+
 }

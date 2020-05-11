@@ -37,4 +37,16 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
 
+    // Helper methods
+
+    public void addGame(Game game) {
+        games.add(game);
+        game.getCategories().add(this);
+    }
+
+    public void removeGame(Game game) {
+        games.remove(game);
+        game.getCategories().remove(this);
+    }
+
 }

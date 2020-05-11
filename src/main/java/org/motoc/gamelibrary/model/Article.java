@@ -33,11 +33,11 @@ public class Article {
     private long id;
 
     @NotNull(message = "Publication time cannot be null")
-    @PastOrPresent(message ="Publication time must be in the past or the present")
+    @PastOrPresent(message = "Publication time must be in the past or the present")
     @Column(nullable = false)
     private LocalDateTime publicationTime;
 
-    @PastOrPresent(message ="Last edit time must be in the past or the present")
+    @PastOrPresent(message = "Last edit time must be in the past or the present")
     private LocalDateTime lastEditTime;
 
     /**
@@ -73,6 +73,7 @@ public class Article {
     private ArticleAuthor articleAuthor;
 
     // Helper methods
+
     public void addKeyword(Keyword keyword) {
         this.keywords.add(keyword);
         keyword.getArticles().add(this);
@@ -91,5 +92,15 @@ public class Article {
     public void removeImage(Image image) {
         this.images.remove(image);
         image.getArticles().remove(this);
+    }
+
+    public void addArticleAuthor(ArticleAuthor articleAuthor) {
+        this.setArticleAuthor(articleAuthor);
+        articleAuthor.getArticles().add(this);
+    }
+
+    public void removeArticleAuthor(ArticleAuthor articleAuthor) {
+        this.setArticleAuthor(null);
+        articleAuthor.getArticles().remove(this);
     }
 }

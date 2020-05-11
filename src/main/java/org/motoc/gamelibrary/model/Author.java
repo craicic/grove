@@ -42,4 +42,27 @@ public class Author {
     @ManyToMany(mappedBy = "authors")
     private Set<Game> games = new HashSet<>();
 
+    // Helper methods
+    public void addGame(Game game) {
+        this.games.add(game);
+        game.getAuthors().add(this);
+    }
+
+    public void removeGame(Game game) {
+        this.games.remove(game);
+        game.getAuthors().remove(this);
+    }
+
+    public void addContact(Contact contact) {
+        this.setContact(contact);
+        contact.setAuthor(this);
+    }
+
+    /**
+     * This helper method is to use before deleting the contact of an author.
+     */
+    public void removeContact(Contact contact) {
+        this.setContact(null);
+        contact.setAuthor(null);
+    }
 }

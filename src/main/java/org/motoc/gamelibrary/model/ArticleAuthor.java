@@ -32,6 +32,8 @@ public class ArticleAuthor {
     @OneToMany(mappedBy = "articleAuthor")
     private Set<Article> articles;
 
+    // Helper methods
+
     /**
      * <p>Helper method for bi-directional association</p>
      * <a href>https://thoughts-on-java.org/best-practices-many-one-one-many-associations-mappings/</a>
@@ -39,6 +41,11 @@ public class ArticleAuthor {
     public void addArticle(Article article) {
         this.articles.add(article);
         article.setArticleAuthor(this);
+    }
+
+    public void removeArticle(Article article) {
+        this.articles.add(article);
+        article.setArticleAuthor(null);
     }
 
 }
