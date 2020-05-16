@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
- * The author of articles
+ * The creator of articles
  *
  * @author RouzicJ
  */

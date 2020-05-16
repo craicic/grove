@@ -45,7 +45,7 @@ public class Contact {
     private String website;
 
     @OneToOne(mappedBy = "contact")
-    private Author author;
+    private Creator creator;
 
     @OneToOne(mappedBy = "contact")
     private Publisher publisher;

@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.model.enumartion;
+package org.motoc.gamelibrary.model.enumeration;
 
 /**
  * The general state of the game copy

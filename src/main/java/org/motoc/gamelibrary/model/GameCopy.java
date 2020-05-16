@@ -3,7 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.motoc.gamelibrary.model.enumartion.GeneralStateEnum;
+import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

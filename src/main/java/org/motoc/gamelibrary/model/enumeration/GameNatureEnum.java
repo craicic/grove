@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.model.enumartion;
+package org.motoc.gamelibrary.model.enumeration;
 
 /**
  * An enumeration : Toy, board game, wooden game
@@ -9,7 +9,7 @@ public enum GameNatureEnum {
 
     TOY("Jouet"),
     BOARD_GAME("Jeu de société"),
-    WOODEN_GAME("Jeu en bois");
+    BIG_GAME("Grand jeu");
 
     GameNatureEnum(String frenchTranslation) {}
 }

@@ -3,7 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.motoc.gamelibrary.model.enumartion.GameNatureEnum;
+import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.validation.annotation.ConsistentNumberOfPlayer;
 
@@ -57,11 +57,13 @@ public class Game {
     private short maxNumberOfPlayer;
 
     @Size(min = 1, max = 100, message = "Min age must be between 1 and 100")
-    @Column(nullable = false)
-    private short ageMin;
+    private short minAge;
 
     @Size(min = 1, max = 100, message = "Max age must be between 1 and 100")
-    private short ageMax;
+    private short maxAge;
+
+    @Size(min = 1, max = 100, message = "Min months must be between 1 and 100")
+    private short minMonths;
 
     /**
      * Stuff the game contains (parts, meeples, cards, etc...)
@@ -136,10 +138,10 @@ public class Game {
 
     @ManyToMany
     @JoinTable(
-            name = "game_author",
+            name = "game_creator",
             joinColumns = {@JoinColumn(name = "fk_game")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_author")})
-    private Set<Author> authors = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "fk_creator")})
+    private Set<Creator> creators = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -148,10 +150,17 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_category")})
     private Set<Category> categories = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "game_theme",
+            joinColumns = {@JoinColumn(name = "fk_game")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_theme")})
+    private Set<Theme> themes = new HashSet<>();
+
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
-    // TODO add helper methods in other tables
+
     // Helper methods
     public void addImage(Image image) {
         this.images.add(image);
@@ -163,14 +172,14 @@ public class Game {
         image.getGames().remove(this);
     }
 
-    public void addAuthor(Author author) {
-        this.authors.add(author);
-        author.getGames().add(this);
+    public void addCreator(Creator creator) {
+        this.creators.add(creator);
+        creator.getGames().add(this);
     }
 
-    public void removeAuthor(Author author) {
-        this.authors.remove(author);
-        author.getGames().remove(this);
+    public void removeCreator(Creator creator) {
+        this.creators.remove(creator);
+        creator.getGames().remove(this);
     }
 
     public void addCategory(Category category) {
@@ -188,6 +197,15 @@ public class Game {
         gameCopy.setGame(this);
     }
 
+    public void addTheme(Theme theme) {
+        this.themes.add(theme);
+        theme.getGames().add(this);
+    }
+
+    public void removeTheme(Theme theme) {
+        this.themes.remove(theme);
+        theme.getGames().remove(this);
+    }
     // I think removeGameCopy is not needed, because the relationship is not optional
 
 }
