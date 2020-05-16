@@ -19,8 +19,11 @@ public class ConsistentAgeRangeValidator implements ConstraintValidator<Consiste
 
     @Override
     public boolean isValid(Game game, ConstraintValidatorContext constraintValidatorContext) {
-        if (game.getAgeMax() == 0)
-            return true;
-        return game.getAgeMax() > game.getAgeMin();
+        if (game.getMaxAge() == 0)
+            if (game.getMinMonth() == 0)
+                return true;
+            else
+                return game.getMaxAge()*12 > game.getMinMonth();
+        return game.getMaxAge() > game.getMinAge();
     }
 }

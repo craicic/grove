@@ -4,7 +4,9 @@ public enum CreatorRole {
 
     AUTHOR("Auteur"),
     DESIGNER("Designer"),
-    ILLUSTRATOR("Illustrateur");
+    ILLUSTRATOR("Illustrateur"),
+    AUTHOR_ILLUSTRATOR("Auteur illustrateur");
+
 
     CreatorRole(String frenchTranslation) {}
 }

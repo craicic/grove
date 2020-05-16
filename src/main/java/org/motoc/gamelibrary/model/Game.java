@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.validation.annotation.ConsistentNumberOfPlayer;
+import org.motoc.gamelibrary.validation.annotation.SelectYearOrMonth;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ import java.util.Set;
  */
 @ConsistentNumberOfPlayer
 @ConsistentAgeRange
+@SelectYearOrMonth
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -63,7 +65,7 @@ public class Game {
     private short maxAge;
 
     @Size(min = 1, max = 100, message = "Min months must be between 1 and 100")
-    private short minMonths;
+    private short minMonth;
 
     /**
      * Stuff the game contains (parts, meeples, cards, etc...)
