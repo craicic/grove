@@ -32,7 +32,7 @@ public class Image {
     private long id;
 
     @NotBlank(message = "File path cannot be null or blank")
-    @Size(max = 255, message = "File path cannot exceed 255 characters")
+    @Size(max = 4251, message = "File path cannot exceed 4251 characters")
     @Column(nullable = false)
     private String filePath;
 
