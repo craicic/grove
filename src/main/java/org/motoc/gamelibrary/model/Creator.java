@@ -37,7 +37,6 @@ public class Creator {
     private String lastName;
 
     @NotNull(message = "Role cannot be null")
-    @Size(max = 50, message = "Role should not exceed 50 characters")
     @Column(nullable = false, length = 50)
     private CreatorRole role;
 

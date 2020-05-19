@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.validation.annotation.ConsistentNumberOfPlayer;
@@ -51,20 +52,20 @@ public class Game {
     @Column(length = 20)
     private String playTime;
 
-    @Size(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
+    @Range(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
     @Column(nullable = false)
     private short minNumberOfPlayer;
 
-    @Size(min = 1, max = 100, message = "Max number of players must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Max number of players must be between 1 and 100")
     private short maxNumberOfPlayer;
 
-    @Size(min = 1, max = 100, message = "Min age must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min age must be between 1 and 100")
     private short minAge;
 
-    @Size(min = 1, max = 100, message = "Max age must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Max age must be between 1 and 100")
     private short maxAge;
 
-    @Size(min = 1, max = 100, message = "Min months must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min months must be between 1 and 100")
     private short minMonth;
 
     /**
@@ -109,7 +110,6 @@ public class Game {
     /**
      * An enumeration : toy, board game, wooden game, etc...
      */
-    @Size(max = 50, message = "Nature rules should not exceed 50 characters")
     @Column(length = 50)
     private GameNatureEnum nature;
 
