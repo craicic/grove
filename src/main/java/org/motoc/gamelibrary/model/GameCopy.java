@@ -28,9 +28,9 @@ public class GameCopy {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Pattern(regexp = "^[1-9]{1,5}$")
+    @Pattern(regexp = "^[0-9]{1,5}$")
     @Column(nullable = false)
-    private long objectCode;
+    private String objectCode;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Price value cannot be below 0.0")
     @Digits(integer = 10, fraction = 2, message = "Price maximum integer part is 10, maximum fractional part is 2")
@@ -57,6 +57,8 @@ public class GameCopy {
     @NotNull(message = "General State cannot be null")
     @Column(nullable = false)
     private GeneralStateEnum generalState;
+
+    private boolean isLoanable;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_game")

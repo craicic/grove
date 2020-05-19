@@ -3,11 +3,13 @@ package org.motoc.gamelibrary;
 
 import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
+import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 import org.motoc.gamelibrary.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -56,6 +58,12 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final Category demoCategoryA;
     private final Category demoCategoryB;
     private final Category demoCategoryC;
+    private final Seller demoSellerA;
+    private final Game demoGameA;
+    private final GameCopy demoGameCopyA;
+    private final LoanStatus demoLoanStatusA;
+    private final LoanStatus demoLoanStatusB;
+    private final LoanStatus demoLoanStatusC;
 
     @Autowired
     public CommandLineStartupRunner(AccountRepository accountRepository, ArticleRepository articleRepository,
@@ -109,6 +117,12 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.demoCategoryA = new Category();
         this.demoCategoryB = new Category();
         this.demoCategoryC = new Category();
+        this.demoSellerA = new Seller();
+        this.demoGameA = new Game();
+        this.demoGameCopyA = new GameCopy();
+        this.demoLoanStatusA = new LoanStatus();
+        this.demoLoanStatusB = new LoanStatus();
+        this.demoLoanStatusC = new LoanStatus();
     }
 
     @Override
@@ -260,7 +274,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillGame() {
-        Game demoGameA = new Game();
         demoGameA.setName("Les Colons de Catane");
         demoGameA.setDescription("Un jeu de territoire");
         demoGameA.setPlayTime("90");
@@ -288,7 +301,18 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillGameCopy() {
+        demoGameCopyA.setObjectCode("00050");
+        demoGameCopyA.setPrice(BigDecimal.valueOf(40));
+        demoGameCopyA.setLocation("Etagère jeu famille");
+        demoGameCopyA.setDateOfPurchase(LocalDate.of(2018,5,20));
+        demoGameCopyA.setRegisterDate(LocalDate.now());
+        demoGameCopyA.setWearCondition("Bon état");
+        demoGameCopyA.setGeneralState(GeneralStateEnum.IN_ACTIVITY);
+        demoGameCopyA.setLoanable(true);
+        demoGameCopyA.setSeller(demoSellerA);
+        demoGameCopyA.setGame(demoGameA);
 
+        gameCopyRepository.save(demoGameCopyA);
     }
 
     private void fillImage() {
@@ -312,14 +336,20 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillLoan() {
+        Loan demoLoanA = new Loan();
+
+        demoLoanA.setUserUuid("REPLACE_THIS_UUID");
+        demoLoanA.setLoanStartTime(LocalDateTime.of(2020,7,16,9,0));
+        demoLoanA.setLoanEndTime(LocalDateTime.of(2020,7,16,15,0));
+        demoLoanA.setLoanStatus(demoLoanStatusB);
+        demoLoanA.setGameCopy(demoGameCopyA);
+
+        loanRepository.save(demoLoanA);
+        loanRepository.flush();
 
     }
 
     private void fillLoanStatus() {
-        LoanStatus demoLoanStatusA = new LoanStatus();
-        LoanStatus demoLoanStatusB = new LoanStatus();
-        LoanStatus demoLoanStatusC = new LoanStatus();
-
         demoLoanStatusA.setTag("Proposé");
         demoLoanStatusA.setDescription("L'adhérent a emis une proposition d'emprunt pour le jeu");
         demoLoanStatusB.setTag("Validé");
@@ -349,7 +379,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillSeller() {
-        Seller demoSellerA = new Seller();
         demoSellerA.setName("Joué Club Tulle");
         demoSellerA.setContact(demoContactC);
 
