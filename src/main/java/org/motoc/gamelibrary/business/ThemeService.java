@@ -1,18 +1,15 @@
 package org.motoc.gamelibrary.business;
 
+import org.motoc.gamelibrary.business.refactor.CrudMethodsImpl;
 import org.motoc.gamelibrary.model.Theme;
 import org.motoc.gamelibrary.repository.ThemeRepository;
+import org.motoc.gamelibrary.repository.contract.GenericRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  * Perform business logic on the web entity Theme
@@ -21,46 +18,49 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class ThemeService {
+public class ThemeService extends CrudMethodsImpl<Theme, GenericRepository<Theme>>{
 
     private static final Logger logger = LoggerFactory.getLogger(ThemeService.class);
 
     private final ThemeRepository themeRepository;
 
     @Autowired
-    public ThemeService(ThemeRepository themeRepository) {
+    public ThemeService(ThemeRepository themeRepository, GenericRepository<Theme> themeGenericRepository) {
+        super(themeGenericRepository);
         this.themeRepository = themeRepository;
     }
-
-    public void persist(Theme theme) {
-        themeRepository.saveAndFlush(theme);
-    }
-
-    public long count() {
-        return themeRepository.count();
-    }
-
-    public Theme findOne(Theme theme) {
-        if (theme != null)
-            return themeRepository.getOne(theme.getId());
-        return null;
-    }
-
-    public List<Theme> findAll() {
-        return themeRepository.findAll();
-    }
-
-    public Page<Theme> findPage(int page, int size) {
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(
-                Sort.Order.asc("name")
-        ));
-
-        return themeRepository.findAll(pageable);
-    }
-
-    public void deleteOne(Theme theme) {
-        themeRepository.delete(theme);
-    }
+//
+//    public Theme persist(Theme theme) {
+//        Theme result = themeRepository.saveAndFlush(theme);
+//        logger.debug("Persisted theme : " + result);
+//        return result;
+//    }
+//
+//    public long count() {
+//        long result = themeRepository.count();
+//        logger.debug("Counting theme(s)=" + result);
+//        return result;
+//    }
+//
+//    public Theme findOne(Theme theme) {
+//        if (theme != null) {
+//            Theme result = themeRepository.getOne(theme.getId());
+//            logger.debug("Found theme : " + result);
+//            return result;
+//        }
+//        logger.warn("Theme can't be null");
+//        return null;
+//    }
+//
+//    public Page<Theme> findPage(Pageable pageable) {
+//        Page<Theme> result = themeRepository.findAll(pageable);
+//        logger.debug("Found {} element(s) through {} page(s)", result.getTotalElements(), result.getTotalPages());
+//        return result;
+//    }
+//
+//    public void deleteOne(Theme theme) {
+//        themeRepository.delete(theme);
+//        logger.debug("Deleted theme : " + theme);
+//    }
 
 }
