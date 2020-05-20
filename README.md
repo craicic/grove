@@ -5,7 +5,7 @@ A tool for game libraries
 ### Project description
 
 The purpose is to create a tool for a french game-library. The project is designed around this particular client
-use cases but it should be flexible as well as documented enough to adapt to your own use cases.
+use cases.
 The project is composed by a REST service (this repo) and web client.
 
 ### Service's technologies
@@ -15,13 +15,16 @@ It will consume a PostgreSQL 9.6 database.
 The user session, login / logout, security and more are delegated to a [Keycloak](https://www.keycloak.org/) service.
 
 ## Current version
-#### 0.1.0-ALPHA
-Application's model with hibernate and constrains.
+#### 0.2.0-ALPHA
+Repository fundamentals set, database is fill with demo data on startup
 
 ## Upcoming version
-#### 0.2.0-ALPHA
-Repository fundamentals sets, fill database on startup
+#### 0.3.0-ALPHA
+Theme CRUD feature, exposed on the service's API
 
 ## Changelog
 #### 0.0.1-SNAPSHOT - 1 May 2020
 Project structure is done.
+
+#### 0.2.0-ALPHA - 20 May 2020
+Repository fundamentals set, database is fill with demo data on startup
