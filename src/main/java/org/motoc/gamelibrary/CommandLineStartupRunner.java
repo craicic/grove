@@ -15,6 +15,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * It's methods run is executed on startup. It fill the database with demo data.
+ *
+ * @author RouzicJ
+ */
 @Component
 public class CommandLineStartupRunner implements CommandLineRunner {
 
