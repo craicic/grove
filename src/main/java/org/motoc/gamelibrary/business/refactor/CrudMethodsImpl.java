@@ -1,15 +1,15 @@
 package org.motoc.gamelibrary.business.refactor;
 
-import org.motoc.gamelibrary.repository.contract.GenericRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 
-public abstract class CrudMethodsImpl<T, T_Repo extends GenericRepository<T>> implements CrudMethods<T> {
+public abstract class CrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> implements CrudMethods<T> {
 
     private final T_Repo genericRepository;
 
