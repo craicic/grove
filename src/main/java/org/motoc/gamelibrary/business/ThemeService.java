@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class ThemeService extends CrudMethodsImpl<Theme, JpaRepository<Theme, Long>>{
+public class ThemeService extends CrudMethodsImpl<Theme, JpaRepository<Theme, Long>> {
 
     private static final Logger logger = LoggerFactory.getLogger(ThemeService.class);
 
@@ -29,38 +29,5 @@ public class ThemeService extends CrudMethodsImpl<Theme, JpaRepository<Theme, Lo
         super(themeGenericRepository);
         this.themeRepository = themeRepository;
     }
-//
-//    public Theme persist(Theme theme) {
-//        Theme result = themeRepository.saveAndFlush(theme);
-//        logger.debug("Persisted theme : " + result);
-//        return result;
-//    }
-//
-//    public long count() {
-//        long result = themeRepository.count();
-//        logger.debug("Counting theme(s)=" + result);
-//        return result;
-//    }
-//
-//    public Theme findOne(Theme theme) {
-//        if (theme != null) {
-//            Theme result = themeRepository.getOne(theme.getId());
-//            logger.debug("Found theme : " + result);
-//            return result;
-//        }
-//        logger.warn("Theme can't be null");
-//        return null;
-//    }
-//
-//    public Page<Theme> findPage(Pageable pageable) {
-//        Page<Theme> result = themeRepository.findAll(pageable);
-//        logger.debug("Found {} element(s) through {} page(s)", result.getTotalElements(), result.getTotalPages());
-//        return result;
-//    }
-//
-//    public void deleteOne(Theme theme) {
-//        themeRepository.delete(theme);
-//        logger.debug("Deleted theme : " + theme);
-//    }
 
 }

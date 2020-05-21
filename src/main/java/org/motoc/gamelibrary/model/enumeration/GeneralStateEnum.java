@@ -20,6 +20,7 @@ public enum GeneralStateEnum {
     RESTOCKING("Réassort"),
     DONATION("Don à une association");
 
-    GeneralStateEnum(String frenchTranslation) {}
+    GeneralStateEnum(String frenchTranslation) {
+    }
 
 }

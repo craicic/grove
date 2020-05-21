@@ -8,7 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-
+/**
+ * Part of a strategy pattern, the goal is to factorize basics business methods.
+ *
+ * @author RouzicJ
+ */
 public abstract class CrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> implements CrudMethods<T> {
 
     private final T_Repo genericRepository;
@@ -34,13 +38,16 @@ public abstract class CrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> 
     }
 
     @Override
-    public T findOne(long id, Class<T> tClass) {
-        T result = genericRepository.getOne(id);
-        if (result != Optional.empty())
+    public T findById(long id, Class<T> tClass) {
+        Optional<T> optional = genericRepository.findById(id);
+        if (optional.isPresent()) {
+            T result = optional.get();
             logger.debug("Found {} : {}", tClass.getSimpleName().toLowerCase(), result);
-        else
+            return result;
+        } else {
             logger.debug("No {} found for id={}", tClass.getSimpleName().toLowerCase(), id);
-        return result;
+            return null;
+        }
     }
 
     @Override

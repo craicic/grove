@@ -57,7 +57,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final ProductLine demoProductLineA;
     private final Publisher demoPublisherA;
     private final Creator demoCreatorA;
-    private final Theme demoThemeA ;
+    private final Theme demoThemeA;
     private final Theme demoThemeB;
     private final Theme demoThemeC;
     private final Category demoCategoryA;
@@ -169,7 +169,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         Article demoArticleB = new Article();
 
         demoArticleA.setLastEditTime(LocalDateTime.now());
-        demoArticleA.setPublicationTime(LocalDateTime.of(2019,12,20,10,30));
+        demoArticleA.setPublicationTime(LocalDateTime.of(2019, 12, 20, 10, 30));
         demoArticleA.setHtmlContent("<h1>Article A content<h1/><p>Mauris nec velit eu turpis laoreet viverra. Donec feugiat ante ullamcorper tristique feugiat. Aliquam erat volutpat. Vivamus fermentum metus est, a pellentesque lectus aliquet in.</p>");
         demoArticleA.setShortDescription("This is article A... about tournament");
         demoArticleA.setArticleAuthor(demoArticleAuthorA);
@@ -187,7 +187,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         articleRepository.flush();
 
         demoArticleB.setLastEditTime(LocalDateTime.now());
-        demoArticleB.setPublicationTime(LocalDateTime.of(2020,3,8,15,0));
+        demoArticleB.setPublicationTime(LocalDateTime.of(2020, 3, 8, 15, 0));
         demoArticleB.setHtmlContent("<h1>Article B content<h1/><p>Nullam nec ipsum nisi. Aenean ullamcorper, leo eget luctus fermentum, dolor est varius nunc, vel varius massa purus ac urna. In metus orci, dapibus in malesuada nec, posuere vitae augue.</p>");
         demoArticleB.setShortDescription("This is article B... about formation");
         demoArticleB.setArticleAuthor(demoArticleAuthorB);
@@ -282,9 +282,9 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoGameA.setName("Les Colons de Catane");
         demoGameA.setDescription("Un jeu de territoire");
         demoGameA.setPlayTime("90");
-        demoGameA.setMinNumberOfPlayer((short)3);
-        demoGameA.setMinNumberOfPlayer((short)4);
-        demoGameA.setMinAge((short)8);
+        demoGameA.setMinNumberOfPlayer((short) 3);
+        demoGameA.setMinNumberOfPlayer((short) 4);
+        demoGameA.setMinAge((short) 8);
         demoGameA.setProductLine(demoProductLineA);
         demoGameA.setPublisher(demoPublisherA);
 
@@ -309,7 +309,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoGameCopyA.setObjectCode("00050");
         demoGameCopyA.setPrice(BigDecimal.valueOf(40));
         demoGameCopyA.setLocation("Etagère jeu famille");
-        demoGameCopyA.setDateOfPurchase(LocalDate.of(2018,5,20));
+        demoGameCopyA.setDateOfPurchase(LocalDate.of(2018, 5, 20));
         demoGameCopyA.setRegisterDate(LocalDate.now());
         demoGameCopyA.setWearCondition("Bon état");
         demoGameCopyA.setGeneralState(GeneralStateEnum.IN_ACTIVITY);
@@ -344,8 +344,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         Loan demoLoanA = new Loan();
 
         demoLoanA.setUserUuid("REPLACE_THIS_UUID");
-        demoLoanA.setLoanStartTime(LocalDateTime.of(2020,7,16,9,0));
-        demoLoanA.setLoanEndTime(LocalDateTime.of(2020,7,16,15,0));
+        demoLoanA.setLoanStartTime(LocalDateTime.of(2020, 7, 16, 9, 0));
+        demoLoanA.setLoanEndTime(LocalDateTime.of(2020, 7, 16, 15, 0));
         demoLoanA.setLoanStatus(demoLoanStatusB);
         demoLoanA.setGameCopy(demoGameCopyA);
 

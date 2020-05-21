@@ -8,5 +8,6 @@ public enum CreatorRole {
     AUTHOR_ILLUSTRATOR("Auteur illustrateur");
 
 
-    CreatorRole(String frenchTranslation) {}
+    CreatorRole(String frenchTranslation) {
+    }
 }

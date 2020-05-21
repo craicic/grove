@@ -11,5 +11,6 @@ public enum GameNatureEnum {
     BOARD_GAME("Jeu de société"),
     BIG_GAME("Grand jeu");
 
-    GameNatureEnum(String frenchTranslation) {}
+    GameNatureEnum(String frenchTranslation) {
+    }
 }

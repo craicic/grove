@@ -23,7 +23,7 @@ public class ConsistentAgeRangeValidator implements ConstraintValidator<Consiste
             if (game.getMinMonth() == 0)
                 return true;
             else
-                return game.getMaxAge()*12 > game.getMinMonth();
+                return game.getMaxAge() * 12 > game.getMinMonth();
         return game.getMaxAge() > game.getMinAge();
     }
 }
