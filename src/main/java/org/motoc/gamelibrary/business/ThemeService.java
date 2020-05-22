@@ -24,6 +24,7 @@ public class ThemeService extends CrudMethodsImpl<Theme, JpaRepository<Theme, Lo
 
     private final ThemeRepository themeRepository;
 
+
     @Autowired
     public ThemeService(ThemeRepository themeRepository, JpaRepository<Theme, Long> themeGenericRepository) {
         super(themeGenericRepository);

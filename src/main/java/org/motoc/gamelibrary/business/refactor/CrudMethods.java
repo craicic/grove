@@ -10,13 +10,28 @@ import org.springframework.data.domain.Pageable;
  */
 public interface CrudMethods<T> {
 
+    /**
+     * Persist T
+     */
     T persist(T t);
 
+    /**
+     * Count the number of T in persistence, the argument is useful for logging
+     */
     long count(Class<T> tClass);
 
+    /**
+     * Find T. The second argument is useful for logging
+     */
     T findById(long id, Class<T> tClass);
 
+    /**
+     * Find page
+     */
     Page<T> findPage(Pageable pageable);
 
+    /**
+     * Delete T
+     */
     void deleteOne(T t);
 }
