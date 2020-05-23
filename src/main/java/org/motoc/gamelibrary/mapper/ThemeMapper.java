@@ -11,10 +11,11 @@ public interface ThemeMapper {
 
     ThemeMapper INSTANCE = Mappers.getMapper(ThemeMapper.class);
 
-    ThemeDto themeToThemeDto(Theme theme);
-
     default Page<ThemeDto> themePageToThemePageDto(Page<Theme> themePage) {
         return themePage.map(this::themeToThemeDto);
     }
 
+    ThemeDto themeToThemeDto(Theme theme);
+
+    Theme themeDtoToTheme(ThemeDto theme);
 }

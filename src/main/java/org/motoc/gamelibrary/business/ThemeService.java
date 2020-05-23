@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.business;
 
-import org.motoc.gamelibrary.business.refactor.CrudMethodsImpl;
+import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Theme;
 import org.motoc.gamelibrary.repository.ThemeRepository;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class ThemeService extends CrudMethodsImpl<Theme, JpaRepository<Theme, Long>> {
+public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<Theme, Long>> {
 
     private static final Logger logger = LoggerFactory.getLogger(ThemeService.class);
 
@@ -27,8 +27,20 @@ public class ThemeService extends CrudMethodsImpl<Theme, JpaRepository<Theme, Lo
 
     @Autowired
     public ThemeService(ThemeRepository themeRepository, JpaRepository<Theme, Long> themeGenericRepository) {
-        super(themeGenericRepository);
+        super(themeGenericRepository, Theme.class);
         this.themeRepository = themeRepository;
     }
 
+    // Methods
+    public Theme edit(Theme theme, Long id) {
+        return themeRepository.findById(id)
+                .map(themeFromPersistence -> {
+            themeFromPersistence.setName(theme.getName());
+            return themeFromPersistence;
+        })
+                .orElseGet(() -> {
+            theme.setId(id);
+            return themeRepository.save(theme);
+        });
+    }
 }

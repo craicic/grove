@@ -27,23 +27,40 @@ public class ThemeController {
     }
 
     @GetMapping("/themes/count")
-    public Long count() {
-        return service.count(Theme.class);
+    Long count() {
+        return service.count();
     }
 
     @GetMapping("/themes")
-    public ThemeDto findById(@RequestParam(value="id") long id) {
-        return mapper.themeToThemeDto(service.findById(id, Theme.class));
+    ThemeDto findById(@RequestParam(value="id") long id) {
+        return mapper.themeToThemeDto(service.findById(id));
     }
 
     @GetMapping("/themes/page")
-    public Page<ThemeDto> findPage(Pageable pageable) {
+    Page<ThemeDto> findPage(Pageable pageable) {
         return mapper.themePageToThemePageDto(service.findPage(pageable));
     }
 
     @PostMapping("/themes")
-    public ThemeDto persist(@RequestBody Theme theme) {
-        logger.debug("Persist method called");
-        return mapper.themeToThemeDto(service.persist(theme));
+    ThemeDto persist(@RequestBody ThemeDto theme) {
+        logger.debug("Persist(theme) called");
+        return mapper.themeToThemeDto(service.persist(mapper.themeDtoToTheme(theme)));
     }
+
+    @PutMapping("/themes/{id}")
+    ThemeDto edit(@RequestBody ThemeDto theme,
+                  @PathVariable Long id) {
+        return mapper.themeToThemeDto(service.edit(mapper.themeDtoToTheme(theme), id));
+    }
+
+    @DeleteMapping("themes/{id}")
+    void deleteById(@PathVariable Long id) {
+        service.deleteById(id);
+    }
+
+    @DeleteMapping("/themes")
+    void deleteByEntity(@RequestBody Theme theme) {
+
+    }
+
 }

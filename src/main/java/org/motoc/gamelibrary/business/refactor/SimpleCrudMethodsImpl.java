@@ -13,14 +13,17 @@ import java.util.Optional;
  *
  * @author RouzicJ
  */
-public abstract class CrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> implements CrudMethods<T> {
+public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> implements SimpleCrudMethods<T> {
 
     private final T_Repo genericRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(CrudMethodsImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleCrudMethodsImpl.class);
 
-    public CrudMethodsImpl(T_Repo genericRepository) {
+    final Class<T> type;
+
+    public SimpleCrudMethodsImpl(T_Repo genericRepository, Class<T> type) {
         this.genericRepository = genericRepository;
+        this.type = type;
     }
 
     @Override
@@ -31,21 +34,21 @@ public abstract class CrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> 
     }
 
     @Override
-    public long count(Class<T> tClass) {
+    public long count() {
         long result = genericRepository.count();
-        logger.debug("Count {}={}", tClass.getSimpleName().toLowerCase(), result);
+        logger.debug("Count {}={}", type.getSimpleName().toLowerCase(), result);
         return result;
     }
 
     @Override
-    public T findById(long id, Class<T> tClass) {
+    public T findById(long id) {
         Optional<T> optional = genericRepository.findById(id);
         if (optional.isPresent()) {
             T result = optional.get();
-            logger.debug("Found {} : {}", tClass.getSimpleName().toLowerCase(), result);
+            logger.debug("Found {} : {}", type.getSimpleName().toLowerCase(), result);
             return result;
         } else {
-            logger.debug("No {} found for id={}", tClass.getSimpleName().toLowerCase(), id);
+            logger.debug("No {} found for id={}", type.getSimpleName().toLowerCase(), id);
             return null;
         }
     }
@@ -61,5 +64,11 @@ public abstract class CrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> 
     public void deleteOne(T t) {
         genericRepository.delete(t);
         logger.debug("Deleted {} : {}", t.getClass().getSimpleName().toLowerCase(), t);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        genericRepository.deleteById(id);
+        logger.debug("Deleted {} of id {}", type.getSimpleName().toLowerCase(), id);
     }
 }

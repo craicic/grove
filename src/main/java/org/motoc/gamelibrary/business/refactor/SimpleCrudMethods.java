@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
  *
  * @author RouzicJ
  */
-public interface CrudMethods<T> {
+public interface SimpleCrudMethods<T> {
 
     /**
      * Persist T
@@ -16,14 +16,14 @@ public interface CrudMethods<T> {
     T persist(T t);
 
     /**
-     * Count the number of T in persistence, the argument is useful for logging
+     * Count the number of T in persistence
      */
-    long count(Class<T> tClass);
+    long count();
 
     /**
-     * Find T. The second argument is useful for logging
+     * Find T
      */
-    T findById(long id, Class<T> tClass);
+    T findById(long id);
 
     /**
      * Find page
@@ -34,4 +34,9 @@ public interface CrudMethods<T> {
      * Delete T
      */
     void deleteOne(T t);
+
+    /**
+     * Delete by id
+     */
+    void deleteById(long id);
 }

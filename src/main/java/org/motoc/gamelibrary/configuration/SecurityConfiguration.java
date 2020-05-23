@@ -12,6 +12,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // enable csrf in production
-        http.csrf().disable();
+        // http.csrf().disable();
+        // disable formLogin() when keycloak server is up
+        http.formLogin();
     }
 }
