@@ -35,12 +35,14 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
     public Theme edit(Theme theme, Long id) {
         return themeRepository.findById(id)
                 .map(themeFromPersistence -> {
-            themeFromPersistence.setName(theme.getName());
-            return themeFromPersistence;
-        })
+                    themeFromPersistence.setName(theme.getName());
+                    logger.debug("Found theme of id={} : {}", id, themeFromPersistence);
+                    return themeRepository.save(themeFromPersistence);
+                })
                 .orElseGet(() -> {
-            theme.setId(id);
-            return themeRepository.save(theme);
-        });
+                    theme.setId(id);
+                    logger.debug("No theme of id={} found. Set theme : {}", id, theme);
+                    return themeRepository.save(theme);
+                });
     }
 }

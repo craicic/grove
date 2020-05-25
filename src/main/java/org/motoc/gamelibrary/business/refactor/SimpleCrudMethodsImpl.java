@@ -27,9 +27,9 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
     }
 
     @Override
-    public T persist(T t) {
+    public T save(T t) {
         T result = genericRepository.saveAndFlush(t);
-        logger.debug("Persisted a {} : {}", result.getClass().getSimpleName().toLowerCase(), result.toString());
+        logger.debug("Saved a {} : {}", result.getClass().getSimpleName().toLowerCase(), result.toString());
         return result;
     }
 

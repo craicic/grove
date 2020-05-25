@@ -19,19 +19,20 @@ import static org.mockito.Mockito.when;
 class ThemeServiceTest {
 
     @Mock
-    JpaRepository<Theme, Long> themeGenericRepository;
+    JpaRepository<Theme, Long> themeRepository;
+
     @InjectMocks
     ThemeService themeService;
 
     @Test
     void testCount() {
-        when(themeGenericRepository.count()).thenReturn(5L);
+        when(themeRepository.count()).thenReturn(5L);
 
-        assertThat(themeService.count(Theme.class)).isEqualTo(5L);
+        assertThat(themeService.count()).isEqualTo(5L);
     }
 
     @Test
-    void testPersist() {
+    void testSave() {
         String themeName = "Aventure";
         Theme toPersist = new Theme();
         toPersist.setName(themeName);
@@ -40,9 +41,9 @@ class ThemeServiceTest {
         toReturn.setId(5L);
         toReturn.setName(themeName);
 
-        when(themeGenericRepository.saveAndFlush(toPersist)).thenReturn(toReturn);
+        when(themeRepository.saveAndFlush(toPersist)).thenReturn(toReturn);
 
-        assertThat(themeService.persist(toPersist)).isSameAs(toReturn);
+        assertThat(themeService.save(toPersist)).isSameAs(toReturn);
     }
 
     @Test
@@ -57,18 +58,18 @@ class ThemeServiceTest {
         Optional<Theme> toReturn = Optional.of(theme);
 
 
-        when(themeGenericRepository.findById(4L)).thenReturn(toReturn);
+        when(themeRepository.findById(4L)).thenReturn(toReturn);
 
-        assertThat(themeService.findById(id, Theme.class)).isSameAs(theme);
+        assertThat(themeService.findById(id)).isSameAs(theme);
     }
 
     @Test
     void testFindByIdNotFound() {
         long id = 4L;
 
-        when(themeGenericRepository.findById(4L)).thenReturn(Optional.empty());
+        when(themeRepository.findById(4L)).thenReturn(Optional.empty());
 
-        assertThat(themeService.findById(id, Theme.class)).isNull();
+        assertThat(themeService.findById(id)).isNull();
     }
 
     @Test
@@ -86,8 +87,11 @@ class ThemeServiceTest {
         List<Theme> themes = List.of(themeA, themeB);
         Page<Theme> pageToReturn = new PageImpl<>(themes, pageable, themes.size());
 
-        when(themeGenericRepository.findAll(pageable)).thenReturn(pageToReturn);
+        when(themeRepository.findAll(pageable)).thenReturn(pageToReturn);
 
         assertThat(themeService.findPage(pageable)).isSameAs(pageToReturn);
+    }
+
+    void testEdit() {
     }
 }

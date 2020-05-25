@@ -44,7 +44,7 @@ public class ThemeController {
     @PostMapping("/themes")
     ThemeDto persist(@RequestBody ThemeDto theme) {
         logger.debug("Persist(theme) called");
-        return mapper.themeToThemeDto(service.persist(mapper.themeDtoToTheme(theme)));
+        return mapper.themeToThemeDto(service.save(mapper.themeDtoToTheme(theme)));
     }
 
     @PutMapping("/themes/{id}")

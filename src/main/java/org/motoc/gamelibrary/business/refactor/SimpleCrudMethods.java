@@ -13,7 +13,7 @@ public interface SimpleCrudMethods<T> {
     /**
      * Persist T
      */
-    T persist(T t);
+    T save(T t);
 
     /**
      * Count the number of T in persistence
