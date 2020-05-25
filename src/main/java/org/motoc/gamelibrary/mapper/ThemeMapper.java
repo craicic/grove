@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.motoc.gamelibrary.dto.ThemeDto;
 import org.motoc.gamelibrary.model.Theme;
@@ -17,5 +18,6 @@ public interface ThemeMapper {
 
     ThemeDto themeToThemeDto(Theme theme);
 
+    @Mapping(target = "games", ignore = true)
     Theme themeDtoToTheme(ThemeDto theme);
 }

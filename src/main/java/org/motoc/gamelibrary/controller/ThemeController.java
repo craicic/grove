@@ -26,39 +26,49 @@ public class ThemeController {
         this.mapper = ThemeMapper.INSTANCE;
     }
 
-    @GetMapping("/themes/count")
+    @GetMapping(path = {"/", "/unsecured"})
+    String home() {
+        return "Welcome !!!";
+    }
+
+    @GetMapping("/user")
+    String user() {
+        return "User page";
+    }
+
+    @GetMapping("/admin/themes/count")
     Long count() {
         return service.count();
     }
 
-    @GetMapping("/themes")
+    @GetMapping("/admin/themes")
     ThemeDto findById(@RequestParam(value="id") long id) {
         return mapper.themeToThemeDto(service.findById(id));
     }
 
-    @GetMapping("/themes/page")
+    @GetMapping("/admin/themes/page")
     Page<ThemeDto> findPage(Pageable pageable) {
         return mapper.themePageToThemePageDto(service.findPage(pageable));
     }
 
-    @PostMapping("/themes")
+    @PostMapping("/admin/admin/themes")
     ThemeDto persist(@RequestBody ThemeDto theme) {
         logger.debug("Persist(theme) called");
         return mapper.themeToThemeDto(service.save(mapper.themeDtoToTheme(theme)));
     }
 
-    @PutMapping("/themes/{id}")
+    @PutMapping("/admin/themes/{id}")
     ThemeDto edit(@RequestBody ThemeDto theme,
                   @PathVariable Long id) {
         return mapper.themeToThemeDto(service.edit(mapper.themeDtoToTheme(theme), id));
     }
 
-    @DeleteMapping("themes/{id}")
+    @DeleteMapping("/admin/themes/{id}")
     void deleteById(@PathVariable Long id) {
         service.deleteById(id);
     }
 
-    @DeleteMapping("/themes")
+    @DeleteMapping("/admin/themes")
     void deleteByEntity(@RequestBody Theme theme) {
 
     }
