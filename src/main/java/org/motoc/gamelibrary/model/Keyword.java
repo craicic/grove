@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -49,4 +50,17 @@ public class Keyword {
         article.getKeywords().remove(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Keyword keyword = (Keyword) o;
+        return id == keyword.id &&
+                tag.equals(keyword.tag);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tag);
+    }
 }

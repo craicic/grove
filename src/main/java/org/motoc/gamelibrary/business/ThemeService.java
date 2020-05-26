@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Theme;
 import org.motoc.gamelibrary.repository.ThemeRepository;
+import org.motoc.gamelibrary.repository.ThemeRepositoryCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,15 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
 
     private final ThemeRepository themeRepository;
 
+    private final ThemeRepositoryCustom themeRepositoryCustom;
+
 
     @Autowired
-    public ThemeService(ThemeRepository themeRepository, JpaRepository<Theme, Long> themeGenericRepository) {
+    public ThemeService(ThemeRepository themeRepository, ThemeRepositoryCustom themeRepositoryCustom,
+                        JpaRepository<Theme, Long> themeGenericRepository) {
         super(themeGenericRepository, Theme.class);
         this.themeRepository = themeRepository;
+        this.themeRepositoryCustom = themeRepositoryCustom;
     }
 
     // Methods
@@ -44,5 +49,12 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
                     logger.debug("No theme of id={} found. Set theme : {}", id, theme);
                     return themeRepository.save(theme);
                 });
+    }
+
+    /**
+     * Calls the DAO to delete a theme by id
+     */
+    public void remove(Long id) {
+        themeRepositoryCustom.remove(id);
     }
 }

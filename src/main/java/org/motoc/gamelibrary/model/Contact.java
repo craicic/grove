@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  * Contact details for external actors
@@ -56,4 +57,23 @@ public class Contact {
     @OneToOne(mappedBy = "contact")
     private Account account;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return id == contact.id &&
+                Objects.equals(postalCode, contact.postalCode) &&
+                Objects.equals(street, contact.street) &&
+                Objects.equals(city, contact.city) &&
+                country.equals(contact.country) &&
+                Objects.equals(streetNumber, contact.streetNumber) &&
+                Objects.equals(phoneNumber, contact.phoneNumber) &&
+                Objects.equals(website, contact.website);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, postalCode, street, city, country, streetNumber, phoneNumber, website);
+    }
 }

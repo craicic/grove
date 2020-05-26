@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -210,4 +211,35 @@ public class Game {
     }
     // I think removeGameCopy is not needed, because the relationship is not optional
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return id == game.id &&
+                minNumberOfPlayer == game.minNumberOfPlayer &&
+                maxNumberOfPlayer == game.maxNumberOfPlayer &&
+                minAge == game.minAge &&
+                maxAge == game.maxAge &&
+                minMonth == game.minMonth &&
+                Objects.equals(coreGame, game.coreGame) &&
+                name.equals(game.name) &&
+                Objects.equals(description, game.description) &&
+                Objects.equals(playTime, game.playTime) &&
+                Objects.equals(stuff, game.stuff) &&
+                Objects.equals(preparation, game.preparation) &&
+                Objects.equals(goal, game.goal) &&
+                Objects.equals(coreRules, game.coreRules) &&
+                Objects.equals(variant, game.variant) &&
+                Objects.equals(ending, game.ending) &&
+                nature == game.nature &&
+                Objects.equals(size, game.size) &&
+                Objects.equals(editionNumber, game.editionNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, coreGame, name, description, playTime, minNumberOfPlayer, maxNumberOfPlayer, minAge, maxAge, minMonth, stuff, preparation, goal, coreRules, variant, ending, nature, size, editionNumber);
+    }
 }

@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -94,4 +95,26 @@ public class GameCopy {
     }
 
     // addGame/removeGame methods are not needed because adding game is mandatory at the creation of this object
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameCopy gameCopy = (GameCopy) o;
+        return id == gameCopy.id &&
+                isLoanable == gameCopy.isLoanable &&
+                objectCode.equals(gameCopy.objectCode) &&
+                Objects.equals(price, gameCopy.price) &&
+                Objects.equals(location, gameCopy.location) &&
+                Objects.equals(dateOfPurchase, gameCopy.dateOfPurchase) &&
+                registerDate.equals(gameCopy.registerDate) &&
+                wearCondition.equals(gameCopy.wearCondition) &&
+                generalState == gameCopy.generalState;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, objectCode, price, location, dateOfPurchase, registerDate, wearCondition, generalState, isLoanable);
+    }
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -48,4 +49,17 @@ public class ArticleAuthor {
         article.setArticleAuthor(null);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArticleAuthor that = (ArticleAuthor) o;
+        return id == that.id &&
+                userUuid.equals(that.userUuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userUuid);
+    }
 }

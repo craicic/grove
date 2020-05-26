@@ -11,6 +11,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -102,5 +103,22 @@ public class Article {
     public void removeArticleAuthor(ArticleAuthor articleAuthor) {
         this.setArticleAuthor(null);
         articleAuthor.getArticles().remove(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return id == article.id &&
+                publicationTime.equals(article.publicationTime) &&
+                Objects.equals(lastEditTime, article.lastEditTime) &&
+                htmlContent.equals(article.htmlContent) &&
+                shortDescription.equals(article.shortDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, publicationTime, lastEditTime, htmlContent, shortDescription);
     }
 }

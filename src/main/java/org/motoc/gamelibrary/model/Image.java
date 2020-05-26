@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -64,4 +65,17 @@ public class Image {
         game.getImages().remove(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Image image = (Image) o;
+        return id == image.id &&
+                filePath.equals(image.filePath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, filePath);
+    }
 }

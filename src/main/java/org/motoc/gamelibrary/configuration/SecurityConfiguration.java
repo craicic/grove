@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Configures keycloak and application's security
+ *
+ * @author RouzicJ
  */
 @KeycloakConfiguration
 @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true", matchIfMissing = true)
@@ -67,7 +69,7 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // disable csrf because of API mode
-                //                .csrf().disable()
+                .csrf().disable()
                 .sessionManagement()
                 // use previously declared bean
                 .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
@@ -89,7 +91,7 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 .and()
                 // manage routes security here
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/logout", "/", "/unsecured").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/user").hasRole("USER")
                 .antMatchers("/user").hasRole("ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")

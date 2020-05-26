@@ -11,6 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Defines theme endpoint
+ *
+ * @author RouzicJ
+ */
 @RestController
 public class ThemeController {
 
@@ -26,23 +31,13 @@ public class ThemeController {
         this.mapper = ThemeMapper.INSTANCE;
     }
 
-    @GetMapping(path = {"/", "/unsecured"})
-    String home() {
-        return "Welcome !!!";
-    }
-
-    @GetMapping("/user")
-    String user() {
-        return "User page";
-    }
-
     @GetMapping("/admin/themes/count")
     Long count() {
         return service.count();
     }
 
     @GetMapping("/admin/themes")
-    ThemeDto findById(@RequestParam(value="id") long id) {
+    ThemeDto findById(@RequestParam(value = "id") Long id) {
         return mapper.themeToThemeDto(service.findById(id));
     }
 
@@ -51,9 +46,9 @@ public class ThemeController {
         return mapper.themePageToThemePageDto(service.findPage(pageable));
     }
 
-    @PostMapping("/admin/admin/themes")
-    ThemeDto persist(@RequestBody ThemeDto theme) {
-        logger.debug("Persist(theme) called");
+    @PostMapping("/admin/themes")
+    ThemeDto save(@RequestBody ThemeDto theme) {
+        logger.debug("Save theme called");
         return mapper.themeToThemeDto(service.save(mapper.themeDtoToTheme(theme)));
     }
 
@@ -65,12 +60,11 @@ public class ThemeController {
 
     @DeleteMapping("/admin/themes/{id}")
     void deleteById(@PathVariable Long id) {
-        service.deleteById(id);
+        service.remove(id);
     }
 
     @DeleteMapping("/admin/themes")
     void deleteByEntity(@RequestBody Theme theme) {
-
     }
 
 }

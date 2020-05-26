@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Contain some detail about the account
@@ -39,4 +40,20 @@ public class Account {
     @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id == account.id &&
+                userUuid.equals(account.userUuid) &&
+                membershipNumber.equals(account.membershipNumber) &&
+                Objects.equals(renewalDate, account.renewalDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userUuid, membershipNumber, renewalDate);
+    }
 }

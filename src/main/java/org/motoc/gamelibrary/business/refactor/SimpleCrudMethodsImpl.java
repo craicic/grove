@@ -1,12 +1,11 @@
 package org.motoc.gamelibrary.business.refactor;
 
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
@@ -29,7 +28,7 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
     @Override
     public T save(T t) {
         T result = genericRepository.saveAndFlush(t);
-        logger.debug("Saved a {} : {}", result.getClass().getSimpleName().toLowerCase(), result.toString());
+        logger.debug("Saved a {} : {}", type.getSimpleName().toLowerCase(), result.toString());
         return result;
     }
 
@@ -42,15 +41,15 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
 
     @Override
     public T findById(long id) {
-        Optional<T> optional = genericRepository.findById(id);
-        if (optional.isPresent()) {
-            T result = optional.get();
-            logger.debug("Found {} : {}", type.getSimpleName().toLowerCase(), result);
-            return result;
-        } else {
-            logger.debug("No {} found for id={}", type.getSimpleName().toLowerCase(), id);
-            return null;
-        }
+        return genericRepository.findById(id)
+                .map(result -> {
+                    logger.debug("Found {} for id={}", type.getSimpleName().toLowerCase(), id);
+                    return result;
+                })
+                .orElseThrow(() -> {
+                    logger.warn("No {} found for id={}", type.getSimpleName().toLowerCase(), id);
+                    throw new NotFoundException(id);
+                });
     }
 
     @Override
