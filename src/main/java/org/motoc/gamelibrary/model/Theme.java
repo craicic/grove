@@ -36,6 +36,14 @@ public class Theme {
     @ManyToMany(mappedBy = "themes")
     private Set<Game> games = new HashSet<>();
 
+    // Other constructors
+
+    public Theme(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
     // Helper methods
 
     public void addGame(Game game) {

@@ -25,14 +25,14 @@ class ThemeServiceTest {
     ThemeService themeService;
 
     @Test
-    void testCount() {
+    void count() {
         when(themeRepository.count()).thenReturn(5L);
 
         assertThat(themeService.count()).isEqualTo(5L);
     }
 
     @Test
-    void testSave() {
+    void save() {
         String themeName = "Aventure";
         Theme toPersist = new Theme();
         toPersist.setName(themeName);
@@ -47,7 +47,7 @@ class ThemeServiceTest {
     }
 
     @Test
-    void testFindById(){
+    void findById() {
 
         long id = 4L;
 
@@ -64,7 +64,7 @@ class ThemeServiceTest {
     }
 
     @Test
-    void testFindByIdNotFound() {
+    void findByIdNotFound() {
         long id = 4L;
 
         when(themeRepository.findById(4L)).thenReturn(Optional.empty());
@@ -73,7 +73,7 @@ class ThemeServiceTest {
     }
 
     @Test
-    void testFindPage() {
+    void findPage() {
         Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Order.asc("name")));
 
         Theme themeA = new Theme();
@@ -90,8 +90,5 @@ class ThemeServiceTest {
         when(themeRepository.findAll(pageable)).thenReturn(pageToReturn);
 
         assertThat(themeService.findPage(pageable)).isSameAs(pageToReturn);
-    }
-
-    void testEdit() {
     }
 }

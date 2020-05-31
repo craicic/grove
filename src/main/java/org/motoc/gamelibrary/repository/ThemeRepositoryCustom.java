@@ -6,7 +6,7 @@ package org.motoc.gamelibrary.repository;
 public interface ThemeRepositoryCustom {
 
     /**
-     * @param id
+     * Removes a theme, removing it from game before
      */
     void remove(Long id);
 }
