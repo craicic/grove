@@ -17,12 +17,12 @@ public interface ThemeMapper {
 
     ThemeMapper INSTANCE = Mappers.getMapper(ThemeMapper.class);
 
-    default Page<ThemeDto> themePageToThemePageDto(Page<Theme> themePage) {
-        return themePage.map(this::themeToThemeDto);
+    default Page<ThemeDto> pageToPageDto(Page<Theme> themePage) {
+        return themePage.map(this::themeToDto);
     }
 
-    ThemeDto themeToThemeDto(Theme theme);
+    ThemeDto themeToDto(Theme theme);
 
     @Mapping(target = "games", ignore = true)
-    Theme themeDtoToTheme(ThemeDto theme);
+    Theme dtoToTheme(ThemeDto theme);
 }
