@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 /**
  * Perform business logic on the web entity Theme
@@ -41,7 +42,7 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
     /**
      * Calls the DAO to edit a theme by id
      */
-    public Theme edit(Theme theme, Long id) {
+    public Theme edit(@Valid Theme theme, Long id) {
         return themeRepository.findById(id)
                 .map(themeFromPersistence -> {
                     themeFromPersistence.setName(theme.getName());

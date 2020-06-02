@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * Defines theme endpoints
  *
@@ -68,13 +70,13 @@ public class ThemeController {
     }
 
     @PostMapping("/admin/themes")
-    ThemeDto save(@RequestBody ThemeDto theme) {
+    ThemeDto save(@RequestBody @Valid ThemeDto theme) {
         logger.trace("save(theme) called");
         return mapper.themeToDto(service.save(mapper.dtoToTheme(theme)));
     }
 
     @PutMapping("/admin/themes/{id}")
-    ThemeDto edit(@RequestBody ThemeDto theme,
+    ThemeDto edit(@RequestBody @Valid ThemeDto theme,
                   @PathVariable Long id) {
         logger.trace("edit(theme, id) called");
         return mapper.themeToDto(service.edit(mapper.dtoToTheme(theme), id));
