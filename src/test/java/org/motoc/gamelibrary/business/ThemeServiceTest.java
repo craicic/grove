@@ -65,11 +65,7 @@ class ThemeServiceTest {
 
     @Test
     void findByIdNotFound() {
-        long id = 4L;
-
-        when(themeRepository.findById(4L)).thenReturn(Optional.empty());
-
-        assertThat(themeService.findById(id)).isNull();
+        // TODO merge
     }
 
     @Test
