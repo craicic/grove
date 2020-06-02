@@ -92,8 +92,8 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 // manage routes security here
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/user").hasRole("USER")
-                .antMatchers("/user").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/user/**").hasRole("ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().denyAll();
     }

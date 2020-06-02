@@ -37,6 +37,10 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
     }
 
     // Methods
+
+    /**
+     * Calls the DAO to edit a theme by id
+     */
     public Theme edit(Theme theme, Long id) {
         return themeRepository.findById(id)
                 .map(themeFromPersistence -> {
@@ -55,6 +59,7 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
      * Calls the DAO to delete a theme by id
      */
     public void remove(Long id) {
+        logger.debug("deleting (if exist) theme of id=" + id);
         themeRepositoryCustom.remove(id);
     }
 }

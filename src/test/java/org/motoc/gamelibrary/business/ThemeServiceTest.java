@@ -5,21 +5,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.motoc.gamelibrary.model.Theme;
+import org.motoc.gamelibrary.repository.ThemeRepository;
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class ThemeServiceTest {
 
     @Mock
-    JpaRepository<Theme, Long> themeRepository;
+    ThemeRepository themeRepository;
 
     @InjectMocks
     ThemeService themeService;
@@ -33,7 +34,7 @@ class ThemeServiceTest {
 
     @Test
     void save() {
-        String themeName = "Aventure";
+        final String themeName = "Aventure";
         Theme toPersist = new Theme();
         toPersist.setName(themeName);
 
@@ -49,32 +50,32 @@ class ThemeServiceTest {
     @Test
     void findById() {
 
-        long id = 4L;
+        final long id = 4L;
 
         Theme theme = new Theme();
         theme.setId(id);
         theme.setName("Aventure");
 
-        Optional<Theme> toReturn = Optional.of(theme);
-
-
-        when(themeRepository.findById(4L)).thenReturn(toReturn);
+        when(themeRepository.findById(id)).thenReturn(Optional.of(theme));
 
         assertThat(themeService.findById(id)).isSameAs(theme);
     }
 
     @Test
-    void findByIdNotFound() {
-        long id = 4L;
+    void findById_NotFoundException() {
+        final long id = 4L;
 
-        when(themeRepository.findById(4L)).thenReturn(Optional.empty());
+        when(themeRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThat(themeService.findById(id)).isNull();
+        assertThatThrownBy(() -> {
+            themeService.findById(id);
+        }).hasMessageContaining("Could not find " + id);
+
     }
 
     @Test
     void findPage() {
-        Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Order.asc("name")));
+        final Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Order.asc("name")));
 
         Theme themeA = new Theme();
         themeA.setId(5L);
@@ -90,5 +91,32 @@ class ThemeServiceTest {
         when(themeRepository.findAll(pageable)).thenReturn(pageToReturn);
 
         assertThat(themeService.findPage(pageable)).isSameAs(pageToReturn);
+    }
+
+    @Test
+    void edit_ShouldReplace() {
+        final long id = 1L;
+        final String name = "Antiquité";
+        Theme theme = new Theme();
+        theme.setId(id);
+        theme.setName(name);
+
+        when(themeRepository.findById(id)).thenReturn(Optional.of(theme));
+        when(themeRepository.save(theme)).thenReturn(theme);
+
+        assertThat(themeService.edit(theme, id)).isEqualTo(theme);
+    }
+
+    @Test
+    void edit_ShouldCreate() {
+        final long id = 1L;
+        final String name = "Antiquité";
+        Theme theme = new Theme();
+        theme.setName(name);
+
+        when(themeRepository.findById(id)).thenReturn(Optional.empty());
+        when(themeRepository.save(theme)).thenReturn(theme);
+
+        assertThat(themeService.edit(theme, id)).isEqualTo(theme);
     }
 }

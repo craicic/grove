@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Defines theme endpoint
+ * Defines theme endpoints
  *
  * @author RouzicJ
  */
@@ -51,33 +51,38 @@ public class ThemeController {
 
     @GetMapping("/admin/themes/count")
     Long count() {
+        logger.trace("count called");
         return service.count();
     }
 
     @GetMapping("/admin/themes")
     ThemeDto findById(@RequestParam(value = "id") Long id) {
-        return mapper.themeToThemeDto(service.findById(id));
+        logger.trace("findById(id) called");
+        return mapper.themeToDto(service.findById(id));
     }
 
     @GetMapping("/admin/themes/page")
     Page<ThemeDto> findPage(Pageable pageable) {
-        return mapper.themePageToThemePageDto(service.findPage(pageable));
+        logger.trace("findPage(pageable) called");
+        return mapper.pageToPageDto(service.findPage(pageable));
     }
 
     @PostMapping("/admin/themes")
     ThemeDto save(@RequestBody ThemeDto theme) {
-        logger.debug("Save theme called");
-        return mapper.themeToThemeDto(service.save(mapper.themeDtoToTheme(theme)));
+        logger.trace("save(theme) called");
+        return mapper.themeToDto(service.save(mapper.dtoToTheme(theme)));
     }
 
     @PutMapping("/admin/themes/{id}")
     ThemeDto edit(@RequestBody ThemeDto theme,
                   @PathVariable Long id) {
-        return mapper.themeToThemeDto(service.edit(mapper.themeDtoToTheme(theme), id));
+        logger.trace("edit(theme, id) called");
+        return mapper.themeToDto(service.edit(mapper.dtoToTheme(theme), id));
     }
 
     @DeleteMapping("/admin/themes/{id}")
     void deleteById(@PathVariable Long id) {
+        logger.trace("deleteById(id) called");
         service.remove(id);
     }
 
