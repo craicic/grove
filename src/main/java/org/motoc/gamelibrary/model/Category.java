@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,6 +36,10 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category parent;
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "parent")
+    private Set<Category> children;
+
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
 
@@ -50,17 +55,38 @@ public class Category {
         game.getCategories().remove(this);
     }
 
+    public void addParent(Category parent) {
+        parent.getChildren().add(this);
+        this.setParent(parent);
+    }
+
+    public void removeParent(Category parent) {
+        parent.getChildren().remove(this);
+        this.setParent(null);
+    }
+
+    public void addChild(Category child) {
+        child.setParent(this);
+        this.getChildren().add(child);
+    }
+
+    public void removeChild(Category child) {
+        child.setParent(null);
+        this.getChildren().remove(child);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return id == category.id &&
-                name.equals(category.name);
+                name.equals(category.name) &&
+                Objects.equals(parent, category.parent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, parent);
     }
 }
