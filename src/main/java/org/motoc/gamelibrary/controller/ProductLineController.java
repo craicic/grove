@@ -33,6 +33,7 @@ public class ProductLineController {
 
     @GetMapping("/admin/product-lines/count")
     Long count() {
+        logger.trace("count called");
         return service.count();
     }
 

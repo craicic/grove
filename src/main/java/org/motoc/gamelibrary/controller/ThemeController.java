@@ -51,6 +51,7 @@ public class ThemeController {
 
     @GetMapping("/admin/themes/count")
     Long count() {
+        logger.trace("count called");
         return service.count();
     }
 

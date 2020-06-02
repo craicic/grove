@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.mapper;
 
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.motoc.gamelibrary.dto.ProductLineDto;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
  *
  * @author RouzicJ
  */
+@Mapper(componentModel = "spring")
 public interface ProductLineMapper {
 
     ProductLineMapper INSTANCE = Mappers.getMapper(ProductLineMapper.class);
