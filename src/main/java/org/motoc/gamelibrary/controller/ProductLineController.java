@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * Defines product line endpoints
  *
@@ -50,13 +52,13 @@ public class ProductLineController {
     }
 
     @PostMapping("/admin/product-line")
-    ProductLineDto save(@RequestBody ProductLineDto productLine) {
+    ProductLineDto save(@RequestBody @Valid ProductLineDto productLine) {
         logger.trace("save(productLine) called");
         return mapper.productLineToDto(service.save(mapper.dtoToProductLine(productLine)));
     }
 
     @PutMapping("/admin/product-line/{id}")
-    ProductLineDto edit(@RequestBody ProductLineDto productLine,
+    ProductLineDto edit(@RequestBody @Valid ProductLineDto productLine,
                         @PathVariable Long id) {
         logger.trace("edit(productLine, id) called");
         return mapper.productLineToDto(service.edit(mapper.dtoToProductLine(productLine), id));

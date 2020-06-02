@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 /**
  * Perform business logic on the web entity ProductLine
@@ -37,9 +38,9 @@ public class ProductLineService extends SimpleCrudMethodsImpl<ProductLine, JpaRe
     // Methods
 
     /**
-     * Calls the DAO to edit a product line by id
+     * Edits a product line by id
      */
-    public ProductLine edit(ProductLine productLine, Long id) {
+    public ProductLine edit(@Valid ProductLine productLine, Long id) {
         return productLineRepository.findById(id)
                 .map(productLineFromPersistence -> {
                     productLineFromPersistence.setName(productLine.getName());
