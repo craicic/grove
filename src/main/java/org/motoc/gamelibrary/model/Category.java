@@ -38,8 +38,9 @@ public class Category {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "parent")
-    private Set<Category> children;
+    private Set<Category> children = new HashSet<>();
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
 
@@ -81,12 +82,11 @@ public class Category {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return id == category.id &&
-                name.equals(category.name) &&
-                Objects.equals(parent, category.parent);
+                name.equals(category.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, parent);
+        return Objects.hash(id, name);
     }
 }

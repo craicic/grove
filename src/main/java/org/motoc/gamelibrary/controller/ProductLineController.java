@@ -52,16 +52,16 @@ public class ProductLineController {
     }
 
     @PostMapping("/admin/product-line")
-    ProductLineDto save(@RequestBody @Valid ProductLineDto productLine) {
+    ProductLineDto save(@RequestBody @Valid ProductLineDto productLineDto) {
         logger.trace("save(productLine) called");
-        return mapper.productLineToDto(service.save(mapper.dtoToProductLine(productLine)));
+        return mapper.productLineToDto(service.save(mapper.dtoToProductLine(productLineDto)));
     }
 
     @PutMapping("/admin/product-line/{id}")
-    ProductLineDto edit(@RequestBody @Valid ProductLineDto productLine,
+    ProductLineDto edit(@RequestBody @Valid ProductLineDto productLineDto,
                         @PathVariable Long id) {
         logger.trace("edit(productLine, id) called");
-        return mapper.productLineToDto(service.edit(mapper.dtoToProductLine(productLine), id));
+        return mapper.productLineToDto(service.edit(mapper.dtoToProductLine(productLineDto), id));
     }
 
     @DeleteMapping("/admin/product-line/{id}")
