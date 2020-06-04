@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.implementation;
 
 import org.motoc.gamelibrary.model.Category;
+import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.repository.CategoryRepositoryCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,10 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
                 category.removeChild(children);
             }
             category.removeParent(category.getParent());
+
+            for (Game game : category.getGames()) {
+                game.removeCategory(category);
+            }
             entityManager.remove(category);
             logger.info("Successfully deleted category of id={}", id);
         } else

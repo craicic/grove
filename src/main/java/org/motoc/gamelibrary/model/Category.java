@@ -62,8 +62,10 @@ public class Category {
     }
 
     public void removeParent(Category parent) {
-        parent.getChildren().remove(this);
-        this.setParent(null);
+        if (parent != null) {
+            parent.getChildren().remove(this);
+            this.setParent(null);
+        }
     }
 
     public void addChild(Category child) {
