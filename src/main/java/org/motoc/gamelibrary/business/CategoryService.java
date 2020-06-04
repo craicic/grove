@@ -4,6 +4,8 @@ import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Category;
 import org.motoc.gamelibrary.repository.CategoryRepository;
 import org.motoc.gamelibrary.repository.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.technical.exception.ChildAndParentException;
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Perform business logic on the web entity Category
@@ -41,13 +44,17 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
         return categoryRepository.findById(id)
                 .map(categoryFromPersistence -> {
                     categoryFromPersistence.setName(category.getName());
+                    for (Category child : category.getChildren()) {
+                        if (child.equals(category.getParent()))
+                            throw new ChildAndParentException("This children is also the parent of the given category");
+                    }
                     categoryFromPersistence.setParent(category.getParent());
                     logger.debug("Found category of id={} : {}", id, categoryFromPersistence);
                     return categoryRepository.save(categoryFromPersistence);
                 })
                 .orElseGet(() -> {
                     category.setId(id);
-                    logger.debug("No product line of id={} found. Set category : {}", id, category);
+                    logger.debug("No category of id={} found. Set category : {}", id, category);
                     return categoryRepository.save(category);
                 });
     }
@@ -58,5 +65,29 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     public void remove(Long id) {
         logger.debug("deleting (if exist) category of id=" + id);
         categoryRepositoryCustom.remove(id);
+    }
+
+    /**
+     * Adds a children list to the given category of id=catId
+     */
+    public Category addChildren(List<Long> childrenIds, Long catId) {
+        return categoryRepository.findById(catId)
+                .map(category -> {
+                    List<Category> children = categoryRepository.findAllById(childrenIds);
+                    /* If a candidate children is the parent of the given category, there is no way we could let it
+                     register as a children also */
+                    for (Category child : children) {
+                        if (child.equals(category.getParent()))
+                            throw new ChildAndParentException("This children is also the parent of the given category");
+                    }
+
+                    return categoryRepositoryCustom.saveWithChildren(children, category);
+                })
+                .orElseThrow(
+                        () -> {
+                            logger.debug("No product line of id={} found.", catId);
+                            throw new NotFoundException(catId);
+                        }
+                );
     }
 }

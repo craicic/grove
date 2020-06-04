@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Defines category endpoints
@@ -55,8 +56,7 @@ public class CategoryController {
     CategoryDto save(@RequestBody @Valid CategoryDto category) {
         logger.trace("save(category) called");
         return mapper.categoryToDto(
-                service.save(
-                        mapper.dtoToCategory(category))
+                service.save(mapper.dtoToCategory(category))
 
         );
     }
@@ -75,6 +75,15 @@ public class CategoryController {
     void deleteById(@PathVariable Long id) {
         logger.trace("deleteById(id) called");
         service.remove(id);
+    }
+
+    @PutMapping("/admin/categories/{catId}/children")
+    CategoryDto addChildren(@RequestBody @Valid List<Long> childrenIds,
+                            @PathVariable Long catId) {
+        logger.trace("addChildren(children, catId) called");
+        return mapper.categoryToDto(
+                service.addChildren(childrenIds, catId)
+        );
     }
 
 }

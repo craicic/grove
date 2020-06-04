@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * It's the category custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
@@ -44,5 +45,20 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
             logger.info("Successfully deleted category of id={}", id);
         } else
             logger.info("Tried to delete, but category of id={} doesn't exist", id);
+    }
+
+    @Override
+    public Category saveWithChildren(List<Category> children, Category category) {
+        for (Category child : children) {
+            if (!category.getChildren().contains(child))
+                category.addChild(child);
+            else
+                logger.warn("Child category {} of id={} is already linked to {} of id={}",
+                        child.getName(), child.getId(),
+                        category.getName(), category.getId());
+        }
+        entityManager.persist(category);
+        logger.info("Successfully persisted category of id={}", category.getId());
+        return category;
     }
 }
