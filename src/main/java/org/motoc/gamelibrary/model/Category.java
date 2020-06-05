@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.motoc.gamelibrary.validation.annotation.EitherChildOrParent;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,6 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@EitherChildOrParent
 public class Category {
 
     @Id

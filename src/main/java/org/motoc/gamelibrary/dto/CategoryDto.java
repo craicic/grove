@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.motoc.gamelibrary.validation.annotation.EitherChildOrParent;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EitherChildOrParent
 public class CategoryDto {
     private long id;
 
