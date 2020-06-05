@@ -61,4 +61,12 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
         logger.info("Successfully persisted category of id={}", category.getId());
         return category;
     }
+
+    @Override
+    public Category saveWithParent(Category parent, Category category) {
+        Category parentFromDb = entityManager.find(Category.class, parent.getId());
+        category.addParent(parentFromDb);
+        logger.info("Successfully persisted category of id={}", parentFromDb.getId());
+        return category;
+    }
 }

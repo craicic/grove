@@ -11,4 +11,6 @@ public interface CategoryRepositoryCustom {
     void remove(Long id);
 
     Category saveWithChildren(List<Category> children, Category category);
+
+    Category saveWithParent(Category parent, Category category);
 }

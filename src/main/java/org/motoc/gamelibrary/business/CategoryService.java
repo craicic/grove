@@ -68,7 +68,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     }
 
     /**
-     * Adds a children list to the given category of id=catId
+     * Adds a children list to the category of id=catId
      */
     public Category addChildren(List<Long> childrenIds, Long catId) {
         return categoryRepository.findById(catId)
@@ -78,14 +78,36 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                      register as a children also */
                     for (Category child : children) {
                         if (child.equals(category.getParent()))
-                            throw new ChildAndParentException("This children is also the parent of the given category");
+                            throw new ChildAndParentException("The child : " + child + "is also the parent of the given : " + category);
                     }
 
                     return categoryRepositoryCustom.saveWithChildren(children, category);
                 })
                 .orElseThrow(
                         () -> {
-                            logger.debug("No product line of id={} found.", catId);
+                            logger.debug("No category of id={} found.", catId);
+                            throw new NotFoundException(catId);
+                        }
+                );
+    }
+
+    /**
+     * Adds a parent to the category of id=catId
+     */
+    public Category addParent(@Valid Category parent, Long catId) {
+        return categoryRepository.findById(catId)
+                .map(category -> {
+                    if (parent.getChildren().contains(category))
+                        throw new ChildAndParentException("Category : " + parent.getName() + " is already the parent of " + category.getName());
+                    if (category.getParent() != null)
+                        throw new ChildAndParentException("The category of id=" + catId + " has already a parent");
+                    if (category.getChildren().contains(parent))
+                        throw new ChildAndParentException("Category " + parent.getName() + " is one of the children of " + category.getName());
+                    return categoryRepositoryCustom.saveWithParent(parent, category);
+                })
+                .orElseThrow(
+                        () -> {
+                            logger.debug("No category of id={} found.", catId);
                             throw new NotFoundException(catId);
                         }
                 );
