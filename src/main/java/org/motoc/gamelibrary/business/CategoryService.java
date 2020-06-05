@@ -79,7 +79,8 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                      register as a children also */
                     for (Category child : children) {
                         if (child.equals(category.getParent()))
-                            throw new ChildAndParentException("The child : " + child + "is also the parent of the given : " + category);
+                            throw new ChildAndParentException("The child : " + child
+                                    + " is also the parent of the given : " + category);
                     }
 
                     return categoryRepositoryCustom.saveWithChildren(children, category);
