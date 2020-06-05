@@ -63,9 +63,9 @@ public class Category {
         this.setParent(parent);
     }
 
-    public void removeParent(Category parent) {
-        if (parent != null) {
-            parent.getChildren().remove(this);
+    public void removeParent() {
+        if (this.getParent() != null) {
+            this.getParent().getChildren().remove(this);
             this.setParent(null);
         }
     }

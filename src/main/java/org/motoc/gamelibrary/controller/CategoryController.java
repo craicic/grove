@@ -86,11 +86,23 @@ public class CategoryController {
         );
     }
 
-    @PutMapping("/admin/categories/{catId}/parents")
+    @PutMapping("/admin/categories/{catId}/parent")
     CategoryDto addParent(@RequestBody @Valid CategoryDto parent,
                           @PathVariable Long catId) {
         logger.trace("addParent(parent, catId) called");
         return mapper.categoryToDto(service.addParent(
                 mapper.dtoToCategory(parent), catId));
+    }
+
+    @DeleteMapping("/admin/categories/{catId}/parent")
+    void removeParent(@PathVariable Long catId) {
+        logger.trace("removeParent(catId) called");
+        service.removeParent(catId);
+    }
+
+    @DeleteMapping("/admin/categories/{catId}/children/{childId}")
+    void removeChild(@PathVariable Long catId, @PathVariable Long childId) {
+        logger.trace("removeChildren(catId, childId) called");
+        service.removeChild(catId, childId);
     }
 }

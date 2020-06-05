@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -100,7 +101,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                     if (parent.getChildren().contains(category))
                         throw new ChildAndParentException("Category : " + parent.getName() + " is already the parent of " + category.getName());
                     if (category.getParent() != null)
-                        throw new ChildAndParentException("The category of id=" + catId + " has already a parent");
+                        throw new ChildAndParentException("The category of id=" + catId + " already has a parent");
                     if (category.getChildren().contains(parent))
                         throw new ChildAndParentException("Category " + parent.getName() + " is one of the children of " + category.getName());
                     return categoryRepositoryCustom.saveWithParent(parent, category);
@@ -111,5 +112,32 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                             throw new NotFoundException(catId);
                         }
                 );
+    }
+
+    /**
+     * Removes the parent of a category
+     */
+    public void removeParent(Long catId) {
+        categoryRepository.findById(catId)
+                .ifPresentOrElse(
+                        category -> {
+                            if (category.getParent() != null)
+                                categoryRepositoryCustom.removeParent(category);
+                            else
+                                logger.warn("Category of id={} already has a parent", category.getId());
+                        },
+                        () -> {
+                            logger.debug("No category of id={} found.", catId);
+                            throw new NotFoundException(catId);
+                        });
+    }
+
+    /**
+     * Removes a particular child
+     */
+    public void removeChild(Long catId, Long childId) {
+        List<Long> ids = Arrays.asList(catId, childId);
+        categoryRepository.findAllById(ids);
+        categoryRepositoryCustom.removeChild(catId, childId);
     }
 }
