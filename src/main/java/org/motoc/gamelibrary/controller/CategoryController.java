@@ -77,7 +77,7 @@ public class CategoryController {
         service.remove(id);
     }
 
-    @PutMapping("/admin/categories/{catId}/add-children")
+    @PostMapping("/admin/categories/{catId}/add-children")
     CategoryDto addChildren(@RequestBody List<Long> childrenIds,
                             @PathVariable Long catId) {
         logger.trace("addChildren(children, catId) called");
@@ -86,21 +86,20 @@ public class CategoryController {
         );
     }
 
-    @PutMapping("/admin/categories/{catId}/parent")
-    CategoryDto addParent(@RequestBody @Valid CategoryDto parent,
+    @PostMapping("/admin/categories/{catId}/add-parent/{parentId}")
+    CategoryDto addParent(@PathVariable Long parentId,
                           @PathVariable Long catId) {
-        logger.trace("addParent(parent, catId) called");
-        return mapper.categoryToDto(service.addParent(
-                mapper.dtoToCategory(parent), catId));
+        logger.trace("addParent(parentid, catId) called");
+        return mapper.categoryToDto(service.addParent(parentId, catId));
     }
 
-    @DeleteMapping("/admin/categories/{catId}/parent")
+    @DeleteMapping("/admin/categories/{catId}/unlink-parent")
     void removeParent(@PathVariable Long catId) {
         logger.trace("removeParent(catId) called");
         service.removeParent(catId);
     }
 
-    @DeleteMapping("/admin/categories/{catId}/children/{childId}")
+    @DeleteMapping("/admin/categories/{catId}/unlink-child/{childId}")
     void removeChild(@PathVariable Long catId, @PathVariable Long childId) {
         logger.trace("removeChildren(catId, childId) called");
         service.removeChild(catId, childId);
