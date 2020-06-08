@@ -57,7 +57,6 @@ public class CategoryController {
         logger.trace("save(category) called");
         return mapper.categoryToDto(
                 service.save(mapper.dtoToCategory(category))
-
         );
     }
 
@@ -67,7 +66,6 @@ public class CategoryController {
         logger.trace("edit(category, id) called");
         return mapper.categoryToDto(service.edit(
                 mapper.dtoToCategory(category), id)
-
         );
     }
 

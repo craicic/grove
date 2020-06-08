@@ -8,6 +8,7 @@ import org.motoc.gamelibrary.technical.exception.ChildAndParentException;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
 
     final private CategoryRepositoryCustom categoryRepositoryCustom;
 
+    @Autowired
     public CategoryService(JpaRepository<Category, Long> genericRepository, CategoryRepository categoryRepository,
                            CategoryRepositoryCustom categoryRepositoryCustom) {
         super(genericRepository, Category.class);
@@ -106,7 +108,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
 
         return categoryRepository.findById(catId)
                 .map(category -> {
-                    if (parent.getChildren().contains(category))
+                    if (parent.getChildren() != null && parent.getChildren().contains(category))
                         throw new ChildAndParentException("Category : " + parent.getName() + " is already the parent of " + category.getName());
                     if (category.getParent() != null)
                         throw new ChildAndParentException("The category of id=" + catId + " already has a parent");
