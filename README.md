@@ -16,18 +16,18 @@ The user session, login / logout, security and more are delegated to a [Keycloak
 
 ## Current version
 #### 0.3.0-ALPHA
-Theme CRUD feature, exposed on the service's API
+Theme CRUD feature, exposed on the service's API.
 
 ## Upcoming version
 #### 0.4.0-ALPHA
-Game related CRUD feature, exposed on the service's API
+Game related CRUD feature, exposed on the service's API.
 
 ## Changelog
 #### 0.0.1-SNAPSHOT - 1 May 2020
 Project structure is done.
 
 #### 0.2.0-ALPHA - 20 May 2020
-Repository fundamentals set, database is fill with demo data on startup
+Repository fundamentals set, database is fill with demo data on startup.
 
 #### 0.3.0-ALPHA
-Theme CRUD feature, exposed on the service's API
+Theme CRUD feature, exposed on the service's API.
