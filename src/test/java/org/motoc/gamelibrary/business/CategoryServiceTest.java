@@ -148,9 +148,10 @@ class CategoryServiceTest {
     @Test
     void addParent_shouldThrow_ChildAndParentException_1() {
         final long catId = 5L;
+        final long parentId = 1L;
 
         Category parent = new Category();
-        parent.setId(1L);
+        parent.setId(parentId);
         parent.setName("Refléxion");
 
         Category category = new Category();
@@ -161,16 +162,17 @@ class CategoryServiceTest {
 
         parent.getChildren().add(category);
 
-        assertThatThrownBy(() -> service.addParent(parent, catId)).hasMessageContaining("Category : " + parent.getName() + " is already the parent of " + category.getName());
+        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category : " + parent.getName() + " is already the parent of " + category.getName());
 
     }
 
     @Test
     void addParent_shouldThrow_ChildAndParentException_2() {
         final long catId = 5L;
+        final long parentId = 1L;
 
         Category parent = new Category();
-        parent.setId(1L);
+        parent.setId(parentId);
         parent.setName("Refléxion");
 
         Category category = new Category();
@@ -181,16 +183,17 @@ class CategoryServiceTest {
 
         category.setParent(new Category());
 
-        assertThatThrownBy(() -> service.addParent(parent, catId)).hasMessageContaining("The category of id=" + catId + " already has a parent");
+        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("The category of id=" + catId + " already has a parent");
 
     }
 
     @Test
     void addParent_shouldThrow_ChildAndParentException_3() {
         final long catId = 5L;
+        final long parentId = 1L;
 
         Category parent = new Category();
-        parent.setId(1L);
+        parent.setId(parentId);
         parent.setName("Refléxion");
 
         Category category = new Category();
@@ -201,15 +204,16 @@ class CategoryServiceTest {
 
         category.getChildren().add(parent);
 
-        assertThatThrownBy(() -> service.addParent(parent, catId)).hasMessageContaining("Category " + parent.getName() + " is one of the children of " + category.getName());
+        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category " + parent.getName() + " is one of the children of " + category.getName());
     }
 
     @Test
     void addParent() {
         final long catId = 5L;
+        final long parentId = 1L;
 
         Category parent = new Category();
-        parent.setId(1L);
+        parent.setId(parentId);
         parent.setName("Refléxion");
 
         Category category = new Category();
@@ -225,6 +229,6 @@ class CategoryServiceTest {
 
         when(repositoryCustom.saveWithParent(parent, category)).thenReturn(toReturn);
 
-        assertThat(service.addParent(parent, catId)).isEqualTo(toReturn);
+        assertThat(service.addParent(parentId, catId)).isEqualTo(toReturn);
     }
 }
