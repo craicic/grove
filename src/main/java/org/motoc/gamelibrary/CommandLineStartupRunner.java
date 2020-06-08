@@ -4,7 +4,7 @@ package org.motoc.gamelibrary;
 import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
-import org.motoc.gamelibrary.repository.*;
+import org.motoc.gamelibrary.repository.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

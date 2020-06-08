@@ -1,6 +1,6 @@
-package org.motoc.gamelibrary.repository;
+package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.GameCopy;
+import org.motoc.gamelibrary.model.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @author RouzicJ
  */
 @Repository
-public interface GameCopyRepository extends JpaRepository<GameCopy, Long> {
+public interface LoanRepository extends JpaRepository<Loan, Long> {
 }

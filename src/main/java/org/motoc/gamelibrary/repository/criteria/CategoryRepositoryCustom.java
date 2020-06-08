@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.repository;
+package org.motoc.gamelibrary.repository.criteria;
 
 import org.motoc.gamelibrary.model.Category;
 

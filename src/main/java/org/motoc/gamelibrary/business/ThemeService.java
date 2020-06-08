@@ -2,8 +2,8 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Theme;
-import org.motoc.gamelibrary.repository.ThemeRepository;
-import org.motoc.gamelibrary.repository.ThemeRepositoryCustom;
+import org.motoc.gamelibrary.repository.criteria.ThemeRepositoryCustom;
+import org.motoc.gamelibrary.repository.jpa.ThemeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

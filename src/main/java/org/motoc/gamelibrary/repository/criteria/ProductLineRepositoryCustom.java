@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.repository;
+package org.motoc.gamelibrary.repository.criteria;
 
 /**
  * It's the product line custom repository, made to create / use javax persistence objects, criteria, queryDSL (if needed)

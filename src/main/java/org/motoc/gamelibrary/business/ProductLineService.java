@@ -2,8 +2,8 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.ProductLine;
-import org.motoc.gamelibrary.repository.ProductLineRepository;
-import org.motoc.gamelibrary.repository.ProductLineRepositoryCustom;
+import org.motoc.gamelibrary.repository.criteria.ProductLineRepositoryCustom;
+import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

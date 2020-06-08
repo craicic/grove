@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.motoc.gamelibrary.model.ProductLine;
-import org.motoc.gamelibrary.repository.ProductLineRepository;
+import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.springframework.data.domain.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 

@@ -1,8 +1,8 @@
-package org.motoc.gamelibrary.repository.implementation;
+package org.motoc.gamelibrary.repository.criteria.implementation;
 
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.ProductLine;
-import org.motoc.gamelibrary.repository.ProductLineRepositoryCustom;
+import org.motoc.gamelibrary.repository.criteria.ProductLineRepositoryCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

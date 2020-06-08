@@ -1,6 +1,6 @@
-package org.motoc.gamelibrary.repository;
+package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Keyword;
+import org.motoc.gamelibrary.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @author RouzicJ
  */
 @Repository
-public interface KeywordRepository extends JpaRepository<Keyword, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 }

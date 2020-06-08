@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.motoc.gamelibrary.model.Category;
-import org.motoc.gamelibrary.repository.CategoryRepository;
-import org.motoc.gamelibrary.repository.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;

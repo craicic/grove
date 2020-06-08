@@ -1,6 +1,6 @@
-package org.motoc.gamelibrary.repository;
+package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Theme;
+import org.motoc.gamelibrary.model.ProductLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
  * @author RouzicJ
  */
 @Repository
-public interface ThemeRepository extends JpaRepository<Theme, Long> {
-
+public interface ProductLineRepository extends JpaRepository<ProductLine, Long> {
 }

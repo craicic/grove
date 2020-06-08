@@ -2,8 +2,8 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Category;
-import org.motoc.gamelibrary.repository.CategoryRepository;
-import org.motoc.gamelibrary.repository.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
 import org.motoc.gamelibrary.technical.exception.ChildAndParentException;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Perform business logic on the web entity Category
+ * Perform business logic on the entity Category
  *
  * @author RouzicJ
  */
