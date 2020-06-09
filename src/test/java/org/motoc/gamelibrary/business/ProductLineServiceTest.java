@@ -93,7 +93,7 @@ class ProductLineServiceTest {
     }
 
     @Test
-    public void edit_ShouldReplace() {
+    void edit_ShouldReplace() {
         final long id = 1L;
         final String name = "Carcassonne";
 
