@@ -41,7 +41,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     }
 
     /**
-     * Edits a category line by id
+     * Edits a category by id
      */
     public Category edit(@Valid Category category, Long id) {
         return categoryRepository.findById(id)
@@ -112,7 +112,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                         throw new ChildAndParentException("Category : " + parent.getName() + " is already the parent of " + category.getName());
                     if (category.getParent() != null)
                         throw new ChildAndParentException("The category of id=" + catId + " already has a parent");
-                    if (category.getChildren().contains(parent))
+                    if (parent.getChildren() != null && category.getChildren().contains(parent))
                         throw new ChildAndParentException("Category " + parent.getName() + " is one of the children of " + category.getName());
                     return categoryRepositoryCustom.saveWithParent(parent, category);
                 })

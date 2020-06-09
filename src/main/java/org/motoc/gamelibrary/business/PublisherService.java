@@ -34,4 +34,29 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
         this.publisherRepository = publisherRepository;
         this.publisherRepositoryCustom = publisherRepositoryCustom;
     }
+
+    /**
+     * Edits a publisher by id
+     */
+    public Publisher edit(Publisher publisher, Long id) {
+        return publisherRepository.findById(id)
+                .map(publisherFromPersistence -> {
+                    publisherFromPersistence.setName(publisher.getName());
+                    logger.debug("Found publisher of id={} : {}", id, publisherFromPersistence);
+                    return publisherRepository.save(publisherFromPersistence);
+                })
+                .orElseGet(() -> {
+                    publisher.setId(id);
+                    logger.debug("No publisher of id={} found. Set theme : {}", id, publisher);
+                    return publisherRepository.save(publisher);
+                });
+    }
+
+    /**
+     * Calls the DAO to delete a publisher by id
+     */
+    public void remove(Long id) {
+        logger.debug("deleting (if exist) publisher of id=" + id);
+        publisherRepositoryCustom.remove(id);
+    }
 }

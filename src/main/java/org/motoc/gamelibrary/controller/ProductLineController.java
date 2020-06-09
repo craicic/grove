@@ -45,26 +45,26 @@ public class ProductLineController {
         return mapper.productLineToDto(service.findById(id));
     }
 
-    @GetMapping("/admin/product-line/page")
+    @GetMapping("/admin/product-lines/page")
     Page<ProductLineDto> findPage(Pageable pageable) {
         logger.trace("findPage(pageable) called");
         return mapper.pageToPageDto(service.findPage(pageable));
     }
 
-    @PostMapping("/admin/product-line")
+    @PostMapping("/admin/product-lines")
     ProductLineDto save(@RequestBody @Valid ProductLineDto productLineDto) {
         logger.trace("save(productLine) called");
         return mapper.productLineToDto(service.save(mapper.dtoToProductLine(productLineDto)));
     }
 
-    @PutMapping("/admin/product-line/{id}")
+    @PutMapping("/admin/product-lines/{id}")
     ProductLineDto edit(@RequestBody @Valid ProductLineDto productLineDto,
                         @PathVariable Long id) {
         logger.trace("edit(productLine, id) called");
         return mapper.productLineToDto(service.edit(mapper.dtoToProductLine(productLineDto), id));
     }
 
-    @DeleteMapping("/admin/product-line/{id}")
+    @DeleteMapping("/admin/product-lines/{id}")
     void deleteById(@PathVariable Long id) {
         logger.trace("deleteById(id) called");
         service.remove(id);

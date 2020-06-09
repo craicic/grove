@@ -209,8 +209,11 @@ public class Game {
         this.themes.remove(theme);
         theme.getGames().remove(this);
     }
-    // I think removeGameCopy is not needed, because the relationship is not optional
 
+    public void removePublisher(Publisher publisher) {
+        publisher.getGames().remove(this);
+        this.setPublisher(null);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -242,4 +245,6 @@ public class Game {
     public int hashCode() {
         return Objects.hash(id, coreGame, name, description, playTime, minNumberOfPlayer, maxNumberOfPlayer, minAge, maxAge, minMonth, stuff, preparation, goal, coreRules, variant, ending, nature, size, editionNumber);
     }
+
+
 }

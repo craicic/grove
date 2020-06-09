@@ -6,4 +6,5 @@ package org.motoc.gamelibrary.repository.criteria;
  * @author RouzicJ
  */
 public interface PublisherRepositoryCustom {
+    void remove(Long id);
 }
