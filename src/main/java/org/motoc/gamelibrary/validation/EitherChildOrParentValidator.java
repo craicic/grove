@@ -19,6 +19,6 @@ public class EitherChildOrParentValidator implements ConstraintValidator<EitherC
 
     @Override
     public boolean isValid(Category category, ConstraintValidatorContext constraintValidatorContext) {
-                return (category.getChildren().isEmpty() || category.getParent() == null);
+        return (category.getChildren().isEmpty() || category.getParent() == null);
     }
 }

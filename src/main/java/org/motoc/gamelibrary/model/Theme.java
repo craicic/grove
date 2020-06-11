@@ -4,6 +4,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -33,6 +34,7 @@ public class Theme {
     @Column(nullable = false, length = 50)
     private String name;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "themes")
     private Set<Game> games = new HashSet<>();
 

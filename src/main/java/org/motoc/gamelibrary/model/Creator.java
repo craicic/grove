@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 
 import javax.persistence.*;
@@ -41,10 +42,12 @@ public class Creator {
     @Column(nullable = false, length = 50)
     private CreatorRole role;
 
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "creators")
     private Set<Game> games = new HashSet<>();
 

@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,9 +33,11 @@ public class Publisher {
     @Column(nullable = false)
     private String name;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "publisher")
     private Set<Game> games = new HashSet<>();
 
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
