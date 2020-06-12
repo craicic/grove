@@ -87,7 +87,7 @@ public class CategoryController {
     @PostMapping("/admin/categories/{catId}/add-parent/{parentId}")
     CategoryDto addParent(@PathVariable Long parentId,
                           @PathVariable Long catId) {
-        logger.trace("addParent(parentid, catId) called");
+        logger.trace("addParent(parentId, catId) called");
         return mapper.categoryToDto(service.addParent(parentId, catId));
     }
 

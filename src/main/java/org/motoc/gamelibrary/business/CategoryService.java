@@ -76,13 +76,21 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     public Category addChildren(List<Long> childrenIds, Long catId) {
         return categoryRepository.findById(catId)
                 .map(category -> {
+                    if (category.getParent() != null)
+                        throw new ChildAndParentException("The parent category : " + category
+                                + " has already a parent : " + category.getParent());
+
                     List<Category> children = categoryRepository.findAllById(childrenIds);
-                    /* If a candidate children is the parent of the given category, there is no way we could let it
-                     register as a children also */
+
                     for (Category child : children) {
-                        if (child.equals(category.getParent()))
-                            throw new ChildAndParentException("The child : " + child
-                                    + " is also the parent of the given : " + category);
+                        /* if a candidate child is already a child, throw exception */
+                        if (child.getParent() != null)
+                            throw new ChildAndParentException("The candidate child : " + child
+                                    + " has already a parent  : " + child.getParent());
+                        /* if a candidate child already have a child, throw exception */
+                        if (!child.getChildren().isEmpty())
+                            throw new ChildAndParentException("The candidate child : " + child
+                                    + " has already at least one child : children.size()=" + child.getChildren().size());
                     }
 
                     return categoryRepositoryCustom.saveWithChildren(children, category);
