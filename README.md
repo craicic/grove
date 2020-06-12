@@ -6,7 +6,7 @@ A tool for game libraries
 
 The purpose is to create a tool for a french game-library. The project is designed around this particular client
 use cases.
-The project is composed by a REST service (this repo) and web client.
+The project is composed by a web service (this repo) and web client.
 
 ### Service's technologies
 
