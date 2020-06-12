@@ -95,27 +95,92 @@ class CategoryServiceTest {
     }
 
     @Test
-    void addChildren_shouldThrow_ChildAndParentException() {
+    void addChildren_shouldThrow_ChildAndParentException1() {
         final long catId = 5L;
         List<Long> childrenIds = Arrays.asList(1L);
 
-        Category childButAlsoParent = new Category();
-        childButAlsoParent.setId(1L);
-        childButAlsoParent.setName("Refléxion");
+        Category child = new Category();
 
         Category category = new Category();
         category.setId(catId);
         category.setName("Stratégie");
-        category.setParent(childButAlsoParent);
+        category.setParent(child);
 
-        childButAlsoParent.getChildren().add(category);
-        List<Category> children = Arrays.asList(childButAlsoParent);
+        when(repository.findById(catId)).thenReturn(Optional.of(category));
+
+        assertThatThrownBy(() -> service.addChildren(childrenIds, catId))
+                .hasMessageContaining("The parent category : " + category
+                        + " has already a parent : " + category.getParent());
+    }
+
+    @Test
+    void addChildren_shouldThrow_ChildAndParentException2() {
+        final long catId = 5L;
+        List<Long> childrenIds = Arrays.asList(1L);
+
+        Category childParent = new Category();
+
+        Category child = new Category();
+        child.setId(1L);
+        child.setName("Refléxion");
+        child.setParent(childParent);
+
+
+        Category category = new Category();
+        category.setId(catId);
+        category.setName("Stratégie");
+
+        List<Category> children = Arrays.asList(child);
 
         when(repository.findById(catId)).thenReturn(Optional.of(category));
         when(repository.findAllById(childrenIds)).thenReturn(children);
 
-        assertThatThrownBy(() -> service.addChildren(childrenIds, catId)).hasMessageContaining("The child : " + childButAlsoParent + " is also the parent of the given : " + category);
+        assertThatThrownBy(() -> service.addChildren(childrenIds, catId))
+                .hasMessageContaining("The candidate child : " + child
+                        + " has already a parent  : " + child.getParent());
+    }
 
+    @Test
+    void addChildren_shouldThrow_ChildAndParentException3() {
+        final long catId = 5L;
+        List<Long> childrenIds = Arrays.asList(1L);
+
+        Category childChild = new Category();
+
+        Category child = new Category();
+        child.setId(1L);
+        child.setName("Refléxion");
+        child.getChildren().add(childChild);
+
+
+        Category category = new Category();
+        category.setId(catId);
+        category.setName("Stratégie");
+
+        List<Category> children = Arrays.asList(child);
+
+        when(repository.findById(catId)).thenReturn(Optional.of(category));
+        when(repository.findAllById(childrenIds)).thenReturn(children);
+
+        assertThatThrownBy(() -> service.addChildren(childrenIds, catId))
+                .hasMessageContaining("The candidate child : " + child
+                        + " has already at least one child : children.size()=" + child.getChildren().size());
+    }
+
+    @Test
+    void addChildren_shouldThrow_IllegalArgumentException() {
+        final long catId = 5L;
+        List<Long> childrenIds = Arrays.asList(1L);
+
+        Category category = new Category();
+        category.setId(catId);
+        category.setName("Stratégie");
+
+
+        when(repository.findById(catId)).thenReturn(Optional.of(category));
+        when(repository.findAllById(childrenIds)).thenThrow(new IllegalArgumentException("message"));
+        assertThatThrownBy(() -> service.addChildren(childrenIds, catId))
+                .hasMessageContaining("message");
     }
 
     @Test
@@ -146,6 +211,23 @@ class CategoryServiceTest {
     }
 
     @Test
+    void addParent_shouldThrow_NotFoundException() {
+        final long catId = 5L;
+        final long parentId = 1L;
+
+        Category parent = new Category();
+        parent.setId(parentId);
+        parent.setName("Refléxion");
+
+
+        when(repository.findById(parentId)).thenReturn(Optional.empty());
+
+
+        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Could not find " + catId);
+    }
+
+
+    @Test
     void addParent_shouldThrow_ChildAndParentException_1() {
         final long catId = 5L;
         final long parentId = 1L;
@@ -158,6 +240,8 @@ class CategoryServiceTest {
         category.setId(catId);
         category.setName("Stratégie");
 
+
+        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
         when(repository.findById(catId)).thenReturn(Optional.of(category));
 
         parent.getChildren().add(category);
@@ -179,6 +263,7 @@ class CategoryServiceTest {
         category.setId(catId);
         category.setName("Stratégie");
 
+        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
         when(repository.findById(catId)).thenReturn(Optional.of(category));
 
         category.setParent(new Category());
@@ -200,11 +285,12 @@ class CategoryServiceTest {
         category.setId(catId);
         category.setName("Stratégie");
 
+        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
         when(repository.findById(catId)).thenReturn(Optional.of(category));
 
         category.getChildren().add(parent);
 
-        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category " + parent.getName() + " is one of the children of " + category.getName());
+        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category " + category.getName() + " has at least one child : it can't have a parent");
     }
 
     @Test
@@ -220,6 +306,7 @@ class CategoryServiceTest {
         category.setId(catId);
         category.setName("Stratégie");
 
+        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
         when(repository.findById(catId)).thenReturn(Optional.of(category));
 
         Category toReturn = new Category();
