@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
+import org.motoc.gamelibrary.model.Contact;
 import org.motoc.gamelibrary.model.Creator;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.repository.criteria.CreatorRepositoryCustom;
@@ -28,12 +29,19 @@ public class CreatorRepositoryCustomImpl implements CreatorRepositoryCustom {
     }
 
     /**
-     * Removes a creator
+     * Removes a creator and its associated contact
      */
     @Override
     public void remove(Long id) {
         Creator creator = entityManager.find(Creator.class, id);
-        creator.removeContact(creator.getContact());
+        Contact contact = creator.getContact();
+
+        if (contact != null) {
+            creator.removeContact(contact);
+            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
+            if (contactFromDb.getPublisher() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
+                entityManager.remove(contactFromDb);
+        }
 
         for (Game game : creator.getGames()) {
             game.removeCreator(creator);

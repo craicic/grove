@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
+import org.motoc.gamelibrary.model.Contact;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.repository.criteria.PublisherRepositoryCustom;
@@ -26,13 +27,20 @@ public class PublisherRepositoryCustomImpl implements PublisherRepositoryCustom 
     }
 
     /**
-     * Removes a publisher
+     * Removes a publisher and its associated contact
      */
     @Override
     public void remove(Long id) {
         Publisher publisher = entityManager.find(Publisher.class, id);
-        publisher.removeContact(publisher.getContact());
 
+        Contact contact = publisher.getContact();
+
+        if (contact != null) {
+            publisher.removeContact(contact);
+            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
+            if (contactFromDb.getCreator() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
+                entityManager.remove(contactFromDb);
+        }
         for (Game game : publisher.getGames()) {
             game.removePublisher(publisher);
         }
