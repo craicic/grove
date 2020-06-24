@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.validation.annotation;
 
+import org.motoc.gamelibrary.validation.SelectYearOrMonthDtoValidator;
 import org.motoc.gamelibrary.validation.SelectYearOrMonthValidator;
 
 import javax.validation.Constraint;
@@ -14,7 +15,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = SelectYearOrMonthValidator.class)
+@Constraint(validatedBy = {SelectYearOrMonthValidator.class, SelectYearOrMonthDtoValidator.class})
 public @interface SelectYearOrMonth {
     String message() default "If you picked a minimal age, you shouldn't pick a minimal month";
 

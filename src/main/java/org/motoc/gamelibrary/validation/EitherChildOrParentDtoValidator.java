@@ -6,7 +6,7 @@ import org.motoc.gamelibrary.validation.annotation.EitherChildOrParent;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class EitherChildOrParentValidatorForDto implements ConstraintValidator<EitherChildOrParent, CategoryDto> {
+public class EitherChildOrParentDtoValidator implements ConstraintValidator<EitherChildOrParent, CategoryDto> {
     @Override
     public void initialize(EitherChildOrParent constraintAnnotation) {
     }

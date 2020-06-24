@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.validation.annotation;
 
+import org.motoc.gamelibrary.validation.ConsistentNumberOfPlayerDtoValidator;
 import org.motoc.gamelibrary.validation.ConsistentNumberOfPlayerValidator;
 
 import javax.validation.Constraint;
@@ -14,7 +15,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ConsistentNumberOfPlayerValidator.class)
+@Constraint(validatedBy = {ConsistentNumberOfPlayerValidator.class, ConsistentNumberOfPlayerDtoValidator.class})
 public @interface ConsistentNumberOfPlayer {
     String message() default "Minimum number of player must be less than maximum number of player";
 

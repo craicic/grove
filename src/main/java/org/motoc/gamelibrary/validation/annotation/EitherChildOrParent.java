@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.validation.annotation;
 
+import org.motoc.gamelibrary.validation.EitherChildOrParentDtoValidator;
 import org.motoc.gamelibrary.validation.EitherChildOrParentValidator;
-import org.motoc.gamelibrary.validation.EitherChildOrParentValidatorForDto;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {EitherChildOrParentValidator.class, EitherChildOrParentValidatorForDto.class})
+@Constraint(validatedBy = {EitherChildOrParentValidator.class, EitherChildOrParentDtoValidator.class})
 public @interface EitherChildOrParent {
 
     String message() default "A category can be either a child or a parent, not both";

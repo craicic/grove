@@ -21,7 +21,7 @@ public interface ProductLineMapper {
         return page.map(this::productLineToDto);
     }
 
-    ProductLineDto productLineToDto(ProductLine byId);
+    ProductLineDto productLineToDto(ProductLine productLine);
 
     @Mapping(target = "games", ignore = true)
     ProductLine dtoToProductLine(ProductLineDto productLineDto);
