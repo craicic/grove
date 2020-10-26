@@ -28,7 +28,7 @@ Fill the username in general, in Definition enter a password. In Privileges enab
 Download and [install Maven](https://maven.apache.org/install.html).
 
 ##### 2 - Deploy keycloak server
-Follow this guide : [Deploy and configure Keycloak](https://github.com/xxjokerx/game-library-service/blob/master/KEYCLAOK.md)
+Follow this guide : [Deploy and configure Keycloak](./KEYCLAOK.md)
 
 ##### 3 - Create the database
 Run SQL Shell (psql), press enter 3 times then fill username and password. Then type : `CREATE DATABASE YOUR-DB-NAME WITH OWNER = YOUR-USERNAME;`.  

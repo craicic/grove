@@ -28,7 +28,7 @@ Finally, go to **Role Mapping** and assigne him roles ADMIN & USER.
 ##### 6 - Generate secret
 **Configure > Clients > game-library-api > Credentials > Regenerate secret**  
 *You'll have to set this secret into the `application.properties` file later.*  
-*it's done for keycloak, you can return to the [Game Library deploy guide](./README.md:33)*
+*it's done for keycloak, you can return to the [Game Library deploy guide](./README.md#3---create-the-database)*
 
 ##### 7 - OPTIONAL - Request for a bearer token via postman
 Your request should look like this, at the end Keycloak should return a bearer token. This bearer token can then be
