@@ -47,6 +47,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final Contact demoContactB;
     private final Contact demoContactC;
     private final Contact demoContactD;
+    private final Contact demoContactE;
+    private final Contact demoContactF;
     private final ArticleAuthor demoArticleAuthorA;
     private final ArticleAuthor demoArticleAuthorB;
     private final Image demoImageA;
@@ -57,6 +59,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final ProductLine demoProductLineA;
     private final Publisher demoPublisherA;
     private final Creator demoCreatorA;
+    private final Creator demoCreatorB;
+    private final Creator demoCreatorC;
     private final Theme demoThemeA;
     private final Theme demoThemeB;
     private final Theme demoThemeC;
@@ -106,6 +110,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.demoContactB = new Contact();
         this.demoContactC = new Contact();
         this.demoContactD = new Contact();
+        this.demoContactE = new Contact();
+        this.demoContactF = new Contact();
         this.demoArticleAuthorA = new ArticleAuthor();
         this.demoArticleAuthorB = new ArticleAuthor();
         this.demoImageA = new Image();
@@ -116,6 +122,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.demoProductLineA = new ProductLine();
         this.demoPublisherA = new Publisher();
         this.demoCreatorA = new Creator();
+        this.demoCreatorB = new Creator();
+        this.demoCreatorC = new Creator();
         this.demoThemeA = new Theme();
         this.demoThemeB = new Theme();
         this.demoThemeC = new Theme();
@@ -248,23 +256,39 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoContactB.setStreetNumber("45");
 
         demoContactC.setCountry("France");
-        demoContactC.setCity("Paris");
+        demoContactC.setCity("Lyon");
         demoContactC.setPhoneNumber("+0332");
         demoContactC.setPostalCode("75000");
         demoContactC.setStreet("foo street");
         demoContactC.setStreetNumber("32");
 
         demoContactD.setCountry("France");
-        demoContactD.setCity("Paris");
+        demoContactD.setCity("Dijon");
         demoContactD.setPhoneNumber("+0334");
         demoContactD.setPostalCode("75000");
         demoContactD.setStreet("foo street");
         demoContactD.setStreetNumber("1");
 
+        demoContactE.setCountry("France");
+        demoContactE.setCity("Lille");
+        demoContactE.setPhoneNumber("+0334");
+        demoContactE.setPostalCode("75000");
+        demoContactE.setStreet("foo street");
+        demoContactE.setStreetNumber("1");
+
+        demoContactF.setCountry("France");
+        demoContactF.setCity("Bordeaux");
+        demoContactF.setPhoneNumber("+0334");
+        demoContactF.setPostalCode("75000");
+        demoContactF.setStreet("foo street");
+        demoContactF.setStreetNumber("1");
+
         contactRepository.save(demoContactA);
         contactRepository.save(demoContactB);
         contactRepository.save(demoContactC);
         contactRepository.save(demoContactD);
+        contactRepository.save(demoContactE);
+        contactRepository.save(demoContactF);
         contactRepository.flush();
     }
 
@@ -274,7 +298,19 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoCreatorA.setRole(CreatorRole.AUTHOR);
         demoCreatorA.setContact(demoContactB);
 
+        demoCreatorB.setFirstName("Bruno");
+        demoCreatorB.setLastName("Faduitti");
+        demoCreatorB.setRole(CreatorRole.AUTHOR);
+        demoCreatorB.setContact(demoContactE);
+
+        demoCreatorC.setFirstName("Mihajlo");
+        demoCreatorC.setLastName(" Dimitrievski");
+        demoCreatorC.setRole(CreatorRole.ILLUSTRATOR);
+        demoCreatorC.setContact(demoContactF);
+
         creatorRepository.save(demoCreatorA);
+        creatorRepository.save(demoCreatorB);
+        creatorRepository.save(demoCreatorC);
         creatorRepository.flush();
     }
 
@@ -308,7 +344,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private void fillGameCopy() {
         demoGameCopyA.setObjectCode("00050");
         demoGameCopyA.setPrice(BigDecimal.valueOf(40));
-        demoGameCopyA.setLocation("Etagère jeu famille");
+        demoGameCopyA.setLocation("Étagère jeu famille");
         demoGameCopyA.setDateOfPurchase(LocalDate.of(2018, 5, 20));
         demoGameCopyA.setRegisterDate(LocalDate.now());
         demoGameCopyA.setWearCondition("Bon état");

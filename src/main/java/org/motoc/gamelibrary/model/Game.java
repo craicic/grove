@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
@@ -40,6 +41,10 @@ public class Game {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     private Game coreGame;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "coreGame")
+    private Set<Game> expansions = new HashSet<>();
 
     @NotBlank(message = "Name cannot be null or blank")
     @Column(nullable = false)
