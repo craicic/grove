@@ -18,7 +18,7 @@ Import the file `realm-settings.json` and create the realm.
 
 ##### 5 - Create an Admin
 *This admin differs from the initial admin you set up, it will have rights only on the Game Library application, 
-not onto the console*
+not onto the console*  
 Go to **Manage > User > Add user**. Create your admin profile. Make sure that `Email verified` is ON.  
 Then go to **Credentials** and set a password (not a temporary one).  
 Finally, go to **Role Mapping** and assigne him roles ADMIN & USER.  
@@ -33,4 +33,5 @@ Finally, go to **Role Mapping** and assigne him roles ADMIN & USER.
 ##### 7 - OPTIONAL - Request for a bearer token via postman
 Your request should look like this, at the end Keycloak should return a bearer token. This bearer token can then be
 passed on each request on secured API endpoints.  
+  
 ![request](./doc/guides/postman.png)
