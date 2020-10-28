@@ -30,7 +30,7 @@ public class Loan {
 
     @NotBlank(message = "User uuid cannot be null or blank")
     @Size(max = 50, message = "User uuid cannot exceed 50 characters")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String userUuid;
 
     @NotNull(message = "Loan start time cannot be null")

@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
 @EitherChildOrParent
 public class Category {
 
@@ -35,6 +35,10 @@ public class Category {
     @Column(nullable = false, length = 50)
     private String name;
 
+    @ToString.Exclude
+    @Column(nullable = false, length = 50)
+    private String lowerCaseName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Category parent;
 
@@ -46,8 +50,13 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
 
-    // Helper methods
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
 
+    // Helper methods
     public void addGame(Game game) {
         games.add(game);
         game.getCategories().add(this);
@@ -94,3 +103,4 @@ public class Category {
         return Objects.hash(id, name);
     }
 }
+

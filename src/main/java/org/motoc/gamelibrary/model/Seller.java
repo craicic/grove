@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
 public class Seller {
 
     @Id
@@ -32,6 +33,10 @@ public class Seller {
     @Column(nullable = false)
     private String name;
 
+    @ToString.Exclude
+    @Column(nullable = false)
+    private String lowerCaseName;
+
     @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
@@ -39,6 +44,14 @@ public class Seller {
     @OneToMany(mappedBy = "seller")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
+
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
+
+    // Helper methods
     public void addGameCopy(GameCopy gameCopy) {
         this.gameCopies.add(gameCopy);
         gameCopy.setSeller(this);

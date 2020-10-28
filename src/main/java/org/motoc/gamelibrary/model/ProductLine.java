@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
 public class ProductLine {
 
     @Id
@@ -34,8 +34,18 @@ public class ProductLine {
     private String name;
 
     @ToString.Exclude
+    @Column(nullable = false)
+    private String lowerCaseName;
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "productLine")
     private Set<Game> games = new HashSet<>();
+
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
 
     // Helper methods
     public void addGame(Game game) {

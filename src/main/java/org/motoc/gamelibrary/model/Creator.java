@@ -25,6 +25,8 @@ import java.util.Set;
 @Entity
 public class Creator {
 
+    // todo name constraint
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;

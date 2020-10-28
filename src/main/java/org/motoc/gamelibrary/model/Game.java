@@ -29,7 +29,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
 public class Game {
 
     @Id
@@ -49,6 +49,10 @@ public class Game {
     @NotBlank(message = "Name cannot be null or blank")
     @Column(nullable = false)
     private String name;
+
+    @ToString.Exclude
+    @Column(nullable = false)
+    private String lowerCaseName;
 
     @Size(max = 1000, message = "Description should not exceed 1000 characters")
     @Column(length = 1000)
@@ -168,6 +172,11 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
 
     // Helper methods
     public void addImage(Image image) {

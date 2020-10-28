@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "tag"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseTag"))
 public class LoanStatus {
 
     @Id
@@ -31,6 +32,10 @@ public class LoanStatus {
     @Column(nullable = false, length = 50)
     private String tag;
 
+    @ToString.Exclude
+    @Column(nullable = false, length = 50)
+    private String lowerCaseTag;
+
     @NotBlank(message = "Description cannot be null or blank")
     @Size(max = 255, message = "Description cannot exceed 255 characters")
     @Column(nullable = false)
@@ -39,6 +44,13 @@ public class LoanStatus {
     @OneToMany(mappedBy = "loanStatus")
     private Set<Loan> loans;
 
+    // Overridden accessors
+    public void setTag(String tag) {
+        this.tag = tag;
+        this.lowerCaseTag = tag.toLowerCase();
+    }
+
+    // Helper methods
     public void addLoan(Loan loan) {
         this.loans.add(loan);
         loan.setLoanStatus(this);

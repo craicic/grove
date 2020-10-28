@@ -27,12 +27,12 @@ public class Account {
 
     @NotBlank(message = "User uuid cannot be null or blank")
     @Size(max = 50, message = "User uuid cannot exceed 50 characters")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String userUuid;
 
     @NotBlank(message = "Membership Number cannot be null or blank")
     @Size(max = 50, message = "Membership Number cannot exceed 50 characters")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String membershipNumber;
 
     private LocalDate renewalDate;

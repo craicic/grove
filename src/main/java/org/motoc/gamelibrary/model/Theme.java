@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
 public class Theme {
 
     @Id
@@ -35,19 +35,26 @@ public class Theme {
     private String name;
 
     @ToString.Exclude
+    @Column(nullable = false, length = 50)
+    private String lowerCaseName;
+
+    @ToString.Exclude
     @ManyToMany(mappedBy = "themes")
     private Set<Game> games = new HashSet<>();
 
     // Other constructors
-
     public Theme(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
 
     // Helper methods
-
     public void addGame(Game game) {
         games.add(game);
         game.getThemes().add(this);
