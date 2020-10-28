@@ -23,9 +23,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"lowerCaseFirstName", "lowerCaseLastName"}))
 public class Creator {
-
-    // todo name constraint
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -40,6 +39,14 @@ public class Creator {
     @Column(nullable = false, length = 50)
     private String lastName;
 
+    @ToString.Exclude
+    @Column(nullable = false, length = 50)
+    private String lowerCaseFirstName;
+
+    @ToString.Exclude
+    @Column(nullable = false, length = 50)
+    private String lowerCaseLastName;
+
     @NotNull(message = "Role cannot be null")
     @Column(nullable = false, length = 50)
     private CreatorRole role;
@@ -52,6 +59,17 @@ public class Creator {
     @ToString.Exclude
     @ManyToMany(mappedBy = "creators")
     private Set<Game> games = new HashSet<>();
+
+    // Overridden accessors
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        this.lowerCaseFirstName = firstName.toLowerCase();
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        this.lowerCaseLastName = lastName.toLowerCase();
+    }
 
     // Helper methods
     public void addGame(Game game) {
