@@ -64,10 +64,17 @@ public class ThemeController {
     }
 
     @GetMapping("/admin/themes/page")
-    Page<ThemeDto> findPage(Pageable pageable) {
-        logger.trace("findPage(pageable) called");
-        return mapper.pageToPageDto(service.findPage(pageable));
+    Page<ThemeDto> findPage(Pageable pageable,
+                            @RequestParam(required = false, name = "search") String keyword) {
+        if (keyword == null) {
+            logger.trace("findPage(pageable) called");
+            return mapper.pageToPageDto(service.findPage(pageable));
+        } else {
+            logger.trace("findPage(" + keyword + ", pageable) called");
+            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+        }
     }
+
 
     @PostMapping("/admin/themes")
     ThemeDto save(@RequestBody @Valid ThemeDto theme) {
