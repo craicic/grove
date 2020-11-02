@@ -29,7 +29,9 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
     private final CreatorRepositoryCustom creatorRepositoryCustom;
 
     @Autowired
-    public CreatorService(JpaRepository<Creator, Long> genericRepository, CreatorRepository creatorRepository, CreatorRepositoryCustom creatorRepositoryCustom) {
+    public CreatorService(JpaRepository<Creator, Long> genericRepository,
+                          CreatorRepository creatorRepository,
+                          CreatorRepositoryCustom creatorRepositoryCustom) {
         super(genericRepository, Creator.class);
         this.creatorRepository = creatorRepository;
         this.creatorRepositoryCustom = creatorRepositoryCustom;
@@ -61,5 +63,10 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
     public void remove(Long id) {
         logger.debug("deleting (if exist) creator of id=" + id);
         creatorRepositoryCustom.remove(id);
+    }
+
+    public void removeContact(Long creatorId, Long contactId) {
+        logger.debug("deleting (if exist) contact of id=" + contactId + " from creator of id=" + creatorId);
+        creatorRepositoryCustom.removeContact(creatorId, contactId);
     }
 }
