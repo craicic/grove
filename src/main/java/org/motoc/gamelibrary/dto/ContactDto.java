@@ -36,6 +36,9 @@ public class ContactDto {
     @Size(max = 75, message = "Website cannot exceed 75 characters")
     private String website;
 
+    @Size(max = 320, message = "Mail address cannot exceed 320 characters")
+    private String mailAddress;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

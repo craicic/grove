@@ -69,4 +69,11 @@ public class CreatorController {
         logger.trace("deleteById(id) called");
         service.remove(id);
     }
+
+    @DeleteMapping("admin/creators/{creatorId}/contact/{contactId}")
+    void deleteContact(@PathVariable Long creatorId,
+                       @PathVariable Long contactId) {
+        logger.trace("deleteContact(creatorId, contactId) called");
+        service.removeContact(creatorId, contactId);
+    }
 }

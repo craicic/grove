@@ -49,4 +49,20 @@ public class CreatorRepositoryCustomImpl implements CreatorRepositoryCustom {
 
         entityManager.remove(creator);
     }
+
+    /**
+     * Removes a contact from a creator, then delete the contact.
+     */
+    @Override
+    public void removeContact(Long creatorId, Long contactId) {
+        Creator creator = entityManager.find(Creator.class, creatorId);
+        Contact contact = entityManager.find(Contact.class, contactId);
+
+        if (contact != null
+                && creator != null
+                && creator.getContact() == contact) {
+            creator.removeContact(contact);
+            entityManager.remove(contact);
+        }
+    }
 }
