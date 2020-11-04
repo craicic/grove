@@ -42,7 +42,7 @@ public class Publisher {
     private Set<Game> games = new HashSet<>();
 
     @ToString.Exclude
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

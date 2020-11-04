@@ -37,7 +37,7 @@ public class Account {
 
     private LocalDate renewalDate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

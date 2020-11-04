@@ -30,6 +30,7 @@ public class Contact {
     @Column(length = 50)
     private String postalCode;
 
+    @Size(max = 255, message = "Street cannot exceed 255 characters")
     private String street;
 
     @Size(max = 50, message = "City cannot exceed 50 characters")
@@ -57,16 +58,16 @@ public class Contact {
     @Column(length = 320)
     private String mailAddress;
 
-    @OneToOne(mappedBy = "contact")
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Creator creator;
 
-    @OneToOne(mappedBy = "contact")
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Publisher publisher;
 
-    @OneToOne(mappedBy = "contact")
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Seller seller;
 
-    @OneToOne(mappedBy = "contact")
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Account account;
 
     @Override

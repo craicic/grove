@@ -37,7 +37,7 @@ public class Seller {
     @Column(nullable = false)
     private String lowerCaseName;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

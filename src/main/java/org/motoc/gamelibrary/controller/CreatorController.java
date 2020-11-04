@@ -51,16 +51,23 @@ public class CreatorController {
         return mapper.pageToPageDto(service.findPage(pageable));
     }
 
+    /**
+     * Save a new creator with or without contact
+     */
     @PostMapping("/admin/creators")
-    CreatorDto save(@RequestBody @Valid CreatorDto creator) {
+    CreatorDto save(@RequestBody @Valid CreatorDto creator,
+                    @RequestParam(value = "hasContact") Boolean hasContact) {
         logger.trace("save(creator) called");
-        return mapper.creatorToDto(service.save(mapper.dtoToCreator(creator)));
+        return mapper.creatorToDto(service.save(mapper.dtoToCreator(creator), hasContact));
     }
 
+    /**
+     * Edit an existing creator
+     */
     @PutMapping("/admin/creators/{id}")
     CreatorDto edit(@RequestBody @Valid CreatorDto creator,
                     @PathVariable Long id) {
-        logger.trace("edit(creator, id) called");
+        logger.trace("edit(creator), id) called");
         return mapper.creatorToDto(service.edit(mapper.dtoToCreator(creator), id));
     }
 

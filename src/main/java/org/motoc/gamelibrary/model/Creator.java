@@ -52,7 +52,7 @@ public class Creator {
     private CreatorRole role;
 
     @ToString.Exclude
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

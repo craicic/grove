@@ -296,17 +296,17 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoCreatorA.setFirstName("Bruno");
         demoCreatorA.setLastName("Cathala");
         demoCreatorA.setRole(CreatorRole.AUTHOR);
-        demoCreatorA.setContact(demoContactB);
+        demoCreatorA.addContact(demoContactB);
 
         demoCreatorB.setFirstName("Bruno");
         demoCreatorB.setLastName("Faduitti");
         demoCreatorB.setRole(CreatorRole.AUTHOR);
-        demoCreatorB.setContact(demoContactE);
+        demoCreatorB.addContact(demoContactE);
 
         demoCreatorC.setFirstName("Mihajlo");
-        demoCreatorC.setLastName(" Dimitrievski");
+        demoCreatorC.setLastName("Dimitrievski");
         demoCreatorC.setRole(CreatorRole.ILLUSTRATOR);
-        demoCreatorC.setContact(demoContactF);
+        demoCreatorC.addContact(demoContactF);
 
         creatorRepository.save(demoCreatorA);
         creatorRepository.save(demoCreatorB);

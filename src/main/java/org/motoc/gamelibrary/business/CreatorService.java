@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Creator;
 import org.motoc.gamelibrary.repository.criteria.CreatorRepositoryCustom;
+import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.repository.jpa.CreatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,15 +27,31 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
 
     private final CreatorRepository creatorRepository;
 
+    private final ContactRepository contactRepository;
+
     private final CreatorRepositoryCustom creatorRepositoryCustom;
 
     @Autowired
     public CreatorService(JpaRepository<Creator, Long> genericRepository,
                           CreatorRepository creatorRepository,
-                          CreatorRepositoryCustom creatorRepositoryCustom) {
+                          CreatorRepositoryCustom creatorRepositoryCustom,
+                          ContactRepository contactRepository) {
         super(genericRepository, Creator.class);
         this.creatorRepository = creatorRepository;
         this.creatorRepositoryCustom = creatorRepositoryCustom;
+        this.contactRepository = contactRepository;
+    }
+
+
+    /**
+     * Persist a new creator by id (if a contact is associated, this one must be new)
+     */
+    public Creator save(Creator creator, boolean hasContact) {
+        if (hasContact) {
+            long contactId = contactRepository.save(creator.getContact()).getId();
+            creator.getContact().setId(contactId);
+        }
+        return creatorRepository.save(creator);
     }
 
     /**
@@ -46,13 +63,13 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
                     creatorFromPersistence.setFirstName(creator.getFirstName());
                     creatorFromPersistence.setLastName(creator.getLastName());
                     creatorFromPersistence.setRole(creator.getRole());
-
-                    logger.debug("Found product line of id={} : {}", id, creatorFromPersistence);
+                    creatorFromPersistence.setContact(creator.getContact());
+                    logger.debug("Found creator of id={} : {}", id, creatorFromPersistence);
                     return creatorRepository.save(creatorFromPersistence);
                 })
                 .orElseGet(() -> {
                     creator.setId(id);
-                    logger.debug("No product line of id={} found. Set theme : {}", id, creator);
+                    logger.debug("No creator of id={} found. Set creator : {}", id, creator);
                     return creatorRepository.save(creator);
                 });
     }

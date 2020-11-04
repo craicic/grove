@@ -18,6 +18,7 @@ public class ContactDto {
     @Size(max = 50, message = "Postal code cannot exceed 50 characters")
     private String postalCode;
 
+    @Size(max = 255, message = "Street cannot exceed 255 characters")
     private String street;
 
     @Size(max = 50, message = "City cannot exceed 50 characters")
