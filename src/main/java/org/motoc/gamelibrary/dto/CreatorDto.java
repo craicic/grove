@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.dto;
 import lombok.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,6 +33,7 @@ public class CreatorDto {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Valid
     private ContactDto contact;
 
 }

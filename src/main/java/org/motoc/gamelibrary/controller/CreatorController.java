@@ -56,7 +56,7 @@ public class CreatorController {
      */
     @PostMapping("/admin/creators")
     CreatorDto save(@RequestBody @Valid CreatorDto creator,
-                    @RequestParam(value = "hasContact") Boolean hasContact) {
+                    @RequestParam(value = "has-contact", required = false) boolean hasContact) {
         logger.trace("save(creator) called");
         return mapper.creatorToDto(service.save(mapper.dtoToCreator(creator), hasContact));
     }

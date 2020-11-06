@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.motoc.gamelibrary.validation.annotation.EitherChildOrParent;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -27,8 +28,10 @@ public class CategoryDto {
     @Size(max = 50, message = "Name cannot exceed 50")
     private String name;
 
+    @Valid
     private CategoryDto parent;
 
+    @Valid
     private Set<CategoryDto> children = new HashSet<>();
 
     @Override

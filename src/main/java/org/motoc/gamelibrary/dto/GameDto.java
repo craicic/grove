@@ -7,6 +7,7 @@ import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.validation.annotation.ConsistentNumberOfPlayer;
 import org.motoc.gamelibrary.validation.annotation.SelectYearOrMonth;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -62,15 +63,19 @@ public class GameDto {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Valid
     private Set<CategoryDto> categories = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Valid
     private Set<ThemeDto> themes = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Valid
     private Set<CreatorDto> creators = new HashSet<>();
+
     // TODO images && gameCopies
 
 }
