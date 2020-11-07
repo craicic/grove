@@ -8,6 +8,8 @@ import org.motoc.gamelibrary.repository.jpa.CreatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -85,5 +87,10 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
     public void removeContact(Long creatorId, Long contactId) {
         logger.debug("deleting (if exist) contact of id=" + contactId + " from creator of id=" + creatorId);
         creatorRepositoryCustom.removeContact(creatorId, contactId);
+    }
+
+    public Page<Creator> quickSearch(String keyword, Pageable pageable) {
+        logger.debug("Find paged creators that contains : " + keyword);
+        return creatorRepository.findByLowerCaseFirstNameContainingOrLowerCaseLastNameContaining(keyword, keyword, pageable);
     }
 }
