@@ -7,6 +7,8 @@ import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +60,10 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
     public void remove(Long id) {
         logger.debug("deleting (if exist) publisher of id=" + id);
         publisherRepositoryCustom.remove(id);
+    }
+
+    public Page<Publisher> quickSearch(String keyword, Pageable pageable) {
+        logger.debug("Find paged publishers that contains : " + keyword);
+        return publisherRepository.findByLowerCaseNameContaining(keyword, pageable);
     }
 }

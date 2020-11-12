@@ -7,6 +7,8 @@ import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +62,10 @@ public class ProductLineService extends SimpleCrudMethodsImpl<ProductLine, JpaRe
     public void remove(Long id) {
         logger.debug("deleting (if exist) productLine of id=" + id);
         productLineRepositoryCustom.remove(id);
+    }
+
+    public Page<ProductLine> quickSearch(String keyword, Pageable pageable) {
+        logger.debug("Find paged product-lines that contains : " + keyword);
+        return productLineRepository.findByLowerCaseNameContaining(keyword, pageable);
     }
 }

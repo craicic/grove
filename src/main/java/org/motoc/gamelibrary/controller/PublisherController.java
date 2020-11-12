@@ -39,9 +39,15 @@ public class PublisherController {
     }
 
     @GetMapping("/admin/publishers/page")
-    Page<PublisherDto> findPage(Pageable pageable) {
+    Page<PublisherDto> findPage(Pageable pageable,
+                                @RequestParam(name = "search", required = false) String keyword) {
         logger.trace("findPage(pageable) called");
-        return mapper.pageToPageDto(service.findPage(pageable));
+        if (keyword == null) {
+            return mapper.pageToPageDto(service.findPage(pageable));
+        } else {
+            logger.trace("findPage(" + keyword + ", pageable) called");
+            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+        }
     }
 
     @PostMapping("/admin/publishers")
