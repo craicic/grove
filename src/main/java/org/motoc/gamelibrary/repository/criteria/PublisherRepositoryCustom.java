@@ -7,4 +7,6 @@ package org.motoc.gamelibrary.repository.criteria;
  */
 public interface PublisherRepositoryCustom {
     void remove(Long id);
+
+    void removeContact(Long publisherId, Long contactId);
 }

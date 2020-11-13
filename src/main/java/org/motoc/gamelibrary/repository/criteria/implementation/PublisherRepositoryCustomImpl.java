@@ -46,4 +46,20 @@ public class PublisherRepositoryCustomImpl implements PublisherRepositoryCustom 
         }
         entityManager.remove(publisher);
     }
+
+    /**
+     * Removes a contact from a publisher, then delete the contact.
+     */
+    @Override
+    public void removeContact(Long publisherId, Long contactId) {
+        Publisher publisher = entityManager.find(Publisher.class, publisherId);
+        Contact contact = entityManager.find(Contact.class, contactId);
+        if (contact != null
+                && publisher != null
+                && publisher.getContact() == contact) {
+            logger.debug("passage ici!");
+            publisher.removeContact(contact);
+            entityManager.remove(contact);
+        }
+    }
 }

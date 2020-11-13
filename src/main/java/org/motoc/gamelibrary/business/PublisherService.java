@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.repository.criteria.PublisherRepositoryCustom;
+import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +30,29 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
 
     final private PublisherRepositoryCustom publisherRepositoryCustom;
 
+    final private ContactRepository contactRepository;
+
     @Autowired
-    public PublisherService(JpaRepository<Publisher, Long> genericRepository, PublisherRepository publisherRepository,
-                            PublisherRepositoryCustom publisherRepositoryCustom) {
+    public PublisherService(JpaRepository<Publisher, Long> genericRepository,
+                            PublisherRepository publisherRepository,
+                            PublisherRepositoryCustom publisherRepositoryCustom,
+                            ContactRepository contactRepository) {
         super(genericRepository, Publisher.class);
         this.publisherRepository = publisherRepository;
         this.publisherRepositoryCustom = publisherRepositoryCustom;
+        this.contactRepository = contactRepository;
+    }
+
+
+    /**
+     * Persist a new publisher by id (if a contact is associated, this one must be new)
+     */
+    public Publisher save(Publisher publisher, boolean hasContact) {
+        if (hasContact) {
+            long contactId = contactRepository.save(publisher.getContact()).getId();
+            publisher.getContact().setId(contactId);
+        }
+        return publisherRepository.save(publisher);
     }
 
     /**
@@ -44,6 +62,7 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
         return publisherRepository.findById(id)
                 .map(publisherFromPersistence -> {
                     publisherFromPersistence.setName(publisher.getName());
+                    publisherFromPersistence.setContact(publisher.getContact());
                     logger.debug("Found publisher of id={} : {}", id, publisherFromPersistence);
                     return publisherRepository.save(publisherFromPersistence);
                 })
@@ -66,4 +85,10 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
         logger.debug("Find paged publishers that contains : " + keyword);
         return publisherRepository.findByLowerCaseNameContaining(keyword, pageable);
     }
+
+    public void removeContact(Long publisherId, Long contactId) {
+        logger.debug("deleting (if exist) contact of id=" + contactId + " from publisher of id=" + publisherId);
+        publisherRepositoryCustom.removeContact(publisherId, contactId);
+    }
 }
+

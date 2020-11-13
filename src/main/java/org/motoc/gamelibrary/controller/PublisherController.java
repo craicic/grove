@@ -51,9 +51,10 @@ public class PublisherController {
     }
 
     @PostMapping("/admin/publishers")
-    PublisherDto save(@RequestBody @Valid PublisherDto publisherDto) {
+    PublisherDto save(@RequestBody @Valid PublisherDto publisherDto,
+                      @RequestParam(value = "has-contact", required = false) boolean hasContact) {
         logger.trace("save(publisher) called");
-        return mapper.publisherToDto(service.save(mapper.dtoToPublisher(publisherDto)));
+        return mapper.publisherToDto(service.save(mapper.dtoToPublisher(publisherDto), hasContact));
     }
 
     @PutMapping("/admin/publishers/{id}")
@@ -67,5 +68,12 @@ public class PublisherController {
     void deleteById(@PathVariable Long id) {
         logger.trace("deleteById(id) called");
         service.remove(id);
+    }
+
+    @DeleteMapping("admin/publishers/{publisherId}/contact/{contactId}")
+    void deleteContact(@PathVariable Long publisherId,
+                       @PathVariable Long contactId) {
+        logger.trace("deleteContact(publisherId, contactId) called");
+        service.removeContact(publisherId, contactId);
     }
 }
