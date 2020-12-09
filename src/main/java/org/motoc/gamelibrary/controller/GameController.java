@@ -39,8 +39,8 @@ public class GameController {
         return service.count();
     }
 
-    @GetMapping("/admin/games")
-    GameDto findById(@RequestParam(value = "id") Long id) {
+    @GetMapping("/admin/games/{id}")
+    GameDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.gameToDto(service.findById(id));
     }

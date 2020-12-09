@@ -39,8 +39,8 @@ public class CreatorController {
         return service.count();
     }
 
-    @GetMapping("/admin/creators")
-    CreatorDto findById(@RequestParam(value = "id") Long id) {
+    @GetMapping("/admin/creators/{id}")
+    CreatorDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.creatorToDto(service.findById(id));
     }

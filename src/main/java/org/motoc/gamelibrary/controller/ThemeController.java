@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Defines theme endpoints
@@ -58,7 +59,13 @@ public class ThemeController {
     }
 
     @GetMapping("/admin/themes")
-    ThemeDto findById(@RequestParam(value = "id") Long id) {
+    List<ThemeDto> findAll() {
+        logger.trace("findAll called");
+        return mapper.themesToDto(service.findAll());
+    }
+
+    @GetMapping("/admin/themes/{id}")
+    ThemeDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.themeToDto(service.findById(id));
     }

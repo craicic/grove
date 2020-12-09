@@ -39,8 +39,8 @@ public class ProductLineController {
         return service.count();
     }
 
-    @GetMapping("/admin/product-lines")
-    ProductLineDto findById(Long id) {
+    @GetMapping("/admin/product-lines/{id}")
+    ProductLineDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.productLineToDto(service.findById(id));
     }

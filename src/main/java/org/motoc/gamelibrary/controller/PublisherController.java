@@ -32,8 +32,8 @@ public class PublisherController {
         return service.count();
     }
 
-    @GetMapping("/admin/publishers")
-    PublisherDto findById(Long id) {
+    @GetMapping("/admin/publishers/{id}")
+    PublisherDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.publisherToDto(service.findById(id));
     }

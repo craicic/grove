@@ -40,8 +40,8 @@ public class CategoryController {
         return service.count();
     }
 
-    @GetMapping("/admin/categories")
-    CategoryDto findById(Long id) {
+    @GetMapping("/admin/categories/{id}")
+    CategoryDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.categoryToDto(service.findById(id));
     }

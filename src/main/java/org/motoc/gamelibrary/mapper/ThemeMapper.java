@@ -7,6 +7,8 @@ import org.motoc.gamelibrary.dto.ThemeDto;
 import org.motoc.gamelibrary.model.Theme;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * Maps model to dto and and dto to model
  *
@@ -20,6 +22,8 @@ public interface ThemeMapper {
     default Page<ThemeDto> pageToPageDto(Page<Theme> themePage) {
         return themePage.map(this::themeToDto);
     }
+
+    List<ThemeDto> themesToDto(List<Theme> themes);
 
     ThemeDto themeToDto(Theme theme);
 
