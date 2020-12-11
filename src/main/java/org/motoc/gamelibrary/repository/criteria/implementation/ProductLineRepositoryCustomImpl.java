@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
+import org.motoc.gamelibrary.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.ProductLine;
 import org.motoc.gamelibrary.repository.criteria.ProductLineRepositoryCustom;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * It's the product line custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
@@ -38,6 +41,14 @@ public class ProductLineRepositoryCustomImpl implements ProductLineRepositoryCus
             logger.info("Successfully deleted product line of id={}", id);
         } else
             logger.info("Tried to delete, but product line of id={} doesn't exist", id);
+    }
+
+    @Override
+    public List<ProductLineNameDto> findNames() {
+        TypedQuery<ProductLineNameDto> q = entityManager.createQuery(
+                "SELECT new org.motoc.gamelibrary.dto.ProductLineNameDto(p.name) FROM ProductLine as p",
+                ProductLineNameDto.class);
+        return q.getResultList();
     }
 }
 

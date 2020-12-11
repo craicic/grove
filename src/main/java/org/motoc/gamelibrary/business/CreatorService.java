@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
+import org.motoc.gamelibrary.dto.CreatorNameDto;
 import org.motoc.gamelibrary.model.Creator;
 import org.motoc.gamelibrary.repository.criteria.CreatorRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Perform business logic on the entity Creator
@@ -92,5 +94,12 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
     public Page<Creator> quickSearch(String keyword, Pageable pageable) {
         logger.debug("Find paged creators that contains : " + keyword);
         return creatorRepository.findByLowerCaseFirstNameContainingOrLowerCaseLastNameContaining(keyword, keyword, pageable);
+    }
+
+    /**
+     * Find all creator's name.
+     */
+    public List<CreatorNameDto> findNames() {
+        return creatorRepositoryCustom.findNames();
     }
 }

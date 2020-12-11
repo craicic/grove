@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.CreatorService;
 import org.motoc.gamelibrary.dto.CreatorDto;
+import org.motoc.gamelibrary.dto.CreatorNameDto;
 import org.motoc.gamelibrary.mapper.CreatorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Defines creator's endpoints
@@ -37,6 +39,12 @@ public class CreatorController {
     Long count() {
         logger.trace("count called");
         return service.count();
+    }
+
+    @GetMapping("/admin/creators/names")
+    List<CreatorNameDto> findNames() {
+        logger.trace("findNames called");
+        return service.findNames();
     }
 
     @GetMapping("/admin/creators/{id}")

@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
+import org.motoc.gamelibrary.dto.PublisherNameDto;
 import org.motoc.gamelibrary.model.Contact;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.Publisher;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * It's the category custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
@@ -26,9 +29,6 @@ public class PublisherRepositoryCustomImpl implements PublisherRepositoryCustom 
         this.entityManager = entityManager;
     }
 
-    /**
-     * Removes a publisher and its associated contact
-     */
     @Override
     public void remove(Long id) {
         Publisher publisher = entityManager.find(Publisher.class, id);
@@ -47,9 +47,6 @@ public class PublisherRepositoryCustomImpl implements PublisherRepositoryCustom 
         entityManager.remove(publisher);
     }
 
-    /**
-     * Removes a contact from a publisher, then delete the contact.
-     */
     @Override
     public void removeContact(Long publisherId, Long contactId) {
         Publisher publisher = entityManager.find(Publisher.class, publisherId);
@@ -61,5 +58,14 @@ public class PublisherRepositoryCustomImpl implements PublisherRepositoryCustom 
             publisher.removeContact(contact);
             entityManager.remove(contact);
         }
+    }
+
+    @Override
+    public List<PublisherNameDto> findNames() {
+
+        TypedQuery<PublisherNameDto> q = entityManager.createQuery(
+                "SELECT new org.motoc.gamelibrary.dto.PublisherNameDto(p.name) FROM Publisher as p",
+                PublisherNameDto.class);
+        return q.getResultList();
     }
 }

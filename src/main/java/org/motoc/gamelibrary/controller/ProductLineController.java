@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.ProductLineService;
 import org.motoc.gamelibrary.dto.ProductLineDto;
+import org.motoc.gamelibrary.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.mapper.ProductLineMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Defines product line endpoints
@@ -37,6 +39,12 @@ public class ProductLineController {
     Long count() {
         logger.trace("count called");
         return service.count();
+    }
+
+    @GetMapping("/admin/product-lines/names")
+    List<ProductLineNameDto> findNames() {
+        logger.trace("findNames called");
+        return service.findNames();
     }
 
     @GetMapping("/admin/product-lines/{id}")

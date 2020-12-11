@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +81,6 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
      */
     public List<Theme> findAll() {
         logger.debug("Find all themes");
-        return themeRepository.findAll();
+        return themeRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 }

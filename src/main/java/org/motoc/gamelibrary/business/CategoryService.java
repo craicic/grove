@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
+import org.motoc.gamelibrary.dto.CategoryNameDto;
 import org.motoc.gamelibrary.model.Category;
 import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
@@ -157,5 +158,9 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
         List<Long> ids = Arrays.asList(catId, childId);
         categoryRepository.findAllById(ids);
         categoryRepositoryCustom.removeChild(catId, childId);
+    }
+
+    public List<CategoryNameDto> findNames() {
+        return categoryRepositoryCustom.findNames();
     }
 }

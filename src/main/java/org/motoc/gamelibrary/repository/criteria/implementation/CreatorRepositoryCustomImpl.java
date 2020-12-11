@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
+import org.motoc.gamelibrary.dto.CreatorNameDto;
 import org.motoc.gamelibrary.model.Contact;
 import org.motoc.gamelibrary.model.Creator;
 import org.motoc.gamelibrary.model.Game;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Creator custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
@@ -28,9 +31,7 @@ public class CreatorRepositoryCustomImpl implements CreatorRepositoryCustom {
         this.entityManager = entityManager;
     }
 
-    /**
-     * Removes a creator and its associated contact
-     */
+
     @Override
     public void remove(Long id) {
         Creator creator = entityManager.find(Creator.class, id);
@@ -50,9 +51,6 @@ public class CreatorRepositoryCustomImpl implements CreatorRepositoryCustom {
         entityManager.remove(creator);
     }
 
-    /**
-     * Removes a contact from a creator, then delete the contact.
-     */
     @Override
     public void removeContact(Long creatorId, Long contactId) {
         Creator creator = entityManager.find(Creator.class, creatorId);
@@ -64,5 +62,13 @@ public class CreatorRepositoryCustomImpl implements CreatorRepositoryCustom {
             creator.removeContact(contact);
             entityManager.remove(contact);
         }
+    }
+
+    @Override
+    public List<CreatorNameDto> findNames() {
+        TypedQuery<CreatorNameDto> q = entityManager.createQuery(
+                "SELECT new org.motoc.gamelibrary.dto.CreatorNameDto(c.firstName, c.lastName) FROM Creator as c",
+                CreatorNameDto.class);
+        return q.getResultList();
     }
 }

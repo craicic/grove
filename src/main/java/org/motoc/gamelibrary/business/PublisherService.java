@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
+import org.motoc.gamelibrary.dto.PublisherNameDto;
 import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.repository.criteria.PublisherRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Perform business logic on the entity Publisher
@@ -89,6 +91,11 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
     public void removeContact(Long publisherId, Long contactId) {
         logger.debug("deleting (if exist) contact of id=" + contactId + " from publisher of id=" + publisherId);
         publisherRepositoryCustom.removeContact(publisherId, contactId);
+    }
+
+    public List<PublisherNameDto> findNames() {
+        logger.debug("Find all publishers' name");
+        return publisherRepositoryCustom.findNames();
     }
 }
 
