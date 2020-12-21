@@ -163,4 +163,8 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     public List<CategoryNameDto> findNames() {
         return categoryRepositoryCustom.findNames();
     }
+
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
+    }
 }

@@ -47,6 +47,12 @@ public class CategoryController {
         return service.findNames();
     }
 
+    @GetMapping("/admin/categories")
+    List<CategoryDto> findAll() {
+        logger.trace("findAll() called");
+        return mapper.categoriesToDto(service.findAll());
+    }
+
     @GetMapping("/admin/categories/{id}")
     CategoryDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");

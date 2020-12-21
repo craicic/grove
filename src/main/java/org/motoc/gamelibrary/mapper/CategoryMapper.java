@@ -6,6 +6,9 @@ import org.motoc.gamelibrary.dto.CategoryDto;
 import org.motoc.gamelibrary.model.Category;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Maps model to dto and and dto to model
  *
@@ -18,6 +21,10 @@ public interface CategoryMapper {
 
     default Page<CategoryDto> pageToPageDto(Page<Category> page) {
         return page.map(this::categoryToDto);
+    }
+
+    default List<CategoryDto> categoriesToDto(List<Category> categories) {
+        return categories.stream().map(this::categoryToDtoIgnoringRelations).collect(Collectors.toList());
     }
 
     default Category dtoToCategoryIgnoringRelations(CategoryDto categoryDto) {
@@ -81,4 +88,6 @@ public interface CategoryMapper {
 
         return categoryDto;
     }
+
+
 }
