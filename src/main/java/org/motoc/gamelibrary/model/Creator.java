@@ -23,7 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"lowerCaseFirstName", "lowerCaseLastName"}))
+@Table(name = "creator", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"lowerCaseFirstName", "lowerCaseLastName"}))
 public class Creator {
 
     @Id

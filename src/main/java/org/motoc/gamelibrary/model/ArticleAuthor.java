@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "article_author")
 public class ArticleAuthor {
 
     @Id

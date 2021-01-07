@@ -22,6 +22,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "loan", schema = "public")
 public class Loan {
 
     @Id

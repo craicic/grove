@@ -23,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "article", schema = "public")
 public class Article {
 
     /**

@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "filePath"))
+@Table(name = "image", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "file_path"))
 public class Image {
 
     /**
@@ -34,7 +34,7 @@ public class Image {
 
     @NotBlank(message = "File path cannot be null or blank")
     @Size(max = 4251, message = "File path cannot exceed 4251 characters")
-    @Column(nullable = false)
+    @Column(name = "file_path", nullable = false)
     private String filePath;
 
     @ManyToMany(mappedBy = "images")

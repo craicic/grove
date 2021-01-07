@@ -29,7 +29,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Game {
 
     @Id
@@ -51,7 +51,7 @@ public class Game {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false)
+    @Column(nullable = false, name = "lower_case_name")
     private String lowerCaseName;
 
     @Size(max = 1000, message = "Description should not exceed 1000 characters")
@@ -227,6 +227,11 @@ public class Game {
     public void removePublisher(Publisher publisher) {
         publisher.getGames().remove(this);
         this.setPublisher(null);
+    }
+
+    public void removeProductLine(ProductLine productLine) {
+        productLine.getGames().remove(this);
+        this.setProductLine(null);
     }
 
     @Override

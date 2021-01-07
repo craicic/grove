@@ -19,6 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "account", schema = "public")
 public class Account {
 
     @Id

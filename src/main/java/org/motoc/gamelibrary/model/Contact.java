@@ -20,6 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @UniqueContactHolder
+@Table(name = "contact", schema = "public")
 public class Contact {
 
     @Id

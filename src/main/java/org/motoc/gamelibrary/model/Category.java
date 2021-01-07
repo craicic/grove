@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 @EitherChildOrParent
 public class Category {
 
@@ -36,7 +36,7 @@ public class Category {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(name = "lower_case_name", nullable = false, length = 50)
     private String lowerCaseName;
 
     @ManyToOne(fetch = FetchType.LAZY)

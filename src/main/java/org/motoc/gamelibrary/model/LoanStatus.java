@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseTag"))
+@Table(name = "loan_status", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_tag"))
 public class LoanStatus {
 
     @Id
@@ -33,7 +33,7 @@ public class LoanStatus {
     private String tag;
 
     @ToString.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(name = "lower_case_tag", nullable = false, length = 50)
     private String lowerCaseTag;
 
     @NotBlank(message = "Description cannot be null or blank")

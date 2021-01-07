@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "objectCode"))
+@Table(name = "game_copy", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "object_code"))
 public class GameCopy {
 
     @Id
@@ -30,7 +30,7 @@ public class GameCopy {
     private long id;
 
     @Pattern(regexp = "^[0-9]{1,5}$")
-    @Column(nullable = false)
+    @Column(name = "object_code", nullable = false)
     private String objectCode;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Price value cannot be below 0.0")

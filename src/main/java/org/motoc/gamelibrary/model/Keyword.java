@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "tag"))
+@Table(name = "keyword", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "tag"))
 public class Keyword {
 
     /**

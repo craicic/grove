@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(name = "theme", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Theme {
 
     @Id
@@ -35,7 +35,7 @@ public class Theme {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(name = "lower_case_name", nullable = false, length = 50)
     private String lowerCaseName;
 
     @ToString.Exclude

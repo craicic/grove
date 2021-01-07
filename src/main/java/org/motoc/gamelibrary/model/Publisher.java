@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(name = "publisher", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Publisher {
 
     @Id
@@ -34,7 +34,7 @@ public class Publisher {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false)
+    @Column(name = "lower_case_name", nullable = false)
     private String lowerCaseName;
 
     @ToString.Exclude
