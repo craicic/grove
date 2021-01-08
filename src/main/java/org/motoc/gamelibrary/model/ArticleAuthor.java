@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "article_author")
+@Table(name = "article_author", schema = "public")
 public class ArticleAuthor {
 
     @Id
