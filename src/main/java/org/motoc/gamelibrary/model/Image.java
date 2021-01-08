@@ -38,22 +38,9 @@ public class Image {
     private String filePath;
 
     @ManyToMany(mappedBy = "images")
-    private Set<Article> articles = new HashSet<>();
-
-    @ManyToMany(mappedBy = "images")
     private Set<Game> games = new HashSet<>();
 
     // Helper methods
-
-    public void addArticle(Article article) {
-        articles.add(article);
-        article.getImages().add(this);
-    }
-
-    public void removeArticle(Article article) {
-        articles.remove(article);
-        article.getImages().remove(this);
-    }
 
     public void addGame(Game game) {
         games.add(game);
