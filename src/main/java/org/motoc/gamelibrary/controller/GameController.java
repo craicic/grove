@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.GameService;
 import org.motoc.gamelibrary.dto.GameDto;
+import org.motoc.gamelibrary.dto.GameNameDto;
 import org.motoc.gamelibrary.mapper.GameMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Defines game endpoints
@@ -53,7 +55,13 @@ public class GameController {
 
     @PostMapping("/admin/games")
     GameDto save(@RequestBody @Valid GameDto gameDto) {
-        logger.trace("save(games) called");
+        logger.trace("save(game) called");
         return mapper.gameToDto(service.save(mapper.dtoToGame(gameDto)));
+    }
+
+    @GetMapping("/admin/games/names")
+    List<GameNameDto> findNames() {
+        logger.trace("findNames() called");
+        return service.findNames();
     }
 }

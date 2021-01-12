@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
+import org.motoc.gamelibrary.dto.GameNameDto;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.GameRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Perform business logic on the entity Creator
@@ -30,5 +32,9 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         super(genericRepository, Game.class);
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
+    }
+
+    public List<GameNameDto> findNames() {
+        return gameRepositoryCustom.findNames();
     }
 }
