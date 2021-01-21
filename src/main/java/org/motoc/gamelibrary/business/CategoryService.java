@@ -161,10 +161,16 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
         categoryRepositoryCustom.removeChild(catId, childId);
     }
 
+    /**
+     * Find all categories' names
+     */
     public List<CategoryNameDto> findNames() {
         return categoryRepositoryCustom.findNames();
     }
 
+    /**
+     * Find all categories
+     */
     public List<Category> findAll() {
         return categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
