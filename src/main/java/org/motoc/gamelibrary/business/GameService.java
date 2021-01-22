@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * Perform business logic on the entity Creator
+ * Perform business logic on the entity Game
  *
  * @author RouzicJ
  */

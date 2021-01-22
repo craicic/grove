@@ -76,6 +76,6 @@ public class GameDto {
     @Valid
     private Set<CreatorDto> creators = new HashSet<>();
 
-    // TODO images && gameCopies
+    private Set<ImageDto> images = new HashSet<>();
 
 }

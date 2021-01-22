@@ -87,6 +87,12 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+        <!-- Used for its consistent random name generation -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.11</version>
+        </dependency>
         <!-- KEYCLOAK ADAPTER -->
         <dependency>
             <groupId>org.keycloak</groupId>
