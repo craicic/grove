@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.controller;
 import org.motoc.gamelibrary.business.GameService;
 import org.motoc.gamelibrary.dto.GameDto;
 import org.motoc.gamelibrary.dto.GameNameDto;
+import org.motoc.gamelibrary.dto.GameOverviewDto;
 import org.motoc.gamelibrary.mapper.GameMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,13 @@ public class GameController {
     Page<GameDto> findPage(Pageable pageable) {
         logger.trace("findPage(pageable) called");
         return mapper.pageToPageDto(service.findPage(pageable));
+    }
+
+    @GetMapping("/admin/games/page/overview")
+    Page<GameOverviewDto> findPagedOverview(Pageable pageable,
+                                            @RequestParam(name = "search", required = false) String keyword) {
+        logger.trace("findPagedOverview(pageable) called");
+        return service.findPagedOverview(pageable, keyword);
     }
 
     @PostMapping("/admin/games")
