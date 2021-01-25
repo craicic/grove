@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.ImageService;
+import org.motoc.gamelibrary.dto.ImageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,9 @@ public class ImageController {
         return imageService.save(file);
     }
 
-    // TODO remove
-    @GetMapping("/admin/images/io")
-    Long throwIO() throws IOException {
-        logger.trace("save(image) called");
-        throw new IOException("test");
+    @GetMapping("/admin/images/{id}")
+    ImageDto findById(@PathVariable Long id) throws IOException {
+        logger.trace("findById(id) called");
+        return imageService.retrieve(id);
     }
 }
