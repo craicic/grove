@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 /**
@@ -60,6 +61,19 @@ public class ErrorController {
                 request.getDescription(false),
                 HttpStatus.BAD_REQUEST);
         logger.warn("In notFoundHandler, new error treated : " + error);
+        return error;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    ErrorDetails iOHandler(IOException ex, WebRequest request) {
+        ErrorDetails error = new ErrorDetails(
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        logger.warn("In iOHandler, new error treated : " + error);
         return error;
     }
 }

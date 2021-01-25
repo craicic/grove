@@ -4,11 +4,10 @@ import org.motoc.gamelibrary.business.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * Images endpoints
@@ -21,7 +20,7 @@ public class ImageController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
 
-    private ImageService imageService;
+    private final ImageService imageService;
 
     @Autowired
     public ImageController(ImageService imageService) {
@@ -29,8 +28,15 @@ public class ImageController {
     }
 
     @PostMapping("/admin/images")
-    Long save(@RequestParam(name = "file") MultipartFile file) {
+    Long save(@RequestParam(name = "file") MultipartFile file) throws IOException {
         logger.trace("save(image) called");
         return imageService.save(file);
+    }
+
+    // TODO remove
+    @GetMapping("/admin/images/io")
+    Long throwIO() throws IOException {
+        logger.trace("save(image) called");
+        throw new IOException("test");
     }
 }

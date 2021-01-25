@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.business;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.http.HttpStatus;
 import org.motoc.gamelibrary.model.Image;
 import org.motoc.gamelibrary.repository.jpa.ImageRepository;
+import org.motoc.gamelibrary.technical.exception.UnsupportedFileTypeException;
 import org.motoc.gamelibrary.technical.properties.PathProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,16 +42,16 @@ public class ImageService {
     /**
      * Given a MultipartFile, call methods to store it on file system, and in database
      */
-    public Long save(MultipartFile image) {
+    public Long save(MultipartFile image) throws IOException {
         String path = "";
-        path = storeImage(image);
-        return persistPath(path);
+        path = storeImageOnFileSystem(image);
+        return persistPathInDatabase(path);
     }
 
     /**
      * Given a MultipartFile, store it on file system, then return a full path in order to store it in database
      */
-    private String storeImage(MultipartFile image) {
+    private String storeImageOnFileSystem(MultipartFile image) throws IOException {
 
         logger.debug("Starting operations to store an image into file system");
         byte[] imageBytes;
@@ -59,7 +59,8 @@ public class ImageService {
         try {
             imageBytes = image.getBytes();
         } catch (IOException e) {
-            return String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            logger.warn("Exception caught on method .getBytes() with error message : " + e.getMessage());
+            throw new IOException(e.getMessage());
         }
 
         String imageExtension = "";
@@ -71,9 +72,8 @@ public class ImageService {
                 || image.getOriginalFilename().endsWith(".jpg")) {
             imageExtension = "jpg";
         } else {
-            return String.valueOf(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE);
+            throw new UnsupportedFileTypeException("Unsupported file type");
         }
-
 
         /* We choose a randomly generated name, using RandomStringUtils */
         String name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), imageExtension);
@@ -87,25 +87,29 @@ public class ImageService {
         try {
             FileOutputStream outputStream = new FileOutputStream(imageToStore);
             outputStream.write(imageBytes);
-            logger.debug("Image successfully stored");
+            logger.debug("Image successfully stored on the file system");
             outputStream.close();
         } catch (FileNotFoundException fe) {
-            logger.error("An error occurred : the file exists but is a directory rather than a regular file, does not" +
-                    " exist but cannot be created, or cannot be opened for any other reason");
-            logger.error(fe.getMessage());
-            return String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            logger.error("An error occurred : " + fe.getMessage());
+            throw new FileNotFoundException(fe.getMessage());
         } catch (IOException ioe) {
-            logger.error("An I/O error occurred");
-            logger.error(ioe.getMessage());
-            return String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            logger.error("An I/O error occurred : " + ioe.getMessage());
+            throw new IOException(ioe.getMessage());
         }
 
         return strPath;
     }
 
-    Long persistPath(String path) {
+    Long persistPathInDatabase(String path) {
+        logger.debug("Starting operations to store an image into the database");
+
         Image image = new Image();
         image.setFilePath(path);
-        return this.repository.save(image).getId();
+        logger.debug("Saving bean : " + image);
+
+        Long id = this.repository.save(image).getId();
+        logger.debug("Image successfully stored in database with id=" + id);
+
+        return id;
     }
 }
