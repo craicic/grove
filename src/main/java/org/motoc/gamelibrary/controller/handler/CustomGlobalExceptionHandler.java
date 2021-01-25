@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.controller.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomGlobalExceptionHandler.class);
+
     // @Validate For Validating Path Variables and Request Parameters
     @ExceptionHandler(ConstraintViolationException.class)
     public void constraintViolationException(HttpServletResponse response) throws IOException {
@@ -34,13 +38,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                                  HttpHeaders headers,
                                  HttpStatus status, WebRequest request) {
 
+        logger.debug("method handleMethodArgumentNotValid was invoked");
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", status.value());
+        body.put("details", request.getDescription(false));
 
         //Get all fields errors
         List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
+                .getAllErrors()
                 .stream()
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());

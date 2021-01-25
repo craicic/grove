@@ -111,8 +111,8 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     public Category addParent(Long parentId, Long catId) {
 
         Category parent = categoryRepository.findById(parentId).orElseThrow(() -> {
-            logger.debug("No parent category of id={} found.", catId);
-            throw new NotFoundException(catId);
+            logger.debug("No parent category of id={} found.", parentId);
+            throw new NotFoundException(parentId);
         });
 
 
