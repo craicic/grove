@@ -20,10 +20,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Handles the contraint errors and formats the output
+ *
+ * @author RouzicJ
+ */
 @ControllerAdvice
-public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class ConstraintErrorController extends ResponseEntityExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomGlobalExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConstraintErrorController.class);
 
     // @Validate For Validating Path Variables and Request Parameters
     @ExceptionHandler(ConstraintViolationException.class)
