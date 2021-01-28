@@ -1,6 +1,9 @@
 package org.motoc.gamelibrary.dto;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.Valid;
@@ -10,15 +13,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Game overview's DTO
+ * Game overview's DTO, image are define by their id
  * The goal is to have a quick presentation with only one image, name, etc. They are fetch by page of 5 to 20 approx
  *
  * @author RouzicJ
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class GameOverviewDto {
+public class GameOverviewWithImageIdsDto {
 
     private long id;
 
@@ -55,11 +57,9 @@ public class GameOverviewDto {
     @Range(min = 0, max = 100, message = "Min months must be between 1 and 100")
     private short minMonth;
 
-
     @EqualsAndHashCode.Exclude
     @Valid
     private Set<CategoryNameAndIdDto> categories = new HashSet<>();
-
 
     @EqualsAndHashCode.Exclude
     @Valid
@@ -67,6 +67,37 @@ public class GameOverviewDto {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private ImageDto images;
+    private Set<Long> imageIds;
 
+    public GameOverviewWithImageIdsDto(long id,
+                                       long gameCopyCount,
+                                       GameNameAndIdDto coreGame,
+                                       Set<GameNameAndIdDto> expansions,
+                                       String name,
+                                       String description,
+                                       String playTime,
+                                       short minNumberOfPlayer,
+                                       short maxNumberOfPlayer,
+                                       short minAge,
+                                       short maxAge,
+                                       short minMonth,
+                                       Set<CategoryNameAndIdDto> categories,
+                                       Set<CreatorWithoutContactDto> creators,
+                                       Set<Long> imageIds) {
+        this.id = id;
+        this.gameCopyCount = gameCopyCount;
+        this.coreGame = coreGame;
+        this.expansions = expansions;
+        this.name = name;
+        this.description = description;
+        this.playTime = playTime;
+        this.minNumberOfPlayer = minNumberOfPlayer;
+        this.maxNumberOfPlayer = maxNumberOfPlayer;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
+        this.minMonth = minMonth;
+        this.categories = categories;
+        this.creators = creators;
+        this.imageIds = imageIds;
+    }
 }

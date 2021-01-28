@@ -28,9 +28,9 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
     private static final Logger logger = LoggerFactory.getLogger(GameService.class);
 
-    private final GameRepository gameRepository;
-
     private final ImageService imageService;
+
+    private final GameRepository gameRepository;
 
     private final GameRepositoryCustom gameRepositoryCustom;
 
@@ -50,6 +50,9 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public Page<GameOverviewDto> findPagedOverview(Pageable pageable, String keyword) {
+        // TODO change method name
+        Page<Game> games = gameRepositoryCustom.getFilteredGameOverview(pageable, keyword);
+
         return null;
     }
 }

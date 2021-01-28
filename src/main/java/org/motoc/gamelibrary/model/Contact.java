@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.motoc.gamelibrary.validation.annotation.UniqueContactHolder;
 
 import javax.persistence.*;
@@ -60,15 +61,19 @@ public class Contact {
     private String mailAddress;
 
     @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Creator creator;
 
     @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Publisher publisher;
 
     @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Seller seller;
 
     @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Account account;
 
     @Override

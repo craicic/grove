@@ -5,6 +5,8 @@ import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 import org.motoc.gamelibrary.repository.jpa.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ import java.util.Set;
  */
 @Component
 public class CommandLineStartupRunner implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(CommandLineStartupRunner.class);
 
 
     // Repositories
@@ -101,6 +105,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
                                     PublisherRepository publisherRepository,
                                     SellerRepository sellerRepository,
                                     ThemeRepository themeRepository) {
+        logger.warn("Starting CommandLineRunner");
         this.accountRepository = accountRepository;
         this.categoryRepository = categoryRepository;
         this.contactRepository = contactRepository;

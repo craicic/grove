@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 
 import javax.persistence.*;
@@ -63,13 +64,16 @@ public class GameCopy {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_game")
+    @ToString.Exclude
     private Game game;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_seller")
+    @ToString.Exclude
     private Seller seller;
 
     @OneToMany(mappedBy = "gameCopy")
+    @ToString.Exclude
     private Set<Loan> loans = new HashSet<>();
 
     // Helper methods

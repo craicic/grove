@@ -39,9 +39,11 @@ public class Seller {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
+    @ToString.Exclude
     private Contact contact;
 
     @OneToMany(mappedBy = "seller")
+    @ToString.Exclude
     private Set<GameCopy> gameCopies = new HashSet<>();
 
 

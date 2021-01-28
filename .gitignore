@@ -33,3 +33,4 @@ build/
 
 ### Custom ###
 application.properties
+*.sql

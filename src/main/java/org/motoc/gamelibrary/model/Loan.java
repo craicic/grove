@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.motoc.gamelibrary.validation.annotation.ConsistentDateTime;
 
 import javax.persistence.*;
@@ -44,10 +45,12 @@ public class Loan {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_game_copy")
+    @ToString.Exclude
     private GameCopy gameCopy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_loan_status")
+    @ToString.Exclude
     private LoanStatus loanStatus;
 
     // Helper methods
@@ -59,7 +62,7 @@ public class Loan {
 
     public void removeLoanStatus(LoanStatus loanStatus) {
         this.setLoanStatus(null);
-        loanStatus.getLoans().remove(loanStatus);
+        loanStatus.getLoans().remove(this);
     }
 
     @Override

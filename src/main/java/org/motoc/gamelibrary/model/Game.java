@@ -172,6 +172,7 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
+
     // Overridden accessors
     public void setName(String name) {
         this.name = name;
