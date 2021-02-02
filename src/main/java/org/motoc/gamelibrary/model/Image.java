@@ -4,13 +4,12 @@ package org.motoc.gamelibrary.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Article's image : store a file path
@@ -37,20 +36,12 @@ public class Image {
     @Column(name = "file_path", nullable = false)
     private String filePath;
 
-    @ManyToMany(mappedBy = "images")
-    private Set<Game> games = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_game")
+    @ToString.Exclude
+    private Game game;
 
-    // Helper methods
-
-    public void addGame(Game game) {
-        games.add(game);
-        game.getImages().add(this);
-    }
-
-    public void removeGame(Game game) {
-        games.remove(game);
-        game.getImages().remove(this);
-    }
+    // No Helper methods
 
     @Override
     public boolean equals(Object o) {

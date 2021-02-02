@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @Sql(scripts = {
         "/sql/game_library_dev_db_public_contact.sql",
-        "/sql/game_library_dev_db_public_image.sql",
         "/sql/game_library_dev_db_public_category.sql",
         "/sql/game_library_dev_db_public_theme.sql",
         "/sql/game_library_dev_db_public_product_line.sql",
@@ -27,16 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
         "/sql/game_library_dev_db_public_account.sql",
         "/sql/game_library_dev_db_public_publisher.sql",
         "/sql/game_library_dev_db_public_game.sql",
+        "/sql/game_library_dev_db_public_image.sql",
         "/sql/game_library_dev_db_public_seller.sql",
         "/sql/game_library_dev_db_public_creator.sql",
         "/sql/game_library_dev_db_public_game_copy.sql",
         "/sql/game_library_dev_db_public_game_category.sql",
         "/sql/game_library_dev_db_public_game_creator.sql",
-        //     NULL ATM   "/sql/game_library_dev_db_public_game_image.sql",
         "/sql/game_library_dev_db_public_game_theme.sql",
-        "/sql/game_library_dev_db_public_loan.sql"
-
-}
+        "/sql/game_library_dev_db_public_loan.sql"}
 )
 class GameRepositoryTest {
 

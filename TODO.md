@@ -5,7 +5,7 @@
 #### Model and DTO
 - [ ] Use lombok Equals and Hash to reduce code quantity.
 - [ ] Use lombok .Exclude.
-- [ ] Game - Image : set relationship to one to many.
+- [x] Game - Image : set relationship to one to many.
 - [ ] CoreGame - Game : addCore, addExtension, and remove...
 #### Repository
 - [ ] Remove @Repository on JpaRepos.

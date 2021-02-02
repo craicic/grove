@@ -174,7 +174,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
 
         this.fillCategories();
         this.fillContacts();
-        this.fillImages();
         this.fillLoanStatus();
         this.fillProductLines();
         this.fillThemes();
@@ -187,6 +186,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.fillGames();
         this.fillGameCopies();
         this.fillLoans();
+
+        this.fillImages();
 
     }
 
@@ -371,6 +372,9 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private void fillImages() {
         demoImageA.setFilePath("\\user\\imageA.jpg");
         demoImageB.setFilePath("\\user\\imageB.jpg");
+
+        demoImageA.setGame(demoGameA);
+        demoImageB.setGame(demoGameA);
 
         imageRepository.save(demoImageA);
         imageRepository.save(demoImageB);

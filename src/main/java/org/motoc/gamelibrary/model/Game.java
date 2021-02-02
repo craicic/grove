@@ -141,11 +141,7 @@ public class Game {
     @JoinColumn(name = "fk_publisher")
     private Publisher publisher;
 
-    @ManyToMany
-    @JoinTable(
-            name = "game_image",
-            joinColumns = {@JoinColumn(name = "fk_game")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_image")})
+    @OneToMany(mappedBy = "game")
     private Set<Image> images = new HashSet<>();
 
     @ManyToMany
@@ -182,12 +178,12 @@ public class Game {
     // Helper methods
     public void addImage(Image image) {
         this.images.add(image);
-        image.getGames().add(this);
+        image.setGame(this);
     }
 
     public void removeImage(Image image) {
         this.images.remove(image);
-        image.getGames().remove(this);
+        image.setGame(null);
     }
 
     public void addCreator(Creator creator) {
