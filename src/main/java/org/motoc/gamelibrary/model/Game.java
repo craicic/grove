@@ -35,10 +35,13 @@ public class Game {
     /**
      * Core game, if this game is an extension
      */
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Game coreGame;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "coreGame")
     private Set<Game> expansions = new HashSet<>();
 
@@ -226,10 +229,32 @@ public class Game {
         this.setPublisher(null);
     }
 
+
+    // Self one to many helper methods
     public void removeProductLine(ProductLine productLine) {
         productLine.getGames().remove(this);
         this.setProductLine(null);
     }
 
+    public void addCoreGame(Game coreGame) {
+        coreGame.getExpansions().add(this);
+        this.setCoreGame(coreGame);
+    }
 
+    public void removeCoreGame() {
+        if (this.getCoreGame() != null) {
+            this.getCoreGame().getExpansions().remove(this);
+            this.setCoreGame(null);
+        }
+    }
+
+    public void addExpansion(Game expansion) {
+        expansion.setCoreGame(this);
+        this.getExpansions().add(expansion);
+    }
+
+    public void removeExpansion(Game expansion) {
+        expansion.setCoreGame(null);
+        this.getExpansions().remove(expansion);
+    }
 }
