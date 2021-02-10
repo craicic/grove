@@ -6,14 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 /**
  * This repository takes advantage of Spring data / JPA
  *
  * @author RouzicJ
  */
-@Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query(value = "SELECT g.id, g.name, g.description, g.play_time,g.min_number_of_player, g.max_number_of_player, " +

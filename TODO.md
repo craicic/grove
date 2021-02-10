@@ -8,7 +8,7 @@
 - [x] Game - Image : set relationship to one to many.
 - [ ] CoreGame - Game : addCore, addExtension, and remove...
 #### Repository
-- [ ] Remove @Repository on JpaRepos.
+- [X] Remove @Repository on JpaRepos.
 ## V1.5 (Delivery)
 - [ ] Game - Publisher : remove relationship. Create one to many between GameCopy and Publisher.
 
