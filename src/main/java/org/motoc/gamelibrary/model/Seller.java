@@ -1,15 +1,11 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,13 +33,15 @@ public class Seller {
     @Column(name = "lower_case_name", nullable = false)
     private String lowerCaseName;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
-    @ToString.Exclude
     private Contact contact;
 
-    @OneToMany(mappedBy = "seller")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "seller")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
 
@@ -75,19 +73,5 @@ public class Seller {
     public void removeContact(Contact contact) {
         this.setContact(null);
         contact.setSeller(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Seller seller = (Seller) o;
-        return id == seller.id &&
-                name.equals(seller.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }

@@ -1,16 +1,12 @@
 package org.motoc.gamelibrary.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -39,6 +35,7 @@ public class Theme {
     private String lowerCaseName;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "themes")
     private Set<Game> games = new HashSet<>();
 
@@ -63,20 +60,6 @@ public class Theme {
     public void removeGame(Game game) {
         games.remove(game);
         game.getThemes().remove(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Theme theme = (Theme) o;
-        return id == theme.id &&
-                name.equals(theme.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }
 

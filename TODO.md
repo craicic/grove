@@ -3,8 +3,8 @@
 ## V1 (Student project)
  
 #### Model and DTO
-- [ ] Use lombok Equals and Hash to reduce code quantity.
-- [ ] Use lombok .Exclude.
+- [X] Use lombok Equals and Hash to reduce code quantity.
+- [X] Use lombok .Exclude.
 - [x] Game - Image : set relationship to one to many.
 - [ ] CoreGame - Game : addCore, addExtension, and remove...
 #### Repository

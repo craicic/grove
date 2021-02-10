@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.motoc.gamelibrary.validation.annotation.ConsistentDateTime;
 
 import javax.persistence.*;
@@ -11,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * A game copy loan
@@ -43,14 +39,16 @@ public class Loan {
     @Column(nullable = false)
     private LocalDateTime loanEndTime;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_game_copy")
-    @ToString.Exclude
     private GameCopy gameCopy;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_loan_status")
-    @ToString.Exclude
     private LoanStatus loanStatus;
 
     // Helper methods
@@ -63,21 +61,5 @@ public class Loan {
     public void removeLoanStatus(LoanStatus loanStatus) {
         this.setLoanStatus(null);
         loanStatus.getLoans().remove(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Loan loan = (Loan) o;
-        return id == loan.id &&
-                userUuid.equals(loan.userUuid) &&
-                loanStartTime.equals(loan.loanStartTime) &&
-                loanEndTime.equals(loan.loanEndTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userUuid, loanStartTime, loanEndTime);
     }
 }

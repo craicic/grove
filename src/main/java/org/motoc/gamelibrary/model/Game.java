@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
@@ -14,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -144,6 +140,7 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private Set<Image> images = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "game_creator",
@@ -151,6 +148,7 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_creator")})
     private Set<Creator> creators = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "game_category",
@@ -158,6 +156,7 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_category")})
     private Set<Category> categories = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "game_theme",
@@ -165,6 +164,7 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_theme")})
     private Set<Theme> themes = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
@@ -229,37 +229,6 @@ public class Game {
     public void removeProductLine(ProductLine productLine) {
         productLine.getGames().remove(this);
         this.setProductLine(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return id == game.id &&
-                minNumberOfPlayer == game.minNumberOfPlayer &&
-                maxNumberOfPlayer == game.maxNumberOfPlayer &&
-                minAge == game.minAge &&
-                maxAge == game.maxAge &&
-                minMonth == game.minMonth &&
-                Objects.equals(coreGame, game.coreGame) &&
-                name.equals(game.name) &&
-                Objects.equals(description, game.description) &&
-                Objects.equals(playTime, game.playTime) &&
-                Objects.equals(stuff, game.stuff) &&
-                Objects.equals(preparation, game.preparation) &&
-                Objects.equals(goal, game.goal) &&
-                Objects.equals(coreRules, game.coreRules) &&
-                Objects.equals(variant, game.variant) &&
-                Objects.equals(ending, game.ending) &&
-                nature == game.nature &&
-                Objects.equals(size, game.size) &&
-                Objects.equals(editionNumber, game.editionNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, coreGame, name, description, playTime, minNumberOfPlayer, maxNumberOfPlayer, minAge, maxAge, minMonth, stuff, preparation, goal, coreRules, variant, ending, nature, size, editionNumber);
     }
 
 

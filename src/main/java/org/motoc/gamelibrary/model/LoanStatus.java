@@ -1,14 +1,10 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -41,6 +37,8 @@ public class LoanStatus {
     @Column(nullable = false)
     private String description;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "loanStatus")
     private Set<Loan> loans;
 
@@ -59,20 +57,5 @@ public class LoanStatus {
     public void removeLoan(Loan loan) {
         this.loans.remove(loan);
         loan.setLoanStatus(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LoanStatus that = (LoanStatus) o;
-        return id == that.id &&
-                tag.equals(that.tag) &&
-                description.equals(that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tag, description);
     }
 }

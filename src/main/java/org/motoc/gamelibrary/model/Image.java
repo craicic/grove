@@ -1,15 +1,11 @@
 package org.motoc.gamelibrary.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 /**
  * Article's image : store a file path
@@ -36,24 +32,10 @@ public class Image {
     @Column(name = "file_path", nullable = false)
     private String filePath;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_game")
-    @ToString.Exclude
     private Game game;
 
-    // No Helper methods
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Image image = (Image) o;
-        return id == image.id &&
-                filePath.equals(image.filePath);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, filePath);
-    }
 }

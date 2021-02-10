@@ -1,15 +1,11 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.motoc.gamelibrary.validation.annotation.UniqueContactHolder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 /**
  * Contact details for external actors
@@ -60,40 +56,46 @@ public class Contact {
     @Column(length = 320)
     private String mailAddress;
 
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+
     private Creator creator;
 
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+
     private Publisher publisher;
 
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Seller seller;
 
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Account account;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Contact contact = (Contact) o;
-        return id == contact.id &&
-                Objects.equals(postalCode, contact.postalCode) &&
-                Objects.equals(street, contact.street) &&
-                Objects.equals(city, contact.city) &&
-                country.equals(contact.country) &&
-                Objects.equals(streetNumber, contact.streetNumber) &&
-                Objects.equals(phoneNumber, contact.phoneNumber) &&
-                Objects.equals(website, contact.website) &&
-                Objects.equals(mailAddress, contact.mailAddress);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, postalCode, street, city, country, streetNumber, phoneNumber, website, mailAddress);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Contact contact = (Contact) o;
+//        return id == contact.id &&
+//                Objects.equals(postalCode, contact.postalCode) &&
+//                Objects.equals(street, contact.street) &&
+//                Objects.equals(city, contact.city) &&
+//                country.equals(contact.country) &&
+//                Objects.equals(streetNumber, contact.streetNumber) &&
+//                Objects.equals(phoneNumber, contact.phoneNumber) &&
+//                Objects.equals(website, contact.website) &&
+//                Objects.equals(mailAddress, contact.mailAddress);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, postalCode, street, city, country, streetNumber, phoneNumber, website, mailAddress);
+//    }
 }

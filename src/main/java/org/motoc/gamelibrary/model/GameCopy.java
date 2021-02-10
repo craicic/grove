@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 
 import javax.persistence.*;
@@ -11,7 +8,6 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -62,18 +58,21 @@ public class GameCopy {
 
     private boolean isLoanable;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_game")
-    @ToString.Exclude
     private Game game;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_seller")
-    @ToString.Exclude
     private Seller seller;
 
-    @OneToMany(mappedBy = "gameCopy")
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "gameCopy")
     private Set<Loan> loans = new HashSet<>();
 
     // Helper methods
@@ -99,26 +98,4 @@ public class GameCopy {
     }
 
     // addGame/removeGame methods are not needed because adding game is mandatory at the creation of this object
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GameCopy gameCopy = (GameCopy) o;
-        return id == gameCopy.id &&
-                isLoanable == gameCopy.isLoanable &&
-                objectCode.equals(gameCopy.objectCode) &&
-                Objects.equals(price, gameCopy.price) &&
-                Objects.equals(location, gameCopy.location) &&
-                Objects.equals(dateOfPurchase, gameCopy.dateOfPurchase) &&
-                registerDate.equals(gameCopy.registerDate) &&
-                wearCondition.equals(gameCopy.wearCondition) &&
-                generalState == gameCopy.generalState;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, objectCode, price, location, dateOfPurchase, registerDate, wearCondition, generalState, isLoanable);
-    }
 }

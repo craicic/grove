@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 
 import javax.persistence.*;
@@ -11,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -23,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "creator", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"lowerCaseFirstName", "lowerCaseLastName"}))
+@Table(name = "creator", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"lower_case_first_name", "lower_case_last_name"}))
 public class Creator {
 
     @Id
@@ -40,11 +36,11 @@ public class Creator {
     private String lastName;
 
     @ToString.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(name = "lower_case_first_name", nullable = false, length = 50)
     private String lowerCaseFirstName;
 
     @ToString.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(name = "lower_case_last_name", nullable = false, length = 50)
     private String lowerCaseLastName;
 
     @NotNull(message = "Role cannot be null")
@@ -52,11 +48,13 @@ public class Creator {
     private CreatorRole role;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "creators")
     private Set<Game> games = new HashSet<>();
 
@@ -93,21 +91,5 @@ public class Creator {
     public void removeContact(Contact contact) {
         this.setContact(null);
         contact.setCreator(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Creator creator = (Creator) o;
-        return id == creator.id &&
-                Objects.equals(firstName, creator.firstName) &&
-                lastName.equals(creator.lastName) &&
-                role == creator.role;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, role);
     }
 }
