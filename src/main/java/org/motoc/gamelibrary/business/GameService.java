@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.GameNameDto;
-import org.motoc.gamelibrary.dto.GameOverviewDto;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.GameRepository;
@@ -28,7 +27,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
     private static final Logger logger = LoggerFactory.getLogger(GameService.class);
 
-    private final ImageService imageService;
+
 
     private final GameRepository gameRepository;
 
@@ -37,22 +36,23 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
                        GameRepository gameRepository,
-                       GameRepositoryCustom gameRepositoryCustom,
-                       ImageService imageService) {
+                       GameRepositoryCustom gameRepositoryCustom) {
         super(genericRepository, Game.class);
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
-        this.imageService = imageService;
     }
 
     public List<GameNameDto> findNames() {
         return gameRepositoryCustom.findNames();
     }
 
-    public Page<GameOverviewDto> findPagedOverview(Pageable pageable, String keyword) {
-        // TODO change method name
-        Page<Game> games = gameRepositoryCustom.getFilteredGameOverview(pageable, keyword);
+    public Page<Game> findPagedOverview(Pageable pageable, String keyword) {
+        Page<Game> games = gameRepository.findAllByLowerCaseNameContaining(keyword, pageable);
 
-        return null;
+        return games;
+    }
+
+    public Page<Game> findPagedOverview(Pageable pageable) {
+        return gameRepository.findAll(pageable);
     }
 }

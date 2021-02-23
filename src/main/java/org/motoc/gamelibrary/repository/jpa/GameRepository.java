@@ -20,8 +20,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             " FROM (game as g " +
             " LEFT JOIN game_category gc on g.id = gc.fk_game " +
             " LEFT JOIN category c on c.id = gc.fk_category " +
-            " LEFT JOIN game_image gi on g.id = gi.fk_game " +
-            " LEFT JOIN image i on i.id = gi.fk_image " +
+            " LEFT JOIN image i on i.fk_game = g.id " +
             " LEFT JOIN game_copy gcopy on g.id = gcopy.fk_game " +
             " LEFT JOIN game_creator gc2 on g.id = gc2.fk_game " +
             " LEFT JOIN creator c2 on c2.id = gc2.fk_creator) " +
