@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.dto;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.Valid;
@@ -20,6 +17,7 @@ import java.util.Set;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class GameOverviewDto {
 
     private long id;
@@ -68,36 +66,4 @@ public class GameOverviewDto {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Long> imageIds;
-
-    public GameOverviewDto(long id,
-                           long gameCopyCount,
-                           GameNameAndIdDto coreGame,
-                           Set<GameNameAndIdDto> expansions,
-                           String name,
-                           String description,
-                           String playTime,
-                           short minNumberOfPlayer,
-                           short maxNumberOfPlayer,
-                           short minAge,
-                           short maxAge,
-                           short minMonth,
-                           Set<CategoryNameAndIdDto> categories,
-                           Set<CreatorWithoutContactDto> creators,
-                           Set<Long> imageIds) {
-        this.id = id;
-        this.gameCopyCount = gameCopyCount;
-        this.coreGame = coreGame;
-        this.expansions = expansions;
-        this.name = name;
-        this.description = description;
-        this.playTime = playTime;
-        this.minNumberOfPlayer = minNumberOfPlayer;
-        this.maxNumberOfPlayer = maxNumberOfPlayer;
-        this.minAge = minAge;
-        this.maxAge = maxAge;
-        this.minMonth = minMonth;
-        this.categories = categories;
-        this.creators = creators;
-        this.imageIds = imageIds;
-    }
 }

@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -33,18 +32,4 @@ public class CategoryDto {
 
     @Valid
     private Set<CategoryDto> children = new HashSet<>();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CategoryDto that = (CategoryDto) o;
-        return id == that.id &&
-                name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
 }
