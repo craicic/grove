@@ -86,7 +86,7 @@ public class GameDto {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Valid
-    private Set<CategoryDto> categories = new HashSet<>();
+    private Set<CategoryNameAndIdDto> categories = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -96,7 +96,7 @@ public class GameDto {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Valid
-    private Set<CreatorDto> creators = new HashSet<>();
+    private Set<CreatorWithoutContactDto> creators = new HashSet<>();
 
     private Set<Long> imageIds = new HashSet<>();
 
