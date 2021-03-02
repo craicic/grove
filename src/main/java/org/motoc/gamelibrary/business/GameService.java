@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Perform business logic on the entity Game
@@ -56,7 +55,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         return gameRepository.findAll(pageable);
     }
 
-    public Game addExpansion(Long gameId, Set<Long> expansionIds) {
+    public Game addExpansion(Long gameId, List<Long> expansionIds) {
         return gameRepository.findById(gameId)
                 .map(game -> {
                     if (game.getCoreGame() != null)
@@ -67,11 +66,11 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     List<Game> expansions = gameRepository.findAllById(expansionIds);
 
                     for (Game expansion : expansions) {
-                        /* if a candidate expansion is already a expansion, throw exception */
+                        /* if a candidate expansion is already an expansion, throw exception */
                         if (expansion.getCoreGame() != null)
                             throw new ChildAndParentException("The candidate expansion : " + expansion
                                     + " is already an expansion of the other game : " + expansion.getCoreGame().getName());
-                        /* if a candidate child already have a child, throw exception */
+                        /* if a candidate expansion already has an expansion, throw exception */
                         if (!expansion.getExpansions().isEmpty())
                             throw new ChildAndParentException("The candidate expansion : " + expansion.getName()
                                     + " has already at least one expansion : expansion.size()=" + expansion.getExpansions().size());
