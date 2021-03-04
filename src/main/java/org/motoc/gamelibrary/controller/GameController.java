@@ -75,4 +75,31 @@ public class GameController {
         logger.trace("findNames() called");
         return service.findNames();
     }
+
+    @PostMapping("/admin/games/{gameId}/add-expansions")
+    GameDto addExpansions(@PathVariable Long gameId,
+                          @RequestBody List<Long> expansionsIds) {
+        logger.trace("addExpansions() called");
+        return mapper.gameToDto(service.addExpansion(gameId, expansionsIds));
+    }
+
+    @PostMapping("/admin/games/{gameId}/add-cre-game/{coreGameId}")
+    GameDto addCoreGame(@PathVariable Long gameId,
+                        @PathVariable Long coreGameId) {
+        logger.trace("addCoreGame() called");
+        return mapper.gameToDto(service.addCoreGame(gameId, coreGameId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-core-link")
+    void unlinkCoreGame(@PathVariable Long gameId) {
+        logger.trace("unlinkCoreGame(gameId) called");
+        service.removeCoreGame(gameId);
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-expansion/{expansionId}")
+    void unlinkExpansion(@PathVariable Long gameId,
+                         @PathVariable Long expansionId) {
+        logger.trace("removeExpansion(gameId, expansionId) called");
+        service.removeExpansion(gameId, expansionId);
+    }
 }
