@@ -30,7 +30,7 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     /**
      * Core game, if this game is an extension

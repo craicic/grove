@@ -21,7 +21,7 @@ public class LoanStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Tag cannot be null or blank")
     @Size(max = 50, message = "Tag cannot exceed 50 characters")

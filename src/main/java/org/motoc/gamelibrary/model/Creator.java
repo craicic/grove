@@ -24,7 +24,7 @@ public class Creator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @Size(max = 50, message = "First name should not exceed 50 characters")
     @Column(length = 50)

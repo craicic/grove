@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class GameNameAndIdDto {
 
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     private String name;

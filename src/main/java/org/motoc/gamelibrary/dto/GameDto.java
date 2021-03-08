@@ -25,7 +25,7 @@ import java.util.Set;
 @ConsistentNumberOfPlayer
 @SelectYearOrMonth
 public class GameDto {
-    private long id;
+    private Long id;
 
     @EqualsAndHashCode.Exclude
     private GameNameAndIdDto coreGame;

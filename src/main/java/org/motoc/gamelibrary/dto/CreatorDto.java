@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 public class CreatorDto {
 
 
-    private long id;
+    private Long id;
 
     @Size(max = 50, message = "First name should not exceed 50 characters")
     private String firstName;

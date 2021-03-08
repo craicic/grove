@@ -23,7 +23,7 @@ public class Theme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 50, message = "Name cannot exceed 50")
@@ -40,7 +40,7 @@ public class Theme {
     private Set<Game> games = new HashSet<>();
 
     // Other constructors
-    public Theme(long id, String name) {
+    public Theme(Long id, String name) {
         this.id = id;
         this.name = name;
     }

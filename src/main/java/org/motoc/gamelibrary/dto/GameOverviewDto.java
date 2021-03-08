@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class GameOverviewDto {
 
-    private long id;
+    private Long id;
 
     /**
      * The quantity of copy the game library has

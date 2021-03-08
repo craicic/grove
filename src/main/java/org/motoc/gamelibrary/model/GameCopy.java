@@ -24,7 +24,7 @@ public class GameCopy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @Pattern(regexp = "^[0-9]{1,5}$")
     @Column(name = "object_code", nullable = false)

@@ -22,7 +22,7 @@ public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @Size(max = 50, message = "Postal code cannot exceed 50 characters")
     @Column(length = 50)

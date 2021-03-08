@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class ImageDto {
 
-    private long id;
+    private Long id;
 
     @NotNull
     private byte[] bytes;

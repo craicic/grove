@@ -24,7 +24,7 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "User uuid cannot be null or blank")
     @Size(max = 50, message = "User uuid cannot exceed 50 characters")

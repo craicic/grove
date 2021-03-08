@@ -25,7 +25,7 @@ public class Image {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "File path cannot be null or blank")
     @Size(max = 4251, message = "File path cannot exceed 4251 characters")

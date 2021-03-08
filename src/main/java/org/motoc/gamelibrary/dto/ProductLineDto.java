@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class ProductLineDto {
 
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 255, message = "Name cannot exceed 255 characters")

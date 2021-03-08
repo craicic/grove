@@ -21,7 +21,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "User uuid cannot be null or blank")
     @Size(max = 50, message = "User uuid cannot exceed 50 characters")
@@ -40,20 +40,4 @@ public class Account {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Account account = (Account) o;
-//        return id == account.id &&
-//                userUuid.equals(account.userUuid) &&
-//                membershipNumber.equals(account.membershipNumber) &&
-//                Objects.equals(renewalDate, account.renewalDate);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, userUuid, membershipNumber, renewalDate);
-//    }
 }
