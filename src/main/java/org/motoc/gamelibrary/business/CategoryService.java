@@ -100,7 +100,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                 .orElseThrow(
                         () -> {
                             logger.debug("No category of id={} found.", catId);
-                            throw new NotFoundException(catId);
+                            throw new NotFoundException("No category of id=" + catId + " found.");
                         }
                 );
     }
@@ -112,7 +112,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
 
         Category parent = categoryRepository.findById(parentId).orElseThrow(() -> {
             logger.debug("No parent category of id={} found.", parentId);
-            throw new NotFoundException(parentId);
+            throw new NotFoundException("No parent category of id " + parentId + " found.");
         });
 
 
@@ -129,7 +129,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                 .orElseThrow(
                         () -> {
                             logger.debug("No category of id={} found.", catId);
-                            throw new NotFoundException(catId);
+                            throw new NotFoundException("No category of id=" + catId + " found.");
                         }
                 );
     }
@@ -148,7 +148,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
                         },
                         () -> {
                             logger.debug("No category of id={} found.", catId);
-                            throw new NotFoundException(catId);
+                            throw new NotFoundException("No category of id=" + catId + " found.");
                         });
     }
 

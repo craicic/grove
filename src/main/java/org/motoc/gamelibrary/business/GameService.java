@@ -2,9 +2,9 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.GameNameDto;
-import org.motoc.gamelibrary.model.Game;
+import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
-import org.motoc.gamelibrary.repository.jpa.GameRepository;
+import org.motoc.gamelibrary.repository.jpa.*;
 import org.motoc.gamelibrary.technical.exception.ChildAndParentException;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
@@ -29,19 +29,35 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
     private static final Logger logger = LoggerFactory.getLogger(GameService.class);
 
-
     private final GameRepository gameRepository;
 
     private final GameRepositoryCustom gameRepositoryCustom;
 
+    private final CategoryRepository categoryRepository;
+    private final ThemeRepository themeRepository;
+    private final GameCopyRepository gameCopyRepository;
+    private final CreatorRepository creatorRepository;
+    private final PublisherRepository publisherRepository;
+
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
                        GameRepository gameRepository,
-                       GameRepositoryCustom gameRepositoryCustom) {
+                       GameRepositoryCustom gameRepositoryCustom,
+                       CategoryRepository categoryRepository,
+                       ThemeRepository themeRepository,
+                       GameCopyRepository gameCopyRepository,
+                       CreatorRepository creatorRepository,
+                       PublisherRepository publisherRepository) {
         super(genericRepository, Game.class);
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
+        this.categoryRepository = categoryRepository;
+        this.themeRepository = themeRepository;
+        this.gameCopyRepository = gameCopyRepository;
+        this.creatorRepository = creatorRepository;
+        this.publisherRepository = publisherRepository;
     }
+
 
     public List<GameNameDto> findNames() {
         return gameRepositoryCustom.findNames();
@@ -81,7 +97,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 .orElseThrow(
                         () -> {
                             logger.debug("No game of id={} found.", gameId);
-                            throw new NotFoundException(gameId);
+                            throw new NotFoundException("No category of id=" + gameId + " found.");
                         }
                 );
     }
@@ -89,8 +105,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     public Game addCoreGame(Long gameId, Long coreGameId) {
         Game coreGame = gameRepository.findById(coreGameId)
                 .orElseThrow(() -> {
-                    logger.debug("No core game of id={} found.", coreGameId);
-                    throw new NotFoundException(coreGameId);
+                    throw new NotFoundException("No core game of id=" + coreGameId + " found.");
                 });
 
         return gameRepository.findById(gameId)
@@ -105,8 +120,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 })
                 .orElseThrow(
                         () -> {
-                            logger.debug("No game of id={} found.", gameId);
-                            throw new NotFoundException(gameId);
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
                         });
     }
 
@@ -119,8 +133,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         logger.info("Game of id {} has no core game", id);
                 },
                 () -> {
-                    logger.debug("No game of id={} found.", id);
-                    throw new NotFoundException(id);
+                    throw new NotFoundException("No game of id=" + id + " found.");
                 });
     }
 
@@ -134,4 +147,174 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         gameRepositoryCustom.removeExpansion(game, expansion);
     }
 
+    public Game addCategory(Long gameId, Long categoryId) {
+        Category category = categoryRepository
+                .findById(categoryId)
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No category of id=" + categoryId + " found.");
+                        }
+                );
+
+        return gameRepository
+                .findById(gameId)
+                .map(game -> gameRepositoryCustom.addCategory(game, category))
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+    public void removeCategory(Long gameId, Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> {
+                    throw new NotFoundException("No category of id={}" + categoryId + " found.");
+                }
+        );
+
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> gameRepositoryCustom.removeCategory(game, category), () -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                });
+    }
+
+    public Game addTheme(Long gameId, Long themeId) {
+        Theme theme = themeRepository
+                .findById(themeId)
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No Theme of id=" + themeId + " found.");
+                        }
+                );
+        return gameRepository
+                .findById(gameId)
+                .map(game -> gameRepositoryCustom.addTheme(game, theme))
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+    public void removeTheme(Long gameId, Long themeId) {
+        Theme theme = themeRepository.findById(themeId).orElseThrow(() -> {
+                    throw new NotFoundException("No theme of id={}" + themeId + " found.");
+                }
+        );
+
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> gameRepositoryCustom.removeTheme(game, theme), () -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                });
+    }
+
+    public Game addGameCopy(Long gameId, Long gameCopyId) {
+        GameCopy gameCopy = gameCopyRepository
+                .findById(gameCopyId)
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No GameCopy of id=" + gameCopyId + " found.");
+                        }
+                );
+        return gameRepository
+                .findById(gameId)
+                .map(game -> gameRepositoryCustom.addGameCopy(game, gameCopy))
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+    public void removeGameCopy(Long gameId, Long gameCopyId) {
+        GameCopy gameCopy = gameCopyRepository.findById(gameCopyId).orElseThrow(() -> {
+                    throw new NotFoundException("No gameCopy of id={}" + gameCopyId + " found.");
+                }
+        );
+
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> gameRepositoryCustom.removeGameCopy(game, gameCopy), () -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                });
+    }
+
+    public Game addCreator(Long gameId, Long creatorId) {
+        Creator creator = creatorRepository
+                .findById(creatorId)
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No Creator of id=" + creatorId + " found.");
+                        }
+                );
+        return gameRepository
+                .findById(gameId)
+                .map(game -> gameRepositoryCustom.addCreator(game, creator))
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+    public void removeCreator(Long gameId, Long creatorId) {
+        Creator creator = creatorRepository.findById(creatorId).orElseThrow(() -> {
+                    throw new NotFoundException("No creator of id={}" + creatorId + " found.");
+                }
+        );
+
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> gameRepositoryCustom.removeCreator(game, creator), () -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                });
+    }
+
+    public Game addPublisher(Long gameId, Long publisherId) {
+        Publisher publisher = publisherRepository
+                .findById(publisherId)
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No Publisher of id=" + publisherId + " found.");
+                        }
+                );
+        return gameRepository
+                .findById(gameId)
+                .map(game -> gameRepositoryCustom.addPublisher(game, publisher))
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+    public void removePublisher(Long gameId, Long publisherId) {
+        Publisher publisher = publisherRepository.findById(publisherId).orElseThrow(() -> {
+                    throw new NotFoundException("No publisher of id={}" + publisherId + " found.");
+                }
+        );
+
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> gameRepositoryCustom.removePublisher(game, publisher), () -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                });
+    }
+
+//    public Game addCategoryOld(Long gameId, Long categoryId) {
+//
+//        return gameRepository
+//                .findById(gameId)
+//                .map(game -> gameRepositoryCustom.addCategoryOld(game, categoryId))
+//                .orElseThrow(
+//                        () -> {
+//                            logger.debug("No game of id={} found.", gameId);
+//                            throw new NotFoundException(gameId);
+//                        }
+//                );
+//    }
+
+//    public void removeCategoryOld(Long gameId, Long categoryId) {
+//        gameRepository
+//                .findById(gameId).ifPresentOrElse(
+//                game -> gameRepositoryCustom.removeCategory(game, categoryId)
+//                ,
+//                () -> {
+//                    logger.debug("No game of id={} found.", gameId);
+//                    throw new NotFoundException(gameId);
+//                }
+//        );
+//    }
 }

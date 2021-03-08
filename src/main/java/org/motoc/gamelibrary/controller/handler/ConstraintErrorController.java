@@ -43,7 +43,10 @@ public class ConstraintErrorController extends ResponseEntityExceptionHandler {
                                  HttpHeaders headers,
                                  HttpStatus status, WebRequest request) {
 
-        logger.debug("method handleMethodArgumentNotValid was invoked");
+        logger.debug("Method handleMethodArgumentNotValid was invoked \n" +
+                "Type of exception : " + ex.getClass().getSimpleName() + "\n" +
+                "Reason : " + ex.getMessage());
+
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", status.value());

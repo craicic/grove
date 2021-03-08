@@ -82,7 +82,7 @@ public class ImageService {
     private String getPathFromDatabase(Long id) {
         Image image = repository.findById(id).orElseThrow(() -> {
                     logger.debug("No image path of id={} found.", id);
-                    throw new NotFoundException(id);
+                    throw new NotFoundException("No image path of id=" + id + " found.");
                 }
         );
         return image.getFilePath();

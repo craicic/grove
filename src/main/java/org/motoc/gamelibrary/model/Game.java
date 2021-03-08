@@ -214,6 +214,11 @@ public class Game {
         gameCopy.setGame(this);
     }
 
+    public void removeGameCopy(GameCopy gameCopy) {
+        this.gameCopies.remove(gameCopy);
+        gameCopy.setGame(null);
+    }
+
     public void addTheme(Theme theme) {
         this.themes.add(theme);
         theme.getGames().add(this);
@@ -222,6 +227,11 @@ public class Game {
     public void removeTheme(Theme theme) {
         this.themes.remove(theme);
         theme.getGames().remove(this);
+    }
+
+    public void addPublisher(Publisher publisher) {
+        this.setPublisher(publisher);
+        publisher.getGames().add(this);
     }
 
     public void removePublisher(Publisher publisher) {

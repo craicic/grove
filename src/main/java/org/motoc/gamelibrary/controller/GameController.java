@@ -99,7 +99,77 @@ public class GameController {
     @DeleteMapping("/admin/games/{gameId}/unlink-expansion/{expansionId}")
     void unlinkExpansion(@PathVariable Long gameId,
                          @PathVariable Long expansionId) {
-        logger.trace("removeExpansion(gameId, expansionId) called");
+        logger.trace("unlinkExpansion(gameId, expansionId) called");
         service.removeExpansion(gameId, expansionId);
+    }
+
+    @PostMapping("/admin/games/{gameId}/add-category/{categoryId}")
+    GameDto addCategory(@PathVariable Long gameId,
+                        @PathVariable Long categoryId) {
+        logger.trace("addCategory() called");
+        return mapper.gameToDto(service.addCategory(gameId, categoryId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-category/{categoryId}")
+    void unlinkCategory(@PathVariable Long gameId,
+                        @PathVariable Long categoryId) {
+        logger.trace("unlinkCategory() called");
+        service.removeCategory(gameId, categoryId);
+    }
+
+    @PostMapping("/admin/games/{gameId}/add-theme/{themeId}")
+    GameDto addTheme(@PathVariable Long gameId,
+                     @PathVariable Long themeId) {
+        logger.trace("addTheme() called");
+        return mapper.gameToDto(service.addTheme(gameId, themeId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-theme/{themeId}")
+    void unlinkTheme(@PathVariable Long gameId,
+                     @PathVariable Long themeId) {
+        logger.trace("unlinkTheme() called");
+        service.removeTheme(gameId, themeId);
+    }
+
+    @PostMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")
+    GameDto addGameCopy(@PathVariable Long gameId,
+                        @PathVariable Long gameCopyId) {
+        logger.trace("addGameCopy() called");
+        return mapper.gameToDto(service.addGameCopy(gameId, gameCopyId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-game-copy/{gameCopyId}")
+    void unlinkGameCopy(@PathVariable Long gameId,
+                        @PathVariable Long gameCopyId) {
+        logger.trace("unlinkGameCopy() called");
+        service.removeGameCopy(gameId, gameCopyId);
+    }
+
+    @PostMapping("/admin/games/{gameId}/add-creator/{creatorId}")
+    GameDto addCreator(@PathVariable Long gameId,
+                       @PathVariable Long creatorId) {
+        logger.trace("addCreator() called");
+        return mapper.gameToDto(service.addCreator(gameId, creatorId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-creator/{creatorId}")
+    void unlinkCreator(@PathVariable Long gameId,
+                       @PathVariable Long creatorId) {
+        logger.trace("unlinkCreator() called");
+        service.removeCreator(gameId, creatorId);
+    }
+
+    @PostMapping("/admin/games/{gameId}/add-publisher/{publisherId}")
+    GameDto addPublisher(@PathVariable Long gameId,
+                         @PathVariable Long publisherId) {
+        logger.trace("addPublisher() called");
+        return mapper.gameToDto(service.addPublisher(gameId, publisherId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-publisher/{publisherId}")
+    void unlinkPublisher(@PathVariable Long gameId,
+                         @PathVariable Long publisherId) {
+        logger.trace("unlinkPublisher() called");
+        service.removePublisher(gameId, publisherId);
     }
 }
