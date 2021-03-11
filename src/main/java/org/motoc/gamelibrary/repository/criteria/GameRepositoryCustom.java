@@ -49,4 +49,6 @@ public interface GameRepositoryCustom {
     Game addPublisher(Game game, Publisher publisher);
 
     void removePublisher(Game game, Publisher publisher);
+
+    void attachImage(Game game, Long imageId);
 }

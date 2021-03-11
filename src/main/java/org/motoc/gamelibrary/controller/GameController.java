@@ -83,7 +83,7 @@ public class GameController {
         return mapper.gameToDto(service.addExpansion(gameId, expansionsIds));
     }
 
-    @PostMapping("/admin/games/{gameId}/add-cre-game/{coreGameId}")
+    @PostMapping("/admin/games/{gameId}/add-core-game/{coreGameId}")
     GameDto addCoreGame(@PathVariable Long gameId,
                         @PathVariable Long coreGameId) {
         logger.trace("addCoreGame() called");
@@ -172,4 +172,5 @@ public class GameController {
         logger.trace("unlinkPublisher() called");
         service.removePublisher(gameId, publisherId);
     }
+
 }

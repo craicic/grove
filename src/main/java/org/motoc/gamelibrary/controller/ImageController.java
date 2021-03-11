@@ -34,6 +34,13 @@ public class ImageController {
         return imageService.save(file);
     }
 
+    @PostMapping("/admin/images/games/{gameId}")
+    Long save(@RequestParam(name = "file") MultipartFile file,
+              @PathVariable Long gameId) throws IOException {
+        logger.trace("save(image) called");
+        return imageService.saveThenAttachToGame(file, gameId);
+    }
+
     @GetMapping("/admin/images/{id}")
     ImageDto findById(@PathVariable Long id) throws IOException {
         logger.trace("findById(id) called");

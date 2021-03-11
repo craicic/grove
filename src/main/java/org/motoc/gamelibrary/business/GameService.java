@@ -38,6 +38,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     private final GameCopyRepository gameCopyRepository;
     private final CreatorRepository creatorRepository;
     private final PublisherRepository publisherRepository;
+    private final ImageRepository imageRepository;
 
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
@@ -47,7 +48,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                        ThemeRepository themeRepository,
                        GameCopyRepository gameCopyRepository,
                        CreatorRepository creatorRepository,
-                       PublisherRepository publisherRepository) {
+                       PublisherRepository publisherRepository,
+                       ImageRepository imageRepository) {
         super(genericRepository, Game.class);
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
@@ -56,6 +58,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         this.gameCopyRepository = gameCopyRepository;
         this.creatorRepository = creatorRepository;
         this.publisherRepository = publisherRepository;
+        this.imageRepository = imageRepository;
     }
 
 
@@ -157,7 +160,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         return gameRepository
                 .findById(gameId)
-                .map(game -> gameRepositoryCustom.addCategory(game, category))
+                .map(game -> {
+                    if (!game.getCategories().isEmpty() && game.getCategories().contains(category))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is already linked to category of id=" + category.getId());
+                    return gameRepositoryCustom.addCategory(game, category);
+                })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         }
@@ -172,7 +180,13 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         gameRepository
                 .findById(gameId)
-                .ifPresentOrElse(game -> gameRepositoryCustom.removeCategory(game, category), () -> {
+                .ifPresentOrElse(game -> {
+                    if (game.getCategories().isEmpty() || !game.getCategories().contains(category))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is not linked to category of id=" + category.getId());
+
+                    gameRepositoryCustom.removeCategory(game, category);
+                }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
     }
@@ -186,7 +200,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
         return gameRepository
                 .findById(gameId)
-                .map(game -> gameRepositoryCustom.addTheme(game, theme))
+                .map(game -> {
+                    if (!game.getThemes().isEmpty() && game.getThemes().contains(theme))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is already linked to theme of id=" + theme.getId());
+                    return gameRepositoryCustom.addTheme(game, theme);
+                })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         }
@@ -201,7 +220,13 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         gameRepository
                 .findById(gameId)
-                .ifPresentOrElse(game -> gameRepositoryCustom.removeTheme(game, theme), () -> {
+                .ifPresentOrElse(game -> {
+                    if (game.getThemes().isEmpty() || !game.getThemes().contains(theme))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is not linked to theme of id=" + theme.getId());
+
+                    gameRepositoryCustom.removeTheme(game, theme);
+                }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
     }
@@ -215,7 +240,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
         return gameRepository
                 .findById(gameId)
-                .map(game -> gameRepositoryCustom.addGameCopy(game, gameCopy))
+                .map(game -> {
+                    if (!game.getGameCopies().isEmpty() && game.getGameCopies().contains(gameCopy))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is already linked to gameCopy of id=" + gameCopy.getId());
+                    return gameRepositoryCustom.addGameCopy(game, gameCopy);
+                })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         }
@@ -230,7 +260,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         gameRepository
                 .findById(gameId)
-                .ifPresentOrElse(game -> gameRepositoryCustom.removeGameCopy(game, gameCopy), () -> {
+                .ifPresentOrElse(game -> {
+                    if (!game.getGameCopies().contains(gameCopy))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is not linked to gameCopy of id=" + gameCopy.getId());
+                    gameRepositoryCustom.removeGameCopy(game, gameCopy);
+                }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
     }
@@ -244,7 +279,13 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
         return gameRepository
                 .findById(gameId)
-                .map(game -> gameRepositoryCustom.addCreator(game, creator))
+                .map(game -> {
+                    if (!game.getCreators().isEmpty() && game.getCreators().contains(creator))
+                        logger.warn("Game of id=" + game.getId() +
+                                " is already linked to creator of id=" + creator.getId());
+
+                    return gameRepositoryCustom.addCreator(game, creator);
+                })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         }
@@ -259,7 +300,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         gameRepository
                 .findById(gameId)
-                .ifPresentOrElse(game -> gameRepositoryCustom.removeCreator(game, creator), () -> {
+                .ifPresentOrElse(game -> {
+                    if (game.getCreators().isEmpty() || !game.getCreators().contains(creator))
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is not linked to creator of id=" + creator.getId());
+                    gameRepositoryCustom.removeCreator(game, creator);
+                }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
     }
@@ -273,7 +319,15 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
         return gameRepository
                 .findById(gameId)
-                .map(game -> gameRepositoryCustom.addPublisher(game, publisher))
+                .map(game -> {
+                    if (game.getPublisher() == publisher)
+                        logger.warn("Game of id=" + game.getId() +
+                                " is already linked to the given publisher of id=" + publisher.getId());
+                    if (game.getPublisher() != null)
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is already linked to another publisher of id=" + game.getPublisher().getId());
+                    return gameRepositoryCustom.addPublisher(game, publisher);
+                })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         }
@@ -288,33 +342,25 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         gameRepository
                 .findById(gameId)
-                .ifPresentOrElse(game -> gameRepositoryCustom.removePublisher(game, publisher), () -> {
+                .ifPresentOrElse(game -> {
+                    if (game.getPublisher() == null || game.getPublisher() != publisher)
+                        throw new IllegalStateException("Game of id=" + game.getId() +
+                                " is not linked to publisher of id=" + publisher.getId());
+
+                    gameRepositoryCustom.removePublisher(game, publisher);
+                }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
     }
 
-//    public Game addCategoryOld(Long gameId, Long categoryId) {
-//
-//        return gameRepository
-//                .findById(gameId)
-//                .map(game -> gameRepositoryCustom.addCategoryOld(game, categoryId))
-//                .orElseThrow(
-//                        () -> {
-//                            logger.debug("No game of id={} found.", gameId);
-//                            throw new NotFoundException(gameId);
-//                        }
-//                );
-//    }
-
-//    public void removeCategoryOld(Long gameId, Long categoryId) {
-//        gameRepository
-//                .findById(gameId).ifPresentOrElse(
-//                game -> gameRepositoryCustom.removeCategory(game, categoryId)
-//                ,
-//                () -> {
-//                    logger.debug("No game of id={} found.", gameId);
-//                    throw new NotFoundException(gameId);
-//                }
-//        );
-//    }
+    public void addImage(Long gameId, Long imageId) {
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> {
+                            gameRepositoryCustom.attachImage(game, imageId);
+                        },
+                        () -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        });
+    }
 }

@@ -6,7 +6,7 @@
 - [X] Use lombok Equals and Hash to reduce code quantity.
 - [X] Use lombok .Exclude.
 - [x] Game - Image : set relationship to one to many.
-- [ ] CoreGame - Game : addCore, addExtension, and remove...
+- [X] CoreGame - Game : addCore, addExtension, and remove...
 #### Repository
 - [X] Remove @Repository on JpaRepos.
 ## V1.5 (Delivery)

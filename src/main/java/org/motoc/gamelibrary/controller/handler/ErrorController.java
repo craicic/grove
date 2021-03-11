@@ -76,4 +76,17 @@ public class ErrorController {
         logger.warn("In iOHandler, new error treated : " + error);
         return error;
     }
+
+    @ResponseBody
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ErrorDetails illegalStateHandler(IllegalStateException ex, WebRequest request) {
+        ErrorDetails error = new ErrorDetails(
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false),
+                HttpStatus.BAD_REQUEST);
+        logger.warn("In illegalStateHandler, new error treated : " + error);
+        return error;
+    }
 }

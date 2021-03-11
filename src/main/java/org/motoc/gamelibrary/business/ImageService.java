@@ -31,10 +31,13 @@ public class ImageService {
 
     private final ImageRepository repository;
 
+    private final GameService gameService;
+
     @Autowired
-    public ImageService(PathProperties pathProperties, ImageRepository repository) {
+    public ImageService(PathProperties pathProperties, ImageRepository repository, GameService gameService) {
         this.pathProperties = pathProperties;
         this.repository = repository;
+        this.gameService = gameService;
     }
 
 
@@ -45,6 +48,17 @@ public class ImageService {
         String path = "";
         path = storeImageOnFileSystem(image);
         return persistPathInDatabase(path);
+    }
+
+    /**
+     * Similar to save method, but also link the image to a game
+     */
+    public Long saveThenAttachToGame(MultipartFile image, Long gameId) throws IOException {
+        String path = "";
+        path = storeImageOnFileSystem(image);
+        Long imageId = persistPathInDatabase(path);
+        gameService.addImage(imageId, gameId);
+        return imageId;
     }
 
     /**
@@ -155,4 +169,6 @@ public class ImageService {
 
         return id;
     }
+
+
 }
