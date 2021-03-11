@@ -38,6 +38,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     private final GameCopyRepository gameCopyRepository;
     private final CreatorRepository creatorRepository;
     private final PublisherRepository publisherRepository;
+    private final ImageRepository imageRepository;
 
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
@@ -47,7 +48,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                        ThemeRepository themeRepository,
                        GameCopyRepository gameCopyRepository,
                        CreatorRepository creatorRepository,
-                       PublisherRepository publisherRepository) {
+                       PublisherRepository publisherRepository,
+                       ImageRepository imageRepository) {
         super(genericRepository, Game.class);
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
@@ -56,6 +58,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         this.gameCopyRepository = gameCopyRepository;
         this.creatorRepository = creatorRepository;
         this.publisherRepository = publisherRepository;
+        this.imageRepository = imageRepository;
     }
 
 
@@ -178,12 +181,17 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public void removeExpansion(Long gameId, Long expansionId) {
-        Game game = new Game();
-        game.setId(gameId);
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                }
+        );
 
-        Game expansion = new Game();
-        expansion.setId(expansionId);
+        Game expansion = gameRepository.findById(expansionId).orElseThrow(() -> {
+            throw new NotFoundException("No expansion of id=" + expansionId + " found.");
+        });
 
+        if (game.getExpansions().isEmpty() || !game.getExpansions().contains(expansion))
+            throw new IllegalStateException("Game of id=" + game.getId() + " does not contains this expansion of id=" + expansion.getId());
         gameRepositoryCustom.removeExpansion(game, expansion);
     }
 
@@ -391,10 +399,17 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public void addImage(Long gameId, Long imageId) {
+        Image image = imageRepository.findById(imageId).orElseThrow(
+                () -> {
+                    throw new NotFoundException("No image of id=" + imageId + " found.");
+                });
+
         gameRepository
                 .findById(gameId)
                 .ifPresentOrElse(game -> {
-                            gameRepositoryCustom.attachImage(game, imageId);
+                            if (game.getImages() != null && game.getImages().contains(image))
+                                throw new IllegalStateException("Image of id=" + imageId + " is already attached to the game of id=" + gameId);
+                            gameRepositoryCustom.attachImage(game, image);
                         },
                         () -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");

@@ -50,7 +50,7 @@ public interface GameRepositoryCustom {
 
     void removePublisher(Game game, Publisher publisher);
 
-    void attachImage(Game game, Long imageId);
+    void attachImage(Game game, Image image);
 
     Game addExpansion(Game game, Game expansion);
 }

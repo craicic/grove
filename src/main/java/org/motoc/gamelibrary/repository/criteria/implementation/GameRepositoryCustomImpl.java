@@ -73,15 +73,9 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
 
     @Override
     public void removeExpansion(Game game, Game expansion) {
-        Game gameFromDB = entityManager.find(Game.class, game.getId());
-        Game expansionFromDB = entityManager.find(Game.class, expansion.getId());
+        game.removeExpansion(expansion);
+        entityManager.persist(game);
 
-        if (gameFromDB.getExpansions().isEmpty() || !gameFromDB.getExpansions().contains(expansionFromDB))
-            logger.warn("Game of id=" + game.getId() + " does not contains this expansion of id=" + expansion.getId());
-        else {
-            gameFromDB.removeExpansion(expansionFromDB);
-            entityManager.persist(gameFromDB);
-        }
     }
 
     @Override
@@ -150,14 +144,10 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
-    public void attachImage(Game game, Long imageId) {
-        Image image = entityManager.find(Image.class, imageId);
-        if (game.getImages() != null && game.getImages().contains(image))
-            game.addImage(image);
-        else {
-            game.addImage(image);
-            entityManager.persist(game);
-        }
+    public void attachImage(Game game, Image image) {
+        game.addImage(image);
+        entityManager.persist(game);
+
     }
 
 }
