@@ -41,12 +41,7 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     @Override
     public Game addExpansions(Game game, List<Game> expansions) {
         for (Game expansion : expansions) {
-            if (!game.getExpansions().contains(expansion))
-                game.addExpansion(expansion);
-            else
-                logger.warn("Expansion {} of id={} is already linked to {} of id={}",
-                        expansion.getName(), expansion.getId(),
-                        game.getName(), game.getId());
+            game.addExpansion(expansion);
         }
         entityManager.persist(game);
         logger.info("Successfully persisted game of id={}", game.getId());
@@ -54,14 +49,18 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
+    public Game addExpansion(Game game, Game expansion) {
+        game.addExpansion(expansion);
+        entityManager.persist(game);
+        logger.info("Successfully persisted game of id={}", game.getId());
+        return game;
+    }
+
+    @Override
     public Game addCoreGame(Game game, Game coreGame) {
-        Game coreGameFromDB = entityManager.find(Game.class, coreGame.getId());
-        if (coreGameFromDB != null) {
-            game.addCoreGame(coreGameFromDB);
-            logger.info("Successfully persisted game of id={}", game.getId());
-        } else {
-            logger.warn("No core game of id {}", coreGame.getId());
-        }
+        game.addCoreGame(coreGame);
+        entityManager.persist(game);
+        logger.info("Successfully persisted game of id={}", game.getId());
         return game;
     }
 

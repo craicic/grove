@@ -38,7 +38,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     private final GameCopyRepository gameCopyRepository;
     private final CreatorRepository creatorRepository;
     private final PublisherRepository publisherRepository;
-    private final ImageRepository imageRepository;
 
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
@@ -48,8 +47,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                        ThemeRepository themeRepository,
                        GameCopyRepository gameCopyRepository,
                        CreatorRepository creatorRepository,
-                       PublisherRepository publisherRepository,
-                       ImageRepository imageRepository) {
+                       PublisherRepository publisherRepository) {
         super(genericRepository, Game.class);
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
@@ -58,7 +56,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         this.gameCopyRepository = gameCopyRepository;
         this.creatorRepository = creatorRepository;
         this.publisherRepository = publisherRepository;
-        this.imageRepository = imageRepository;
     }
 
 
@@ -74,7 +71,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         return gameRepository.findAll(pageable);
     }
 
-    public Game addExpansion(Long gameId, List<Long> expansionIds) {
+    public Game addExpansions(Long gameId, List<Long> expansionIds) {
         return gameRepository.findById(gameId)
                 .map(game -> {
                     if (game.getCoreGame() != null)
@@ -87,15 +84,55 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     for (Game expansion : expansions) {
                         /* if a candidate expansion is already an expansion, throw exception */
                         if (expansion.getCoreGame() != null)
-                            throw new ChildAndParentException("The candidate expansion : " + expansion
+                            throw new ChildAndParentException("The candidate expansion : " + expansion.getName()
                                     + " is already an expansion of the other game : " + expansion.getCoreGame().getName());
                         /* if a candidate expansion already has an expansion, throw exception */
                         if (!expansion.getExpansions().isEmpty())
                             throw new ChildAndParentException("The candidate expansion : " + expansion.getName()
                                     + " has already at least one expansion : expansion.size()=" + expansion.getExpansions().size());
+                        if (game.getExpansions().contains(expansion))
+                            throw new ChildAndParentException("Expansion : " + expansion.getName() + " of id=" + expansion.getId() +
+                                    " is already linked to the game : " + game.getName() + " of id=" + game.getId());
                     }
 
                     return gameRepositoryCustom.addExpansions(game, expansions);
+                })
+                .orElseThrow(
+                        () -> {
+                            logger.debug("No game of id={} found.", gameId);
+                            throw new NotFoundException("No category of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+
+    public Game addExpansion(Long gameId, Long expansionId) {
+        Game expansion = gameRepository.findById(expansionId).orElseThrow(
+                () -> {
+                    throw new NotFoundException("No expansion of id=" + expansionId + " found.");
+                }
+        );
+
+        return gameRepository.findById(gameId)
+                .map(game -> {
+                    if (game.getCoreGame() != null)
+                        throw new ChildAndParentException("The candidate core game "
+                                + game.getName() + "  is already set has an expansion of the game : "
+                                + game.getCoreGame().getName());
+
+                    /* if the candidate expansion is already an expansion, throw exception */
+                    if (expansion.getCoreGame() != null)
+                        throw new ChildAndParentException("The candidate expansion : " + expansion.getName()
+                                + " is already an expansion of the other game : " + expansion.getCoreGame().getName());
+                    /* if a candidate expansion already has an expansion, throw exception */
+                    if (!expansion.getExpansions().isEmpty())
+                        throw new ChildAndParentException("The candidate expansion : " + expansion.getName()
+                                + " has already at least one expansion : expansion.size()=" + expansion.getExpansions().size());
+                    if (game.getExpansions().contains(expansion))
+                        throw new ChildAndParentException("Expansion : " + expansion.getName() + " of id=" + expansion.getId() +
+                                " is already linked to the game : " + game.getName() + " of id=" + game.getId());
+
+                    return gameRepositoryCustom.addExpansion(game, expansion);
                 })
                 .orElseThrow(
                         () -> {
@@ -363,4 +400,5 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         });
     }
+
 }

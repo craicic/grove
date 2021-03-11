@@ -76,11 +76,18 @@ public class GameController {
         return service.findNames();
     }
 
+    @PostMapping("/admin/games/{gameId}/add-expansions/{expansionId}")
+    GameDto addExpansion(@PathVariable Long gameId,
+                         @PathVariable Long expansionId) {
+        logger.trace("addExpansion() called");
+        return mapper.gameToDto(service.addExpansion(gameId, expansionId));
+    }
+
     @PostMapping("/admin/games/{gameId}/add-expansions")
     GameDto addExpansions(@PathVariable Long gameId,
                           @RequestBody List<Long> expansionsIds) {
         logger.trace("addExpansions() called");
-        return mapper.gameToDto(service.addExpansion(gameId, expansionsIds));
+        return mapper.gameToDto(service.addExpansions(gameId, expansionsIds));
     }
 
     @PostMapping("/admin/games/{gameId}/add-core-game/{coreGameId}")
