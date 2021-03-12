@@ -11,5 +11,6 @@
 - [X] Remove @Repository on JpaRepos.
 ## V1.5 (Delivery)
 - [ ] Game - Publisher : remove relationship. Create one to many between GameCopy and Publisher.
-
+- [ ] Improve logs.
+- [ ] Improve documentation.
 ## V2 (Update)

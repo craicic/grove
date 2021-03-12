@@ -54,6 +54,14 @@ public class GameController {
         return mapper.pageToPageDto(service.findPage(pageable));
     }
 
+    @PutMapping("/admin/games/{id}")
+    GameDto edit(@RequestBody @Valid GameDto gameDto,
+                 @PathVariable Long id) {
+        logger.trace("edit(game) called");
+        return mapper.gameToDto(service.edit(mapper.dtoToGame(gameDto), id));
+    }
+
+
     @GetMapping("/admin/games/page/overview")
     Page<GameOverviewDto> findPagedOverview(Pageable pageable,
                                             @RequestParam(name = "search", required = false) String keyword) {

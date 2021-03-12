@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.validation.Valid;
+
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
  *
@@ -26,7 +28,7 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
     }
 
     @Override
-    public T save(T t) {
+    public T save(@Valid T t) {
         T result = genericRepository.saveAndFlush(t);
         logger.debug("Saved a {} : {}", type.getSimpleName().toLowerCase(), result.toString());
         return result;

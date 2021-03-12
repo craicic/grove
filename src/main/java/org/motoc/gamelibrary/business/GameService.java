@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -61,6 +62,32 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         this.imageRepository = imageRepository;
     }
 
+    public Game edit(@Valid Game newGame, Long id) {
+        return gameRepository.findById(id)
+                .map(game -> {
+                    game.setName(newGame.getName());
+                    game.setDescription(newGame.getDescription());
+                    game.setPlayTime(newGame.getPlayTime());
+                    game.setMinNumberOfPlayer(newGame.getMinNumberOfPlayer());
+                    game.setMaxNumberOfPlayer(newGame.getMaxNumberOfPlayer());
+                    game.setMinMonth(newGame.getMinMonth());
+                    game.setStuff(newGame.getStuff());
+                    game.setPreparation(newGame.getPreparation());
+                    game.setGoal(newGame.getGoal());
+                    game.setCoreRules(newGame.getCoreRules());
+                    game.setVariant(newGame.getVariant());
+                    game.setEnding(newGame.getEnding());
+                    game.setNature(newGame.getNature());
+                    game.setSize(newGame.getSize());
+                    game.setEditionNumber(newGame.getEditionNumber());
+                    return gameRepository.save(game);
+                })
+                .orElseGet(() -> {
+                    newGame.setId(id);
+                    logger.debug("No game of id={} found. Set game : {}", id, newGame);
+                    return gameRepository.save(newGame);
+                });
+    }
 
     public List<GameNameDto> findNames() {
         return gameRepositoryCustom.findNames();
@@ -415,5 +442,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         });
     }
+
 
 }
