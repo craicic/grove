@@ -7,6 +7,7 @@
 - [X] Use lombok .Exclude.
 - [x] Game - Image : set relationship to one to many.
 - [X] CoreGame - Game : addCore, addExtension, and remove...
+- [ ] Check for places where @Valid could have been forget
 #### Repository
 - [X] Remove @Repository on JpaRepos.
 ## V1.5 (Delivery)
