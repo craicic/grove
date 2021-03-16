@@ -77,25 +77,4 @@ public class Contact {
     @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Account account;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Contact contact = (Contact) o;
-//        return id == contact.id &&
-//                Objects.equals(postalCode, contact.postalCode) &&
-//                Objects.equals(street, contact.street) &&
-//                Objects.equals(city, contact.city) &&
-//                country.equals(contact.country) &&
-//                Objects.equals(streetNumber, contact.streetNumber) &&
-//                Objects.equals(phoneNumber, contact.phoneNumber) &&
-//                Objects.equals(website, contact.website) &&
-//                Objects.equals(mailAddress, contact.mailAddress);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, postalCode, street, city, country, streetNumber, phoneNumber, website, mailAddress);
-//    }
 }

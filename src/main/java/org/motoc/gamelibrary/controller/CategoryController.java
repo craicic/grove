@@ -87,32 +87,4 @@ public class CategoryController {
         logger.trace("deleteById(id) called");
         service.remove(id);
     }
-
-    @PostMapping("/admin/categories/{catId}/add-children")
-    CategoryDto addChildren(@RequestBody List<Long> childrenIds,
-                            @PathVariable Long catId) {
-        logger.trace("addChildren(children, catId) called");
-        return mapper.categoryToDto(
-                service.addChildren(childrenIds, catId)
-        );
-    }
-
-    @PostMapping("/admin/categories/{catId}/add-parent/{parentId}")
-    CategoryDto addParent(@PathVariable Long parentId,
-                          @PathVariable Long catId) {
-        logger.trace("addParent(parentId, catId) called");
-        return mapper.categoryToDto(service.addParent(parentId, catId));
-    }
-
-    @DeleteMapping("/admin/categories/{catId}/unlink-parent")
-    void removeParent(@PathVariable Long catId) {
-        logger.trace("removeParent(catId) called");
-        service.removeParent(catId);
-    }
-
-    @DeleteMapping("/admin/categories/{catId}/unlink-child/{childId}")
-    void removeChild(@PathVariable Long catId, @PathVariable Long childId) {
-        logger.trace("removeChildren(catId, childId) called");
-        service.removeChild(catId, childId);
-    }
 }

@@ -86,7 +86,7 @@ public class GameDto {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Valid
-    private Set<CategoryNameAndIdDto> categories = new HashSet<>();
+    private Set<CategoryDto> categories = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -27,7 +27,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(CommandLineStartupRunner.class);
 
-
     // Repositories
     private final AccountRepository accountRepository;
     private final CategoryRepository categoryRepository;
@@ -214,15 +213,10 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoCategoryJ.setName("Associations d'idées");
         demoCategoryK.setName("Course");
         demoCategoryL.setName("Négociation");
-        demoCategoryB.setParent(demoCategoryA);
-        demoCategoryC.setParent(demoCategoryA);
 
         categoryRepository.save(demoCategoryA);
-        categoryRepository.flush();
         categoryRepository.save(demoCategoryB);
-        categoryRepository.flush();
         categoryRepository.save(demoCategoryC);
-        categoryRepository.flush();
         categoryRepository.save(demoCategoryD);
         categoryRepository.save(demoCategoryE);
         categoryRepository.save(demoCategoryF);

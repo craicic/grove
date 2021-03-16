@@ -40,8 +40,10 @@ public interface GameMapper {
     GameOverviewDto gameToOverviewDto(Game game);
 
     GameNameAndIdDto gameToNameAndIdDto(Game game);
+//
+//    CategoryNameAndIdDto categoryToNameAndIdDto(Category category);
 
-    CategoryNameAndIdDto categoryToNameAndIdDto(Category category);
+    CategoryDto categoryToDto(Category category);
 
     CreatorWithoutContactDto toCreatorWithoutContactDto(Creator creator);
 

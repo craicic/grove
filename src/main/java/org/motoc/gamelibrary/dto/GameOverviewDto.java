@@ -57,7 +57,7 @@ public class GameOverviewDto {
 
     @EqualsAndHashCode.Exclude
     @Valid
-    private Set<CategoryNameAndIdDto> categories = new HashSet<>();
+    private Set<CategoryDto> categories = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
     @Valid

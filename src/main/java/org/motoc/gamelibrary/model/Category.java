@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.model;
 
 import lombok.*;
-import org.motoc.gamelibrary.validation.annotation.EitherChildOrParent;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,7 +18,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
-@EitherChildOrParent
 public class Category {
 
     @Id
@@ -35,16 +33,6 @@ public class Category {
     @Column(name = "lower_case_name", nullable = false, length = 50)
     private String lowerCaseName;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Category parent;
-
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "parent")
-    private Set<Category> children = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -66,28 +54,6 @@ public class Category {
     public void removeGame(Game game) {
         games.remove(game);
         game.getCategories().remove(this);
-    }
-
-    public void addParent(Category parent) {
-        parent.getChildren().add(this);
-        this.setParent(parent);
-    }
-
-    public void removeParent() {
-        if (this.getParent() != null) {
-            this.getParent().getChildren().remove(this);
-            this.setParent(null);
-        }
-    }
-
-    public void addChild(Category child) {
-        child.setParent(this);
-        this.getChildren().add(child);
-    }
-
-    public void removeChild(Category child) {
-        child.setParent(null);
-        this.getChildren().remove(child);
     }
 }
 
