@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -40,8 +41,8 @@ public class GameCopyController {
     }
 
     @GetMapping("/admin/game-copies/{objectCode}")
-    GameCopyDto findByObjectCode(@PathVariable String objectCode) {
-        logger.trace("findByObjectCode(id) called");
+    GameCopyDto findByObjectCode(@PathVariable @Pattern(regexp = "^[0-9]{1,5}$") String objectCode) {
+        logger.trace("findByObjectCode(objectCode) called");
         return mapper.copyToDto(service.findByObjectCode(objectCode));
     }
 

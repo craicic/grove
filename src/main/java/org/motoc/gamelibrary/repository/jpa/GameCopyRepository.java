@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author RouzicJ
  */
 public interface GameCopyRepository extends JpaRepository<GameCopy, Long> {
+
+    GameCopy findByObjectCode(String code);
 }

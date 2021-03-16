@@ -36,8 +36,14 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
         this.sellerRepository = sellerRepository;
     }
 
-    public GameCopy findByObjectCode(String objectCode) {
-        return null;
+    public GameCopy findByObjectCode(String code) {
+
+        GameCopy copy = copyRepository.findByObjectCode(code);
+
+        if (copy == null) {
+            throw new NotFoundException("No existing game has the following code :" + code);
+        }
+        return copy;
     }
 
     public GameCopy edit(GameCopy newCopy, Long id) {
