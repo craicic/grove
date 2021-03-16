@@ -69,7 +69,7 @@ class ThemeServiceTest {
 
         assertThatThrownBy(() -> {
             themeService.findById(id);
-        }).hasMessageContaining("Could not find " + id);
+        }).hasMessageContaining("No theme of id=" + id + " found.");
 
     }
 

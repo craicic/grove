@@ -6,9 +6,11 @@ import org.motoc.gamelibrary.repository.criteria.GameCopyRepositoryCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+@Repository
 public class GameCopyRepositoryCustomImpl implements GameCopyRepositoryCustom {
 
     private static final Logger logger = LoggerFactory.getLogger(GameCopyRepositoryCustom.class);

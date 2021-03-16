@@ -90,7 +90,7 @@ class CategoryServiceTest {
 
         when(repository.findById(catId)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> service.addChildren(childrenIds, catId)).hasMessageContaining("Could not find " + catId);
+        assertThatThrownBy(() -> service.addChildren(childrenIds, catId)).hasMessageContaining("No category of id=" + catId + " found.");
 
     }
 
@@ -223,7 +223,7 @@ class CategoryServiceTest {
         when(repository.findById(parentId)).thenReturn(Optional.empty());
 
 
-        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Could not find " + parentId);
+        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("No parent category of id=" + parentId + " found.");
     }
 
 

@@ -69,7 +69,7 @@ class ProductLineServiceTest {
 
         assertThatThrownBy(() -> {
             service.findById(id);
-        }).hasMessageContaining("Could not find " + id);
+        }).hasMessageContaining("No productline of id=" + id + " found.");
     }
 
     @Test
