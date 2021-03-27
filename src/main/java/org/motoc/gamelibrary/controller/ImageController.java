@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.ImageService;
+import org.motoc.gamelibrary.dto.ImageDto;
 import org.motoc.gamelibrary.mapper.ImageMapper;
-import org.motoc.gamelibrary.model.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +42,10 @@ public class ImageController {
         return service.saveThenAttachToGame(file, gameId);
     }
 
-    @GetMapping("/admin/image/data-uri/{id}")
-    ResponseEntity<byte[]> findDataById(@PathVariable Long id) throws IOException {
+    @GetMapping("/admin/images/{id}")
+    ResponseEntity<String> findDataById(@PathVariable Long id) throws IOException {
         logger.trace("findDataById(id) called");
-        Image image = service.retrieveDataUri(id);
+        ImageDto image = service.retrieveDataUri(id);
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.IMAGE_PNG);
         return ResponseEntity.ok().headers(header).body(image.getData());

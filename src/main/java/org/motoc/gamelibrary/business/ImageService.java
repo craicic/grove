@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.business;
 
+import org.motoc.gamelibrary.dto.ImageDto;
 import org.motoc.gamelibrary.model.Image;
 import org.motoc.gamelibrary.repository.jpa.ImageRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 /**
  * Perform business logic on the entity Image, it is in charge to make file operations on Image
@@ -50,11 +52,16 @@ public class ImageService {
     /**
      * Given a path, return the image bytes
      */
-    public Image retrieveDataUri(Long id) {
-        return repository.findById(id).orElseThrow(() -> {
+    public ImageDto retrieveDataUri(Long id) {
+        Image image = repository.findById(id).orElseThrow(() -> {
             logger.debug("No image path of id={} found.", id);
             throw new NotFoundException("No image path of id=" + id + " found.");
         });
+
+        ImageDto dto = new ImageDto();
+        String encodedString = Base64.getEncoder().encodeToString(image.getData());
+        dto.setData(encodedString);
+        return dto;
     }
 
     /**
@@ -68,13 +75,11 @@ public class ImageService {
             bufferedImage = ImageIO.read(multipartImage.getInputStream());
             ImageIO.write(bufferedImage, "png", outputStream);
         } catch (IOException ex) {
-            logger.warn("An error occurred with error message : " + ex.getMessage());
+            logger.warn("An error occurred with message : " + ex.getMessage());
             throw new IOException(ex.getMessage());
         }
 
         image.setData(outputStream.toByteArray());
         return repository.save(image).getId();
     }
-
-
 }
