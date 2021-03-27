@@ -20,5 +20,5 @@ public class ImageDto {
     private Long id;
 
     @NotNull
-    private byte[] bytes;
+    private byte[] data;
 }

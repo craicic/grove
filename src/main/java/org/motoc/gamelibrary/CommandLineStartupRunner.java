@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -364,9 +365,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillImages() {
-        demoImageA.setFilePath("\\user\\imageA.jpg");
-        demoImageB.setFilePath("\\user\\imageB.jpg");
-
+        demoImageA.setData("imageA".getBytes(StandardCharsets.UTF_8));
+        demoImageB.setData("imageB".getBytes(StandardCharsets.UTF_8));
         demoImageA.setGame(demoGameA);
         demoImageB.setGame(demoGameA);
 

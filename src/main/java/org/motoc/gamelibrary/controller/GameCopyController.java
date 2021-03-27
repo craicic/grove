@@ -40,7 +40,7 @@ public class GameCopyController {
         return mapper.copyToDto(service.findById(id));
     }
 
-    @GetMapping("/admin/game-copies/{objectCode}")
+    @GetMapping("/admin/game-copies/object-code/{objectCode}")
     GameCopyDto findByObjectCode(@PathVariable @Pattern(regexp = "^[0-9]{1,5}$") String objectCode) {
         logger.trace("findByObjectCode(objectCode) called");
         return mapper.copyToDto(service.findByObjectCode(objectCode));
