@@ -8,13 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 
 /**
@@ -43,8 +43,8 @@ public class ImageService {
     /**
      * Save the image and attach it to a game
      */
-    public Long saveThenAttachToGame(MultipartFile image, Long gameId) throws IOException {
-        Long imageId = persistImageInDatabase(image);
+    public Long saveThenAttachToGame(InputStream imageStream, Long gameId) throws IOException {
+        Long imageId = persist(imageStream);
         gameService.addImage(gameId, imageId);
         return imageId;
     }
@@ -52,7 +52,7 @@ public class ImageService {
     /**
      * Given a path, return the image bytes
      */
-    public ImageDto retrieveDataUri(Long id) {
+    public ImageDto retrieve(Long id) {
         Image image = repository.findById(id).orElseThrow(() -> {
             logger.debug("No image path of id={} found.", id);
             throw new NotFoundException("No image path of id=" + id + " found.");
@@ -67,12 +67,12 @@ public class ImageService {
     /**
      * Given a MultipartFile, store it in database
      */
-    private Long persistImageInDatabase(MultipartFile multipartImage) throws IOException {
+    public Long persist(InputStream imageStream) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Image image = new Image();
         BufferedImage bufferedImage;
         try {
-            bufferedImage = ImageIO.read(multipartImage.getInputStream());
+            bufferedImage = ImageIO.read(imageStream);
             ImageIO.write(bufferedImage, "png", outputStream);
         } catch (IOException ex) {
             logger.warn("An error occurred with message : " + ex.getMessage());

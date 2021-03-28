@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary;
 
 
+import org.motoc.gamelibrary.business.ImageService;
 import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -52,8 +55,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final Contact demoContactF;
     private final Contact demoContactG;
     private final Contact demoContactH;
-    private final Image demoImageA;
-    private final Image demoImageB;
     private final ProductLine demoProductLineA;
     private final Publisher demoPublisherA;
     private final Publisher demoPublisherB;
@@ -91,6 +92,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final LoanStatus demoLoanStatusA;
     private final LoanStatus demoLoanStatusB;
     private final LoanStatus demoLoanStatusC;
+    private final ImageService imageService;
 
     @Autowired
     public CommandLineStartupRunner(AccountRepository accountRepository,
@@ -104,7 +106,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
                                     ProductLineRepository productLineRepository,
                                     PublisherRepository publisherRepository,
                                     SellerRepository sellerRepository,
-                                    ThemeRepository themeRepository) {
+                                    ThemeRepository themeRepository,
+                                    ImageService imageService) {
         logger.warn("Starting CommandLineRunner");
         this.accountRepository = accountRepository;
         this.categoryRepository = categoryRepository;
@@ -119,6 +122,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.publisherRepository = publisherRepository;
         this.sellerRepository = sellerRepository;
         this.themeRepository = themeRepository;
+        this.imageService = imageService;
 
         this.demoContactA = new Contact();
         this.demoContactB = new Contact();
@@ -128,8 +132,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.demoContactF = new Contact();
         this.demoContactG = new Contact();
         this.demoContactH = new Contact();
-        this.demoImageA = new Image();
-        this.demoImageB = new Image();
         this.demoProductLineA = new ProductLine();
         this.demoPublisherA = new Publisher();
         this.demoPublisherB = new Publisher();
@@ -324,10 +326,14 @@ public class CommandLineStartupRunner implements CommandLineRunner {
 
     private void fillGames() {
         demoGameA.setName("Les Colons de Catane");
-        demoGameA.setDescription("Un jeu de territoire");
-        demoGameA.setPlayTime("90");
-        demoGameA.setMinNumberOfPlayer((short) 3);
-        demoGameA.setMinNumberOfPlayer((short) 4);
+        demoGameA.setDescription("Vous voilà à la tête de colons fraîchement débarqués sur l'île de Catane. Votre " +
+                "but va être d'installer vos ouailles et de faire prospérer vos colonies en construisant des villes " +
+                "et en utilisant au mieux les matières premières qui sont à votre disposition.\n" +
+                "Les Colons de Catane est un jeu tactique de placement, de développement et de négociation. Le hasard " +
+                "y est présent et peut à tout moment contrarier vos plans.");
+        demoGameA.setPlayTime("90 minutes");
+        demoGameA.setMinNumberOfPlayer((short) 2);
+        demoGameA.setMaxNumberOfPlayer((short) 4);
         demoGameA.setMinAge((short) 8);
         demoGameA.setProductLine(demoProductLineA);
         demoGameA.setPublisher(demoPublisherA);
@@ -364,15 +370,27 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         gameCopyRepository.save(demoGameCopyA);
     }
 
-    private void fillImages() {
-        demoImageA.setData("imageA".getBytes(StandardCharsets.UTF_8));
-        demoImageB.setData("imageB".getBytes(StandardCharsets.UTF_8));
-        demoImageA.setGame(demoGameA);
-        demoImageB.setGame(demoGameA);
+    private void fillImages() throws IOException {
+        File fileA = new File("src/main/resources/static/catane.jpg");
+        BufferedImage imageA = ImageIO.read(fileA.getAbsoluteFile());
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(imageA, "png", os);
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
 
-        imageRepository.save(demoImageA);
-        imageRepository.save(demoImageB);
-        imageRepository.flush();
+
+        imageService.saveThenAttachToGame(is, demoGameA.getId());
+        os.close();
+        is.close();
+
+        File fileB = new File("src/main/resources/static/catane2.jpg");
+        BufferedImage imageB = ImageIO.read(fileB);
+        ByteArrayOutputStream osB = new ByteArrayOutputStream();
+        ImageIO.write(imageB, "png", osB);
+        InputStream isB = new ByteArrayInputStream(osB.toByteArray());
+
+        imageService.saveThenAttachToGame(isB, demoGameA.getId());
+        osB.close();
+        isB.close();
     }
 
 

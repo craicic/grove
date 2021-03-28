@@ -39,13 +39,13 @@ public class ImageController {
     Long save(@RequestParam(name = "file") MultipartFile file,
               @PathVariable Long gameId) throws IOException {
         logger.trace("save(image) called");
-        return service.saveThenAttachToGame(file, gameId);
+        return service.saveThenAttachToGame(file.getInputStream(), gameId);
     }
 
     @GetMapping("/admin/images/{id}")
     ResponseEntity<String> findDataById(@PathVariable Long id) throws IOException {
         logger.trace("findDataById(id) called");
-        ImageDto image = service.retrieveDataUri(id);
+        ImageDto image = service.retrieve(id);
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.IMAGE_PNG);
         return ResponseEntity.ok().headers(header).body(image.getData());
