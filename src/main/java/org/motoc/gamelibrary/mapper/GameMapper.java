@@ -2,13 +2,11 @@ package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import org.motoc.gamelibrary.dto.*;
-import org.motoc.gamelibrary.model.Category;
-import org.motoc.gamelibrary.model.Creator;
-import org.motoc.gamelibrary.model.Game;
-import org.motoc.gamelibrary.model.Image;
+import org.motoc.gamelibrary.model.*;
 import org.springframework.data.domain.Page;
 
 import java.util.HashSet;
@@ -27,9 +25,14 @@ public interface GameMapper {
     @Mapping(target = "images", ignore = true)
     Game dtoToGame(GameDto dto);
 
-    @Mapping(target = "imageIds", source = "images", qualifiedByName = "imageSetToIds")
+    @Mappings(
+            {
+                    @Mapping(target = "imageIds", source = "images", qualifiedByName = "imageSetToIds"),
+                    @Mapping(target = "copies", source = "gameCopies")
+            })
     GameDto gameToDto(Game game);
 
+    GameCopyIdAndCodeDto copyToIdAndCodeDto(GameCopy gameCopy);
 
     /* ======================================= OVERVIEW METHODS (AND MORE) ========================================= */
     default Page<GameOverviewDto> pageToOverviewDto(Page<Game> page) {
@@ -40,8 +43,6 @@ public interface GameMapper {
     GameOverviewDto gameToOverviewDto(Game game);
 
     GameNameAndIdDto gameToNameAndIdDto(Game game);
-//
-//    CategoryNameAndIdDto categoryToNameAndIdDto(Category category);
 
     CategoryDto categoryToDto(Category category);
 

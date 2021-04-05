@@ -99,7 +99,7 @@ public class GameDto {
     private Set<CreatorWithoutContactDto> creators = new HashSet<>();
 
     @Valid
-    private Set<GameCopyIdAndCodeDto> copyIdAndCodeDto = new HashSet<>();
+    private Set<GameCopyIdAndCodeDto> copies = new HashSet<>();
 
     private Set<Long> imageIds = new HashSet<>();
 

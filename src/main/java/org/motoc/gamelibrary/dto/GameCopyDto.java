@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.dto;
 
 import lombok.*;
-import org.motoc.gamelibrary.model.Seller;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 
 import javax.validation.Valid;
@@ -47,6 +46,6 @@ public class GameCopyDto {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Valid
-    private Seller seller;
+    private SellerDto seller;
 
 }
