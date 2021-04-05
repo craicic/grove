@@ -4,6 +4,7 @@ package org.motoc.gamelibrary;
 import org.motoc.gamelibrary.business.ImageService;
 import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
+import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.model.enumeration.GeneralStateEnum;
 import org.motoc.gamelibrary.repository.jpa.*;
 import org.slf4j.Logger;
@@ -337,6 +338,19 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoGameA.setMinAge((short) 8);
         demoGameA.setProductLine(demoProductLineA);
         demoGameA.setPublisher(demoPublisherA);
+
+        demoGameA.setNature(GameNatureEnum.BOARD_GAME);
+        demoGameA.setSize("Petit");
+        demoGameA.setStuff("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit");
+
+        demoGameA.setGoal("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit");
+        demoGameA.setCoreRules("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id " +
+                "blandit lobortis, lectus sem porta ipsum, in vestibulum eros magna vel dui. Class aptent taciti " +
+                "sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut scelerisque est et varius " +
+                "molestie. Quisque nec odio eu mauris euismod mollis in ut ligula. Nulla pellentesque iaculis interdum." +
+                " Curabitur felis magna, placerat at rutrum ac, auctor id metus. Cras tempor porttitor ex, ut efficitur " +
+                "ex ullamcorper eget. Cras fringilla urna vel aliquam consectetur.");
+        demoGameA.setEnding("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit");
 
         Set<Creator> creatorsA = new HashSet<>();
         creatorsA.add(demoCreatorA);
