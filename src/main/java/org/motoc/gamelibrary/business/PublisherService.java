@@ -19,8 +19,6 @@ import java.util.List;
 
 /**
  * Perform business logic on the entity Publisher
- *
- * @author RouzicJ
  */
 @Service
 @Transactional

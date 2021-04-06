@@ -8,8 +8,6 @@ import javax.validation.constraints.Size;
 
 /**
  * Dto for creator's name
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

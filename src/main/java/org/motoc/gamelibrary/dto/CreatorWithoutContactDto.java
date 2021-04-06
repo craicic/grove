@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
 
 /**
  * Dto for creator, excluding contact informations
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

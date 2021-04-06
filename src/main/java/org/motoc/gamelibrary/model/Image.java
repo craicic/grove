@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 /**
  * Article's image : store a file path
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

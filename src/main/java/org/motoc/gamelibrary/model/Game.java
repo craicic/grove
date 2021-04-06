@@ -15,8 +15,6 @@ import java.util.Set;
 
 /**
  * A game, it's a generic description of the item, not of a copy
- *
- * @author RouzicJ
  */
 @ConsistentNumberOfPlayer
 @ConsistentAgeRange

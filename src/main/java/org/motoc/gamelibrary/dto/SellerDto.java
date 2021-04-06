@@ -7,8 +7,6 @@ import javax.validation.constraints.Size;
 
 /**
  * The seller of a game copy dto
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

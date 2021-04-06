@@ -21,8 +21,6 @@ import java.util.List;
 
 /**
  * Perform business logic on the entity Game
- *
- * @author RouzicJ
  */
 @Service
 @Transactional

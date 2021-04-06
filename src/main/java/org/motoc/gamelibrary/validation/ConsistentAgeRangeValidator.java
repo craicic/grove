@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the consistency of age range
- *
- * @author RouzicJ
  */
 public class ConsistentAgeRangeValidator implements ConstraintValidator<ConsistentAgeRange, Game> {
 

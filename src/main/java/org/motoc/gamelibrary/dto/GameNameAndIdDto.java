@@ -8,8 +8,6 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * Game name and Id DTO
- *
- * @author RouzicJ
  */
 @Data
 @AllArgsConstructor

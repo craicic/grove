@@ -9,8 +9,6 @@ import java.time.LocalDate;
 
 /**
  * Contain some detail about the account
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

@@ -2,8 +2,6 @@ package org.motoc.gamelibrary.model.enumeration;
 
 /**
  * An enumeration : Toy, board game, wooden game
- *
- * @author RouzicJ
  */
 public enum GameNatureEnum {
 

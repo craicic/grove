@@ -14,8 +14,6 @@ import java.util.List;
 
 /**
  * Game custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
- *
- * @author RouzicJ
  */
 @Repository
 public class GameRepositoryCustomImpl implements GameRepositoryCustom {

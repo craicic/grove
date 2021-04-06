@@ -15,8 +15,6 @@ import java.util.List;
 
 /**
  * Defines theme endpoints
- *
- * @author RouzicJ
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

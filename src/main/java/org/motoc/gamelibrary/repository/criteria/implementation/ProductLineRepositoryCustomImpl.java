@@ -15,8 +15,6 @@ import java.util.List;
 
 /**
  * It's the product line custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
- *
- * @author RouzicJ
  */
 @Repository
 public class ProductLineRepositoryCustomImpl implements ProductLineRepositoryCustom {

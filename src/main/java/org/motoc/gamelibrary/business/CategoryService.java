@@ -18,8 +18,6 @@ import java.util.List;
 
 /**
  * Perform business logic on the entity Category
- *
- * @author RouzicJ
  */
 @Service
 @Transactional

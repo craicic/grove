@@ -9,8 +9,6 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Image's DTO
- *
- * @author RouzicJ
  */
 @Data
 @AllArgsConstructor

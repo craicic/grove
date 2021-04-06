@@ -9,8 +9,6 @@ import javax.validation.constraints.Size;
 
 /**
  * Category name's DTO
- *
- * @author RouzicJ
  */
 @Data
 @AllArgsConstructor

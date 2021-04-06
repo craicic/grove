@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 
 /**
  * A custom annotation in order to lock game to be either a core game or an expansion, not both.
- *
- * @author RouzicJ
  */
 @Target(ElementType.TYPE)
 @Documented

@@ -9,8 +9,6 @@ import javax.validation.constraints.Size;
 
 /**
  * Contact details for external actors
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

@@ -12,8 +12,6 @@ import java.util.Set;
 
 /**
  * The creator of a game
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

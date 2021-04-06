@@ -17,8 +17,6 @@ import java.util.List;
 
 /**
  * Defines game endpoints
- *
- * @author RouzicJ
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

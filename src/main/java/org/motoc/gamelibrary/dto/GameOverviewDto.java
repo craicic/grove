@@ -12,8 +12,6 @@ import java.util.Set;
 /**
  * Game overview's DTO, image are define by their id
  * The goal is to have a quick presentation with only one image, name, etc. They are fetch by page of 5 to 20 approx
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

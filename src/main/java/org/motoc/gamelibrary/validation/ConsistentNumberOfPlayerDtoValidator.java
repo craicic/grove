@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the consistency of number of player parameters
- *
- * @author RouzicJ
  */
 public class ConsistentNumberOfPlayerDtoValidator implements ConstraintValidator<ConsistentNumberOfPlayer, GameDto> {
 

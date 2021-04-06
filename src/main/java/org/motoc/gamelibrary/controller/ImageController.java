@@ -16,8 +16,6 @@ import java.io.IOException;
 
 /**
  * Images endpoints
- *
- * @author RouzicJ
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

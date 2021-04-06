@@ -20,8 +20,6 @@ import java.util.List;
 
 /**
  * Perform business logic on the entity Creator
- *
- * @author RouzicJ
  */
 @Service
 @Transactional

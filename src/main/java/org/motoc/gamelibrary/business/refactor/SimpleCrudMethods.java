@@ -7,8 +7,6 @@ import javax.validation.Valid;
 
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
- *
- * @author RouzicJ
  */
 public interface SimpleCrudMethods<T> {
 

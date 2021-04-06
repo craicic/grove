@@ -9,8 +9,6 @@ import java.util.Set;
 
 /**
  * The status of a loan
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

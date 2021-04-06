@@ -16,8 +16,6 @@ import java.util.List;
 
 /**
  * Defines creator's endpoints
- *
- * @author RouzicJ
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

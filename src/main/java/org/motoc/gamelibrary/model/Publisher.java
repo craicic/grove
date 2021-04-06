@@ -10,8 +10,6 @@ import java.util.Set;
 
 /**
  * The publisher of a game
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

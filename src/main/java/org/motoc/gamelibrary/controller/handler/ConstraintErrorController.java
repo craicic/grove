@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 
 /**
  * Handles the contraint errors and formats the output
- *
- * @author RouzicJ
  */
 @ControllerAdvice
 public class ConstraintErrorController extends ResponseEntityExceptionHandler {

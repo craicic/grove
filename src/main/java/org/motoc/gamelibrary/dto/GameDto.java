@@ -15,8 +15,6 @@ import java.util.Set;
 
 /**
  * Game's DTO
- *
- * @author RouzicJ
  */
 @Data
 @AllArgsConstructor

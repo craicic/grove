@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A validator to make a contact have an unique holder
- *
- * @author RouzicJ
  */
 public class UniqueContactHolderValidator implements ConstraintValidator<UniqueContactHolder, Contact> {
 

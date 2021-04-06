@@ -10,8 +10,6 @@ import javax.validation.constraints.Size;
 
 /**
  * Publisher's DTO
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

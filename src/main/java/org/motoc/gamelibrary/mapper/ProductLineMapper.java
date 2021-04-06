@@ -11,8 +11,6 @@ import java.util.List;
 
 /**
  * Maps model to dto and and dto to model
- *
- * @author RouzicJ
  */
 @Mapper(componentModel = "spring")
 public interface ProductLineMapper {

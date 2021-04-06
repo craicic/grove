@@ -10,8 +10,6 @@ import java.util.Set;
 
 /**
  * The seller of a game copy
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

@@ -10,8 +10,6 @@ import java.util.Set;
 
 /**
  * A game category
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

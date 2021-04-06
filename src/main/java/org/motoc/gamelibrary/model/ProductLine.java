@@ -10,8 +10,6 @@ import java.util.Set;
 
 /**
  * The product line of a game
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

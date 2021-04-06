@@ -19,8 +19,6 @@ import java.util.Base64;
 
 /**
  * Perform business logic on the entity Image, it is in charge to make file operations on Image
- *
- * @author RouzicJ
  */
 @Service
 @Transactional

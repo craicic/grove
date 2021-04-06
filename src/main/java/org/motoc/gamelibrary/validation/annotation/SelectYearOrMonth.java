@@ -9,8 +9,6 @@ import java.lang.annotation.*;
 
 /**
  * A custom annotation in order to check the selection of minimal age. You must choose minAge XOR minMonth
- *
- * @author RouzicJ
  */
 @Target(ElementType.TYPE)
 @Documented

@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 
 /**
  * Handles most of the errors and formats the output
- *
- * @author RouzicJ
  */
 @ControllerAdvice
 public class ErrorController {

@@ -11,8 +11,6 @@ import javax.validation.Valid;
 
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
- *
- * @author RouzicJ
  */
 public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> implements SimpleCrudMethods<T> {
 

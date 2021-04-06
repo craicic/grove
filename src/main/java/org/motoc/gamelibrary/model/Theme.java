@@ -11,8 +11,6 @@ import java.util.Set;
 
 /**
  * A game theme
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

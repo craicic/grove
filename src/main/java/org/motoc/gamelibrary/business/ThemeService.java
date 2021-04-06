@@ -19,8 +19,6 @@ import java.util.List;
 
 /**
  * Perform business logic on the web entity Theme
- *
- * @author RouzicJ
  */
 @Service
 @Transactional

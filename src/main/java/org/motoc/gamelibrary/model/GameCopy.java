@@ -12,8 +12,6 @@ import java.util.Set;
 
 /**
  * A game, it describe a copy
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor

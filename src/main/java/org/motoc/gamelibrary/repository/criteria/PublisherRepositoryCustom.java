@@ -6,8 +6,6 @@ import java.util.List;
 
 /**
  * This repository takes advantage of Criteria API / JPQL
- *
- * @author RouzicJ
  */
 public interface PublisherRepositoryCustom {
 

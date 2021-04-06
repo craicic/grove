@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 
 /**
  * A game copy loan
- *
- * @author RouzicJ
  */
 @ConsistentDateTime
 @Data
