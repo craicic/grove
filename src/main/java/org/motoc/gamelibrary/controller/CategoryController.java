@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.CategoryService;
 import org.motoc.gamelibrary.dto.CategoryDto;
-import org.motoc.gamelibrary.dto.CategoryNameDto;
 import org.motoc.gamelibrary.mapper.CategoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping("/admin/categories/names")
-    List<CategoryNameDto> findNames() {
+    List<String> findNames() {
         logger.trace("findNames called");
         return service.findNames();
     }

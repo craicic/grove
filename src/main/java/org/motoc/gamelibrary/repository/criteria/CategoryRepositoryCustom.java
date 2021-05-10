@@ -1,7 +1,5 @@
 package org.motoc.gamelibrary.repository.criteria;
 
-import org.motoc.gamelibrary.dto.CategoryNameDto;
-
 import java.util.List;
 
 /**
@@ -18,5 +16,5 @@ public interface CategoryRepositoryCustom {
     /**
      * Get all Categories' name in a custom DTO
      */
-    List<CategoryNameDto> findNames();
+    List<String> findNames();
 }

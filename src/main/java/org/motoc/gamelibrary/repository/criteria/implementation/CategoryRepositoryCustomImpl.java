@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
-import org.motoc.gamelibrary.dto.CategoryNameDto;
 import org.motoc.gamelibrary.model.Category;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
@@ -43,10 +42,10 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
     }
 
     @Override
-    public List<CategoryNameDto> findNames() {
-        TypedQuery<CategoryNameDto> q = entityManager.createQuery(
-                "SELECT new org.motoc.gamelibrary.dto.CategoryNameDto(c.name) FROM Category as c",
-                CategoryNameDto.class);
+    public List<String> findNames() {
+        TypedQuery<String> q = entityManager.createQuery(
+                "SELECT c.name FROM Category as c",
+                String.class);
         return q.getResultList();
     }
 }
