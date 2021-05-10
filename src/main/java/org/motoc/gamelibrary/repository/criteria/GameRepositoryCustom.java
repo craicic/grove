@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.repository.criteria;
 
-import org.motoc.gamelibrary.dto.GameNameDto;
 import org.motoc.gamelibrary.model.*;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ public interface GameRepositoryCustom {
     /**
      * Get all Games' name in a custom DTO
      */
-    List<GameNameDto> findNames();
+    List<String> findNames();
 
     Game addExpansions(Game game, @NotNull List<Game> expansions);
 

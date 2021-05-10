@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.GameService;
 import org.motoc.gamelibrary.dto.GameDto;
-import org.motoc.gamelibrary.dto.GameNameDto;
 import org.motoc.gamelibrary.dto.GameOverviewDto;
 import org.motoc.gamelibrary.mapper.GameMapper;
 import org.slf4j.Logger;
@@ -55,7 +54,7 @@ public class GameController {
     @PutMapping("/admin/games/{id}")
     GameDto edit(@RequestBody @Valid GameDto gameDto,
                  @PathVariable Long id) {
-        logger.trace("edit(game) called");
+        logger.trace("edit(game) called\rAttached game to edit is =" + gameDto.toString());
         return mapper.gameToDto(service.edit(mapper.dtoToGame(gameDto), id));
     }
 
@@ -77,7 +76,7 @@ public class GameController {
     }
 
     @GetMapping("/admin/games/names")
-    List<GameNameDto> findNames() {
+    List<String> findNames() {
         logger.trace("findNames() called");
         return service.findNames();
     }
@@ -185,5 +184,4 @@ public class GameController {
         logger.trace("unlinkPublisher() called");
         service.removePublisher(gameId, publisherId);
     }
-
 }

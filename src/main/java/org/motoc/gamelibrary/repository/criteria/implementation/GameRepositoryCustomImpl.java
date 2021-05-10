@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
-import org.motoc.gamelibrary.dto.GameNameDto;
 import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
 import org.slf4j.Logger;
@@ -28,10 +27,10 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
-    public List<GameNameDto> findNames() {
-        TypedQuery<GameNameDto> q = entityManager.createQuery(
-                "SELECT new org.motoc.gamelibrary.dto.GameNameDto(g.name) FROM Game as g",
-                GameNameDto.class
+    public List<String> findNames() {
+        TypedQuery<String> q = entityManager.createQuery(
+                "SELECT TRIM(LOWER(g.name)) FROM Game as g",
+                String.class
         );
         return q.getResultList();
     }

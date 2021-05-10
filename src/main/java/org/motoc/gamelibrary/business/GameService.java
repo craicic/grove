@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
-import org.motoc.gamelibrary.dto.GameNameDto;
 import org.motoc.gamelibrary.model.*;
 import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.*;
@@ -133,7 +132,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 });
     }
 
-    public List<GameNameDto> findNames() {
+    public List<String> findNames() {
         return gameRepositoryCustom.findNames();
     }
 
