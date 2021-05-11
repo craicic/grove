@@ -123,10 +123,11 @@ public class GameController {
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-category/{categoryId}")
-    void unlinkCategory(@PathVariable Long gameId,
-                        @PathVariable Long categoryId) {
+    GameDto unlinkCategory(@PathVariable Long gameId,
+                           @PathVariable Long categoryId) {
         logger.trace("unlinkCategory() called");
-        service.removeCategory(gameId, categoryId);
+        return mapper.gameToDto(service.removeCategory(gameId, categoryId));
+
     }
 
     @PostMapping("/admin/games/{gameId}/add-theme/{themeId}")

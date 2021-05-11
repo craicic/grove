@@ -287,7 +287,9 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
     }
 
-    public void removeCategory(Long gameId, Long categoryId) {
+    private Game gameToReturn;
+
+    public Game removeCategory(Long gameId, Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> {
                     throw new NotFoundException("No category of id={}" + categoryId + " found.");
                 }
@@ -300,10 +302,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to category of id=" + category.getId());
 
-                    gameRepositoryCustom.removeCategory(game, category);
+                    gameToReturn = gameRepositoryCustom.removeCategory(game, category);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
+
+        return gameToReturn;
     }
 
     public Game addTheme(Long gameId, Long themeId) {

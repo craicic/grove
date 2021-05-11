@@ -83,9 +83,10 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
-    public void removeCategory(Game game, Category category) {
+    public Game removeCategory(Game game, Category category) {
         game.removeCategory(category);
         entityManager.persist(game);
+        return game;
     }
 
     @Override

@@ -25,7 +25,7 @@ public interface GameRepositoryCustom {
 
     Game addCategory(Game game, Category category);
 
-    void removeCategory(Game game, Category category);
+    Game removeCategory(Game game, Category category);
 
 
     Game addTheme(Game game, Theme theme);
