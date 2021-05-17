@@ -10,6 +10,7 @@
 - [ ] Check for places where @Valid could have been forget
 #### Repository
 - [X] Remove @Repository on JpaRepos.
+
 ## V1.5 (Delivery)
 - [ ] Game - Publisher : remove relationship. Create one to many between GameCopy and Publisher.
 - [ ] Improve logs.

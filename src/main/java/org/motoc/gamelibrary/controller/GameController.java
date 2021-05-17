@@ -138,10 +138,10 @@ public class GameController {
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-theme/{themeId}")
-    void unlinkTheme(@PathVariable Long gameId,
-                     @PathVariable Long themeId) {
+    GameDto unlinkTheme(@PathVariable Long gameId,
+                        @PathVariable Long themeId) {
         logger.trace("unlinkTheme() called");
-        service.removeTheme(gameId, themeId);
+        return mapper.gameToDto(service.removeTheme(gameId, themeId));
     }
 
     @PostMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")

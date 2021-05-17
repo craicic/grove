@@ -38,6 +38,9 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     private final PublisherRepository publisherRepository;
     private final ImageRepository imageRepository;
 
+
+    private Game gameToReturn;
+
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
                        GameRepository gameRepository,
@@ -287,8 +290,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
     }
 
-    private Game gameToReturn;
-
     public Game removeCategory(Long gameId, Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> {
                     throw new NotFoundException("No category of id={}" + categoryId + " found.");
@@ -331,7 +332,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
     }
 
-    public void removeTheme(Long gameId, Long themeId) {
+    public Game removeTheme(Long gameId, Long themeId) {
         Theme theme = themeRepository.findById(themeId).orElseThrow(() -> {
                     throw new NotFoundException("No theme of id={}" + themeId + " found.");
                 }
@@ -344,10 +345,11 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to theme of id=" + theme.getId());
 
-                    gameRepositoryCustom.removeTheme(game, theme);
+                    gameToReturn = gameRepositoryCustom.removeTheme(game, theme);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
+        return gameToReturn;
     }
 
     public Game addGameCopy(Long gameId, Long gameCopyId) {

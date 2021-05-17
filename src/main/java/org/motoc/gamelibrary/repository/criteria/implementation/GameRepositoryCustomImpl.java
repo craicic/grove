@@ -97,9 +97,10 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
-    public void removeTheme(Game game, Theme theme) {
+    public Game removeTheme(Game game, Theme theme) {
         game.removeTheme(theme);
         entityManager.persist(game);
+        return game;
     }
 
     @Override

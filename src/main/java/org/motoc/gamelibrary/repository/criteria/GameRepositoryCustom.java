@@ -30,7 +30,7 @@ public interface GameRepositoryCustom {
 
     Game addTheme(Game game, Theme theme);
 
-    void removeTheme(Game game, Theme theme);
+    Game removeTheme(Game game, Theme theme);
 
 
     Game addGameCopy(Game game, GameCopy gameCopy);
