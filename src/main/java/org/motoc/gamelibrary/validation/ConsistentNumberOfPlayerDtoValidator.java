@@ -20,6 +20,6 @@ public class ConsistentNumberOfPlayerDtoValidator implements ConstraintValidator
     public boolean isValid(GameDto game, ConstraintValidatorContext constraintValidatorContext) {
         if (game.getMaxNumberOfPlayer() == 0)
             return true;
-        return game.getMaxNumberOfPlayer() > game.getMinNumberOfPlayer();
+        return game.getMaxNumberOfPlayer() >= game.getMinNumberOfPlayer();
     }
 }

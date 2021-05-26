@@ -71,6 +71,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     game.setMinNumberOfPlayer(newGame.getMinNumberOfPlayer());
                     game.setMaxNumberOfPlayer(newGame.getMaxNumberOfPlayer());
                     game.setMinMonth(newGame.getMinMonth());
+                    game.setMinAge(newGame.getMinAge());
+                    game.setMaxAge(newGame.getMaxAge());
                     game.setStuff(newGame.getStuff());
                     game.setNature(newGame.getNature());
                     game.setSize(newGame.getSize());
@@ -116,6 +118,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     game.setMinNumberOfPlayer(newGame.getMinNumberOfPlayer());
                     game.setMaxNumberOfPlayer(newGame.getMaxNumberOfPlayer());
                     game.setMinMonth(newGame.getMinMonth());
+                    game.setMinAge(newGame.getMinAge());
+                    game.setMaxAge(newGame.getMaxAge());
                     game.setStuff(newGame.getStuff());
                     game.setPreparation(newGame.getPreparation());
                     game.setGoal(newGame.getGoal());

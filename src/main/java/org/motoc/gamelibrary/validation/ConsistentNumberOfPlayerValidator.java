@@ -20,7 +20,7 @@ public class ConsistentNumberOfPlayerValidator implements ConstraintValidator<Co
     public boolean isValid(Game game, ConstraintValidatorContext constraintValidatorContext) {
         if (game.getMaxNumberOfPlayer() == 0)
             return true;
-        return game.getMaxNumberOfPlayer() > game.getMinNumberOfPlayer();
+        return game.getMaxNumberOfPlayer() >= game.getMinNumberOfPlayer();
     }
 }
 
