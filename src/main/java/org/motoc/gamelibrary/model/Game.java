@@ -63,16 +63,16 @@ public class Game {
     @Column(nullable = false)
     private short minNumberOfPlayer;
 
-    @Range(min = 0, max = 100, message = "Max number of players must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Max number of players must be between 0 and 100")
     private short maxNumberOfPlayer;
 
-    @Range(min = 0, max = 100, message = "Min age must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min age must be between 0 and 100")
     private short minAge;
 
-    @Range(min = 0, max = 100, message = "Max age must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Max age must be between 0 and 100")
     private short maxAge;
 
-    @Range(min = 0, max = 100, message = "Min months must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min months must be between 0 and 100")
     private short minMonth;
 
     /**

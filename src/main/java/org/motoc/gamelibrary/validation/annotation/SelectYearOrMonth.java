@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {SelectYearOrMonthValidator.class, SelectYearOrMonthDtoValidator.class})
 public @interface SelectYearOrMonth {
-    String message() default "If you picked a minimal age, you shouldn't pick a minimal month";
+    String message() default "If you select a minimal age, minimal month must be equal zero";
 
     Class<?>[] groups() default {};
 
