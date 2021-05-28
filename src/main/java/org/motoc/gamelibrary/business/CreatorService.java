@@ -100,4 +100,8 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
     public List<CreatorNameDto> findNames() {
         return creatorRepositoryCustom.findNames();
     }
+
+    public Creator findByFullName(String name) {
+        return creatorRepository.findByFullName(name);
+    }
 }

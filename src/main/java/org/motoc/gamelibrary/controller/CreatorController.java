@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.controller;
 import org.motoc.gamelibrary.business.CreatorService;
 import org.motoc.gamelibrary.dto.CreatorDto;
 import org.motoc.gamelibrary.dto.CreatorNameDto;
+import org.motoc.gamelibrary.dto.CreatorWithoutContactDto;
 import org.motoc.gamelibrary.mapper.CreatorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,12 @@ public class CreatorController {
     List<CreatorNameDto> findNames() {
         logger.trace("findNames called");
         return service.findNames();
+    }
+
+    @GetMapping("/admin/creators")
+    CreatorWithoutContactDto findByName(@RequestParam(name = "full-name") String name) {
+        logger.trace("findByName(name) called");
+        return mapper.creatorToCreatorWithoutContactDto(service.findByFullName(name));
     }
 
     @GetMapping("/admin/creators/{id}")

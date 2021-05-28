@@ -52,6 +52,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                        PublisherRepository publisherRepository,
                        ImageRepository imageRepository) {
         super(genericRepository, Game.class);
+        this.gameToReturn = null;
         this.gameRepository = gameRepository;
         this.gameRepositoryCustom = gameRepositoryCustom;
         this.categoryRepository = categoryRepository;
