@@ -418,7 +418,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 );
     }
 
-    public void removeCreator(Long gameId, Long creatorId) {
+    public Game removeCreator(Long gameId, Long creatorId) {
         Creator creator = creatorRepository.findById(creatorId).orElseThrow(() -> {
                     throw new NotFoundException("No creator of id={}" + creatorId + " found.");
                 }
@@ -430,10 +430,12 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     if (game.getCreators().isEmpty() || !game.getCreators().contains(creator))
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to creator of id=" + creator.getId());
-                    gameRepositoryCustom.removeCreator(game, creator);
+                    gameToReturn = gameRepositoryCustom.removeCreator(game, creator);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
+
+        return gameToReturn;
     }
 
     public Game addPublisher(Long gameId, Long publisherId) {

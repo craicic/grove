@@ -124,9 +124,10 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
-    public void removeCreator(Game game, Creator creator) {
+    public Game removeCreator(Game game, Creator creator) {
         game.removeCreator(creator);
         entityManager.persist(game);
+        return game;
     }
 
     @Override

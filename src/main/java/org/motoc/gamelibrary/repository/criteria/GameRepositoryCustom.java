@@ -40,7 +40,7 @@ public interface GameRepositoryCustom {
 
     Game addCreator(Game game, Creator creator);
 
-    void removeCreator(Game game, Creator creator);
+    Game removeCreator(Game game, Creator creator);
 
 
     Game addPublisher(Game game, Publisher publisher);

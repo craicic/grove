@@ -166,10 +166,10 @@ public class GameController {
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-creator/{creatorId}")
-    void unlinkCreator(@PathVariable Long gameId,
-                       @PathVariable Long creatorId) {
+    GameDto unlinkCreator(@PathVariable Long gameId,
+                          @PathVariable Long creatorId) {
         logger.trace("unlinkCreator() called");
-        service.removeCreator(gameId, creatorId);
+        return mapper.gameToDto(service.removeCreator(gameId, creatorId));
     }
 
     @PostMapping("/admin/games/{gameId}/add-publisher/{publisherId}")
