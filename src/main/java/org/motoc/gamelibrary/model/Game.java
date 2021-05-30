@@ -225,6 +225,11 @@ public class Game {
 
 
     // Self one to many helper methods
+    public void addProductLine(ProductLine productLine) {
+        productLine.getGames().add(this);
+        this.setProductLine(productLine);
+    }
+
     public void removeProductLine(ProductLine productLine) {
         productLine.getGames().remove(this);
         this.setProductLine(null);

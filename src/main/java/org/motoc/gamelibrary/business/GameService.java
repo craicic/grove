@@ -35,7 +35,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     private final ThemeRepository themeRepository;
     private final GameCopyRepository gameCopyRepository;
     private final CreatorRepository creatorRepository;
-    private final PublisherRepository publisherRepository;
+    private final ProductLineRepository productLineRepository;
     private final ImageRepository imageRepository;
 
 
@@ -49,7 +49,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                        ThemeRepository themeRepository,
                        GameCopyRepository gameCopyRepository,
                        CreatorRepository creatorRepository,
-                       PublisherRepository publisherRepository,
+                       ProductLineRepository productLineRepository,
                        ImageRepository imageRepository) {
         super(genericRepository, Game.class);
         this.gameToReturn = null;
@@ -59,7 +59,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         this.themeRepository = themeRepository;
         this.gameCopyRepository = gameCopyRepository;
         this.creatorRepository = creatorRepository;
-        this.publisherRepository = publisherRepository;
+        this.productLineRepository = productLineRepository;
         this.imageRepository = imageRepository;
     }
 
@@ -464,4 +464,54 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
 
+    public Game addProductLine(Long gameId, Long lineId) {
+        ProductLine productLine = productLineRepository.findById(lineId).orElseThrow(
+                () -> {
+                    throw new NotFoundException("No product line of id=" + lineId + " found.");
+                });
+
+        return gameRepository.findById(gameId)
+                .map(game -> {
+                    if (!(game.getProductLine() == null)) {
+                        logger.warn("Game of id=" + game.getId() + " already has a product line");
+                    }
+                    if (game.getProductLine() == productLine) {
+                        logger.warn("Game of id=" + game.getId() +
+                                " is already linked to product line of id=" + productLine.getId());
+                    }
+
+                    return gameRepositoryCustom.addProductLine(game, productLine);
+                })
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game of id=" + gameId + " found.");
+                        }
+                );
+    }
+
+    public Game removeProductLine(Long gameId, Long lineId) {
+        this.gameToReturn = null;
+
+        ProductLine productLine = productLineRepository.findById(lineId).orElseThrow(() -> {
+                    throw new NotFoundException("No productLine of id={}" + lineId + " found.");
+                }
+        );
+
+        gameRepository
+                .findById(gameId)
+                .ifPresentOrElse(game -> {
+                    if (game.getProductLine() == null) {
+                        logger.warn("Game of id=" + game.getId() + " has no product line");
+                    }
+                    if (game.getProductLine() != productLine) {
+                        logger.warn("Game of id=" + game.getId() +
+                                " is not linked to product line of id=" + lineId);
+                    }
+
+                    gameToReturn = gameRepositoryCustom.removeProductLine(game, productLine);
+                }, () -> {
+                    throw new NotFoundException("No game of id=" + gameId + " found.");
+                });
+
+        return gameToReturn;
+    }
 }

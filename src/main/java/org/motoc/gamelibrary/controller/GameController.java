@@ -171,4 +171,18 @@ public class GameController {
         logger.trace("unlinkCreator() called");
         return mapper.gameToDto(service.removeCreator(gameId, creatorId));
     }
+
+    @PostMapping("/admin/games/{gameId}/add-product-line/{lineId}")
+    GameDto addProductLine(@PathVariable Long gameId,
+                           @PathVariable Long lineId) {
+        logger.trace("addProductLine() called");
+        return mapper.gameToDto(service.addProductLine(gameId, lineId));
+    }
+
+    @DeleteMapping("/admin/games/{gameId}/unlink-product-line/{lineId}")
+    GameDto unlinkProductLine(@PathVariable Long gameId,
+                              @PathVariable Long lineId) {
+        logger.trace("unlinkProductLine() called");
+        return mapper.gameToDto(service.removeProductLine(gameId, lineId));
+    }
 }

@@ -45,4 +45,8 @@ public interface GameRepositoryCustom {
     void attachImage(Game game, Image image);
 
     Game addExpansion(Game game, Game expansion);
+
+    Game addProductLine(Game game, ProductLine productLine);
+
+    Game removeProductLine(Game game, ProductLine productLine);
 }

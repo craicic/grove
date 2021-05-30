@@ -54,6 +54,22 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     }
 
     @Override
+    public Game addProductLine(Game game, ProductLine productLine) {
+        game.addProductLine(productLine);
+        entityManager.persist(game);
+        logger.info("Successfully persisted game of id={}", game.getId());
+        return game;
+    }
+
+    @Override
+    public Game removeProductLine(Game game, ProductLine productLine) {
+        game.removeProductLine(productLine);
+        entityManager.persist(game);
+        logger.info("Successfully persisted game of id={}", game.getId());
+        return game;
+    }
+
+    @Override
     public Game addCoreGame(Game game, Game coreGame) {
         game.addCoreGame(coreGame);
         entityManager.persist(game);
