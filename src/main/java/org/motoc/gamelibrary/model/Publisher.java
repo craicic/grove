@@ -34,11 +34,6 @@ public class Publisher {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "publisher")
-    private Set<Game> games = new HashSet<>();
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "publisher")
     private Set<GameCopy> copies = new HashSet<>();
 
     @ToString.Exclude
@@ -55,9 +50,9 @@ public class Publisher {
     }
 
     // Helper methods
-    public void addGame(Game game) {
-        this.games.add(game);
-        game.setPublisher(this);
+    public void addCopy(GameCopy copy) {
+        this.copies.add(copy);
+        copy.setPublisher(this);
     }
 
     public void addContact(Contact contact) {

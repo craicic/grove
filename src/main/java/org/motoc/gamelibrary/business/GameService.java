@@ -445,49 +445,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         return gameToReturn;
     }
 
-    public Game addPublisher(Long gameId, Long publisherId) {
-        Publisher publisher = publisherRepository
-                .findById(publisherId)
-                .orElseThrow(() -> {
-                            throw new NotFoundException("No Publisher of id=" + publisherId + " found.");
-                        }
-                );
-        return gameRepository
-                .findById(gameId)
-                .map(game -> {
-                    if (game.getPublisher() == publisher)
-                        logger.warn("Game of id=" + game.getId() +
-                                " is already linked to the given publisher of id=" + publisher.getId());
-                    if (game.getPublisher() != null)
-                        throw new IllegalStateException("Game of id=" + game.getId() +
-                                " is already linked to another publisher of id=" + game.getPublisher().getId());
-                    return gameRepositoryCustom.addPublisher(game, publisher);
-                })
-                .orElseThrow(() -> {
-                            throw new NotFoundException("No game of id=" + gameId + " found.");
-                        }
-                );
-    }
-
-    public void removePublisher(Long gameId, Long publisherId) {
-        Publisher publisher = publisherRepository.findById(publisherId).orElseThrow(() -> {
-                    throw new NotFoundException("No publisher of id={}" + publisherId + " found.");
-                }
-        );
-
-        gameRepository
-                .findById(gameId)
-                .ifPresentOrElse(game -> {
-                    if (game.getPublisher() == null || game.getPublisher() != publisher)
-                        throw new IllegalStateException("Game of id=" + game.getId() +
-                                " is not linked to publisher of id=" + publisher.getId());
-
-                    gameRepositoryCustom.removePublisher(game, publisher);
-                }, () -> {
-                    throw new NotFoundException("No game of id=" + gameId + " found.");
-                });
-    }
-
     public void addImage(Long gameId, Long imageId) {
         Image image = imageRepository.findById(imageId).orElseThrow(
                 () -> {

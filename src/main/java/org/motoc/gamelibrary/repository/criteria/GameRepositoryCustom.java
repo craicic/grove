@@ -42,11 +42,6 @@ public interface GameRepositoryCustom {
 
     Game removeCreator(Game game, Creator creator);
 
-
-    Game addPublisher(Game game, Publisher publisher);
-
-    void removePublisher(Game game, Publisher publisher);
-
     void attachImage(Game game, Image image);
 
     Game addExpansion(Game game, Game expansion);

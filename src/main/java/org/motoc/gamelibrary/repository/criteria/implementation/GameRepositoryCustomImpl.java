@@ -130,18 +130,6 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
         return game;
     }
 
-    @Override
-    public Game addPublisher(Game game, Publisher publisher) {
-        game.addPublisher(publisher);
-        entityManager.persist(game);
-        return game;
-    }
-
-    @Override
-    public void removePublisher(Game game, Publisher publisher) {
-        game.removePublisher(publisher);
-        entityManager.persist(game);
-    }
 
     @Override
     public void attachImage(Game game, Image image) {

@@ -16,7 +16,7 @@ public interface PublisherMapper {
 
     PublisherDto publisherNameToDto(Publisher id);
 
-    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "copies", ignore = true)
     @Mapping(target = "contact.creator", ignore = true)
     @Mapping(target = "contact.publisher", ignore = true)
     @Mapping(target = "contact.seller", ignore = true)

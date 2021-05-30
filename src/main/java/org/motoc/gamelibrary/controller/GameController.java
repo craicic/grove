@@ -171,18 +171,4 @@ public class GameController {
         logger.trace("unlinkCreator() called");
         return mapper.gameToDto(service.removeCreator(gameId, creatorId));
     }
-
-    @PostMapping("/admin/games/{gameId}/add-publisher/{publisherId}")
-    GameDto addPublisher(@PathVariable Long gameId,
-                         @PathVariable Long publisherId) {
-        logger.trace("addPublisher() called");
-        return mapper.gameToDto(service.addPublisher(gameId, publisherId));
-    }
-
-    @DeleteMapping("/admin/games/{gameId}/unlink-publisher/{publisherId}")
-    void unlinkPublisher(@PathVariable Long gameId,
-                         @PathVariable Long publisherId) {
-        logger.trace("unlinkPublisher() called");
-        service.removePublisher(gameId, publisherId);
-    }
 }

@@ -134,10 +134,6 @@ public class Game {
     @JoinColumn(name = "fk_product_line")
     private ProductLine productLine;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_publisher")
-    private Publisher publisher;
-
     @OneToMany(mappedBy = "game")
     private Set<Image> images = new HashSet<>();
 
@@ -225,16 +221,6 @@ public class Game {
     public void removeTheme(Theme theme) {
         this.themes.remove(theme);
         theme.getGames().remove(this);
-    }
-
-    public void addPublisher(Publisher publisher) {
-        this.setPublisher(publisher);
-        publisher.getGames().add(this);
-    }
-
-    public void removePublisher(Publisher publisher) {
-        publisher.getGames().remove(this);
-        this.setPublisher(null);
     }
 
 

@@ -335,7 +335,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoGameA.setMaxNumberOfPlayer((short) 4);
         demoGameA.setMinAge((short) 8);
         demoGameA.setProductLine(demoProductLineA);
-        demoGameA.setPublisher(demoPublisherA);
+
 
         demoGameA.setNature(GameNatureEnum.BOARD_GAME);
         demoGameA.setSize("Petit");
@@ -378,7 +378,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoGameCopyA.setLoanable(true);
         demoGameCopyA.setSeller(demoSellerA);
         demoGameCopyA.setGame(demoGameA);
-
+        demoGameCopyA.setPublisher(demoPublisherA);
         gameCopyRepository.save(demoGameCopyA);
     }
 

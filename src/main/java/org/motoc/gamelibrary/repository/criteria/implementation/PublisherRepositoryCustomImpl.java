@@ -2,7 +2,7 @@ package org.motoc.gamelibrary.repository.criteria.implementation;
 
 import org.motoc.gamelibrary.dto.PublisherNameDto;
 import org.motoc.gamelibrary.model.Contact;
-import org.motoc.gamelibrary.model.Game;
+import org.motoc.gamelibrary.model.GameCopy;
 import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.repository.criteria.PublisherRepositoryCustom;
 import org.slf4j.Logger;
@@ -41,8 +41,8 @@ public class PublisherRepositoryCustomImpl implements PublisherRepositoryCustom 
             if (contactFromDb.getCreator() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
                 entityManager.remove(contactFromDb);
         }
-        for (Game game : publisher.getGames()) {
-            game.removePublisher(publisher);
+        for (GameCopy copy : publisher.getCopies()) {
+            copy.removePublisher(publisher);
         }
         entityManager.remove(publisher);
     }
