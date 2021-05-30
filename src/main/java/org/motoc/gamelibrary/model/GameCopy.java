@@ -70,6 +70,12 @@ public class GameCopy {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_publisher")
+    private Publisher publisher;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "gameCopy")
     private Set<Loan> loans = new HashSet<>();
 
@@ -93,6 +99,16 @@ public class GameCopy {
     public void removeSeller(Seller seller) {
         this.setSeller(null);
         seller.getGameCopies().remove(this);
+    }
+
+    public void addPublisher(Publisher publisher) {
+        this.setPublisher(publisher);
+        publisher.getCopies().add(this);
+    }
+
+    public void removePublisher(Publisher publisher) {
+        publisher.getCopies().remove(this);
+        this.setPublisher(null);
     }
 
     // addGame/removeGame methods are not needed because adding game is mandatory at the creation of this object

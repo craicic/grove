@@ -38,6 +38,11 @@ public class Publisher {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "publisher")
+    private Set<GameCopy> copies = new HashSet<>();
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;

@@ -48,4 +48,9 @@ public class GameCopyDto {
     @Valid
     private SellerDto seller;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Valid
+    private PublisherDto publisherDto;
+
 }

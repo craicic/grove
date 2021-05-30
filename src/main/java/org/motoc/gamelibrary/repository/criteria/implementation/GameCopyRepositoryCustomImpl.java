@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.criteria.implementation;
 
 import org.motoc.gamelibrary.model.GameCopy;
+import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.model.Seller;
 import org.motoc.gamelibrary.repository.criteria.GameCopyRepositoryCustom;
 import org.slf4j.Logger;
@@ -30,8 +31,23 @@ public class GameCopyRepositoryCustomImpl implements GameCopyRepositoryCustom {
     }
 
     @Override
-    public void removeSeller(GameCopy copy, Seller seller) {
+    public GameCopy removeSeller(GameCopy copy, Seller seller) {
         copy.removeSeller(seller);
         entityManager.persist(copy);
+        return copy;
+    }
+
+    @Override
+    public GameCopy addPublisher(GameCopy copy, Publisher publisher) {
+        copy.addPublisher(publisher);
+        entityManager.persist(copy);
+        return copy;
+    }
+
+    @Override
+    public GameCopy removePublisher(GameCopy copy, Publisher publisher) {
+        copy.removePublisher(publisher);
+        entityManager.persist(copy);
+        return copy;
     }
 }

@@ -296,6 +296,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public Game removeCategory(Long gameId, Long categoryId) {
+        this.gameToReturn = null;
+
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> {
                     throw new NotFoundException("No category of id={}" + categoryId + " found.");
                 }
@@ -338,6 +340,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public Game removeTheme(Long gameId, Long themeId) {
+        this.gameToReturn = null;
+
         Theme theme = themeRepository.findById(themeId).orElseThrow(() -> {
                     throw new NotFoundException("No theme of id={}" + themeId + " found.");
                 }
@@ -379,6 +383,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public void removeGameCopy(Long gameId, Long gameCopyId) {
+
         GameCopy gameCopy = gameCopyRepository.findById(gameCopyId).orElseThrow(() -> {
                     throw new NotFoundException("No gameCopy of id={}" + gameCopyId + " found.");
                 }
@@ -419,6 +424,8 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public Game removeCreator(Long gameId, Long creatorId) {
+        this.gameToReturn = null;
+
         Creator creator = creatorRepository.findById(creatorId).orElseThrow(() -> {
                     throw new NotFoundException("No creator of id={}" + creatorId + " found.");
                 }

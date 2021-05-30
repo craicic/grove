@@ -2,9 +2,11 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.GameCopy;
+import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.model.Seller;
 import org.motoc.gamelibrary.repository.criteria.GameCopyRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.GameCopyRepository;
+import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.motoc.gamelibrary.repository.jpa.SellerRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
@@ -26,14 +28,21 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
 
     private final SellerRepository sellerRepository;
 
+    private final PublisherRepository publisherRepository;
+
+    private GameCopy gameCopyToReturn;
+
     public GameCopyService(JpaRepository<GameCopy, Long> genericRepository,
                            GameCopyRepository copyRepository,
                            GameCopyRepositoryCustom copyRepositoryCustom,
-                           SellerRepository sellerRepository) {
+                           SellerRepository sellerRepository,
+                           PublisherRepository publisherRepository) {
         super(genericRepository, GameCopy.class);
+        this.gameCopyToReturn = null;
         this.copyRepository = copyRepository;
         this.copyRepositoryCustom = copyRepositoryCustom;
         this.sellerRepository = sellerRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     public GameCopy findByObjectCode(String code) {
@@ -90,7 +99,9 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                 );
     }
 
-    public void removeSeller(Long copyId, Long sellerId) {
+    public GameCopy removeSeller(Long copyId, Long sellerId) {
+        this.gameCopyToReturn = null;
+
         Seller seller = sellerRepository.findById(sellerId).orElseThrow(() -> {
                     throw new NotFoundException("No seller of id={}" + sellerId + " found.");
                 }
@@ -103,10 +114,55 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                         throw new IllegalStateException("Copy of id=" + copy.getId() +
                                 " is not linked to seller of id=" + seller.getId());
 
-                    copyRepositoryCustom.removeSeller(copy, seller);
+                    this.gameCopyToReturn = copyRepositoryCustom.removeSeller(copy, seller);
                 }, () -> {
                     throw new NotFoundException("No copy of id=" + copyId + " found.");
                 });
+        return this.gameCopyToReturn;
+    }
 
+    public GameCopy addPublisher(Long copyId, Long publisherId) {
+        Publisher publisher = publisherRepository
+                .findById(publisherId)
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No Publisher of id=" + publisherId + " found.");
+                        }
+                );
+        return copyRepository
+                .findById(copyId)
+                .map(gameCopy -> {
+                    if (gameCopy.getPublisher() == publisher)
+                        logger.warn("Game copy of id=" + gameCopy.getId() +
+                                " is already linked to the given publisher of id=" + publisher.getId());
+                    if (gameCopy.getPublisher() != null)
+                        throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
+                                " is already linked to another publisher of id=" + gameCopy.getPublisher().getId());
+                    return copyRepositoryCustom.addPublisher(gameCopy, publisher);
+                })
+                .orElseThrow(() -> {
+                            throw new NotFoundException("No game copy of id=" + copyId + " found.");
+                        }
+                );
+    }
+
+    public GameCopy removePublisher(Long copyId, Long publisherId) {
+        this.gameCopyToReturn = null;
+        Publisher publisher = publisherRepository.findById(publisherId).orElseThrow(() -> {
+                    throw new NotFoundException("No publisher of id={}" + publisherId + " found.");
+                }
+        );
+
+        copyRepository
+                .findById(copyId)
+                .ifPresentOrElse(gameCopy -> {
+                    if (gameCopy.getPublisher() == null || gameCopy.getPublisher() != publisher)
+                        throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
+                                " is not linked to publisher of id=" + publisher.getId());
+
+                    this.gameCopyToReturn = copyRepositoryCustom.removePublisher(gameCopy, publisher);
+                }, () -> {
+                    throw new NotFoundException("No game copy of id=" + copyId + " found.");
+                });
+        return this.gameCopyToReturn;
     }
 }

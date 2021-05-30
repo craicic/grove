@@ -67,9 +67,23 @@ public class GameCopyController {
     }
 
     @DeleteMapping("/admin/game-copies/{copyId}/unlink-seller/{sellerId}")
-    void unlinkSeller(@PathVariable Long copyId,
-                      @PathVariable Long sellerId) {
+    GameCopyDto unlinkSeller(@PathVariable Long copyId,
+                             @PathVariable Long sellerId) {
         logger.trace("unlinkSeller() called");
-        service.removeSeller(copyId, sellerId);
+        return mapper.copyToDto(service.removeSeller(copyId, sellerId));
+    }
+
+    @PostMapping("/admin/game-copies/{copyId}/add-publisher/{publisherId}")
+    GameCopyDto addPublisher(@PathVariable Long copyId,
+                             @PathVariable Long publisherId) {
+        logger.trace("addPublisher() called");
+        return mapper.copyToDto(service.addPublisher(copyId, publisherId));
+    }
+
+    @DeleteMapping("/admin/game-copies/{copyId}/unlink-publisher/{publisherId}")
+    GameCopyDto unlinkPublisher(@PathVariable Long copyId,
+                                @PathVariable Long publisherId) {
+        logger.trace("unlinkPublisher() called");
+        return mapper.copyToDto(service.removePublisher(copyId, publisherId));
     }
 }
