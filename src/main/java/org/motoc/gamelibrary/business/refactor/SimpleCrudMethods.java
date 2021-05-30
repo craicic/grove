@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
@@ -24,6 +25,11 @@ public interface SimpleCrudMethods<T> {
      * Find T
      */
     T findById(long id);
+
+    /**
+     * Find All
+     */
+    List<T> findAll();
 
     /**
      * Find page

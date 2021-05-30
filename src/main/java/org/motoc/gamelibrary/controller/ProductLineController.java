@@ -51,6 +51,12 @@ public class ProductLineController {
         return mapper.productLineToDto(service.findById(id));
     }
 
+    @GetMapping("/admin/product-lines")
+    List<ProductLineDto> findAll() {
+        logger.trace("findAll() called");
+        return mapper.productLinesToDto(service.findAll());
+    }
+
     @GetMapping("/admin/product-lines/page")
     Page<ProductLineDto> findPage(Pageable pageable,
                                   @RequestParam(name = "search", required = false) String keyword) {
