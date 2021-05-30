@@ -48,25 +48,38 @@ In section DATA SOURCE : `spring.datasource.url`, `spring.datasource.username` &
 In section SECURITY / KEYCLOAK : `keycloak.credentials.secret`.
 
 ##### 7 - Compile and run the application
+
 With a prompt in project root folder, run : `mvn package`. It will create a Target folder that contains your JAR.  
-Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may vary.  
+Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may vary.
 
 *And it's done : the program will be launched through the embedded tomcat server using port 8080.*
 
 ## Current version
-#### 0.3.0-ALPHA
-Theme CRUD feature, exposed on the service's API.
 
-## Upcoming version
 #### 0.4.0-ALPHA
+
 Game related CRUD feature, exposed on the service's API.
 
+## Upcoming version
+
+#### 0.5.0-ALPHA
+
+Game features are done.
+
 ## Changelog
+
 #### 0.0.1-SNAPSHOT - 1 May 2020
+
 Project structure is done.
 
 #### 0.2.0-ALPHA - 20 May 2020
+
 Repository fundamentals set, database is fill with demo data on startup.
 
 #### 0.3.0-ALPHA
+
 Theme CRUD feature, exposed on the service's API.
+
+#### 0.4.0-ALPHA
+
+Game related CRUD feature, exposed on the service's API.
