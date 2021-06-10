@@ -19,5 +19,6 @@
 ## V1.5 (Delivery)
 - [ ] Improve logs.
 - [ ] Improve documentation.
+- [ ] New constraint person concat(firstname,lastname) unique
 
 ## V2 (Update)
