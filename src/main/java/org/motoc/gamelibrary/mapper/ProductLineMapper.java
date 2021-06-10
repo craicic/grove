@@ -7,10 +7,10 @@ import org.motoc.gamelibrary.dto.ProductLineDto;
 import org.motoc.gamelibrary.model.ProductLine;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * Maps model to dto and and dto to model
- *
- * @author RouzicJ
  */
 @Mapper(componentModel = "spring")
 public interface ProductLineMapper {
@@ -21,8 +21,11 @@ public interface ProductLineMapper {
         return page.map(this::productLineToDto);
     }
 
+
     ProductLineDto productLineToDto(ProductLine productLine);
 
     @Mapping(target = "games", ignore = true)
     ProductLine dtoToProductLine(ProductLineDto productLineDto);
+
+    List<ProductLineDto> productLinesToDto(List<ProductLine> productLines);
 }

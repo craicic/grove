@@ -9,8 +9,6 @@ import java.lang.annotation.*;
 
 /**
  * A custom annotation in order to check the consistency of age range
- *
- * @author RouzicJ
  */
 @Target(ElementType.TYPE)
 @Documented

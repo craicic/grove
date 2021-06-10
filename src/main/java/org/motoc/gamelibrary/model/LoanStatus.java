@@ -1,31 +1,25 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * The status of a loan
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseTag"))
+@Table(name = "loan_status", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_tag"))
 public class LoanStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Tag cannot be null or blank")
     @Size(max = 50, message = "Tag cannot exceed 50 characters")
@@ -33,7 +27,7 @@ public class LoanStatus {
     private String tag;
 
     @ToString.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(name = "lower_case_tag", nullable = false, length = 50)
     private String lowerCaseTag;
 
     @NotBlank(message = "Description cannot be null or blank")
@@ -41,6 +35,8 @@ public class LoanStatus {
     @Column(nullable = false)
     private String description;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "loanStatus")
     private Set<Loan> loans;
 
@@ -59,20 +55,5 @@ public class LoanStatus {
     public void removeLoan(Loan loan) {
         this.loans.remove(loan);
         loan.setLoanStatus(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LoanStatus that = (LoanStatus) o;
-        return id == that.id &&
-                tag.equals(that.tag) &&
-                description.equals(that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tag, description);
     }
 }

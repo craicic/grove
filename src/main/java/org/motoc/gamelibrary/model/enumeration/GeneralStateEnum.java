@@ -3,8 +3,6 @@ package org.motoc.gamelibrary.model.enumeration;
 /**
  * The general state of the game copy
  * ex : in activity, in repair, out of order
- *
- * @author RouzicJ
  */
 public enum GeneralStateEnum {
 

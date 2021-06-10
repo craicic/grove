@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.model.enumeration.GameNatureEnum;
 import org.motoc.gamelibrary.validation.annotation.ConsistentAgeRange;
@@ -14,13 +11,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * A game, it's a generic description of the item, not of a copy
- *
- * @author RouzicJ
  */
 @ConsistentNumberOfPlayer
 @ConsistentAgeRange
@@ -29,20 +23,23 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(name = "game", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     /**
      * Core game, if this game is an extension
      */
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Game coreGame;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "coreGame")
     private Set<Game> expansions = new HashSet<>();
 
@@ -51,7 +48,7 @@ public class Game {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false)
+    @Column(nullable = false, name = "lower_case_name")
     private String lowerCaseName;
 
     @Size(max = 1000, message = "Description should not exceed 1000 characters")
@@ -66,16 +63,16 @@ public class Game {
     @Column(nullable = false)
     private short minNumberOfPlayer;
 
-    @Range(min = 0, max = 100, message = "Max number of players must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Max number of players must be between 0 and 100")
     private short maxNumberOfPlayer;
 
-    @Range(min = 0, max = 100, message = "Min age must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min age must be between 0 and 100")
     private short minAge;
 
-    @Range(min = 0, max = 100, message = "Max age must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Max age must be between 0 and 100")
     private short maxAge;
 
-    @Range(min = 0, max = 100, message = "Min months must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min months must be between 0 and 100")
     private short minMonth;
 
     /**
@@ -137,17 +134,10 @@ public class Game {
     @JoinColumn(name = "fk_product_line")
     private ProductLine productLine;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_publisher")
-    private Publisher publisher;
-
-    @ManyToMany
-    @JoinTable(
-            name = "game_image",
-            joinColumns = {@JoinColumn(name = "fk_game")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_image")})
+    @OneToMany(mappedBy = "game")
     private Set<Image> images = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "game_creator",
@@ -155,6 +145,7 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_creator")})
     private Set<Creator> creators = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "game_category",
@@ -162,6 +153,7 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_category")})
     private Set<Category> categories = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "game_theme",
@@ -169,8 +161,10 @@ public class Game {
             inverseJoinColumns = {@JoinColumn(name = "fk_theme")})
     private Set<Theme> themes = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
+
 
     // Overridden accessors
     public void setName(String name) {
@@ -181,12 +175,12 @@ public class Game {
     // Helper methods
     public void addImage(Image image) {
         this.images.add(image);
-        image.getGames().add(this);
+        image.setGame(this);
     }
 
     public void removeImage(Image image) {
         this.images.remove(image);
-        image.getGames().remove(this);
+        image.setGame(null);
     }
 
     public void addCreator(Creator creator) {
@@ -214,6 +208,11 @@ public class Game {
         gameCopy.setGame(this);
     }
 
+    public void removeGameCopy(GameCopy gameCopy) {
+        this.gameCopies.remove(gameCopy);
+        gameCopy.setGame(null);
+    }
+
     public void addTheme(Theme theme) {
         this.themes.add(theme);
         theme.getGames().add(this);
@@ -224,41 +223,37 @@ public class Game {
         theme.getGames().remove(this);
     }
 
-    public void removePublisher(Publisher publisher) {
-        publisher.getGames().remove(this);
-        this.setPublisher(null);
+
+    // Self one to many helper methods
+    public void addProductLine(ProductLine productLine) {
+        productLine.getGames().add(this);
+        this.setProductLine(productLine);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return id == game.id &&
-                minNumberOfPlayer == game.minNumberOfPlayer &&
-                maxNumberOfPlayer == game.maxNumberOfPlayer &&
-                minAge == game.minAge &&
-                maxAge == game.maxAge &&
-                minMonth == game.minMonth &&
-                Objects.equals(coreGame, game.coreGame) &&
-                name.equals(game.name) &&
-                Objects.equals(description, game.description) &&
-                Objects.equals(playTime, game.playTime) &&
-                Objects.equals(stuff, game.stuff) &&
-                Objects.equals(preparation, game.preparation) &&
-                Objects.equals(goal, game.goal) &&
-                Objects.equals(coreRules, game.coreRules) &&
-                Objects.equals(variant, game.variant) &&
-                Objects.equals(ending, game.ending) &&
-                nature == game.nature &&
-                Objects.equals(size, game.size) &&
-                Objects.equals(editionNumber, game.editionNumber);
+    public void removeProductLine(ProductLine productLine) {
+        productLine.getGames().remove(this);
+        this.setProductLine(null);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, coreGame, name, description, playTime, minNumberOfPlayer, maxNumberOfPlayer, minAge, maxAge, minMonth, stuff, preparation, goal, coreRules, variant, ending, nature, size, editionNumber);
+    public void addCoreGame(Game coreGame) {
+        coreGame.getExpansions().add(this);
+        this.setCoreGame(coreGame);
     }
 
+    public void removeCoreGame() {
+        if (this.getCoreGame() != null) {
+            this.getCoreGame().getExpansions().remove(this);
+            this.setCoreGame(null);
+        }
+    }
 
+    public void addExpansion(Game expansion) {
+        expansion.setCoreGame(this);
+        this.getExpansions().add(expansion);
+    }
+
+    public void removeExpansion(Game expansion) {
+        expansion.setCoreGame(null);
+        this.getExpansions().remove(expansion);
+    }
 }

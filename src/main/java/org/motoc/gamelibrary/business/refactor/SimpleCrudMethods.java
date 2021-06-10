@@ -3,17 +3,18 @@ package org.motoc.gamelibrary.business.refactor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.Valid;
+import java.util.List;
+
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
- *
- * @author RouzicJ
  */
 public interface SimpleCrudMethods<T> {
 
     /**
      * Persist T
      */
-    T save(T t);
+    T save(@Valid T t);
 
     /**
      * Count the number of T in persistence
@@ -24,6 +25,11 @@ public interface SimpleCrudMethods<T> {
      * Find T
      */
     T findById(long id);
+
+    /**
+     * Find All
+     */
+    List<T> findAll();
 
     /**
      * Find page

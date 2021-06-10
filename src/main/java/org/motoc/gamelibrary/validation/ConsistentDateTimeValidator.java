@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the consistency of loan date (is start date before end date)
- *
- * @author RouzicJ
  */
 public class ConsistentDateTimeValidator implements ConstraintValidator<ConsistentDateTime, Loan> {
 

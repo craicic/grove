@@ -1,32 +1,26 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * The product line of a game
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(name = "product_line", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class ProductLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 255, message = "Name cannot exceed 255 characters")
@@ -34,10 +28,11 @@ public class ProductLine {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false)
+    @Column(name = "lower_case_name", nullable = false)
     private String lowerCaseName;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "productLine")
     private Set<Game> games = new HashSet<>();
 
@@ -56,19 +51,5 @@ public class ProductLine {
     public void removeGame(Game game) {
         this.games.remove(game);
         game.setProductLine(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductLine that = (ProductLine) o;
-        return id == that.id &&
-                name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }

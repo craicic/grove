@@ -15,6 +15,6 @@ public class SelectYearOrMonthDtoValidator implements ConstraintValidator<Select
 
     @Override
     public boolean isValid(GameDto game, ConstraintValidatorContext constraintValidatorContext) {
-        return game.getMinAge() == 0 ^ game.getMinMonth() == 0;
+        return game.getMinAge() == 0 || game.getMinMonth() == 0;
     }
 }

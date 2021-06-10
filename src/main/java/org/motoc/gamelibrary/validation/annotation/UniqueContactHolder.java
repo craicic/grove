@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 
 /**
  * An annotation to make a contact have an unique holder
- *
- * @author RouzicJ
  */
 @Target(ElementType.TYPE)
 @Documented

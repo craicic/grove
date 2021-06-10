@@ -1,32 +1,26 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * The publisher of a game
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "lowerCaseName"))
+@Table(name = "publisher", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 255, message = "Name cannot exceed 255 characters")
@@ -34,15 +28,17 @@ public class Publisher {
     private String name;
 
     @ToString.Exclude
-    @Column(nullable = false)
+    @Column(name = "lower_case_name", nullable = false)
     private String lowerCaseName;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "publisher")
-    private Set<Game> games = new HashSet<>();
+    private Set<GameCopy> copies = new HashSet<>();
 
     @ToString.Exclude
-    @OneToOne
+    @EqualsAndHashCode.Exclude
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
@@ -54,9 +50,9 @@ public class Publisher {
     }
 
     // Helper methods
-    public void addGame(Game game) {
-        this.games.add(game);
-        game.setPublisher(this);
+    public void addCopy(GameCopy copy) {
+        this.copies.add(copy);
+        copy.setPublisher(this);
     }
 
     public void addContact(Contact contact) {
@@ -70,19 +66,5 @@ public class Publisher {
     public void removeContact(Contact contact) {
         this.setContact(null);
         contact.setPublisher(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Publisher publisher = (Publisher) o;
-        return id == publisher.id &&
-                name.equals(publisher.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }

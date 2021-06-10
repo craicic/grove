@@ -15,8 +15,6 @@ import java.util.List;
 
 /**
  * Defines category endpoints
- *
- * @author RouzicJ
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -40,8 +38,20 @@ public class CategoryController {
         return service.count();
     }
 
+    @GetMapping("/admin/categories/names")
+    List<String> findNames() {
+        logger.trace("findNames called");
+        return service.findNames();
+    }
+
     @GetMapping("/admin/categories")
-    CategoryDto findById(Long id) {
+    List<CategoryDto> findAll() {
+        logger.trace("findAll() called");
+        return mapper.categoriesToDto(service.findAll());
+    }
+
+    @GetMapping("/admin/categories/{id}")
+    CategoryDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.categoryToDto(service.findById(id));
     }
@@ -73,33 +83,5 @@ public class CategoryController {
     void deleteById(@PathVariable Long id) {
         logger.trace("deleteById(id) called");
         service.remove(id);
-    }
-
-    @PostMapping("/admin/categories/{catId}/add-children")
-    CategoryDto addChildren(@RequestBody List<Long> childrenIds,
-                            @PathVariable Long catId) {
-        logger.trace("addChildren(children, catId) called");
-        return mapper.categoryToDto(
-                service.addChildren(childrenIds, catId)
-        );
-    }
-
-    @PostMapping("/admin/categories/{catId}/add-parent/{parentId}")
-    CategoryDto addParent(@PathVariable Long parentId,
-                          @PathVariable Long catId) {
-        logger.trace("addParent(parentId, catId) called");
-        return mapper.categoryToDto(service.addParent(parentId, catId));
-    }
-
-    @DeleteMapping("/admin/categories/{catId}/unlink-parent")
-    void removeParent(@PathVariable Long catId) {
-        logger.trace("removeParent(catId) called");
-        service.removeParent(catId);
-    }
-
-    @DeleteMapping("/admin/categories/{catId}/unlink-child/{childId}")
-    void removeChild(@PathVariable Long catId, @PathVariable Long childId) {
-        logger.trace("removeChildren(catId, childId) called");
-        service.removeChild(catId, childId);
     }
 }

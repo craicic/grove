@@ -9,16 +9,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Perform business logic on the web entity Theme
- *
- * @author RouzicJ
  */
 @Service
 @Transactional
@@ -72,5 +72,13 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
     public Page<Theme> quickSearch(String keyword, Pageable pageable) {
         logger.debug("Find all theme that contains : " + keyword);
         return themeRepository.findByLowerCaseNameContaining(keyword, pageable);
+    }
+
+    /**
+     * Calls the DAO to search all themes
+     */
+    public List<Theme> findAll() {
+        logger.debug("Find all themes");
+        return themeRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 }

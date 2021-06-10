@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the selection of minimal age. You must choose minAge (in year) XOR minMonth
- *
- * @author RouzicJ
  */
 public class SelectYearOrMonthValidator implements ConstraintValidator<SelectYearOrMonth, Game> {
     @Override
@@ -19,6 +17,6 @@ public class SelectYearOrMonthValidator implements ConstraintValidator<SelectYea
 
     @Override
     public boolean isValid(Game game, ConstraintValidatorContext constraintValidatorContext) {
-        return game.getMinAge() == 0 ^ game.getMinMonth() == 0;
+        return game.getMinAge() == 0 || game.getMinMonth() == 0;
     }
 }

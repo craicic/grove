@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the consistency of number of player parameters
- *
- * @author RouzicJ
  */
 public class ConsistentNumberOfPlayerValidator implements ConstraintValidator<ConsistentNumberOfPlayer, Game> {
 
@@ -22,7 +20,7 @@ public class ConsistentNumberOfPlayerValidator implements ConstraintValidator<Co
     public boolean isValid(Game game, ConstraintValidatorContext constraintValidatorContext) {
         if (game.getMaxNumberOfPlayer() == 0)
             return true;
-        return game.getMaxNumberOfPlayer() > game.getMinNumberOfPlayer();
+        return game.getMaxNumberOfPlayer() >= game.getMinNumberOfPlayer();
     }
 }
 

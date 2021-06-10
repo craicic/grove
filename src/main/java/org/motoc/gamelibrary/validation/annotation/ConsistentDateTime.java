@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 
 /**
  * A custom annotation in order to check the consistency of loan date (is start date before end date)
- *
- * @author RouzicJ
  */
 @Target(ElementType.TYPE)
 @Documented

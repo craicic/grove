@@ -26,8 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Configures keycloak and application's security
- *
- * @author RouzicJ
  */
 @KeycloakConfiguration
 @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true", matchIfMissing = true)

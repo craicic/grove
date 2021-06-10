@@ -69,7 +69,7 @@ class ProductLineServiceTest {
 
         assertThatThrownBy(() -> {
             service.findById(id);
-        }).hasMessageContaining("Could not find " + id);
+        }).hasMessageContaining("No productline of id=" + id + " found.");
     }
 
     @Test
@@ -99,7 +99,7 @@ class ProductLineServiceTest {
 
         ProductLine pLToReplace = new ProductLine();
         pLToReplace.setId(id);
-        pLToReplace.setName("Chtulu");
+        pLToReplace.setName("Cthulhu");
 
         ProductLine productLine = new ProductLine();
         productLine.setId(id);
@@ -115,7 +115,7 @@ class ProductLineServiceTest {
     @Test
     void edit_ShouldCreate() {
         final long id = 1L;
-        final String name = "Chtulu";
+        final String name = "Cthulhu";
 
         ProductLine productLine = new ProductLine();
         productLine.setId(id);

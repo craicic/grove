@@ -14,7 +14,9 @@ public interface PublisherMapper {
 
     PublisherDto publisherToDto(Publisher id);
 
-    @Mapping(target = "games", ignore = true)
+    PublisherDto publisherNameToDto(Publisher id);
+
+    @Mapping(target = "copies", ignore = true)
     @Mapping(target = "contact.creator", ignore = true)
     @Mapping(target = "contact.publisher", ignore = true)
     @Mapping(target = "contact.seller", ignore = true)
@@ -24,5 +26,4 @@ public interface PublisherMapper {
     default Page<PublisherDto> pageToPageDto(Page<Publisher> page) {
         return page.map(this::publisherToDto);
     }
-
 }

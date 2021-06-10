@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.business.ProductLineService;
 import org.motoc.gamelibrary.dto.ProductLineDto;
+import org.motoc.gamelibrary.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.mapper.ProductLineMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Defines product line endpoints
- *
- * @author RouzicJ
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -39,16 +39,34 @@ public class ProductLineController {
         return service.count();
     }
 
-    @GetMapping("/admin/product-lines")
-    ProductLineDto findById(Long id) {
+    @GetMapping("/admin/product-lines/names")
+    List<ProductLineNameDto> findNames() {
+        logger.trace("findNames called");
+        return service.findNames();
+    }
+
+    @GetMapping("/admin/product-lines/{id}")
+    ProductLineDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return mapper.productLineToDto(service.findById(id));
     }
 
+    @GetMapping("/admin/product-lines")
+    List<ProductLineDto> findAll() {
+        logger.trace("findAll() called");
+        return mapper.productLinesToDto(service.findAll());
+    }
+
     @GetMapping("/admin/product-lines/page")
-    Page<ProductLineDto> findPage(Pageable pageable) {
+    Page<ProductLineDto> findPage(Pageable pageable,
+                                  @RequestParam(name = "search", required = false) String keyword) {
         logger.trace("findPage(pageable) called");
-        return mapper.pageToPageDto(service.findPage(pageable));
+        if (keyword == null) {
+            return mapper.pageToPageDto(service.findPage(pageable));
+        } else {
+            logger.trace("findPage(" + keyword + ", pageable) called");
+            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+        }
     }
 
     @PostMapping("/admin/product-lines")

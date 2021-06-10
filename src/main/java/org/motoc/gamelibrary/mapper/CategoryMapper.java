@@ -6,10 +6,10 @@ import org.motoc.gamelibrary.dto.CategoryDto;
 import org.motoc.gamelibrary.model.Category;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * Maps model to dto and and dto to model
- *
- * @author RouzicJ
  */
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
@@ -20,65 +20,11 @@ public interface CategoryMapper {
         return page.map(this::categoryToDto);
     }
 
-    default Category dtoToCategoryIgnoringRelations(CategoryDto categoryDto) {
-        if (categoryDto == null)
-            return null;
+    List<CategoryDto> categoriesToDto(List<Category> categories);
 
-        Category category = new Category();
+    Category dtoToCategory(CategoryDto categoryDto);
 
-        category.setId(categoryDto.getId());
-        category.setName(categoryDto.getName());
-
-        return category;
-    }
-
-    default CategoryDto categoryToDtoIgnoringRelations(Category category) {
-        if (category == null) {
-            return null;
-        }
-
-        CategoryDto categoryDto = new CategoryDto();
-
-        categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
-
-        return categoryDto;
-    }
-
-    default Category dtoToCategory(CategoryDto categoryDto) {
-        if (categoryDto == null) {
-            return null;
-        }
-
-        Category category = new Category();
-
-        category.setId(categoryDto.getId());
-        category.setName(categoryDto.getName());
+    CategoryDto categoryToDto(Category category);
 
 
-        category.setParent(dtoToCategoryIgnoringRelations(categoryDto.getParent()));
-        for (CategoryDto child : categoryDto.getChildren()) {
-            category.getChildren().add(dtoToCategoryIgnoringRelations(child));
-        }
-
-        return category;
-    }
-
-
-    default CategoryDto categoryToDto(Category category) {
-        if (category == null) {
-            return null;
-        }
-
-        CategoryDto categoryDto = new CategoryDto();
-
-        categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
-        for (Category child : category.getChildren()) {
-            categoryDto.getChildren().add(categoryToDtoIgnoringRelations(child));
-        }
-        categoryDto.setParent(categoryToDtoIgnoringRelations(category.getParent()));
-
-        return categoryDto;
-    }
 }
