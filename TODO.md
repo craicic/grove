@@ -15,6 +15,7 @@
 #### Repository
 
 - [X] Remove @Repository on JpaRepos.
+- [ ] Users repository
 
 ## V1.5 (Delivery)
 - [ ] Improve logs.
