@@ -64,6 +64,14 @@ Game related CRUD feature, exposed on the service's API.
 
 #### 0.5.0-ALPHA
 
+User / member features are done.
+
+#### 0.6.0-ALPHA
+
+Loans features are done.
+
+#### 0.7.0-ALPHA
+
 Game features are done.
 
 ## Changelog
