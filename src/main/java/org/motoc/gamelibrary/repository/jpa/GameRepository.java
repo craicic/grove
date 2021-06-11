@@ -14,7 +14,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query(value = "SELECT g.id, g.name, g.description, g.play_time,g.min_number_of_player, g.max_number_of_player, " +
             "g.min_age, g.max_age, g.min_month, c.id, c.name, " +
-            "i.id, i.file_path, gcopy.id, c2.id, c2.first_name, c2.last_name, c2.role " +
+            "i.id, gcopy.id, c2.id, c2.first_name, c2.last_name, c2.role " +
             " FROM (game as g " +
             " LEFT JOIN game_category gc on g.id = gc.fk_game " +
             " LEFT JOIN category c on c.id = gc.fk_category " +

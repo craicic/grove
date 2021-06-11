@@ -23,3 +23,4 @@
 - [ ] New constraint person concat(firstname,lastname) unique
 
 ## V2 (Update)
+- [ ] Cron task to switch role of members who didn't pay the renewal of their membership
