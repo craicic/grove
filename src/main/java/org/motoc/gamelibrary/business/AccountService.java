@@ -39,7 +39,9 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
                 .map(accountFromPersistence -> {
                     accountFromPersistence.setMembershipNumber(account.getMembershipNumber());
                     accountFromPersistence.setRenewalDate(account.getRenewalDate());
-                    accountFromPersistence.setUserUuid(account.getUserUuid());
+                    accountFromPersistence.setFirstName(account.getFirstName());
+                    accountFromPersistence.setLastName(account.getLastName());
+                    accountFromPersistence.setUsername(account.getUsername());
                     accountFromPersistence.setContact(account.getContact());
                     accountFromPersistence.setLoan(account.getLoan());
                     logger.debug("Found account of id={} : {}", id, accountFromPersistence);

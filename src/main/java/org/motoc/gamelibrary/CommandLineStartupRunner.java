@@ -197,7 +197,9 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoAccountA.setMembershipNumber("0015");
         demoAccountA.setRenewalDate(LocalDate.of(2019, 6, 15));
         demoAccountA.setContact(demoContactA);
-        demoAccountA.setUserUuid("REPLACE_THIS_UUID");
+        demoAccountA.setUsername("John-Doe");
+        demoAccountA.setFirstName("John");
+        demoAccountA.setLastName("Doe");
         accountRepository.save(demoAccountA);
         accountRepository.flush();
     }

@@ -15,9 +15,15 @@ public class AccountDto {
 
     private Long id;
 
-    @NotBlank(message = "User uuid cannot be null or blank")
-    @Size(max = 50, message = "User uuid cannot exceed 50 characters")
-    private String userUuid;
+    @Size(max = 127, message = "User's firstname cannot exceed 127 characters")
+    private String firstName;
+
+    @Size(max = 127, message = "User's lastname cannot exceed 127 characters")
+    private String lastName;
+
+    @NotBlank(message = "Username cannot be null or blank")
+    @Size(max = 255, message = "Username cannot exceed 255 characters")
+    private String username;
 
     @NotBlank(message = "Membership Number cannot be null or blank")
     @Size(max = 50, message = "Membership Number cannot exceed 50 characters")
