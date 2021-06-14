@@ -57,10 +57,11 @@ public class AccountController {
     }
 
     @PostMapping("/admin/accounts")
-    AccountDto save(@RequestBody @Valid AccountDto account) {
+    AccountDto save(@RequestBody @Valid AccountDto account,
+                    @RequestParam(value = "has-contact", required = false) boolean hasContact) {
         logger.trace("save(account) called");
         return mapper.accountToDto(
-                service.save(mapper.dtoToAccount(account))
+                service.save(mapper.dtoToAccount(account), hasContact)
         );
     }
 }

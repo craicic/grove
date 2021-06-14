@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.dto;
 
 import lombok.*;
-import org.motoc.gamelibrary.model.Contact;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -25,14 +24,14 @@ public class AccountDto {
     @Size(max = 255, message = "Username cannot exceed 255 characters")
     private String username;
 
-    @NotBlank(message = "Membership Number cannot be null or blank")
-    @Size(max = 50, message = "Membership Number cannot exceed 50 characters")
-    private String membershipNumber;
+//    @NotBlank(message = "Membership Number cannot be null or blank")
+//    @Size(max = 50, message = "Membership Number cannot exceed 50 characters")
+private String membershipNumber;
 
     private LocalDate renewalDate;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Valid
-    private Contact contact;
+    private ContactDto contact;
 }

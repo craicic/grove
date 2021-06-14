@@ -4,6 +4,7 @@ import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Account;
 import org.motoc.gamelibrary.repository.criteria.AccountRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
+import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,16 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
 
     final private AccountRepository accountRepository;
 
+    final private ContactRepository contactRepository;
+
     final private AccountRepositoryCustom accountRepositoryCustom;
 
     @Autowired
     public AccountService(JpaRepository<Account, Long> genericRepository, AccountRepository accountRepository,
-                          AccountRepositoryCustom accountRepositoryCustom) {
+                          ContactRepository contactRepository, AccountRepositoryCustom accountRepositoryCustom) {
         super(genericRepository, Account.class);
         this.accountRepository = accountRepository;
+        this.contactRepository = contactRepository;
         this.accountRepositoryCustom = accountRepositoryCustom;
     }
 
@@ -54,4 +58,14 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
                 });
     }
 
+    /**
+     * Persist a new account by id (if a contact is associated, this one must be new)
+     */
+    public Account save(@Valid Account account, boolean hasContact) {
+        if (hasContact) {
+            long contactId = contactRepository.save(account.getContact()).getId();
+            account.getContact().setId(contactId);
+        }
+        return accountRepository.save(account);
+    }
 }

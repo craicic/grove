@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Contain some detail about the account
@@ -15,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "account", schema = "public")
+@Table(name = "account", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class Account {
 
     @Id
@@ -45,7 +46,7 @@ public class Account {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
@@ -57,5 +58,7 @@ public class Account {
     @PrePersist
     public void prePersist() {
         this.renewalDate = LocalDate.now();
+        this.membershipNumber = UUID.randomUUID().toString();
     }
+
 }

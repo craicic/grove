@@ -194,6 +194,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
 
     private void fillAccounts() {
         Account demoAccountA = new Account();
+
         demoAccountA.setMembershipNumber("0015");
         demoAccountA.setRenewalDate(LocalDate.of(2019, 6, 15));
         demoAccountA.setContact(demoContactA);
