@@ -56,15 +56,11 @@ Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may var
 
 ## Current version
 
-#### 0.4.0-ALPHA
-
-Game related CRUD feature, exposed on the service's API.
-
-## Upcoming version
-
 #### 0.5.0-ALPHA
 
 User / member features are done.
+
+## Upcoming version
 
 #### 0.6.0-ALPHA
 
@@ -91,3 +87,7 @@ Theme CRUD feature, exposed on the service's API.
 #### 0.4.0-ALPHA
 
 Game related CRUD feature, exposed on the service's API.
+
+#### 0.5.0-ALPHA
+
+User / member features are done.
