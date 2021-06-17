@@ -15,10 +15,13 @@
 #### Repository
 
 - [X] Remove @Repository on JpaRepos.
+- [ ] Users repository
 
 ## V1.5 (Delivery)
 - [ ] Improve logs.
 - [ ] Improve documentation.
 - [ ] New constraint person concat(firstname,lastname) unique
+- [ ] Membership number handling
 
 ## V2 (Update)
+- [ ] Cron task to switch role of members who didn't pay the renewal of their membership

@@ -74,7 +74,7 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 // use previously declared bean
                 .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                // keycloak filters for securisation
+                // keycloak filters
                 .and()
                 .addFilterBefore(keycloakPreAuthActionsFilter(), LogoutFilter.class)
                 .addFilterBefore(keycloakAuthenticationProcessingFilter(), X509AuthenticationFilter.class)

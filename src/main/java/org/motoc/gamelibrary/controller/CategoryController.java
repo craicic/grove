@@ -19,7 +19,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class CategoryController {
-
     private static final Logger logger = LoggerFactory.getLogger(ProductLineController.class);
 
     private final CategoryService service;
@@ -31,6 +30,7 @@ public class CategoryController {
         this.service = service;
         this.mapper = CategoryMapper.INSTANCE;
     }
+
 
     @GetMapping("/admin/categories/count")
     Long count() {

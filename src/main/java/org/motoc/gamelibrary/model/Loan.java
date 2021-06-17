@@ -49,6 +49,12 @@ public class Loan {
     @JoinColumn(name = "fk_loan_status")
     private LoanStatus loanStatus;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_account")
+    private Account account;
+
     // Helper methods
 
     public void addLoanStatus(LoanStatus loanStatus) {
