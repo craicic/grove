@@ -38,7 +38,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     private final ProductLineRepository productLineRepository;
     private final ImageRepository imageRepository;
 
-
     private Game gameToReturn;
 
     @Autowired

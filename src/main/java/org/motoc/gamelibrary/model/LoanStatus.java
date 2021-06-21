@@ -1,14 +1,17 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 /**
  * The status of a loan
+ * Note will not be used before V1.5
  */
 @Data
 @NoArgsConstructor
@@ -35,10 +38,11 @@ public class LoanStatus {
     @Column(nullable = false)
     private String description;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "loanStatus")
-    private Set<Loan> loans;
+    /*Uncomment this for V1.5*/
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @OneToMany(mappedBy = "loanStatus")
+//    private Set<Loan> loans;
 
     // Overridden accessors
     public void setTag(String tag) {
@@ -46,14 +50,15 @@ public class LoanStatus {
         this.lowerCaseTag = tag.toLowerCase();
     }
 
+    /*Uncomment this for V1.5*/
     // Helper methods
-    public void addLoan(Loan loan) {
-        this.loans.add(loan);
-        loan.setLoanStatus(this);
-    }
-
-    public void removeLoan(Loan loan) {
-        this.loans.remove(loan);
-        loan.setLoanStatus(null);
-    }
+//    public void addLoan(Loan loan) {
+//        this.loans.add(loan);
+//        loan.setLoanStatus(this);
+//    }
+//
+//    public void removeLoan(Loan loan) {
+//        this.loans.remove(loan);
+//        loan.setLoanStatus(null);
+//    }
 }

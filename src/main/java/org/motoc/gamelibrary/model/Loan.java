@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * A game copy loan
+ * Note taht loanStatus will not be used before V1.5
  */
 @ConsistentDateTime
 @Data
@@ -43,11 +44,9 @@ public class Loan {
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_loan_status")
-    private LoanStatus loanStatus;
+    @NotNull(message = "isClosed must have a value")
+    @Column(nullable = false)
+    private boolean isClosed;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -55,15 +54,23 @@ public class Loan {
     @JoinColumn(name = "fk_account")
     private Account account;
 
+    /*Uncomment this for V1.5*/
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "fk_loan_status")
+//    private LoanStatus loanStatus;
+
     // Helper methods
 
-    public void addLoanStatus(LoanStatus loanStatus) {
-        this.setLoanStatus(loanStatus);
-        loanStatus.getLoans().add(this);
-    }
-
-    public void removeLoanStatus(LoanStatus loanStatus) {
-        this.setLoanStatus(null);
-        loanStatus.getLoans().remove(this);
-    }
+    /*Uncomment this for V1.5*/
+//    public void addLoanStatus(LoanStatus loanStatus) {
+//        this.setLoanStatus(loanStatus);
+//        loanStatus.getLoans().add(this);
+//    }
+//
+//    public void removeLoanStatus(LoanStatus loanStatus) {
+//        this.setLoanStatus(null);
+//        loanStatus.getLoans().remove(this);
+//    }
 }

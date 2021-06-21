@@ -415,7 +415,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoLoanA.setUserUuid("REPLACE_THIS_UUID");
         demoLoanA.setLoanStartTime(LocalDateTime.of(2020, 7, 16, 9, 0));
         demoLoanA.setLoanEndTime(LocalDateTime.of(2020, 7, 16, 15, 0));
-        demoLoanA.setLoanStatus(demoLoanStatusB);
+        demoLoanA.setClosed(false);
         demoLoanA.setGameCopy(demoGameCopyA);
 
         loanRepository.save(demoLoanA);
@@ -430,7 +430,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         demoLoanStatusB.setDescription("L'équipe a validé l'emprunt");
         demoLoanStatusC.setTag("En cours");
         demoLoanStatusC.setDescription("L'objet a été emprunté par l'adhérent");
-
         loanStatusRepository.save(demoLoanStatusA);
         loanStatusRepository.save(demoLoanStatusB);
         loanStatusRepository.save(demoLoanStatusC);
