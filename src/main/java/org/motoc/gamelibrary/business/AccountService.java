@@ -68,4 +68,11 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
         }
         return accountRepository.save(account);
     }
+
+    /**
+     * Find an active member of the given id
+     */
+    public Account findActiveById(Long id) {
+        return accountRepository.findActiveById(id);
+    }
 }

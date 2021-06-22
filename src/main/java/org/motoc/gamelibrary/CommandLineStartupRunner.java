@@ -46,6 +46,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private final ThemeRepository themeRepository;
 
     // Fields
+    private final Account demoAccountA;
     private final Contact demoContactA;
     private final Contact demoContactB;
     private final Contact demoContactC;
@@ -123,6 +124,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         this.themeRepository = themeRepository;
         this.imageService = imageService;
 
+        this.demoAccountA = new Account();
         this.demoContactA = new Contact();
         this.demoContactB = new Contact();
         this.demoContactC = new Contact();
@@ -193,7 +195,6 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillAccounts() {
-        Account demoAccountA = new Account();
 
         demoAccountA.setMembershipNumber("0015");
         demoAccountA.setRenewalDate(LocalDate.of(2019, 6, 15));
@@ -412,12 +413,11 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private void fillLoans() {
         Loan demoLoanA = new Loan();
 
-        demoLoanA.setUserUuid("REPLACE_THIS_UUID");
         demoLoanA.setLoanStartTime(LocalDateTime.of(2020, 7, 16, 9, 0));
         demoLoanA.setLoanEndTime(LocalDateTime.of(2020, 7, 16, 15, 0));
         demoLoanA.setClosed(false);
         demoLoanA.setGameCopy(demoGameCopyA);
-
+        demoLoanA.setAccount(demoAccountA);
         loanRepository.save(demoLoanA);
         loanRepository.flush();
 

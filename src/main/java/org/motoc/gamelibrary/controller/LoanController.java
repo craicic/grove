@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -56,11 +55,14 @@ public class LoanController {
         return mapper.pageToPageDto(service.findPage(pageable));
     }
 
+    /**
+     * Create a new Loan, no @Valid here, the body contains
+     */
     @PostMapping("/admin/loans")
-    LoanDto save(@RequestBody @Valid LoanDto loan) {
+    LoanDto save(@RequestParam(name = "accountId") long accountId,
+                 @RequestParam(name = "gameCopyId") long gameCopyId) {
         logger.trace("save(loan) called");
         return mapper.loanToDto(
-                service.save(mapper.dtoToLoan(loan))
-        );
+                service.save(accountId, gameCopyId));
     }
 }

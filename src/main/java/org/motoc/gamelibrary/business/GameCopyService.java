@@ -165,4 +165,8 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                 });
         return this.gameCopyToReturn;
     }
+
+    public GameCopy findLoanableById(Long id) {
+        return copyRepository.findLoanableById(id);
+    }
 }
