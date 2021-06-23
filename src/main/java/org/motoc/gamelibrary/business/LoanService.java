@@ -81,7 +81,7 @@ public class LoanService extends SimpleCrudMethodsImpl<Loan, JpaRepository<Loan,
         Set<Loan> collidingLoans = loanRepository.findActiveLoans(accountId, gameCopyId);
 
         if (!collidingLoans.isEmpty()) {
-            String errorMessage = "Found at least one active loans that collide with the member:" + accountId + " and game copy:" + gameCopyId;
+            String errorMessage = "Found at least one active loan that collide with the member:" + accountId + " and game copy:" + gameCopyId;
             logger.warn(errorMessage);
             throw new NotFoundException(errorMessage);
         }

@@ -64,4 +64,10 @@ public class AccountController {
                 service.save(mapper.dtoToAccount(account), hasContact)
         );
     }
+
+    @GetMapping("/admin/accounts/no-current-loan")
+    Page<AccountDto> findAccountsWithNoCurrentLoan(Pageable pageable) {
+        logger.trace("findAccountsWithNoCurrentLoan() called");
+        return mapper.pageToPageDto(service.findAccountsWithNoCurrentLoan(pageable));
+    }
 }
