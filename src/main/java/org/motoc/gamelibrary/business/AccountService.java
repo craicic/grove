@@ -5,6 +5,7 @@ import org.motoc.gamelibrary.model.Account;
 import org.motoc.gamelibrary.repository.criteria.AccountRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -69,10 +71,28 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
         return accountRepository.save(account);
     }
 
-    /**
-     * Find an active member of the given id
-     */
-    public Account findActiveById(Long id) {
-        return accountRepository.findActiveById(id);
+    private boolean isMembershipUp(Account account) {
+        return account.getRenewalDate().isAfter(LocalDate.now());
+    }
+
+    public void checkMembership(Long accountId) {
+        String errorMessage = "";
+        // find active member by id
+        // if no result throw exception
+        Account account = this.findById(accountId);
+        if (account == null) {
+            errorMessage = "No account of id=" + accountId + " found in database.";
+            logger.warn(errorMessage);
+            throw new NotFoundException(errorMessage);
+        }
+
+        // has member got an active membership
+        // if not throw exception
+        boolean isUp = this.isMembershipUp(account);
+        if (isUp) {
+            errorMessage = "Member of accountId=" + accountId + " has an expired membership";
+            logger.warn(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
     }
 }

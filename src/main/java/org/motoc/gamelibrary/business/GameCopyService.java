@@ -166,7 +166,23 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
         return this.gameCopyToReturn;
     }
 
-    public GameCopy findLoanableById(Long id) {
-        return copyRepository.findLoanableById(id);
+    public void checkLoanability(Long gameCopyId) {
+        String errorMessage = "";
+        // find game copy by id
+        // if no result throw exception
+        GameCopy gc = this.findById(gameCopyId);
+        if (gc == null) {
+            errorMessage = "No game copy of id=" + gameCopyId + " found in database.";
+            logger.warn(errorMessage);
+            throw new NotFoundException(errorMessage);
+        }
+
+        // check if game has marker 'loanable'
+        // if not throw exception
+        if (!gc.isLoanable()) {
+            errorMessage = "Game copy of id=" + gameCopyId + " is set to Not Loanable";
+            logger.warn(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
     }
 }

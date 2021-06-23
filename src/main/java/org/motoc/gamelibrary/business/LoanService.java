@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -27,30 +28,62 @@ public class LoanService extends SimpleCrudMethodsImpl<Loan, JpaRepository<Loan,
 
     private final GameCopyService gameCopyService;
 
-    public LoanService(JpaRepository<Loan, Long> genericRepository, LoanRepository loanRepository, AccountService accountService, GameCopyService gameCopyService) {
+    public LoanService(JpaRepository<Loan, Long> genericRepository,
+                       LoanRepository loanRepository,
+                       AccountService accountService,
+                       GameCopyService gameCopyService) {
         super(genericRepository, Loan.class);
         this.loanRepository = loanRepository;
         this.accountService = accountService;
         this.gameCopyService = gameCopyService;
     }
 
-    public Loan save(Long accountId, Long gameCopyId) {
-        Account account = accountService.findActiveById(accountId);
-        GameCopy gameCopy = gameCopyService.findLoanableById(gameCopyId);
+    public Loan close(Long loanId) {
+        Loan loanFormDB = this.loanRepository.findById(loanId).map(result -> {
+            logger.debug("Loan found :" + result);
+            return result;
+        }).orElseThrow(() -> {
+            String errorMessage = "No loan of id=" + loanId + "found ! Can't close it";
+            logger.warn(errorMessage);
+            throw new NotFoundException(errorMessage);
+        });
+
+        loanFormDB.setClosed(true);
+        return this.loanRepository.save(loanFormDB);
+    }
+
+    public Loan checkAndSave(Long accountId, Long gameCopyId) {
+        /* The three following methods throws exception if check result in fail */
+
+        // This one checks if member exists, then checks if the membership is active.
+        accountService.checkMembership(accountId);
+        // Checks if game exists, then checks its loanable status.
+        gameCopyService.checkLoanability(gameCopyId);
+        // check if an active loan collide with the requested one
+        this.checkActiveLoans(accountId, gameCopyId);
+
+
+        /* Verification are done, we can now create our entities to persist */
         Loan loan;
 
-        if (account != null && gameCopy != null) {
-            LocalDateTime present = LocalDateTime.now();
-            loan = new Loan(null, present, present.plusWeeks(4L), gameCopy, false, account);
-            loanRepository.save(loan);
-        } else if (account == null && gameCopy == null) {
-            throw new NotFoundException("Account of id:" + accountId + " not found or member can't loan games (membership or loan status)" +
-                    "\nGame copy of id:" + gameCopyId + " not found or not loanable");
-        } else if (account == null) {
-            throw new NotFoundException("Account of id:" + accountId + " not found or member can't loan games (membership or loan status)");
-        } else {
-            throw new NotFoundException("gameCopy of id:" + gameCopyId + " not found or not loanable");
+        Account account = new Account();
+        account.setId(accountId);
+
+        GameCopy gameCopy = new GameCopy();
+        gameCopy.setId(gameCopyId);
+
+        LocalDateTime present = LocalDateTime.now();
+        loan = new Loan(null, present, present.plusWeeks(4L), gameCopy, false, account);
+        return loanRepository.save(loan);
+    }
+
+    private void checkActiveLoans(Long accountId, Long gameCopyId) {
+        Set<Loan> collidingLoans = loanRepository.findActiveLoans(accountId, gameCopyId);
+
+        if (!collidingLoans.isEmpty()) {
+            String errorMessage = "Found at least one active loans that collide with the member:" + accountId + " and game copy:" + gameCopyId;
+            logger.warn(errorMessage);
+            throw new NotFoundException(errorMessage);
         }
-        return loan;
     }
 }

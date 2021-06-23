@@ -415,7 +415,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
 
         demoLoanA.setLoanStartTime(LocalDateTime.of(2020, 7, 16, 9, 0));
         demoLoanA.setLoanEndTime(LocalDateTime.of(2020, 7, 16, 15, 0));
-        demoLoanA.setClosed(false);
+        demoLoanA.setClosed(true);
         demoLoanA.setGameCopy(demoGameCopyA);
         demoLoanA.setAccount(demoAccountA);
         loanRepository.save(demoLoanA);
