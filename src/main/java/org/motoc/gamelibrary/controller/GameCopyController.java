@@ -6,6 +6,8 @@ import org.motoc.gamelibrary.mapper.GameCopyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -59,6 +61,17 @@ public class GameCopyController {
         return mapper.copyToDto(service.edit(mapper.dtoToCopy(copyDto), id));
     }
 
+    /* Maybe replace this endpoint by a endpoint in GAME */
+    @GetMapping("/admin/game-copies/page")
+    Page<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady,
+                              Pageable pageable) {
+        logger.trace("findAll() called");
+        if (!loanReady)
+            return mapper.pageToPageDto(service.findPage(pageable));
+        else
+            return mapper.pageToPageDto(service.findLoanReadyPage(pageable));
+    }
+
     @PostMapping("/admin/game-copies/{copyId}/add-seller/{sellerId}")
     GameCopyDto addSeller(@PathVariable Long copyId,
                           @PathVariable Long sellerId) {
@@ -86,4 +99,6 @@ public class GameCopyController {
         logger.trace("unlinkPublisher() called");
         return mapper.copyToDto(service.removePublisher(copyId, publisherId));
     }
+
+
 }

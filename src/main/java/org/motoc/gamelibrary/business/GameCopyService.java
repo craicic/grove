@@ -11,6 +11,8 @@ import org.motoc.gamelibrary.repository.jpa.SellerRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -184,5 +186,9 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
             logger.warn(errorMessage);
             throw new IllegalStateException(errorMessage);
         }
+    }
+
+    public Page<GameCopy> findLoanReadyPage(Pageable pageable) {
+        return copyRepository.findPageByLoanability(pageable);
     }
 }
