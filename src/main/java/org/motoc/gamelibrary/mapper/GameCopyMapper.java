@@ -7,6 +7,8 @@ import org.motoc.gamelibrary.dto.GameCopyDto;
 import org.motoc.gamelibrary.model.GameCopy;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface GameCopyMapper {
 
@@ -22,4 +24,6 @@ public interface GameCopyMapper {
     @Mapping(source = "game.id", target = "gameId")
     @Mapping(source = "game.name", target = "gameName")
     GameCopyDto copyToDto(GameCopy copy);
+
+    List<GameCopyDto> copiesToDto(List<GameCopy> copy);
 }

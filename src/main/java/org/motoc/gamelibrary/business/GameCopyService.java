@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -190,5 +191,9 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
 
     public Page<GameCopy> findLoanReadyPage(Pageable pageable) {
         return copyRepository.findPageByLoanability(pageable);
+    }
+
+    public List<GameCopy> findLoanReady() {
+        return copyRepository.findByLoanability();
     }
 }

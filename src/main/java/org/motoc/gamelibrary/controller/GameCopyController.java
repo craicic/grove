@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -59,6 +60,16 @@ public class GameCopyController {
                      @PathVariable Long id) {
         logger.trace("edit(gameCopy) called");
         return mapper.copyToDto(service.edit(mapper.dtoToCopy(copyDto), id));
+    }
+
+    /* Maybe replace this endpoint by a endpoint in GAME */
+    @GetMapping("/admin/game-copies")
+    List<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady) {
+        logger.trace("findAll() called");
+        if (!loanReady)
+            return mapper.copiesToDto(service.findAll());
+        else
+            return mapper.copiesToDto(service.findLoanReady());
     }
 
     /* Maybe replace this endpoint by a endpoint in GAME */
