@@ -19,7 +19,7 @@ public interface GameCopyRepository extends JpaRepository<GameCopy, Long> {
             "gc.register_date, gc.wear_condition, gc.fk_publisher, gc.fk_seller, gc.fk_game, g.id, g.name FROM game_copy AS gc " +
             "LEFT JOIN game AS g ON gc.fk_game = g.id " +
             "WHERE gc.is_loanable AND (SELECT (COUNT(l) = 0) " +
-            "FROM loan l WHERE (l.fk_account = gc.id AND l.is_closed = false )) " +
+            "FROM loan l WHERE (l.fk_game_copy = gc.id AND l.is_closed = false )) " +
             "ORDER BY g.name --/n #pageable/n ",
             nativeQuery = true)
     Page<GameCopy> findPageByLoanability(Pageable pageable);
@@ -28,7 +28,7 @@ public interface GameCopyRepository extends JpaRepository<GameCopy, Long> {
             "gc.register_date, gc.wear_condition, gc.fk_publisher, gc.fk_seller, gc.fk_game, g.id, g.name FROM game_copy AS gc " +
             "LEFT JOIN game AS g ON gc.fk_game = g.id " +
             "WHERE gc.is_loanable AND (SELECT (COUNT(l) = 0) " +
-            "FROM loan l WHERE (l.fk_account = gc.id AND l.is_closed = false )) " +
+            "FROM loan l WHERE (l.fk_game_copy = gc.id AND l.is_closed = false )) " +
             "ORDER BY g.name ",
             nativeQuery = true)
     List<GameCopy> findByLoanability();

@@ -5,7 +5,7 @@ import org.motoc.gamelibrary.validation.annotation.ConsistentDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * A game copy loan
@@ -25,15 +25,16 @@ public class Loan {
 
     @NotNull(message = "Loan start time cannot be null")
     @Column(name = "loan_start_time", nullable = false)
-    private LocalDateTime loanStartTime;
+    private LocalDate loanStartTime;
 
     @NotNull(message = "Loan start time cannot be null")
     @Column(name = "loan_end_time", nullable = false)
-    private LocalDateTime loanEndTime;
+    private LocalDate loanEndTime;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    // todo weakness here, LAZY preferred
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 

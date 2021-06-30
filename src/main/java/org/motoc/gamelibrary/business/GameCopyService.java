@@ -175,6 +175,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
         // if no result throw exception
         GameCopy gc = this.findById(gameCopyId);
         if (gc == null) {
+            // todo useless??
             errorMessage = "No game copy of id=" + gameCopyId + " found in database.";
             logger.warn(errorMessage);
             throw new NotFoundException(errorMessage);

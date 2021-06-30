@@ -81,7 +81,9 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
         // find active member by id
         // if no result throw exception
         Account account = this.findById(accountId);
+
         if (account == null) {
+            // todo useless??
             errorMessage = "No account of id=" + accountId + " found in database.";
             logger.warn(errorMessage);
             throw new NotFoundException(errorMessage);

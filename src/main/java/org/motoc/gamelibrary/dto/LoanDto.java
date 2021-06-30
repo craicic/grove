@@ -3,7 +3,7 @@ package org.motoc.gamelibrary.dto;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -17,10 +17,10 @@ public class LoanDto {
     private Long id;
 
     @NotNull(message = "Loan start time cannot be null")
-    private LocalDateTime loanStartTime;
+    private LocalDate loanStartTime;
 
     @NotNull(message = "Loan start time cannot be null")
-    private LocalDateTime loanEndTime;
+    private LocalDate loanEndTime;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -18,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -413,8 +412,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     private void fillLoans() {
         Loan demoLoanA = new Loan();
 
-        demoLoanA.setLoanStartTime(LocalDateTime.of(2020, 7, 16, 9, 0));
-        demoLoanA.setLoanEndTime(LocalDateTime.of(2020, 7, 16, 15, 0));
+        demoLoanA.setLoanStartTime(LocalDate.of(2020, 7, 16));
+        demoLoanA.setLoanEndTime(LocalDate.of(2020, 8, 16));
         demoLoanA.setClosed(true);
         demoLoanA.setGameCopy(demoGameCopyA);
         demoLoanA.setAccount(demoAccountA);

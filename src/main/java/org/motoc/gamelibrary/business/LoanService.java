@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Service
@@ -72,7 +72,8 @@ public class LoanService extends SimpleCrudMethodsImpl<Loan, JpaRepository<Loan,
         GameCopy gameCopy = new GameCopy();
         gameCopy.setId(gameCopyId);
 
-        LocalDateTime present = LocalDateTime.now();
+        LocalDate present = LocalDate.now();
+
         loan = new Loan(null, present, present.plusWeeks(4L), gameCopy, false, account);
         return loanRepository.save(loan);
     }
@@ -83,7 +84,7 @@ public class LoanService extends SimpleCrudMethodsImpl<Loan, JpaRepository<Loan,
         if (!collidingLoans.isEmpty()) {
             String errorMessage = "Found at least one active loan that collide with the member:" + accountId + " and game copy:" + gameCopyId;
             logger.warn(errorMessage);
-            throw new NotFoundException(errorMessage);
+            throw new IllegalStateException(errorMessage);
         }
     }
 }

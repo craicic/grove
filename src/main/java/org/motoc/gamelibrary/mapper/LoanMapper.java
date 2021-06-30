@@ -1,8 +1,11 @@
 package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.motoc.gamelibrary.dto.GameCopyDto;
 import org.motoc.gamelibrary.dto.LoanDto;
+import org.motoc.gamelibrary.model.GameCopy;
 import org.motoc.gamelibrary.model.Loan;
 import org.springframework.data.domain.Page;
 
@@ -22,4 +25,8 @@ public interface LoanMapper {
     Loan dtoToLoan(LoanDto loanDto);
 
     LoanDto loanToDto(Loan loan);
+
+    @Mapping(source = "game.id", target = "gameId")
+    @Mapping(source = "game.name", target = "gameName")
+    GameCopyDto copyToDto(GameCopy copy);
 }
