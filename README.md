@@ -58,7 +58,7 @@ Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may var
 
 #### 1.0.0
 
-This version is the first release.
+This version is the first release of Game Library.
 
 ## Upcoming version
 
