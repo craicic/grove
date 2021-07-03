@@ -56,19 +56,15 @@ Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may var
 
 ## Current version
 
-#### 0.5.0-ALPHA
+#### 1.0.0
 
-User / member features are done.
+This version is the first release.
 
 ## Upcoming version
 
-#### 0.6.0-ALPHA
+#### 1.1.0-BETA
 
-Loans features are done.
-
-#### 0.7.0-ALPHA
-
-Game features are done.
+More realistic loan rules. Update most dependencies version.
 
 ## Changelog
 
@@ -91,3 +87,11 @@ Game related CRUD feature, exposed on the service's API.
 #### 0.5.0-ALPHA
 
 User / member features are done.
+
+#### 0.6.0-ALPHA
+
+Loans features are done.
+
+#### 1.0.0
+
+This version is the first release, not fully complete yet
