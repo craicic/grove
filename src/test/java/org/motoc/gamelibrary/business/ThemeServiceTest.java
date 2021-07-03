@@ -62,10 +62,6 @@ class ThemeServiceTest {
     }
 
     @Test
-<<<<<<< HEAD
-    void findByIdNotFound() {
-        // TODO merge
-=======
     void findById_NotFoundException() {
         final long id = 4L;
 
@@ -74,8 +70,6 @@ class ThemeServiceTest {
         assertThatThrownBy(() -> {
             themeService.findById(id);
         }).hasMessageContaining("No theme of id=" + id + " found.");
-
->>>>>>> release-1.0.0
     }
 
     @Test
