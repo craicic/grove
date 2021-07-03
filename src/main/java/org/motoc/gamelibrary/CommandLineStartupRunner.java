@@ -386,7 +386,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     }
 
     private void fillImages() throws IOException {
-        File fileA = new File("src/main/resources/static/catane.jpg");
+        File fileA = new File("src/test/resources/static/catane.jpg");
         BufferedImage imageA = ImageIO.read(fileA.getAbsoluteFile());
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         ImageIO.write(imageA, "png", os);
@@ -397,7 +397,7 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         os.close();
         is.close();
 
-        File fileB = new File("src/main/resources/static/catane2.jpg");
+        File fileB = new File("src/test/resources/static/catane2.jpg");
         BufferedImage imageB = ImageIO.read(fileB);
         ByteArrayOutputStream osB = new ByteArrayOutputStream();
         ImageIO.write(imageB, "png", osB);
