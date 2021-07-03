@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.3.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.motoc</groupId>
@@ -16,9 +16,10 @@
 
     <properties>
         <java.version>11</java.version>
-        <revision>0.3.0-ALPHA</revision>
+        <revision>1.0.0</revision>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
-        <keycloak.version>10.0.1</keycloak.version>
+        <keycloak.version>11.0.2</keycloak.version>
+        <jpamodelgen.version>5.4.20.Final</jpamodelgen.version>
     </properties>
 
     <dependencies>
@@ -60,6 +61,12 @@
             <optional>true</optional>
             <version>${lombok.version}</version>
         </dependency>
+        <!-- Configuring the Annotation Processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -80,6 +87,19 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+        <!-- Used for its consistent random name generation -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.11</version>
+        </dependency>
+        <!-- Generated JPA Metamodel -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${jpamodelgen.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- KEYCLOAK ADAPTER -->
         <dependency>
@@ -106,6 +126,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Prevent the repackage goal from adding the dependency into the fat jar -->
+                    <excludes>
+                        <exclude>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -124,6 +153,17 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${jpamodelgen.version}</version>
+                        </path>
+                        <!-- Workaround cause we have lombok and mapstruct processors -->
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>${project.parent.version}</version>
                         </path>
                     </annotationProcessorPaths>
 

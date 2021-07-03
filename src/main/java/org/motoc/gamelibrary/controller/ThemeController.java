@@ -10,10 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
 /**
- * Defines theme endpoint
- *
- * @author RouzicJ
+ * Defines theme endpoints
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -51,33 +52,51 @@ public class ThemeController {
 
     @GetMapping("/admin/themes/count")
     Long count() {
+        logger.trace("count called");
         return service.count();
     }
 
     @GetMapping("/admin/themes")
-    ThemeDto findById(@RequestParam(value = "id") Long id) {
-        return mapper.themeToThemeDto(service.findById(id));
+    List<ThemeDto> findAll() {
+        logger.trace("findAll called");
+        return mapper.themesToDto(service.findAll());
+    }
+
+    @GetMapping("/admin/themes/{id}")
+    ThemeDto findById(@PathVariable Long id) {
+        logger.trace("findById(id) called");
+        return mapper.themeToDto(service.findById(id));
     }
 
     @GetMapping("/admin/themes/page")
-    Page<ThemeDto> findPage(Pageable pageable) {
-        return mapper.themePageToThemePageDto(service.findPage(pageable));
+    Page<ThemeDto> findPage(Pageable pageable,
+                            @RequestParam(required = false, name = "search") String keyword) {
+        if (keyword == null) {
+            logger.trace("findPage(pageable) called");
+            return mapper.pageToPageDto(service.findPage(pageable));
+        } else {
+            logger.trace("findPage(" + keyword + ", pageable) called");
+            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+        }
     }
 
+
     @PostMapping("/admin/themes")
-    ThemeDto save(@RequestBody ThemeDto theme) {
-        logger.debug("Save theme called");
-        return mapper.themeToThemeDto(service.save(mapper.themeDtoToTheme(theme)));
+    ThemeDto save(@RequestBody @Valid ThemeDto theme) {
+        logger.trace("save(theme) called");
+        return mapper.themeToDto(service.save(mapper.dtoToTheme(theme)));
     }
 
     @PutMapping("/admin/themes/{id}")
-    ThemeDto edit(@RequestBody ThemeDto theme,
+    ThemeDto edit(@RequestBody @Valid ThemeDto theme,
                   @PathVariable Long id) {
-        return mapper.themeToThemeDto(service.edit(mapper.themeDtoToTheme(theme), id));
+        logger.trace("edit(theme, id) called");
+        return mapper.themeToDto(service.edit(mapper.dtoToTheme(theme), id));
     }
 
     @DeleteMapping("/admin/themes/{id}")
     void deleteById(@PathVariable Long id) {
+        logger.trace("deleteById(id) called");
         service.remove(id);
     }
 

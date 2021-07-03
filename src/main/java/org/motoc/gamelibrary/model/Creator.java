@@ -1,8 +1,6 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 
 import javax.persistence.*;
@@ -10,23 +8,21 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * The creator of a game
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "creator", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"lower_case_first_name", "lower_case_last_name"}))
 public class Creator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @Size(max = 50, message = "First name should not exceed 50 characters")
     @Column(length = 50)
@@ -37,16 +33,39 @@ public class Creator {
     @Column(nullable = false, length = 50)
     private String lastName;
 
+    @ToString.Exclude
+    @Column(name = "lower_case_first_name", nullable = false, length = 50)
+    private String lowerCaseFirstName;
+
+    @ToString.Exclude
+    @Column(name = "lower_case_last_name", nullable = false, length = 50)
+    private String lowerCaseLastName;
+
     @NotNull(message = "Role cannot be null")
     @Column(nullable = false, length = 50)
     private CreatorRole role;
 
-    @OneToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "creators")
     private Set<Game> games = new HashSet<>();
+
+    // Overridden accessors
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        this.lowerCaseFirstName = firstName.toLowerCase();
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        this.lowerCaseLastName = lastName.toLowerCase();
+    }
 
     // Helper methods
     public void addGame(Game game) {
@@ -70,21 +89,5 @@ public class Creator {
     public void removeContact(Contact contact) {
         this.setContact(null);
         contact.setCreator(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Creator creator = (Creator) o;
-        return id == creator.id &&
-                Objects.equals(firstName, creator.firstName) &&
-                lastName.equals(creator.lastName) &&
-                role == creator.role;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, role);
     }
 }

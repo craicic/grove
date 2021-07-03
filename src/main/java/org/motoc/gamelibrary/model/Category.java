@@ -1,45 +1,49 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * A game category
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 50, message = "Name cannot exceed 50")
     @Column(nullable = false, length = 50)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Category parent;
+    @ToString.Exclude
+    @Column(name = "lower_case_name", nullable = false, length = 50)
+    private String lowerCaseName;
 
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
 
-    // Helper methods
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
 
+    // Helper methods
     public void addGame(Game game) {
         games.add(game);
         game.getCategories().add(this);
@@ -49,18 +53,5 @@ public class Category {
         games.remove(game);
         game.getCategories().remove(this);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return id == category.id &&
-                name.equals(category.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
 }
+

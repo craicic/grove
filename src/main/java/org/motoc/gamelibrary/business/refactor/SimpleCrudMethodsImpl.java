@@ -7,10 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.validation.Valid;
+import java.util.List;
+
 /**
  * Part of a strategy pattern, the goal is to factorize basics business methods.
- *
- * @author RouzicJ
  */
 public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, Long>> implements SimpleCrudMethods<T> {
 
@@ -26,7 +27,7 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
     }
 
     @Override
-    public T save(T t) {
+    public T save(@Valid T t) {
         T result = genericRepository.saveAndFlush(t);
         logger.debug("Saved a {} : {}", type.getSimpleName().toLowerCase(), result.toString());
         return result;
@@ -48,8 +49,14 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
                 })
                 .orElseThrow(() -> {
                     logger.warn("No {} found for id={}", type.getSimpleName().toLowerCase(), id);
-                    throw new NotFoundException(id);
+                    throw new NotFoundException("No " + type.getSimpleName().toLowerCase() + " of id=" + id + " found.");
                 });
+    }
+
+    public List<T> findAll() {
+        List<T> result = genericRepository.findAll();
+        logger.debug("Found {} element(s) of type", result.size());
+        return result;
     }
 
     @Override

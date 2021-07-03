@@ -8,8 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the consistency of age range
- *
- * @author RouzicJ
  */
 public class ConsistentAgeRangeValidator implements ConstraintValidator<ConsistentAgeRange, Game> {
 
@@ -19,11 +17,15 @@ public class ConsistentAgeRangeValidator implements ConstraintValidator<Consiste
 
     @Override
     public boolean isValid(Game game, ConstraintValidatorContext constraintValidatorContext) {
-        if (game.getMaxAge() == 0)
-            if (game.getMinMonth() == 0)
-                return true;
-            else
-                return game.getMaxAge() * 12 > game.getMinMonth();
-        return game.getMaxAge() > game.getMinAge();
+        if (game.getMaxAge() == 0) {
+            return true;
+        }
+
+        if (game.getMinMonth() >= 0) {
+            return game.getMaxAge() * 12 > game.getMinMonth();
+        } else if (game.getMinAge() >= 0) {
+            return game.getMaxAge() > game.getMinAge();
+        }
+        return true;
     }
 }

@@ -2,8 +2,6 @@ package org.motoc.gamelibrary.model.enumeration;
 
 /**
  * The role of a game creator
- *
- * @author RouzicJ
  */
 public enum CreatorRole {
 

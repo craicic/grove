@@ -1,44 +1,55 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * The seller of a game copy
- *
- * @author RouzicJ
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "seller", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Seller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 255, message = "Name cannot exceed 255 characters")
     @Column(nullable = false)
     private String name;
 
-    @OneToOne
+    @ToString.Exclude
+    @Column(name = "lower_case_name", nullable = false)
+    private String lowerCaseName;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "seller")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
+
+    // Overridden accessors
+    public void setName(String name) {
+        this.name = name;
+        this.lowerCaseName = name.toLowerCase();
+    }
+
+    // Helper methods
     public void addGameCopy(GameCopy gameCopy) {
         this.gameCopies.add(gameCopy);
         gameCopy.setSeller(this);
@@ -60,19 +71,5 @@ public class Seller {
     public void removeContact(Contact contact) {
         this.setContact(null);
         contact.setSeller(null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Seller seller = (Seller) o;
-        return id == seller.id &&
-                name.equals(seller.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }
