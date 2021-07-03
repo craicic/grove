@@ -39,26 +39,28 @@ public class GameCopy {
     private String location;
 
     @PastOrPresent(message = "Date of purchase must be in the past or present")
+    @Column(name = "date_of_purchase")
     private LocalDate dateOfPurchase;
 
     @PastOrPresent(message = "Date of purchase must be in the past or present")
     @NotNull(message = "Date of purchase cannot be null")
-    @Column(nullable = false)
+    @Column(name = "register_date", nullable = false)
     private LocalDate registerDate;
 
     @NotBlank(message = "Wear condition cannot be null or blank")
-    @Column(nullable = false)
+    @Column(name = "wear_condition", nullable = false)
     private String wearCondition;
 
     @NotNull(message = "General State cannot be null")
-    @Column(nullable = false)
+    @Column(name = "general_state", nullable = false)
     private GeneralStateEnum generalState;
 
+    @Column(name = "is_loanable")
     private boolean isLoanable;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "fk_game")
     private Game game;
 

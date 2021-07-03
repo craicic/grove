@@ -25,11 +25,11 @@ public class Account {
 
 
     @Size(max = 127, message = "User's firstname cannot exceed 127 characters")
-    @Column(length = 127)
+    @Column(name = "first_name", length = 127)
     private String firstName;
 
     @Size(max = 127, message = "User's lastname cannot exceed 127 characters")
-    @Column(length = 127)
+    @Column(name = "last_name", length = 127)
     private String lastName;
 
     @NotBlank(message = "Username cannot be null or blank")
@@ -39,9 +39,10 @@ public class Account {
 
     @NotBlank(message = "Membership Number cannot be null or blank")
     @Size(max = 50, message = "Membership Number cannot exceed 50 characters")
-    @Column(nullable = false, length = 50)
+    @Column(name = "membership_number", nullable = false, length = 50)
     private String membershipNumber;
 
+    @Column(name = "renewal_date")
     private LocalDate renewalDate;
 
     @ToString.Exclude

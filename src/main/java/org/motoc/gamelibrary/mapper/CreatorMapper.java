@@ -19,10 +19,6 @@ public interface CreatorMapper {
     }
 
     @Mapping(target = "games", ignore = true)
-//    @Mapping(target = "contact.creator", ignore = true)
-//    @Mapping(target = "contact.publisher", ignore = true)
-//    @Mapping(target = "contact.seller", ignore = true)
-//    @Mapping(target = "contact.account", ignore = true)
     Creator dtoToCreator(CreatorDto creatorDto);
 
 

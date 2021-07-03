@@ -4,13 +4,12 @@ import lombok.*;
 import org.motoc.gamelibrary.validation.annotation.ConsistentDateTime;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * A game copy loan
+ * Note taht loanStatus will not be used before V1.5
  */
 @ConsistentDateTime
 @Data
@@ -24,30 +23,24 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotBlank(message = "User uuid cannot be null or blank")
-    @Size(max = 50, message = "User uuid cannot exceed 50 characters")
-    @Column(nullable = false, length = 50)
-    private String userUuid;
+    @NotNull(message = "Loan start time cannot be null")
+    @Column(name = "loan_start_time", nullable = false)
+    private LocalDate loanStartTime;
 
     @NotNull(message = "Loan start time cannot be null")
-    @Column(nullable = false)
-    private LocalDateTime loanStartTime;
-
-    @NotNull(message = "Loan start time cannot be null")
-    @Column(nullable = false)
-    private LocalDateTime loanEndTime;
+    @Column(name = "loan_end_time", nullable = false)
+    private LocalDate loanEndTime;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    // todo weakness here, LAZY preferred
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_loan_status")
-    private LoanStatus loanStatus;
+    @NotNull(message = "isClosed must have a value")
+    @Column(name = "is_closed", nullable = false)
+    private boolean isClosed;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -55,15 +48,23 @@ public class Loan {
     @JoinColumn(name = "fk_account")
     private Account account;
 
+    /*Uncomment this for V1.5*/
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "fk_loan_status")
+//    private LoanStatus loanStatus;
+
     // Helper methods
 
-    public void addLoanStatus(LoanStatus loanStatus) {
-        this.setLoanStatus(loanStatus);
-        loanStatus.getLoans().add(this);
-    }
-
-    public void removeLoanStatus(LoanStatus loanStatus) {
-        this.setLoanStatus(null);
-        loanStatus.getLoans().remove(this);
-    }
+    /*Uncomment this for V1.5*/
+//    public void addLoanStatus(LoanStatus loanStatus) {
+//        this.setLoanStatus(loanStatus);
+//        loanStatus.getLoans().add(this);
+//    }
+//
+//    public void removeLoanStatus(LoanStatus loanStatus) {
+//        this.setLoanStatus(null);
+//        loanStatus.getLoans().remove(this);
+//    }
 }

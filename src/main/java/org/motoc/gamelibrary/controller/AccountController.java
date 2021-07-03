@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AccountController {
-    private static final Logger logger = LoggerFactory.getLogger(ProductLineController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private final AccountService service;
 
@@ -63,5 +63,11 @@ public class AccountController {
         return mapper.accountToDto(
                 service.save(mapper.dtoToAccount(account), hasContact)
         );
+    }
+
+    @GetMapping("/admin/accounts/no-current-loan")
+    List<AccountDto> findAccountsWithNoCurrentLoan() {
+        logger.trace("findAccountsWithNoCurrentLoan() called");
+        return mapper.accountsToDto(service.findAccountsWithNoCurrentLoan());
     }
 }

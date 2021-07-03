@@ -11,10 +11,13 @@ import org.motoc.gamelibrary.repository.jpa.SellerRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -164,5 +167,34 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                     throw new NotFoundException("No game copy of id=" + copyId + " found.");
                 });
         return this.gameCopyToReturn;
+    }
+
+    public void checkLoanability(Long gameCopyId) {
+        String errorMessage = "";
+        // find game copy by id
+        // if no result throw exception
+        GameCopy gc = this.findById(gameCopyId);
+        if (gc == null) {
+            // todo useless??
+            errorMessage = "No game copy of id=" + gameCopyId + " found in database.";
+            logger.warn(errorMessage);
+            throw new NotFoundException(errorMessage);
+        }
+
+        // check if game has marker 'loanable'
+        // if not throw exception
+        if (!gc.isLoanable()) {
+            errorMessage = "Game copy of id=" + gameCopyId + " is set to Not Loanable";
+            logger.warn(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
+    }
+
+    public Page<GameCopy> findLoanReadyPage(Pageable pageable) {
+        return copyRepository.findPageByLoanability(pageable);
+    }
+
+    public List<GameCopy> findLoanReady() {
+        return copyRepository.findByLoanability();
     }
 }

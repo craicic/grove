@@ -4,26 +4,29 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.motoc.gamelibrary.dto.GameCopyDto;
+import org.motoc.gamelibrary.dto.LoanDto;
 import org.motoc.gamelibrary.model.GameCopy;
+import org.motoc.gamelibrary.model.Loan;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface GameCopyMapper {
+public interface LoanMapper {
 
-    GameCopyMapper INSTANCE = Mappers.getMapper(GameCopyMapper.class);
+    LoanMapper INSTANCE = Mappers.getMapper(LoanMapper.class);
 
-    default Page<GameCopyDto> pageToPageDto(Page<GameCopy> page) {
-        return page.map(this::copyToDto);
+    default Page<LoanDto> pageToPageDto(Page<Loan> page) {
+        return page.map(this::loanToDto);
     }
 
+    List<LoanDto> loansToDto(List<Loan> loans);
 
-    GameCopy dtoToCopy(GameCopyDto dto);
+    Loan dtoToLoan(LoanDto loanDto);
+
+    LoanDto loanToDto(Loan loan);
 
     @Mapping(source = "game.id", target = "gameId")
     @Mapping(source = "game.name", target = "gameName")
     GameCopyDto copyToDto(GameCopy copy);
-
-    List<GameCopyDto> copiesToDto(List<GameCopy> copy);
 }
