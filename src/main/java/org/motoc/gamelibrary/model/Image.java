@@ -24,7 +24,6 @@ public class Image {
     private Long id;
 
     @Column(name = "data", nullable = false)
-    @Lob
     private byte[] data;
 
     @ToString.Exclude
