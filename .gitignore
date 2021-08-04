@@ -34,5 +34,4 @@ build/
 ### Custom ###
 application.properties
 *.sql
-/src/main/resources/static/catane.jpg
-/src/main/resources/static/catane2.jpg
+/src/main/resources/static/*

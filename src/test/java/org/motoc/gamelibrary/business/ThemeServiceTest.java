@@ -62,68 +62,60 @@ class ThemeServiceTest {
     }
 
     @Test
-<<<<<<
+    void findById_NotFoundException() {
+        final long id = 4L;
 
-    <HEAD
-    void findByIdNotFound() {
-        // TODO merge
-=======
-        void findById_NotFoundException () {
-            final long id = 4L;
+        when(themeRepository.findById(id)).thenReturn(Optional.empty());
 
-            when(themeRepository.findById(id)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> {
+            themeService.findById(id);
+        }).hasMessageContaining("No theme of id=" + id + " found.");
+    }
 
-            assertThatThrownBy(() -> {
-                themeService.findById(id);
-            }).hasMessageContaining("No theme of id=" + id + " found.");
+    @Test
+    void findPage() {
+        final Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Order.asc("name")));
 
->>>>>>>release - 1.0 .0
-        }
+        Theme themeA = new Theme();
+        themeA.setId(5L);
+        themeA.setName("Aventure");
 
-        @Test
-        void findPage() {
-            final Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Order.asc("name")));
+        Theme themeB = new Theme();
+        themeB.setId(7L);
+        themeB.setName("Médiéval");
 
-            Theme themeA = new Theme();
-            themeA.setId(5L);
-            themeA.setName("Aventure");
+        List<Theme> themes = List.of(themeA, themeB);
+        Page<Theme> pageToReturn = new PageImpl<>(themes, pageable, themes.size());
 
-            Theme themeB = new Theme();
-            themeB.setId(7L);
-            themeB.setName("Médiéval");
+        when(themeRepository.findAll(pageable)).thenReturn(pageToReturn);
 
-            List<Theme> themes = List.of(themeA, themeB);
-            Page<Theme> pageToReturn = new PageImpl<>(themes, pageable, themes.size());
+        assertThat(themeService.findPage(pageable)).isSameAs(pageToReturn);
+    }
 
-            when(themeRepository.findAll(pageable)).thenReturn(pageToReturn);
+    @Test
+    void edit_ShouldReplace() {
+        final long id = 1L;
+        final String name = "Antiquité";
+        Theme theme = new Theme();
+        theme.setId(id);
+        theme.setName(name);
 
-            assertThat(themeService.findPage(pageable)).isSameAs(pageToReturn);
-        }
+        when(themeRepository.findById(id)).thenReturn(Optional.of(theme));
+        when(themeRepository.save(theme)).thenReturn(theme);
 
-        @Test
-        void edit_ShouldReplace() {
-            final long id = 1L;
-            final String name = "Antiquité";
-            Theme theme = new Theme();
-            theme.setId(id);
-            theme.setName(name);
+        assertThat(themeService.edit(theme, id)).isEqualTo(theme);
+    }
 
-            when(themeRepository.findById(id)).thenReturn(Optional.of(theme));
-            when(themeRepository.save(theme)).thenReturn(theme);
+    @Test
+    void edit_ShouldCreate() {
+        final long id = 1L;
+        final String name = "Antiquité";
+        Theme theme = new Theme();
+        theme.setName(name);
 
-            assertThat(themeService.edit(theme, id)).isEqualTo(theme);
-        }
+        when(themeRepository.findById(id)).thenReturn(Optional.empty());
+        when(themeRepository.save(theme)).thenReturn(theme);
 
-        @Test
-        void edit_ShouldCreate() {
-            final long id = 1L;
-            final String name = "Antiquité";
-            Theme theme = new Theme();
-            theme.setName(name);
-
-            when(themeRepository.findById(id)).thenReturn(Optional.empty());
-            when(themeRepository.save(theme)).thenReturn(theme);
-
-            assertThat(themeService.edit(theme, id)).isEqualTo(theme);
-        }
+        assertThat(themeService.edit(theme, id)).isEqualTo(theme);
+    }
 }
