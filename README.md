@@ -58,7 +58,7 @@ Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may var
 
 ## Current version
 
-#### 1.0.0
+#### 1.0.1
 
 This version is the first release of Game Library.
 
@@ -97,3 +97,7 @@ Loans features are done.
 #### 1.0.0
 
 This version is the first release, not fully complete yet
+
+#### 1.0.1
+
+Fix bugs
