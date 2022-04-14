@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.*;
-import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.*;
 import org.motoc.gamelibrary.technical.exception.ChildAndParentException;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
@@ -29,8 +28,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
     private final GameRepository gameRepository;
 
-    private final GameRepositoryCustom gameRepositoryCustom;
-
     private final CategoryRepository categoryRepository;
     private final ThemeRepository themeRepository;
     private final GameCopyRepository gameCopyRepository;
@@ -43,7 +40,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     @Autowired
     public GameService(JpaRepository<Game, Long> genericRepository,
                        GameRepository gameRepository,
-                       GameRepositoryCustom gameRepositoryCustom,
                        CategoryRepository categoryRepository,
                        ThemeRepository themeRepository,
                        GameCopyRepository gameCopyRepository,
@@ -53,7 +49,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         super(genericRepository, Game.class);
         this.gameToReturn = null;
         this.gameRepository = gameRepository;
-        this.gameRepositoryCustom = gameRepositoryCustom;
         this.categoryRepository = categoryRepository;
         this.themeRepository = themeRepository;
         this.gameCopyRepository = gameCopyRepository;
@@ -140,11 +135,11 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public List<String> findNames() {
-        return gameRepositoryCustom.findNames();
+        return gameRepository.findNames();
     }
 
     public Page<Game> findPagedOverview(Pageable pageable, String keyword) {
-        return gameRepository.findAllByLowerCaseNameContaining(keyword, pageable);
+        return gameRepository.findOverviewByKeyword(keyword, pageable);
     }
 
     public Page<Game> findPagedOverview(Pageable pageable) {
@@ -175,7 +170,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                                     " is already linked to the game : " + game.getName() + " of id=" + game.getId());
                     }
 
-                    return gameRepositoryCustom.addExpansions(game, expansions);
+                    return gameRepository.addExpansions(game, expansions);
                 })
                 .orElseThrow(
                         () -> {
@@ -212,7 +207,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         throw new ChildAndParentException("Expansion : " + expansion.getName() + " of id=" + expansion.getId() +
                                 " is already linked to the game : " + game.getName() + " of id=" + game.getId());
 
-                    return gameRepositoryCustom.addExpansion(game, expansion);
+                    return gameRepository.addExpansion(game, expansion);
                 })
                 .orElseThrow(
                         () -> {
@@ -236,7 +231,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         throw new ChildAndParentException("The game of id=" + gameId + " already has a core game");
                     if (!game.getExpansions().isEmpty())
                         throw new ChildAndParentException("Game " + game.getName() + " has at least one expansion : it can't have a core game");
-                    return gameRepositoryCustom.addCoreGame(game, coreGame);
+                    return gameRepository.addCoreGame(game, coreGame);
                 })
                 .orElseThrow(
                         () -> {
@@ -248,7 +243,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         gameRepository.findById(id).ifPresentOrElse(
                 game -> {
                     if (game.getCoreGame() != null)
-                        gameRepositoryCustom.removeCoreGame(game);
+                        gameRepository.removeCoreGame(game);
                     else
                         logger.info("Game of id {} has no core game", id);
                 },
@@ -269,7 +264,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
         if (game.getExpansions().isEmpty() || !game.getExpansions().contains(expansion))
             throw new IllegalStateException("Game of id=" + game.getId() + " does not contains this expansion of id=" + expansion.getId());
-        gameRepositoryCustom.removeExpansion(game, expansion);
+        gameRepository.removeExpansion(game, expansion);
     }
 
     public Game addCategory(Long gameId, Long categoryId) {
@@ -286,7 +281,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     if (!game.getCategories().isEmpty() && game.getCategories().contains(category))
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is already linked to category of id=" + category.getId());
-                    return gameRepositoryCustom.addCategory(game, category);
+                    return gameRepository.addCategory(game, category);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -309,7 +304,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to category of id=" + category.getId());
 
-                    gameToReturn = gameRepositoryCustom.removeCategory(game, category);
+                    gameToReturn = gameRepository.removeCategory(game, category);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
@@ -330,7 +325,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     if (!game.getThemes().isEmpty() && game.getThemes().contains(theme))
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is already linked to theme of id=" + theme.getId());
-                    return gameRepositoryCustom.addTheme(game, theme);
+                    return gameRepository.addTheme(game, theme);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -353,7 +348,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to theme of id=" + theme.getId());
 
-                    gameToReturn = gameRepositoryCustom.removeTheme(game, theme);
+                    gameToReturn = gameRepository.removeTheme(game, theme);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
@@ -373,7 +368,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     if (!game.getGameCopies().isEmpty() && game.getGameCopies().contains(gameCopy))
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is already linked to gameCopy of id=" + gameCopy.getId());
-                    return gameRepositoryCustom.addGameCopy(game, gameCopy);
+                    return gameRepository.addGameCopy(game, gameCopy);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -394,7 +389,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     if (!game.getGameCopies().contains(gameCopy))
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to gameCopy of id=" + gameCopy.getId());
-                    gameRepositoryCustom.removeGameCopy(game, gameCopy);
+                    gameRepository.removeGameCopy(game, gameCopy);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
@@ -414,7 +409,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                         logger.warn("Game of id=" + game.getId() +
                                 " is already linked to creator of id=" + creator.getId());
 
-                    return gameRepositoryCustom.addCreator(game, creator);
+                    return gameRepository.addCreator(game, creator);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -436,7 +431,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     if (game.getCreators().isEmpty() || !game.getCreators().contains(creator))
                         throw new IllegalStateException("Game of id=" + game.getId() +
                                 " is not linked to creator of id=" + creator.getId());
-                    gameToReturn = gameRepositoryCustom.removeCreator(game, creator);
+                    gameToReturn = gameRepository.removeCreator(game, creator);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });
@@ -455,7 +450,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 .ifPresentOrElse(game -> {
                             if (game.getImages() != null && game.getImages().contains(image))
                                 throw new IllegalStateException("Image of id=" + imageId + " is already attached to the game of id=" + gameId);
-                            gameRepositoryCustom.attachImage(game, image);
+                            gameRepository.attachImage(game, image);
                         },
                         () -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -479,7 +474,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                                 " is already linked to product line of id=" + productLine.getId());
                     }
 
-                    return gameRepositoryCustom.addProductLine(game, productLine);
+                    return gameRepository.addProductLine(game, productLine);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -506,7 +501,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                                 " is not linked to product line of id=" + lineId);
                     }
 
-                    gameToReturn = gameRepositoryCustom.removeProductLine(game, productLine);
+                    gameToReturn = gameRepository.removeProductLine(game, productLine);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
                 });

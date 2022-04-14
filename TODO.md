@@ -13,6 +13,7 @@
 - [ ] Check for places where @Valid could have been forgotten
 - [ ] Learn about and add @Version, an int
 - [ ] Define a dedicated hibernate sequence for each entity.
+- [ ] Remove @Data lombok annotation and then create getter and setter wisely
 
 #### Repository
 
@@ -24,6 +25,7 @@
   call
 - [ ] Check for sorting on all List<T> usage
 - [ ] Pagination : add Sort in each paginated for better results
+- [ ] Repository pattern !
 
 #### Business layer
 

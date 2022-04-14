@@ -1,6 +1,8 @@
 package org.motoc.gamelibrary.repository.criteria;
 
 import org.motoc.gamelibrary.model.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
  * Game custom repository, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 public interface GameRepositoryCustom {
+
+    Page<Game> findOverviewByKeyword(String keyword, Pageable pageable);
 
     /**
      * Get all Games' name in a custom DTO

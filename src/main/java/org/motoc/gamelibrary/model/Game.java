@@ -16,6 +16,12 @@ import java.util.Set;
 /**
  * A game, it's a generic description of the item, not of a copy
  */
+//@NamedEntityGraphs({
+////        @NamedEntityGraph(name = "graph.GameCategories", attributeNodes = @NamedAttributeNode("categories")),
+////        @NamedEntityGraph(name = "graph.GameImages", attributeNodes = @NamedAttributeNode("images")),
+////        @NamedEntityGraph(name = "graph.GameCopies", attributeNodes = @NamedAttributeNode("gameCopies")),
+////        @NamedEntityGraph(name = "graph.GameCreators", attributeNodes = @NamedAttributeNode("creators"))
+////})
 @ConsistentNumberOfPlayer
 @ConsistentAgeRange
 @SelectYearOrMonth
@@ -154,7 +160,7 @@ public class Game {
     private Set<Category> categories = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "game_theme",
             joinColumns = {@JoinColumn(name = "fk_game")},

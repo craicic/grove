@@ -61,12 +61,10 @@ public class GameController {
 
     @GetMapping("/admin/games/page/overview")
     Page<GameOverviewDto> findPagedOverview(Pageable pageable,
-                                            @RequestParam(name = "search", required = false) String keyword) {
+                                            @RequestParam(name = "search", required = false, defaultValue = "") String keyword) {
         logger.trace("findPagedOverview(pageable) called");
-        if (keyword != null)
-            return mapper.pageToOverviewDto(service.findPagedOverview(pageable, keyword));
-        else
-            return mapper.pageToOverviewDto(service.findPagedOverview(pageable));
+        return mapper.pageToOverviewDto(service.findPagedOverview(pageable, keyword));
+
     }
 
     @PostMapping("/admin/games")

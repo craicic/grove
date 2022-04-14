@@ -17,7 +17,7 @@ public class Image {
 
     /**
      * <p>Chosen strategy is SEQUENCE</p>
-     * <a href>https://thoughts-on-java.org/jpa-generate-primary-keys/</a>
+     * <a href="https://thoughts-on-java.org/jpa-generate-primary-keys"></a>
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

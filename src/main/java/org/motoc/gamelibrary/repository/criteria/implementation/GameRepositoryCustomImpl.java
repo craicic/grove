@@ -5,8 +5,12 @@ import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -24,6 +28,37 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
     @Autowired
     public GameRepositoryCustomImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
+    }
+
+    @Override
+    public Page<Game> findOverviewByKeyword(String keyword, Pageable pageable) {
+
+        String searchQuery = "SELECT g FROM Game as g " +
+                " WHERE g.id IN (:ids) ORDER BY g.name ";
+
+        String idQuery = "SELECT g.id FROM Game as g" +
+                " WHERE (g.lowerCaseName LIKE CONCAT('%', LOWER(:keyword), '%'))";
+
+        TypedQuery<Long> idQ = entityManager.createQuery(idQuery, Long.class);
+
+        List<Long> ids = idQ.setParameter("keyword", keyword)
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        EntityGraph<Game> graph = entityManager.createEntityGraph(Game.class);
+        graph.addSubgraph(Game_.categories);
+        graph.addSubgraph(Game_.images);
+        graph.addSubgraph(Game_.gameCopies);
+        graph.addSubgraph(Game_.creators);
+
+        List<Game> games = entityManager.createQuery(searchQuery, Game.class)
+                .setParameter("ids", ids)
+                .setHint("javax.persistence.fetchgraph", graph)
+                .getResultList();
+
+
+        return new PageImpl<>(games, pageable, games.size());
     }
 
     @Override

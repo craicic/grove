@@ -25,9 +25,9 @@ public class GameOverviewDto {
      */
     private long gameCopyCount;
 
-    private GameNameAndIdDto coreGame;
-
-    private Set<GameNameAndIdDto> expansions = new HashSet<>();
+//    private GameNameAndIdDto coreGame;
+//
+//    private Set<GameNameAndIdDto> expansions = new HashSet<>();
 
     @NotBlank(message = "Name cannot be null or blank")
     private String name;

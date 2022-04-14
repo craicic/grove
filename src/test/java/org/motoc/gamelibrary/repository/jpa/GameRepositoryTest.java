@@ -40,6 +40,25 @@ class GameRepositoryTest {
     @Autowired
     private GameRepository repository;
 
+    @Test
+    void test_findOverviewByKeyword() {
+        String keyword = "colons";
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
+
+        Page<Game> pagedGames = repository.findOverviewByKeyword(keyword, pageable);
+        List<Game> games = pagedGames.getContent();
+//
+//        logger.warn("Total pages : " + pagedGames.getTotalPages());
+//        logger.warn("Total elements : " + pagedGames.getTotalElements());
+//        for (Game game : games) {
+//            logger.warn(game.getCategories().toString());
+//        }
+
+        assertThat(games).isNotNull();
+    }
+
+
+    @Test
     void test_getGameOverview() {
         String keyword = "colons";
         Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
