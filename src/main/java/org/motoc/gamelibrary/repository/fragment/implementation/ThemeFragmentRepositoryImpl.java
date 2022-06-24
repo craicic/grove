@@ -1,8 +1,8 @@
-package org.motoc.gamelibrary.repository.criteria.implementation;
+package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.Theme;
-import org.motoc.gamelibrary.repository.criteria.ThemeRepositoryCustom;
+import org.motoc.gamelibrary.repository.fragment.ThemeFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,14 @@ import javax.persistence.EntityManager;
  * It's the theme custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 @Repository
-public class ThemeRepositoryCustomImpl implements ThemeRepositoryCustom {
+public class ThemeFragmentRepositoryImpl implements ThemeFragmentRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(ThemeRepositoryCustomImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThemeFragmentRepositoryImpl.class);
 
     private final EntityManager entityManager;
 
     @Autowired
-    public ThemeRepositoryCustomImpl(EntityManager entityManager) {
+    public ThemeFragmentRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

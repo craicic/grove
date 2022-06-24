@@ -1,11 +1,11 @@
-package org.motoc.gamelibrary.repository.criteria;
+package org.motoc.gamelibrary.repository.fragment;
 
 import java.util.List;
 
 /**
  * Category custom repository, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
-public interface CategoryRepositoryCustom {
+public interface CategoryFragmentRepository {
 
     /**
      * Removes carefully the category of id

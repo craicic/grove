@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.repository.criteria;
+package org.motoc.gamelibrary.repository.fragment;
 
 import org.motoc.gamelibrary.dto.CreatorNameDto;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Creator custom repository, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
-public interface CreatorRepositoryCustom {
+public interface CreatorFragmentRepository {
 
     /**
      * Removes a contact from a creator, then delete the contact.

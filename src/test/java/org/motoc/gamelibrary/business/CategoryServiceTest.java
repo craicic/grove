@@ -3,7 +3,7 @@ package org.motoc.gamelibrary.business;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.repository.fragment.CategoryFragmentRepository;
 import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -14,7 +14,7 @@ class CategoryServiceTest {
     CategoryRepository repository;
 
     @Mock
-    CategoryRepositoryCustom repositoryCustom;
+    CategoryFragmentRepository repositoryCustom;
 
     @InjectMocks
     CategoryService service;

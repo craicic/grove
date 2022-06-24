@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.model.ProductLine;
-import org.motoc.gamelibrary.repository.criteria.ProductLineRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +27,10 @@ public class ProductLineService extends SimpleCrudMethodsImpl<ProductLine, JpaRe
 
     private final ProductLineRepository productLineRepository;
 
-    private final ProductLineRepositoryCustom productLineRepositoryCustom;
-
     @Autowired
-    public ProductLineService(JpaRepository<ProductLine, Long> genericRepository, ProductLineRepository productLineRepository, ProductLineRepositoryCustom productLineRepositoryCustom) {
+    public ProductLineService(JpaRepository<ProductLine, Long> genericRepository, ProductLineRepository productLineRepository) {
         super(genericRepository, ProductLine.class);
         this.productLineRepository = productLineRepository;
-        this.productLineRepositoryCustom = productLineRepositoryCustom;
     }
 
     // Methods
@@ -61,7 +57,7 @@ public class ProductLineService extends SimpleCrudMethodsImpl<ProductLine, JpaRe
      */
     public void remove(Long id) {
         logger.debug("deleting (if exist) productLine of id=" + id);
-        productLineRepositoryCustom.remove(id);
+        productLineRepository.remove(id);
     }
 
     public Page<ProductLine> quickSearch(String keyword, Pageable pageable) {
@@ -71,6 +67,6 @@ public class ProductLineService extends SimpleCrudMethodsImpl<ProductLine, JpaRe
 
     public List<ProductLineNameDto> findNames() {
         logger.debug("Find product-line names");
-        return productLineRepositoryCustom.findNames();
+        return productLineRepository.findNames();
     }
 }

@@ -45,36 +45,10 @@ class GameRepositoryTest {
         String keyword = "colons";
         Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
 
-        Page<Game> pagedGames = repository.findOverviewByKeyword(keyword, pageable);
+        Page<Game> pagedGames = repository.findOverview(keyword, pageable);
         List<Game> games = pagedGames.getContent();
-//
-//        logger.warn("Total pages : " + pagedGames.getTotalPages());
-//        logger.warn("Total elements : " + pagedGames.getTotalElements());
-//        for (Game game : games) {
-//            logger.warn(game.getCategories().toString());
-//        }
 
         assertThat(games).isNotNull();
-    }
-
-
-    @Test
-    void test_getGameOverview() {
-        String keyword = "colons";
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
-
-        Page<Game> pagedGames = repository.getFilteredGameOverviewNative(keyword, pageable);
-
-        logger.warn(pagedGames.toString());
-        logger.warn("number of elements=" + pagedGames.getTotalElements());
-        List<Game> games = pagedGames.getContent();
-        logger.warn("number of games=" + games.size());
-
-        for (Game game : games) {
-            logger.warn(game.toString());
-        }
-
-        assertThat(pagedGames).isNotNull();
     }
 
     @Test

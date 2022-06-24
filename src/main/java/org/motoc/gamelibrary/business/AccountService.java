@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Account;
-import org.motoc.gamelibrary.repository.criteria.AccountRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
@@ -27,15 +26,12 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
 
     final private ContactRepository contactRepository;
 
-    final private AccountRepositoryCustom accountRepositoryCustom;
-
     @Autowired
     public AccountService(JpaRepository<Account, Long> genericRepository, AccountRepository accountRepository,
-                          ContactRepository contactRepository, AccountRepositoryCustom accountRepositoryCustom) {
+                          ContactRepository contactRepository) {
         super(genericRepository, Account.class);
         this.accountRepository = accountRepository;
         this.contactRepository = contactRepository;
-        this.accountRepositoryCustom = accountRepositoryCustom;
     }
 
     /**

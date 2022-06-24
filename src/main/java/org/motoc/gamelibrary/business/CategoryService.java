@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.Category;
-import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +25,10 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
 
     final private CategoryRepository categoryRepository;
 
-    final private CategoryRepositoryCustom categoryRepositoryCustom;
-
     @Autowired
-    public CategoryService(JpaRepository<Category, Long> genericRepository, CategoryRepository categoryRepository,
-                           CategoryRepositoryCustom categoryRepositoryCustom) {
+    public CategoryService(JpaRepository<Category, Long> genericRepository, CategoryRepository categoryRepository) {
         super(genericRepository, Category.class);
         this.categoryRepository = categoryRepository;
-        this.categoryRepositoryCustom = categoryRepositoryCustom;
     }
 
     /**
@@ -58,7 +53,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
      */
     public void remove(Long id) {
         logger.debug("deleting (if exist) category of id=" + id);
-        categoryRepositoryCustom.remove(id);
+        categoryRepository.remove(id);
     }
 
 
@@ -66,7 +61,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
      * Find all categories' names
      */
     public List<String> findNames() {
-        return categoryRepositoryCustom.findNames();
+        return categoryRepository.findNames();
     }
 
     /**

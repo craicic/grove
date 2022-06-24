@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.repository.criteria;
+package org.motoc.gamelibrary.repository.fragment;
 
 import org.motoc.gamelibrary.dto.ProductLineNameDto;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * It's the product line custom repository, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
-public interface ProductLineRepositoryCustom {
+public interface ProductLineFragmentRepository {
 
     /**
      * Removes a theme, removing it from game before

@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.CreatorNameDto;
 import org.motoc.gamelibrary.model.Creator;
-import org.motoc.gamelibrary.repository.criteria.CreatorRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.repository.jpa.CreatorRepository;
 import org.slf4j.Logger;
@@ -31,16 +30,12 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
 
     private final ContactRepository contactRepository;
 
-    private final CreatorRepositoryCustom creatorRepositoryCustom;
-
     @Autowired
     public CreatorService(JpaRepository<Creator, Long> genericRepository,
                           CreatorRepository creatorRepository,
-                          CreatorRepositoryCustom creatorRepositoryCustom,
                           ContactRepository contactRepository) {
         super(genericRepository, Creator.class);
         this.creatorRepository = creatorRepository;
-        this.creatorRepositoryCustom = creatorRepositoryCustom;
         this.contactRepository = contactRepository;
     }
 
@@ -81,12 +76,12 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
      */
     public void remove(Long id) {
         logger.debug("deleting (if exist) creator of id=" + id);
-        creatorRepositoryCustom.remove(id);
+        creatorRepository.remove(id);
     }
 
     public void removeContact(Long creatorId, Long contactId) {
         logger.debug("deleting (if exist) contact of id=" + contactId + " from creator of id=" + creatorId);
-        creatorRepositoryCustom.removeContact(creatorId, contactId);
+        creatorRepository.removeContact(creatorId, contactId);
     }
 
     public Page<Creator> quickSearch(String keyword, Pageable pageable) {
@@ -98,7 +93,7 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
      * Find all creator's name.
      */
     public List<CreatorNameDto> findNames() {
-        return creatorRepositoryCustom.findNames();
+        return creatorRepository.findNames();
     }
 
     public Creator findByFullName(String name) {

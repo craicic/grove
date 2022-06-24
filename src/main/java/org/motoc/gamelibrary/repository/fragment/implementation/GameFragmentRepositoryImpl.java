@@ -1,7 +1,7 @@
-package org.motoc.gamelibrary.repository.criteria.implementation;
+package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.model.*;
-import org.motoc.gamelibrary.repository.criteria.GameRepositoryCustom;
+import org.motoc.gamelibrary.repository.fragment.GameFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +19,19 @@ import java.util.List;
  * Game custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 @Repository
-public class GameRepositoryCustomImpl implements GameRepositoryCustom {
+public class GameFragmentRepositoryImpl implements GameFragmentRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(GameRepositoryCustomImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameFragmentRepositoryImpl.class);
 
     private final EntityManager entityManager;
 
     @Autowired
-    public GameRepositoryCustomImpl(EntityManager entityManager) {
+    public GameFragmentRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public Page<Game> findOverviewByKeyword(String keyword, Pageable pageable) {
+    public Page<Game> findOverview(String keyword, Pageable pageable) {
 
         String searchQuery = "SELECT g FROM Game as g " +
                 " WHERE g.id IN (:ids) ORDER BY g.name ";
@@ -56,7 +56,6 @@ public class GameRepositoryCustomImpl implements GameRepositoryCustom {
                 .setParameter("ids", ids)
                 .setHint("javax.persistence.fetchgraph", graph)
                 .getResultList();
-
 
         return new PageImpl<>(games, pageable, games.size());
     }

@@ -1,10 +1,10 @@
-package org.motoc.gamelibrary.repository.criteria.implementation;
+package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.dto.CreatorNameDto;
 import org.motoc.gamelibrary.model.Contact;
 import org.motoc.gamelibrary.model.Creator;
 import org.motoc.gamelibrary.model.Game;
-import org.motoc.gamelibrary.repository.criteria.CreatorRepositoryCustom;
+import org.motoc.gamelibrary.repository.fragment.CreatorFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ import java.util.List;
  * Creator custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 @Repository
-public class CreatorRepositoryCustomImpl implements CreatorRepositoryCustom {
+public class CreatorFragmentRepositoryImpl implements CreatorFragmentRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(CreatorRepositoryCustomImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CreatorFragmentRepositoryImpl.class);
 
     private final EntityManager entityManager;
 
     @Autowired
-    public CreatorRepositoryCustomImpl(EntityManager entityManager) {
+    public CreatorFragmentRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

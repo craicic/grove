@@ -4,7 +4,6 @@ import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.model.GameCopy;
 import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.model.Seller;
-import org.motoc.gamelibrary.repository.criteria.GameCopyRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.GameCopyRepository;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.motoc.gamelibrary.repository.jpa.SellerRepository;
@@ -27,7 +26,6 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
 
     private final GameCopyRepository copyRepository;
 
-    private final GameCopyRepositoryCustom copyRepositoryCustom;
 
     private final SellerRepository sellerRepository;
 
@@ -37,13 +35,11 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
 
     public GameCopyService(JpaRepository<GameCopy, Long> genericRepository,
                            GameCopyRepository copyRepository,
-                           GameCopyRepositoryCustom copyRepositoryCustom,
                            SellerRepository sellerRepository,
                            PublisherRepository publisherRepository) {
         super(genericRepository, GameCopy.class);
         this.gameCopyToReturn = null;
         this.copyRepository = copyRepository;
-        this.copyRepositoryCustom = copyRepositoryCustom;
         this.sellerRepository = sellerRepository;
         this.publisherRepository = publisherRepository;
     }
@@ -94,7 +90,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                     if (copy.getSeller() != null)
                         throw new IllegalStateException("Game copy of id=" + copy.getId() +
                                 " is already linked to another seller of id=" + copy.getSeller().getId());
-                    return copyRepositoryCustom.addSeller(copy, seller);
+                    return copyRepository.addSeller(copy, seller);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No copy of id=" + copyId + " found.");
@@ -117,7 +113,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                         throw new IllegalStateException("Copy of id=" + copy.getId() +
                                 " is not linked to seller of id=" + seller.getId());
 
-                    this.gameCopyToReturn = copyRepositoryCustom.removeSeller(copy, seller);
+                    this.gameCopyToReturn = copyRepository.removeSeller(copy, seller);
                 }, () -> {
                     throw new NotFoundException("No copy of id=" + copyId + " found.");
                 });
@@ -140,7 +136,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                     if (gameCopy.getPublisher() != null)
                         throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
                                 " is already linked to another publisher of id=" + gameCopy.getPublisher().getId());
-                    return copyRepositoryCustom.addPublisher(gameCopy, publisher);
+                    return copyRepository.addPublisher(gameCopy, publisher);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game copy of id=" + copyId + " found.");
@@ -162,7 +158,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                         throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
                                 " is not linked to publisher of id=" + publisher.getId());
 
-                    this.gameCopyToReturn = copyRepositoryCustom.removePublisher(gameCopy, publisher);
+                    this.gameCopyToReturn = copyRepository.removePublisher(gameCopy, publisher);
                 }, () -> {
                     throw new NotFoundException("No game copy of id=" + copyId + " found.");
                 });

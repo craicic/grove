@@ -1,8 +1,8 @@
-package org.motoc.gamelibrary.repository.criteria.implementation;
+package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.model.Category;
 import org.motoc.gamelibrary.model.Game;
-import org.motoc.gamelibrary.repository.criteria.CategoryRepositoryCustom;
+import org.motoc.gamelibrary.repository.fragment.CategoryFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ import java.util.List;
  * It's the category custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 @Repository
-public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
+public class CategoryFragmentRepositoryImpl implements CategoryFragmentRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(CategoryRepositoryCustomImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryFragmentRepositoryImpl.class);
 
     private final EntityManager entityManager;
 
     @Autowired
-    public CategoryRepositoryCustomImpl(EntityManager entityManager) {
+    public CategoryFragmentRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

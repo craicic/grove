@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.jpa;
 
 import org.motoc.gamelibrary.model.GameCopy;
+import org.motoc.gamelibrary.repository.fragment.GameCopyFragmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * This repository takes advantage of Spring data / JPA
  */
-public interface GameCopyRepository extends JpaRepository<GameCopy, Long> {
+public interface GameCopyRepository extends JpaRepository<GameCopy, Long>, GameCopyFragmentRepository {
 
     GameCopy findByObjectCode(String code);
 

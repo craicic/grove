@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.repository.criteria;
+package org.motoc.gamelibrary.repository.fragment;
 
 import org.motoc.gamelibrary.dto.PublisherNameDto;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This repository takes advantage of Criteria API / JPQL
  */
-public interface PublisherRepositoryCustom {
+public interface PublisherFragmentRepository {
 
     /**
      * Removes a publisher and its associated contact

@@ -1,9 +1,9 @@
-package org.motoc.gamelibrary.repository.criteria.implementation;
+package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.ProductLine;
-import org.motoc.gamelibrary.repository.criteria.ProductLineRepositoryCustom;
+import org.motoc.gamelibrary.repository.fragment.ProductLineFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,14 @@ import java.util.List;
  * It's the product line custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 @Repository
-public class ProductLineRepositoryCustomImpl implements ProductLineRepositoryCustom {
+public class ProductLineFragmentRepositoryImpl implements ProductLineFragmentRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductLineRepositoryCustomImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductLineFragmentRepositoryImpl.class);
 
     private final EntityManager entityManager;
 
     @Autowired
-    public ProductLineRepositoryCustomImpl(EntityManager entityManager) {
+    public ProductLineFragmentRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

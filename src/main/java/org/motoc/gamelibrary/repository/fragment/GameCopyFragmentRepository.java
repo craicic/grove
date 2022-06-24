@@ -1,10 +1,10 @@
-package org.motoc.gamelibrary.repository.criteria;
+package org.motoc.gamelibrary.repository.fragment;
 
 import org.motoc.gamelibrary.model.GameCopy;
 import org.motoc.gamelibrary.model.Publisher;
 import org.motoc.gamelibrary.model.Seller;
 
-public interface GameCopyRepositoryCustom {
+public interface GameCopyFragmentRepository {
     GameCopy addSeller(GameCopy copy, Seller seller);
 
     GameCopy removeSeller(GameCopy copy, Seller seller);

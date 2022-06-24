@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.PublisherNameDto;
 import org.motoc.gamelibrary.model.Publisher;
-import org.motoc.gamelibrary.repository.criteria.PublisherRepositoryCustom;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.slf4j.Logger;
@@ -28,18 +27,14 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
 
     final private PublisherRepository publisherRepository;
 
-    final private PublisherRepositoryCustom publisherRepositoryCustom;
-
     final private ContactRepository contactRepository;
 
     @Autowired
     public PublisherService(JpaRepository<Publisher, Long> genericRepository,
                             PublisherRepository publisherRepository,
-                            PublisherRepositoryCustom publisherRepositoryCustom,
                             ContactRepository contactRepository) {
         super(genericRepository, Publisher.class);
         this.publisherRepository = publisherRepository;
-        this.publisherRepositoryCustom = publisherRepositoryCustom;
         this.contactRepository = contactRepository;
     }
 
@@ -78,7 +73,7 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
      */
     public void remove(Long id) {
         logger.debug("deleting (if exist) publisher of id=" + id);
-        publisherRepositoryCustom.remove(id);
+        publisherRepository.remove(id);
     }
 
     public Page<Publisher> quickSearch(String keyword, Pageable pageable) {
@@ -88,12 +83,12 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
 
     public void removeContact(Long publisherId, Long contactId) {
         logger.debug("deleting (if exist) contact of id=" + contactId + " from publisher of id=" + publisherId);
-        publisherRepositoryCustom.removeContact(publisherId, contactId);
+        publisherRepository.removeContact(publisherId, contactId);
     }
 
     public List<PublisherNameDto> findNames() {
         logger.debug("Find all publishers' name");
-        return publisherRepositoryCustom.findNames();
+        return publisherRepository.findNames();
     }
 }
 
