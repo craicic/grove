@@ -42,14 +42,17 @@ public class Publisher {
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 
-    // Overridden accessors
+    // Helper methods
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * This is for adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
         this.lowerCaseName = name.toLowerCase();
     }
 
-    // Helper methods
     public void addCopy(GameCopy copy) {
         this.copies.add(copy);
         copy.setPublisher(this);

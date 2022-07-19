@@ -43,6 +43,16 @@ public class ProductLine {
     }
 
     // Helper methods
+
+    /**
+     * This is for adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
+        this.lowerCaseName = name.toLowerCase();
+    }
+
     public void addGame(Game game) {
         this.games.add(game);
         game.setProductLine(this);

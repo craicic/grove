@@ -25,7 +25,8 @@ import java.util.Set;
 @ConsistentNumberOfPlayer
 @ConsistentAgeRange
 @SelectYearOrMonth
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -172,13 +173,47 @@ public class Game {
     private Set<GameCopy> gameCopies = new HashSet<>();
 
 
-    // Overridden accessors
-    public void setName(String name) {
-        this.name = name;
-        this.lowerCaseName = name.toLowerCase();
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lowerCaseName='" + lowerCaseName + '\'' +
+                ", description='" + description + '\'' +
+                ", playTime='" + playTime + '\'' +
+                ", minNumberOfPlayer=" + minNumberOfPlayer +
+                ", maxNumberOfPlayer=" + maxNumberOfPlayer +
+                ", minAge=" + minAge +
+                ", maxAge=" + maxAge +
+                ", minMonth=" + minMonth +
+                ", stuff='" + stuff + '\'' +
+                ", preparation='" + preparation + '\'' +
+                ", goal='" + goal + '\'' +
+                ", coreRules='" + coreRules + '\'' +
+                ", variant='" + variant + '\'' +
+                ", ending='" + ending + '\'' +
+                ", nature=" + nature +
+                ", size='" + size + '\'' +
+                ", editionNumber='" + editionNumber + '\'' +
+                ", images=" + images +
+                ", creators=" + creators +
+                ", categories=" + categories +
+                ", gameCopies=" + gameCopies +
+                '}';
     }
 
+
     // Helper methods
+
+    /**
+     * This is for adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
+        this.lowerCaseName = name != null ? name.toLowerCase() : null;
+    }
+
     public void addImage(Image image) {
         this.images.add(image);
         image.setGame(this);

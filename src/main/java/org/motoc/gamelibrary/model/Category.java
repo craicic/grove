@@ -37,13 +37,17 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Game> games = new HashSet<>();
 
-    // Overridden accessors
-    public void setName(String name) {
-        this.name = name;
-        this.lowerCaseName = name.toLowerCase();
+    // Helper methods
+
+    /**
+     * This is for adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
+        this.lowerCaseName = name != null ? name.toLowerCase() : null;
     }
 
-    // Helper methods
     public void addGame(Game game) {
         games.add(game);
         game.getCategories().add(this);

@@ -19,7 +19,7 @@
 
 - [X] Remove @Repository on JpaRepos.
 - [ ] Users repository
-- [ ] Check the need of JpaRepos - Choose Interface that fits the requirement
+- [X] Check the need of JpaRepos - Choose Interface that fits the requirement
 - [ ] Take advantage of @EnableJpaRepositories to define a more specific package
 - [ ] Look REALLY carefully at save method for already managed instance and remove the useless / problematic operation
   call

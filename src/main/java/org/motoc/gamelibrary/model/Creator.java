@@ -56,18 +56,18 @@ public class Creator {
     @ManyToMany(mappedBy = "creators")
     private Set<Game> games = new HashSet<>();
 
-    // Overridden accessors
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-        this.lowerCaseFirstName = firstName.toLowerCase();
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-        this.lowerCaseLastName = lastName.toLowerCase();
-    }
-
     // Helper methods
+
+    /**
+     * This is for adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
+        this.lowerCaseFirstName = firstName != null ? firstName.toLowerCase() : null;
+        this.lowerCaseLastName = lastName != null ? lastName.toLowerCase() : null;
+    }
+
     public void addGame(Game game) {
         this.games.add(game);
         game.getCreators().add(this);

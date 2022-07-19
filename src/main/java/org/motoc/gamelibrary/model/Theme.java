@@ -43,13 +43,18 @@ public class Theme {
         this.name = name;
     }
 
-    // Overridden accessors
-    public void setName(String name) {
-        this.name = name;
-        this.lowerCaseName = name.toLowerCase();
-    }
 
     // Helper methods
+
+    /**
+     * This is for adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
+        this.lowerCaseName = name != null ? name.toLowerCase() : null;
+    }
+
     public void addGame(Game game) {
         games.add(game);
         game.getThemes().add(this);

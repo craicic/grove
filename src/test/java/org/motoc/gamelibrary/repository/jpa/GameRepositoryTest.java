@@ -48,6 +48,9 @@ class GameRepositoryTest {
         Page<Game> pagedGames = repository.findOverview(keyword, pageable);
         List<Game> games = pagedGames.getContent();
 
+        for (Game game : games) {
+            logger.info(game.toString());
+        }
         assertThat(games).isNotNull();
     }
 

@@ -43,13 +43,17 @@ public class Seller {
     private Set<GameCopy> gameCopies = new HashSet<>();
 
 
-    // Overridden accessors
-    public void setName(String name) {
-        this.name = name;
+    // Helper methods
+
+    /**
+     * Adding a case-insensitive entry in database
+     */
+    @PrePersist
+    @PreUpdate
+    public void toLowerCase() {
         this.lowerCaseName = name.toLowerCase();
     }
 
-    // Helper methods
     public void addGameCopy(GameCopy gameCopy) {
         this.gameCopies.add(gameCopy);
         gameCopy.setSeller(this);
