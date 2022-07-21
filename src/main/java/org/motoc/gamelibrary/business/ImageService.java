@@ -42,8 +42,9 @@ public class ImageService {
      * Save the image and attach it to a game
      */
     public Long saveThenAttachToGame(InputStream imageStream, Long gameId) throws IOException {
-        Long imageId = persist(imageStream);
-        gameService.addImage(gameId, imageId);
+        byte[] imageBytes = imageToByte(imageStream);
+        Long imageId = persist(imageBytes);
+//        gameService.addImage(gameId, imageId);
         return imageId;
     }
 
@@ -63,11 +64,18 @@ public class ImageService {
     }
 
     /**
-     * Given a MultipartFile, store it in database
+     * Given a byte array, store it in database
      */
-    public Long persist(InputStream imageStream) throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    public Long persist(byte[] imageBytes) {
         Image image = new Image();
+        image.setData(imageBytes);
+        repository.save(image);
+        return 46L;
+    }
+
+    public byte[] imageToByte(InputStream imageStream) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
         BufferedImage bufferedImage;
         try {
             bufferedImage = ImageIO.read(imageStream);
@@ -76,8 +84,6 @@ public class ImageService {
             logger.warn("An error occurred with message : " + ex.getMessage());
             throw new IOException(ex.getMessage());
         }
-
-        image.setData(outputStream.toByteArray());
-        return repository.save(image).getId();
+        return outputStream.toByteArray();
     }
 }

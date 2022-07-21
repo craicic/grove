@@ -206,7 +206,7 @@ public class Game {
     // Helper methods
 
     /**
-     * This is for adding a case-insensitive entry in database
+     * Adding a case-insensitive entry in database
      */
     @PrePersist
     @PreUpdate

@@ -25,7 +25,8 @@ import java.util.Set;
  * It's methods run is executed on startup. It fill the database with demo data.
  */
 @Component
-public class CommandLineStartupRunner implements CommandLineRunner {
+public class CommandLineStartupRunner
+        implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(CommandLineStartupRunner.class);
 
@@ -174,20 +175,20 @@ public class CommandLineStartupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        this.fillCategories();
-        this.fillContacts();
-        this.fillLoanStatus();
-        this.fillProductLines();
-        this.fillThemes();
+//        this.fillCategories();
+//        this.fillContacts();
+//        this.fillLoanStatus();
+//        this.fillProductLines();
+//        this.fillThemes();
 
-        this.fillAccounts();
-        this.fillCreators();
-        this.fillSellers();
-        this.fillPublishers();
+//        this.fillAccounts();
+//        this.fillCreators();
+//        this.fillSellers();
+//        this.fillPublishers();
 
-        this.fillGames();
-        this.fillGameCopies();
-        this.fillLoans();
+//        this.fillGames();
+//        this.fillGameCopies();
+//        this.fillLoans();
 
         this.fillImages();
 
@@ -385,7 +386,8 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         gameCopyRepository.save(demoGameCopyA);
     }
 
-    private void fillImages() throws IOException {
+
+    public void fillImages() throws IOException {
         File fileA = new File("src/main/resources/static/catane.jpg");
         BufferedImage imageA = ImageIO.read(fileA.getAbsoluteFile());
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -393,19 +395,19 @@ public class CommandLineStartupRunner implements CommandLineRunner {
         InputStream is = new ByteArrayInputStream(os.toByteArray());
 
 
-        imageService.saveThenAttachToGame(is, demoGameA.getId());
+        imageService.saveThenAttachToGame(is, 45L);
         os.close();
         is.close();
 
-        File fileB = new File("src/main/resources/static/catane2.jpg");
-        BufferedImage imageB = ImageIO.read(fileB);
-        ByteArrayOutputStream osB = new ByteArrayOutputStream();
-        ImageIO.write(imageB, "png", osB);
-        InputStream isB = new ByteArrayInputStream(osB.toByteArray());
-
-        imageService.saveThenAttachToGame(isB, demoGameA.getId());
-        osB.close();
-        isB.close();
+//        File fileB = new File("src/main/resources/static/catane2.jpg");
+//        BufferedImage imageB = ImageIO.read(fileB);
+//        ByteArrayOutputStream osB = new ByteArrayOutputStream();
+//        ImageIO.write(imageB, "png", osB);
+//        InputStream isB = new ByteArrayInputStream(osB.toByteArray());
+//
+//        imageService.saveThenAttachToGame(isB, 45L);
+//        osB.close();
+//        isB.close();
     }
 
 

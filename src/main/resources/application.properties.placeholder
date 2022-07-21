@@ -2,18 +2,31 @@
 # = DATA SOURCE
 # ===============================
 spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://localhost:5432/DB-NAME-HERE
-spring.datasource.username=DB-USERNAME-HERE
-spring.datasource.password=DB-PASSWORD-HERE
+spring.datasource.url=jdbc:postgresql://localhost:5432/xxxxxxxxxxxxx
+spring.datasource.username=xxxxxxxxxxxxx
+spring.datasource.password=xxxxxxxxxxxxx
+
 
 # ===============================
 # = JPA / HIBERNATE
 # ===============================
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
 
-spring.jpa.show-sql=false
-spring.jpa.hibernate.ddl-auto=create
+# KEEP THIS COMMENTED
+#spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
+
+spring.sql.init.mode=always
+spring.jpa.hibernate.ddl-auto=validate
+
+spring.jpa.show-sql=true
+spring.jpa.open-in-view=false
+# JPA configuration - development (with statistics)
+spring.jpa.properties.hibernate.format_sql=true
+
+# useful to detect n+1 issues
+# do not use in production
+spring.jpa.properties.hibernate.generate_statistics=true
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation = true
 
 # ===============================
 # = PAGINATION
@@ -28,15 +41,26 @@ spring.data.web.pageable.max-page-size=2000
 # ===============================
 logging.level.org.motoc=TRACE
 logging.level.org.springframework=INFO
-logging.level.org.keycloak=INFO
+logging.level.org.springframework.transaction=DEBUG
+logging.level.org.keycloak=DEBUG
 
+
+
+logging.level.root=INFO
+logging.level.org.hibernate.cache=DEBUG
+# useful to detect n+1 issues
+logging.level.org.hibernate.stat=DEBUG
+logging.level.org.hibernate.sql=DEBUG
+
+spring.main.allow-circular-references=true
 # ===============================
 # = SECURITY / KEYCLOAK
 # ===============================
-keycloak.auth-server-url=http://localhost:8180/auth
-keycloak.realm=game-library-realm
-keycloak.resource=game-library-api
-keycloak.credentials.secret=KEYCLOAK-SECRET-HERE
+keycloak.auth-server-url=xxxxxxxxxxxxx
+keycloak.realm=xxxxxxxxxxxxx
+keycloak.resource=xxxxxxxxxxxxx
+keycloak.credentials.secret=xxxxxxxxxxxxx
+
 #we do not write a web-app - so no login page and redirects are necessary
 keycloak.bearer-only=true
 keycloak.enabled=true
@@ -59,3 +83,4 @@ keycloak.security-constraints[2].securityCollections[0].patterns[0]=/admin/*
 # ===============================
 # = CUSTOM PROPERTIES
 # ===============================
+files.path-root=/C:/Users/vaalp/jee-workspace/system-file-placeholder/

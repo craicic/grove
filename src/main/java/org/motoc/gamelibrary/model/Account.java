@@ -23,7 +23,6 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-
     @Size(max = 127, message = "User's firstname cannot exceed 127 characters")
     @Column(name = "first_name", length = 127)
     private String firstName;

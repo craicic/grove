@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
+        <version>2.6.9</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.motoc</groupId>
@@ -20,6 +20,8 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <keycloak.version>11.0.2</keycloak.version>
         <jpamodelgen.version>5.4.20.Final</jpamodelgen.version>
+        <lombok.version>1.18.24</lombok.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
@@ -53,12 +55,14 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>2.1.214</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+
             <version>${lombok.version}</version>
         </dependency>
         <!-- Configuring the Annotation Processor -->
@@ -92,7 +96,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.11</version>
         </dependency>
         <!-- Generated JPA Metamodel -->
         <dependency>
@@ -127,7 +130,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!-- Prevent the repackage goal from adding the dependency into the fat jar -->
+                    <!-- Prevent the repackaged goal from adding the dependency into the fat jar -->
                     <excludes>
                         <exclude>
                             <groupId>org.springframework.boot</groupId>
@@ -159,7 +162,7 @@
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${jpamodelgen.version}</version>
                         </path>
-                        <!-- Workaround cause we have lombok and mapstruct processors -->
+                        <!-- Workaround because we have lombok and mapstruct processors -->
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>

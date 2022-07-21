@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
+@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name", name = "unique_cat"))
 public class Category {
 
     @Id
@@ -40,7 +40,7 @@ public class Category {
     // Helper methods
 
     /**
-     * This is for adding a case-insensitive entry in database
+     * Adding a case-insensitive entry in database
      */
     @PrePersist
     @PreUpdate

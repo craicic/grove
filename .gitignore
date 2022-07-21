@@ -34,4 +34,5 @@ build/
 ### Custom ###
 application.properties
 *.sql
+!/src/main/resources/*.sql
 /src/main/resources/static/*
