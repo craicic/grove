@@ -94,13 +94,13 @@ VALUES (nextval('hibernate_sequence'), 'asmodee', 'Asmodee', 19);
 INSERT INTO public.game (id, core_rules, description, edition_number, ending, goal, lower_case_name, max_age,
                          max_number_of_player, min_age, min_month, min_number_of_player, name, nature, play_time,
                          preparation, size, stuff, variant, core_game_id, fk_product_line)
-VALUES (nextval('hibernate_sequence'), '354566',
+VALUES (nextval('hibernate_sequence'), null,
         'Vous voilà à la tête de colons fraîchement débarqués sur l''île de Catane. Votre but va être d''installer vos ouailles et de faire prospérer vos colonies en construisant des villes et en utilisant au mieux les matières premières qui sont à votre disposition.
 Les Colons de Catane est un jeu tactique de placement, de développement et de négociation. Le hasard y est présent et peut à tout moment contrarier vos plans.',
-        null, '354567', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit',
+        null, null, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit',
         'les colons de catane', 0, 4, 8, 0, 2,
         'Les Colons de Catane', 1, '90 minutes', null, 'Petit',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit', null, null,
+        null, null, null,
         (SELECT id FROM product_line WHERE name = 'Catane'));
 
 INSERT INTO public.game_copy (id, date_of_purchase, general_state, is_loanable, location, object_code, price,

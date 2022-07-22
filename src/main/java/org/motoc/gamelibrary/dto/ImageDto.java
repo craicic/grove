@@ -1,22 +1,21 @@
 package org.motoc.gamelibrary.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotNull;
+import lombok.Setter;
 
 
 /**
  * Image's DTO
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageDto {
 
     private Long id;
 
-    @NotNull
-    private String data;
+
 }
