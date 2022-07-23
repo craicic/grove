@@ -23,10 +23,6 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "data", nullable = false)
-    @Lob
-    private byte[] data;
-
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)

@@ -5,7 +5,7 @@ CREATE SEQUENCE hibernate_sequence START 1 INCREMENT BY 1;
 
 CREATE TABLE IF NOT EXISTS category
 (
-    id              BIGINT      NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id              BIGINT      NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(50) NOT NULL,
     name            VARCHAR(50) NOT NULL,
     CONSTRAINT category_pkey
@@ -18,7 +18,7 @@ ALTER TABLE category
 
 CREATE TABLE IF NOT EXISTS contact
 (
-    id            BIGINT      NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id            BIGINT      NOT NULL DEFAULT nextval('hibernate_sequence'),
     city          VARCHAR(50),
     country       VARCHAR(50) NOT NULL,
     mail_address  VARCHAR(320),
@@ -36,7 +36,7 @@ ALTER TABLE contact
 
 CREATE TABLE IF NOT EXISTS account
 (
-    id                BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id                BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     first_name        VARCHAR(127),
     last_name         VARCHAR(127),
     membership_number VARCHAR(50)  NOT NULL,
@@ -53,7 +53,7 @@ ALTER TABLE account
 
 CREATE TABLE IF NOT EXISTS creator
 (
-    id                    BIGINT      NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id                    BIGINT      NOT NULL DEFAULT nextval('hibernate_sequence'),
     first_name            VARCHAR(50),
     last_name             VARCHAR(50) NOT NULL,
     lower_case_first_name VARCHAR(50) NOT NULL,
@@ -71,7 +71,7 @@ ALTER TABLE creator
 
 CREATE TABLE IF NOT EXISTS loan_status
 (
-    id             BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id             BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     description    VARCHAR(255) NOT NULL,
     lower_case_tag VARCHAR(50)  NOT NULL,
     tag            VARCHAR(50)  NOT NULL,
@@ -84,7 +84,7 @@ ALTER TABLE loan_status
 
 CREATE TABLE IF NOT EXISTS product_line
 (
-    id              BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id              BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(255) NOT NULL,
     name            VARCHAR(255) NOT NULL,
     CONSTRAINT product_line_pkey
@@ -96,7 +96,7 @@ ALTER TABLE product_line
 
 CREATE TABLE IF NOT EXISTS game
 (
-    id                   BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id                   BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     core_rules           oid,
     description          VARCHAR(1000),
     edition_number       VARCHAR(255),
@@ -148,8 +148,7 @@ ALTER TABLE game
 
 CREATE TABLE IF NOT EXISTS image
 (
-    id      BIGINT NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
-    data    oid    NOT NULL,
+    id      BIGINT NOT NULL DEFAULT nextval('hibernate_sequence'),
     fk_game BIGINT,
     CONSTRAINT image_pkey
         PRIMARY KEY (id),
@@ -159,9 +158,19 @@ CREATE TABLE IF NOT EXISTS image
 ALTER TABLE image
     OWNER TO postgres;
 
+CREATE TABLE IF NOT EXISTS image_blob
+(
+    image_id BIGINT NOT NULL,
+    content  oid    NOT NULL,
+    FOREIGN KEY (image_id) REFERENCES image
+);
+
+ALTER TABLE image_blob
+    OWNER TO postgres;
+
 CREATE TABLE IF NOT EXISTS publisher
 (
-    id              BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id              BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(255) NOT NULL,
     name            VARCHAR(255) NOT NULL,
     fk_contact      BIGINT,
@@ -175,7 +184,7 @@ ALTER TABLE publisher
 
 CREATE TABLE IF NOT EXISTS seller
 (
-    id              BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id              BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(255) NOT NULL,
     name            VARCHAR(255) NOT NULL,
     fk_contact      BIGINT,
@@ -189,7 +198,7 @@ ALTER TABLE seller
 
 CREATE TABLE IF NOT EXISTS game_copy
 (
-    id               BIGINT       NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id               BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     date_of_purchase DATE,
     general_state    INTEGER      NOT NULL,
     is_loanable      BOOLEAN,
@@ -213,7 +222,7 @@ ALTER TABLE game_copy
 
 CREATE TABLE IF NOT EXISTS loan
 (
-    id              BIGINT  NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id              BIGINT  NOT NULL DEFAULT nextval('hibernate_sequence'),
     is_closed       BOOLEAN NOT NULL,
     loan_end_time   date    NOT NULL,
     loan_start_time date    NOT NULL,
@@ -229,7 +238,7 @@ ALTER TABLE loan
 
 CREATE TABLE IF NOT EXISTS theme
 (
-    id              BIGINT      NOT NULL NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id              BIGINT      NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(50) NOT NULL,
     name            VARCHAR(50) NOT NULL,
     CONSTRAINT theme_pkey
