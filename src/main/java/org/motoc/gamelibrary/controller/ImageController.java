@@ -42,16 +42,6 @@ public class ImageController {
     }
 
     @GetMapping("/admin/images/{id}")
-    ResponseEntity<InputStream> findDataById(@PathVariable Long id) throws IOException {
-        logger.trace("findDataById(id) called");
-        InputStream is = service.retrieveBytes(id);
-        HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.IMAGE_PNG);
-
-        return ResponseEntity.ok().headers(header).body(is);
-    }
-
-    @GetMapping("/admin/images/{id}")
     @ResponseBody
     ResponseEntity<InputStreamResource> getContent(@PathVariable Long id) throws IOException {
         logger.trace("findDataById(id) called");
