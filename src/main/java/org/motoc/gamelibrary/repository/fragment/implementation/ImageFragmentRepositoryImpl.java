@@ -5,6 +5,7 @@ import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.model.Image;
 import org.motoc.gamelibrary.model.ImageBlob;
 import org.motoc.gamelibrary.repository.fragment.ImageFragmentRepository;
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,11 +53,13 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
 
         ImageBlob ib = em.find(ImageBlob.class, imageId);
 
+        if (ib == null || ib.getContent() == null) {
+            throw new NotFoundException("No image of id " + imageId + " found.");
+        }
         try {
             return ib.getContent().getBinaryStream();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
