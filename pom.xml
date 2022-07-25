@@ -11,17 +11,19 @@
     <groupId>org.motoc</groupId>
     <artifactId>game-library</artifactId>
     <version>${revision}</version>
-    <name>Game Library Service</name>
+    <name>Grove API</name>
     <description>A tool for game libraries - This is the REST service</description>
 
     <properties>
         <java.version>11</java.version>
         <revision>1.0.1</revision>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <keycloak.version>11.0.2</keycloak.version>
         <jpamodelgen.version>5.4.20.Final</jpamodelgen.version>
         <lombok.version>1.18.24</lombok.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <springdoc.version>1.6.9</springdoc.version>
+        <webjars.version>5.1.3</webjars.version>
+        <h2.version>2.1.214</h2.version>
     </properties>
 
     <dependencies>
@@ -77,7 +79,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.1.214</version>
+            <version>${h2.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -91,26 +93,32 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
-        <!-- SWAGGER 2-->
+
+        <!-- Documentation -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+        <!-- END of Documentation -->
 
         <!-- Webjar support for SWAGGER UI -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.1.3</version>
+            <version>${webjars.version}</version>
         </dependency>
 
-        <!-- JSR303 Support for SWAGGER 2 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-            <version>3.0.0</version>
-        </dependency>
         <!-- Used for its consistent random name generation -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -135,6 +143,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
                 <configuration>
                     <!-- Prevent the repackaged goal from adding the dependency into the fat jar -->
                     <excludes>

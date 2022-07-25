@@ -13,18 +13,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] SWAGGER_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+    };
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("game-library-user").password(getPasswordEncoder().encode("azertyui")).roles("USER")
+                .withUser("game-library-user").password(getEncoder().encode("azertyui")).roles("USER")
                 .and()
-                .withUser("game-library-admin").password(getPasswordEncoder().encode("simplePassword")).roles("ADMIN");
+                .withUser("game-library-admin").password(getEncoder().encode("simplePassword")).roles("ADMIN")
+                .and()
+                .withUser("swagger").password(getEncoder().encode("123")).roles("SWAGGER");
 
     }
 
     @Bean
-    protected PasswordEncoder getPasswordEncoder() {
+    protected PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -32,18 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(
-                        "/v2/api-docs",
-                        "/configuration/ui",
-                        "/swagger-resources/**",
-                        "/configuration/security",
-                        "/webjars/**",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**").permitAll()
+                .antMatchers(SWAGGER_WHITELIST
+                ).permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().denyAll()
-                .and().httpBasic();
+                .and();
     }
 }

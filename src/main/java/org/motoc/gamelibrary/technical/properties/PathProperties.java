@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class PathProperties {
 
     /**
-     * <p>The root file path that lead to the image directory. The ication will then append the filename to define
-     * * the full path of each imaapplges.</p>
+     * <p>The root file path that lead to the image directory. The location will then append the filename to define
+     * * the full path of each image.</p>
      */
     private String pathRoot = "/opt/game-library/image/";
 
