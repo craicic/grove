@@ -32,24 +32,6 @@ public class ThemeController {
         this.mapper = ThemeMapper.INSTANCE;
     }
 
-    // TODO remove
-    @GetMapping(path = {"/"})
-    String tempHome() {
-        return "You're at index";
-    }
-
-    // TODO remove
-    @GetMapping(path = {"/user"})
-    String tempUser() {
-        return "You're on the user page";
-    }
-
-    // TODO remove
-    @GetMapping(path = {"/admin"})
-    String tempAdmin() {
-        return "You're on the admin page";
-    }
-
     @GetMapping("/admin/themes/count")
     Long count() {
         logger.trace("count called");
