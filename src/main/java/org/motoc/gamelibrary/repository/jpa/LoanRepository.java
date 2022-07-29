@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Set;
 
 /**
- * This repository takes advantage of Spring data / JPA
+ * This repository takes advantage of Spring data.sql / JPA
  */
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query("SELECT distinct l FROM Loan l " +

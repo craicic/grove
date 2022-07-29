@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface CreatorFragmentRepository {
 
-    /**
-     * Removes a contact from a creator, then delete the contact.
-     */
-    void removeContact(Long creatorId, Long contactId);
-
-    /**
-     * Removes a creator and its associated contact
-     */
-    void remove(Long id);
+//    /**
+//     * Removes a contact from a creator, then delete the contact.
+//     */
+//    void removeContact(Long creatorId, Long contactId);
+//
+//    /**
+//     * Removes a creator and its associated contact
+//     */
+//    void remove(Long id);
 
     /**
      * Get all Creator's name in a custom DTO

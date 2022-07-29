@@ -7,9 +7,11 @@ import org.motoc.gamelibrary.mapper.AccountMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -54,14 +56,14 @@ public class AccountController {
 //        return mapper.pageToPageDto(service.findPage(pageable));
 //    }
 
-    @PostMapping("/admin/accounts")
-    AccountDto save(@RequestBody @Valid AccountDto account,
-                    @RequestParam(value = "has-contact", required = false) boolean hasContact) {
-        logger.trace("save(account) called");
-        return mapper.accountToDto(
-                service.save(mapper.dtoToAccount(account), hasContact)
-        );
-    }
+//    @PostMapping("/admin/accounts")
+//    AccountDto save(@RequestBody @Valid AccountDto account,
+//                    @RequestParam(value = "has-contact", required = false) boolean hasContact) {
+//        logger.trace("save(account) called");
+//        return mapper.accountToDto(
+//                service.save(mapper.dtoToAccount(account), hasContact)
+//        );
+//    }
 
     @GetMapping("/admin/accounts/no-current-loan")
     List<AccountDto> findAccountsWithNoCurrentLoan() {

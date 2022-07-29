@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * This repository takes advantage of Spring data / JPA
+ * This repository takes advantage of Spring data.sql / JPA
  */
 public interface CreatorRepository extends JpaRepository<Creator, Long>, CreatorFragmentRepository {
     Page<Creator> findByLowerCaseFirstNameContainingOrLowerCaseLastNameContaining(String keyword,

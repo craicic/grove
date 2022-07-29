@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 /**
- * This repository takes advantage of Spring data / JPA
+ * This repository takes advantage of Spring data.sql / JPA
  */
 public interface GameRepository extends JpaRepository<Game, Long>, GameFragmentRepository {
 

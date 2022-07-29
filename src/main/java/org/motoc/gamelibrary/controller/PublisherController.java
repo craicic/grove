@@ -58,12 +58,12 @@ public class PublisherController {
         }
     }
 
-    @PostMapping("/admin/publishers")
-    PublisherDto save(@RequestBody @Valid PublisherDto publisherDto,
-                      @RequestParam(value = "has-contact", required = false) boolean hasContact) {
-        logger.trace("save(publisher) called");
-        return mapper.publisherToDto(service.save(mapper.dtoToPublisher(publisherDto), hasContact));
-    }
+//    @PostMapping("/admin/publishers")
+//    PublisherDto save(@RequestBody @Valid PublisherDto publisherDto,
+//                      @RequestParam(value = "has-contact", required = false) boolean hasContact) {
+//        logger.trace("save(publisher) called");
+//        return mapper.publisherToDto(service.save(mapper.dtoToPublisher(publisherDto), hasContact));
+//    }
 
     @PutMapping("/admin/publishers/{id}")
     PublisherDto edit(@RequestBody @Valid PublisherDto publisherDto,

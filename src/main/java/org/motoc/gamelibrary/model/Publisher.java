@@ -36,10 +36,7 @@ public class Publisher {
     @OneToMany(mappedBy = "publisher")
     private Set<GameCopy> copies = new HashSet<>();
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne
-    @JoinColumn(name = "fk_contact")
+    @Embedded
     private Contact contact;
 
     // Helper methods
@@ -56,18 +53,5 @@ public class Publisher {
     public void addCopy(GameCopy copy) {
         this.copies.add(copy);
         copy.setPublisher(this);
-    }
-
-    public void addContact(Contact contact) {
-        this.setContact(contact);
-        contact.setPublisher(this);
-    }
-
-    /**
-     * This helper method is to use before deleting the contact of a publisher.
-     */
-    public void removeContact(Contact contact) {
-        this.setContact(null);
-        contact.setPublisher(null);
     }
 }

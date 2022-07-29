@@ -28,6 +28,9 @@ public class Creator {
     @Column(length = 50)
     private String firstName;
 
+    @Embedded
+    private Contact contact;
+
     @NotBlank(message = "Last name cannot be null or blank")
     @Size(max = 50, message = "Last name should not exceed 50 characters")
     @Column(nullable = false, length = 50)
@@ -44,13 +47,6 @@ public class Creator {
     @NotNull(message = "Role cannot be null")
     @Column(nullable = false, length = 50)
     private CreatorRole role;
-
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne
-    @JoinColumn(name = "fk_contact")
-    private Contact contact;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -77,18 +73,5 @@ public class Creator {
     public void removeGame(Game game) {
         this.games.remove(game);
         game.getCreators().remove(this);
-    }
-
-    public void addContact(Contact contact) {
-        this.setContact(contact);
-        contact.setCreator(this);
-    }
-
-    /**
-     * This helper method is to be used before deleting the contact of an creator.
-     */
-    public void removeContact(Contact contact) {
-        this.setContact(null);
-        contact.setCreator(null);
     }
 }

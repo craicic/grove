@@ -4,7 +4,7 @@ import org.motoc.gamelibrary.model.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * This repository takes advantage of Spring data / JPA
+ * This repository takes advantage of Spring data.sql / JPA
  */
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 }

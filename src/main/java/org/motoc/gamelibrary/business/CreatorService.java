@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.CreatorNameDto;
 import org.motoc.gamelibrary.model.Creator;
-import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.repository.jpa.CreatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,28 +27,25 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
 
     private final CreatorRepository creatorRepository;
 
-    private final ContactRepository contactRepository;
 
     @Autowired
     public CreatorService(JpaRepository<Creator, Long> genericRepository,
-                          CreatorRepository creatorRepository,
-                          ContactRepository contactRepository) {
+                          CreatorRepository creatorRepository) {
         super(genericRepository, Creator.class);
         this.creatorRepository = creatorRepository;
-        this.contactRepository = contactRepository;
     }
 
 
-    /**
-     * Persist a new creator by id (if a contact is associated, this one must be new)
-     */
-    public Creator save(@Valid Creator creator, boolean hasContact) {
-        if (hasContact) {
-            long contactId = contactRepository.save(creator.getContact()).getId();
-            creator.getContact().setId(contactId);
-        }
-        return creatorRepository.save(creator);
-    }
+//    /**
+//     * Persist a new creator by id (if a contact is associated, this one must be new)
+//     */
+//    public Creator save(@Valid Creator creator, boolean hasContact) {
+//        if (hasContact) {
+//            long contactId = contactRepository.save(creator.getContact()).getId();
+//            creator.getContact().setId(contactId);
+//        }
+//        return creatorRepository.save(creator);
+//    }
 
     /**
      * Edits a creator by id
@@ -71,18 +67,18 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
                 });
     }
 
-    /**
-     * Removes a creator
-     */
-    public void remove(Long id) {
-        logger.debug("deleting (if exist) creator of id=" + id);
-        creatorRepository.remove(id);
-    }
-
-    public void removeContact(Long creatorId, Long contactId) {
-        logger.debug("deleting (if exist) contact of id=" + contactId + " from creator of id=" + creatorId);
-        creatorRepository.removeContact(creatorId, contactId);
-    }
+//    /**
+//     * Removes a creator
+//     */
+//    public void remove(Long id) {
+//        logger.debug("deleting (if exist) creator of id=" + id);
+//        creatorRepository.remove(id);
+//    }
+//
+//    public void removeContact(Long creatorId, Long contactId) {
+//        logger.debug("deleting (if exist) contact of id=" + contactId + " from creator of id=" + creatorId);
+//        creatorRepository.removeContact(creatorId, contactId);
+//    }
 
     public Page<Creator> quickSearch(String keyword, Pageable pageable) {
         logger.debug("Find paged creators that contains : " + keyword);

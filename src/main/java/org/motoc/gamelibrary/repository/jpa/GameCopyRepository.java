@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 /**
- * This repository takes advantage of Spring data / JPA
+ * This repository takes advantage of Spring data.sql / JPA
  */
 public interface GameCopyRepository extends JpaRepository<GameCopy, Long>, GameCopyFragmentRepository {
 

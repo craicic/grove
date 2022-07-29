@@ -4,7 +4,6 @@ import org.motoc.gamelibrary.dto.AccountDto;
 import org.motoc.gamelibrary.mapper.AccountMapper;
 import org.motoc.gamelibrary.model.Account;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
-import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +22,12 @@ public class AccountService {
 
     final private AccountRepository repository;
 
-    final private ContactRepository contactRepository;
-
     final private AccountMapper mapper;
 
     @Autowired
     public AccountService(AccountRepository repository,
-                          ContactRepository contactRepository,
                           AccountMapper mapper) {
         this.repository = repository;
-        this.contactRepository = contactRepository;
         this.mapper = mapper;
     }
 
@@ -68,16 +63,16 @@ public class AccountService {
                 });
     }
 
-    /**
-     * Persist a new account by id (if a contact is associated, this one must be new)
-     */
-    public Account save(@Valid Account account, boolean hasContact) {
-        if (hasContact) {
-            long contactId = contactRepository.save(account.getContact()).getId();
-            account.getContact().setId(contactId);
-        }
-        return repository.save(account);
-    }
+//    /**
+//     * Persist a new account by id (if a contact is associated, this one must be new)
+//     */
+//    public Account save(@Valid Account account, boolean hasContact) {
+//        if (hasContact) {
+//            long contactId = contactRepository.save(account.getContact()).getId();
+//            account.getContact().setId(contactId);
+//        }
+//        return repository.save(account);
+//    }
 
     private boolean isMembershipUp(Account account) {
         return account.getRenewalDate().isAfter(LocalDate.now());

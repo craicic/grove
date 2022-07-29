@@ -44,10 +44,7 @@ public class Account {
     @Column(name = "renewal_date")
     private LocalDate renewalDate;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne
-    @JoinColumn(name = "fk_contact")
+    @Embedded
     private Contact contact;
 
     @ToString.Exclude

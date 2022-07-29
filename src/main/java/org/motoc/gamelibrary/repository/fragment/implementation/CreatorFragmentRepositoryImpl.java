@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.dto.CreatorNameDto;
-import org.motoc.gamelibrary.model.Contact;
-import org.motoc.gamelibrary.model.Creator;
-import org.motoc.gamelibrary.model.Game;
 import org.motoc.gamelibrary.repository.fragment.CreatorFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,37 +27,37 @@ public class CreatorFragmentRepositoryImpl implements CreatorFragmentRepository 
     }
 
 
-    @Override
-    public void remove(Long id) {
-        Creator creator = entityManager.find(Creator.class, id);
-        Contact contact = creator.getContact();
+//    @Override
+//    public void remove(Long id) {
+//        Creator creator = entityManager.find(Creator.class, id);
+//        Contact contact = creator.getContact();
+//
+//        if (contact != null) {
+//            creator.removeContact(contact);
+//            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
+//            if (contactFromDb.getPublisher() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
+//                entityManager.remove(contactFromDb);
+//        }
+//
+//        for (Game game : creator.getGames()) {
+//            game.removeCreator(creator);
+//        }
+//
+//        entityManager.remove(creator);
+//    }
 
-        if (contact != null) {
-            creator.removeContact(contact);
-            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
-            if (contactFromDb.getPublisher() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
-                entityManager.remove(contactFromDb);
-        }
-
-        for (Game game : creator.getGames()) {
-            game.removeCreator(creator);
-        }
-
-        entityManager.remove(creator);
-    }
-
-    @Override
-    public void removeContact(Long creatorId, Long contactId) {
-        Creator creator = entityManager.find(Creator.class, creatorId);
-        Contact contact = entityManager.find(Contact.class, contactId);
-
-        if (contact != null
-                && creator != null
-                && creator.getContact() == contact) {
-            creator.removeContact(contact);
-            entityManager.remove(contact);
-        }
-    }
+//    @Override
+//    public void removeContact(Long creatorId, Long contactId) {
+//        Creator creator = entityManager.find(Creator.class, creatorId);
+//        Contact contact = entityManager.find(Contact.class, contactId);
+//
+//        if (contact != null
+//                && creator != null
+//                && creator.getContact() == contact) {
+//            creator.removeContact(contact);
+//            entityManager.remove(contact);
+//        }
+//    }
 
     @Override
     public List<CreatorNameDto> findNames() {

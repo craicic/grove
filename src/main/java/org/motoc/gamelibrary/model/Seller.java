@@ -31,10 +31,7 @@ public class Seller {
     @Column(name = "lower_case_name", nullable = false)
     private String lowerCaseName;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne
-    @JoinColumn(name = "fk_contact")
+    @Embedded
     private Contact contact;
 
     @ToString.Exclude
@@ -62,18 +59,5 @@ public class Seller {
     public void removeGameCopy(GameCopy gameCopy) {
         this.gameCopies.remove(gameCopy);
         gameCopy.setSeller(null);
-    }
-
-    public void addContact(Contact contact) {
-        this.setContact(contact);
-        contact.setSeller(this);
-    }
-
-    /**
-     * This helper method is to use before deleting the contact of a publisher.
-     */
-    public void removeContact(Contact contact) {
-        this.setContact(null);
-        contact.setSeller(null);
     }
 }

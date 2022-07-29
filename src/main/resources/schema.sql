@@ -16,24 +16,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS uniq_cat ON category (lower_case_name);
 ALTER TABLE category
     OWNER TO postgres;
 
-CREATE TABLE IF NOT EXISTS contact
-(
-    id            BIGINT      NOT NULL DEFAULT nextval('hibernate_sequence'),
-    city          VARCHAR(50),
-    country       VARCHAR(50) NOT NULL,
-    mail_address  VARCHAR(320),
-    phone_number  VARCHAR(50),
-    postal_code   VARCHAR(50),
-    street        VARCHAR(255),
-    street_number VARCHAR(10),
-    website       VARCHAR(75),
-    CONSTRAINT contact_pkey
-        PRIMARY KEY (id)
-);
-
-ALTER TABLE contact
-    OWNER TO postgres;
-
 CREATE TABLE IF NOT EXISTS account
 (
     id                BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
@@ -42,10 +24,16 @@ CREATE TABLE IF NOT EXISTS account
     membership_number VARCHAR(50)  NOT NULL,
     renewal_date      DATE,
     username          VARCHAR(255) NOT NULL,
-    fk_contact        BIGINT,
+    city              VARCHAR(255),
+    country           VARCHAR(255) NOT NULL,
+    mail_address      VARCHAR(320),
+    phone_number      VARCHAR(50),
+    post_code         VARCHAR(50),
+    street            VARCHAR(255),
+    house_number      VARCHAR(50),
+    website           VARCHAR(255),
     CONSTRAINT account_pkey
-        PRIMARY KEY (id),
-    FOREIGN KEY (fk_contact) REFERENCES contact
+        PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_acc ON account (username);
 ALTER TABLE account
@@ -53,16 +41,22 @@ ALTER TABLE account
 
 CREATE TABLE IF NOT EXISTS creator
 (
-    id                    BIGINT      NOT NULL DEFAULT nextval('hibernate_sequence'),
+    id                    BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     first_name            VARCHAR(50),
-    last_name             VARCHAR(50) NOT NULL,
-    lower_case_first_name VARCHAR(50) NOT NULL,
-    lower_case_last_name  VARCHAR(50) NOT NULL,
-    role                  INTEGER     NOT NULL,
-    fk_contact            BIGINT,
+    last_name             VARCHAR(50)  NOT NULL,
+    lower_case_first_name VARCHAR(50)  NOT NULL,
+    lower_case_last_name  VARCHAR(50)  NOT NULL,
+    role                  INTEGER      NOT NULL,
+    city                  VARCHAR(255),
+    country               VARCHAR(255) NOT NULL,
+    mail_address          VARCHAR(320),
+    phone_number          VARCHAR(50),
+    post_code             VARCHAR(50),
+    street                VARCHAR(255),
+    house_number          VARCHAR(50),
+    website               VARCHAR(255),
     CONSTRAINT creator_pkey
-        PRIMARY KEY (id),
-    FOREIGN KEY (fk_contact) REFERENCES contact
+        PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS unique_name ON creator (lower_case_first_name, lower_case_last_name);
@@ -173,10 +167,16 @@ CREATE TABLE IF NOT EXISTS publisher
     id              BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(255) NOT NULL,
     name            VARCHAR(255) NOT NULL,
-    fk_contact      BIGINT,
+    city            VARCHAR(255),
+    country         VARCHAR(255) NOT NULL,
+    mail_address    VARCHAR(320),
+    phone_number    VARCHAR(50),
+    post_code       VARCHAR(50),
+    street          VARCHAR(255),
+    house_number    VARCHAR(50),
+    website         VARCHAR(255),
     CONSTRAINT publisher_pkey
-        PRIMARY KEY (id),
-    FOREIGN KEY (fk_contact) REFERENCES contact
+        PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_pub ON publisher (lower_case_name);
 ALTER TABLE publisher
@@ -187,10 +187,16 @@ CREATE TABLE IF NOT EXISTS seller
     id              BIGINT       NOT NULL DEFAULT nextval('hibernate_sequence'),
     lower_case_name VARCHAR(255) NOT NULL,
     name            VARCHAR(255) NOT NULL,
-    fk_contact      BIGINT,
+    city            VARCHAR(255),
+    country         VARCHAR(255) NOT NULL,
+    mail_address    VARCHAR(320),
+    phone_number    VARCHAR(50),
+    post_code       VARCHAR(50),
+    street          VARCHAR(255),
+    house_number    VARCHAR(50),
+    website         VARCHAR(255),
     CONSTRAINT seller_pkey
-        PRIMARY KEY (id),
-    FOREIGN KEY (fk_contact) REFERENCES contact
+        PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_sel ON seller (lower_case_name);
 ALTER TABLE seller

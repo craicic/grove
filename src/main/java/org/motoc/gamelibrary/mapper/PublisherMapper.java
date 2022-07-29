@@ -17,10 +17,6 @@ public interface PublisherMapper {
     PublisherDto publisherNameToDto(Publisher id);
 
     @Mapping(target = "copies", ignore = true)
-    @Mapping(target = "contact.creator", ignore = true)
-    @Mapping(target = "contact.publisher", ignore = true)
-    @Mapping(target = "contact.seller", ignore = true)
-    @Mapping(target = "contact.account", ignore = true)
     Publisher dtoToPublisher(PublisherDto publisherDto);
 
     default Page<PublisherDto> pageToPageDto(Page<Publisher> page) {

@@ -23,22 +23,7 @@ VALUES (nextval('hibernate_sequence'), 'course', 'Course');
 INSERT INTO public.category (id, lower_case_name, name)
 VALUES (nextval('hibernate_sequence'), 'négociation', 'Négociation');
 
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Paris', 'France', null, '+0331', '75000', 'foo street', '40', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Marseille', 'France', null, '+0333', '13000', 'foo street', '45', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Lyon', 'France', null, '+0332', '75000', 'foo street', '32', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Dijon', 'France', null, '+0334', '75000', 'foo street', '1', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Lille', 'France', null, '+0334', '75000', 'foo street', '1', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Bordeaux', 'France', null, '+0334', '75000', 'foo street', '1', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Rennes', 'France', null, '+0334', '75000', 'foo street', '1', null);
-INSERT INTO public.contact (id, city, country, mail_address, phone_number, postal_code, street, street_number, website)
-VALUES (nextval('hibernate_sequence'), 'Nantes', 'France', null, '+0334', '75000', 'foo street', '1', null);
+
 
 INSERT INTO public.product_line (id, lower_case_name, name)
 VALUES (nextval('hibernate_sequence'), 'catane', 'Catane');
@@ -68,27 +53,42 @@ VALUES (nextval('hibernate_sequence'), 'enquête', 'Enquête');
 INSERT INTO public.theme (id, lower_case_name, name)
 VALUES (nextval('hibernate_sequence'), 'far west', 'Far West');
 
-INSERT INTO public.account (id, first_name, last_name, membership_number, renewal_date, username, fk_contact)
+INSERT INTO public.account (id, first_name, last_name, membership_number, renewal_date, username, city, country,
+                            mail_address, phone_number, post_code, street, house_number, website)
 VALUES (nextval('hibernate_sequence'), 'John', 'Doe', 'f993a834-37ce-40d2-8863-a512813d689b', '2021-07-03', 'John-Doe',
-        13);
+        'Paris', 'France', null, '+0331', '75000', 'foo street', '40', null);
 
 
-INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'Bruno', 'Cathala', 'bruno', 'cathala', 0, 14);
-INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'Bruno', 'Faduitti', 'bruno', 'faduitti', 0, 17);
-INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'Mihajlo', 'Dimitrievski', 'mihajlo', 'dimitrievski', 2, 18);
+INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, city, country,
+                            mail_address, phone_number, post_code, street, house_number, website)
+VALUES (nextval('hibernate_sequence'), 'Bruno', 'Cathala', 'bruno', 'cathala', 0, 'Marseille', 'France', null, '+0333',
+        '13000', 'foo street', '45', null);
+INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, city, country,
+                            mail_address, phone_number, post_code, street, house_number, website)
+VALUES (nextval('hibernate_sequence'), 'Bruno', 'Faduitti', 'bruno', 'faduitti', 0, 'Lyon', 'France', null, '+0332',
+        '75000', 'foo street', '32', null);
+INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, city, country,
+                            mail_address, phone_number, post_code, street, house_number, website)
+VALUES (nextval('hibernate_sequence'), 'Mihajlo', 'Dimitrievski', 'mihajlo', 'dimitrievski', 2, 'Dijon', 'France', null,
+        '+0334', '75000', 'foo street', '1', null);
 
-INSERT INTO public.seller (id, lower_case_name, name, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'joué club tulle', 'Joué Club Tulle', 15);
-INSERT INTO public.seller (id, lower_case_name, name, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'boutique philibert', 'Boutique Philibert', 20);
+INSERT INTO public.seller (id, lower_case_name, name, city, country, mail_address, phone_number, post_code, street,
+                           house_number, website)
+VALUES (nextval('hibernate_sequence'), 'joué club tulle', 'Joué Club Tulle', 'Lille', 'France', null, '+0334', '75000',
+        'foo street', '1', null);
+INSERT INTO public.seller (id, lower_case_name, name, city, country, mail_address, phone_number, post_code, street,
+                           house_number, website)
+VALUES (nextval('hibernate_sequence'), 'boutique philibert', 'Boutique Philibert', 'Bordeaux', 'France', null, '+0334',
+        '75000', 'foo street', '1', null);
 
-INSERT INTO public.publisher (id, lower_case_name, name, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'kosmos', 'Kosmos', 16);
-INSERT INTO public.publisher (id, lower_case_name, name, fk_contact)
-VALUES (nextval('hibernate_sequence'), 'asmodee', 'Asmodee', 19);
+INSERT INTO public.publisher (id, lower_case_name, name, city, country, mail_address, phone_number, post_code, street,
+                              house_number, website)
+VALUES (nextval('hibernate_sequence'), 'kosmos', 'Kosmos', 'Rennes', 'France', null, '+0334', '75000', 'foo street',
+        '1', null);
+INSERT INTO public.publisher (id, lower_case_name, name, city, country, mail_address, phone_number, post_code, street,
+                              house_number, website)
+VALUES (nextval('hibernate_sequence'), 'asmodee', 'Asmodee', 'Nantes', 'France', null, '+0334', '75000', 'foo street',
+        '1', null);
 
 
 INSERT INTO public.game (id, core_rules, description, edition_number, ending, goal, lower_case_name, max_age,

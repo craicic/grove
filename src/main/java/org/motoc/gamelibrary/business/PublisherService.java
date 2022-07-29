@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.business;
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.dto.PublisherNameDto;
 import org.motoc.gamelibrary.model.Publisher;
-import org.motoc.gamelibrary.repository.jpa.ContactRepository;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,28 +26,25 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
 
     final private PublisherRepository publisherRepository;
 
-    final private ContactRepository contactRepository;
 
     @Autowired
     public PublisherService(JpaRepository<Publisher, Long> genericRepository,
-                            PublisherRepository publisherRepository,
-                            ContactRepository contactRepository) {
+                            PublisherRepository publisherRepository) {
         super(genericRepository, Publisher.class);
         this.publisherRepository = publisherRepository;
-        this.contactRepository = contactRepository;
     }
 
 
-    /**
-     * Persist a new publisher by id (if a contact is associated, this one must be new)
-     */
-    public Publisher save(Publisher publisher, boolean hasContact) {
-        if (hasContact) {
-            long contactId = contactRepository.save(publisher.getContact()).getId();
-            publisher.getContact().setId(contactId);
-        }
-        return publisherRepository.save(publisher);
-    }
+//    /**
+//     * Persist a new publisher by id (if a contact is associated, this one must be new)
+//     */
+//    public Publisher save(Publisher publisher, boolean hasContact) {
+//        if (hasContact) {
+//            long contactId = contactRepository.save(publisher.getContact()).getId();
+//            publisher.getContact().setId(contactId);
+//        }
+//        return publisherRepository.save(publisher);
+//    }
 
     /**
      * Edits a publisher by id

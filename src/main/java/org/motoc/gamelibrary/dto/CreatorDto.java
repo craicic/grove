@@ -1,6 +1,8 @@
 package org.motoc.gamelibrary.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 
 import javax.validation.Valid;
@@ -29,8 +31,6 @@ public class CreatorDto {
     @NotNull(message = "Role cannot be null")
     private CreatorRole role;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @Valid
     private ContactDto contact;
 

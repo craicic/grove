@@ -35,12 +35,12 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
 
         Contact contact = publisher.getContact();
 
-        if (contact != null) {
-            publisher.removeContact(contact);
-            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
-            if (contactFromDb.getCreator() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
-                entityManager.remove(contactFromDb);
-        }
+//        if (contact != null) {
+//            publisher.removeContact(contact);
+//            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
+//            if (contactFromDb.getCreator() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
+//                entityManager.remove(contactFromDb);
+//        }
         for (GameCopy copy : publisher.getCopies()) {
             copy.removePublisher(publisher);
         }
@@ -55,7 +55,7 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
                 && publisher != null
                 && publisher.getContact() == contact) {
             logger.debug("passage ici!");
-            publisher.removeContact(contact);
+//            publisher.removeContact(contact);
             entityManager.remove(contact);
         }
     }
