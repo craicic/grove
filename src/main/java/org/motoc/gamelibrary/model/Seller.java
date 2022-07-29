@@ -33,7 +33,7 @@ public class Seller {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

@@ -58,13 +58,13 @@ public class LoanController {
     /**
      * Create a new Loan, no body used here but request params
      */
-    @PostMapping("/admin/loans")
-    LoanDto save(@RequestParam(name = "accountId") long accountId,
-                 @RequestParam(name = "gameCopyId") long gameCopyId) {
-        logger.trace("save(loan) called");
-        return mapper.loanToDto(
-                service.checkAndSave(accountId, gameCopyId));
-    }
+//    @PostMapping("/admin/loans")
+//    LoanDto save(@RequestParam(name = "accountId") long accountId,
+//                 @RequestParam(name = "gameCopyId") long gameCopyId) {
+//        logger.trace("save(loan) called");
+//        return mapper.loanToDto(
+//                service.checkAndSave(accountId, gameCopyId));
+//    }
 
     /**
      * Close a loan if exist !

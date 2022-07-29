@@ -45,9 +45,10 @@ public class Creator {
     @Column(nullable = false, length = 50)
     private CreatorRole role;
 
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

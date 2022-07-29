@@ -5,40 +5,44 @@ import org.motoc.gamelibrary.model.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@Sql(scripts = {
-        "/sql/game_library_dev_db_public_contact.sql",
-        "/sql/game_library_dev_db_public_category.sql",
-        "/sql/game_library_dev_db_public_theme.sql",
-        "/sql/game_library_dev_db_public_product_line.sql",
-        "/sql/game_library_dev_db_public_account.sql",
-        "/sql/game_library_dev_db_public_publisher.sql",
-        "/sql/game_library_dev_db_public_game.sql",
-        "/sql/game_library_dev_db_public_seller.sql",
-        "/sql/game_library_dev_db_public_creator.sql",
-        "/sql/game_library_dev_db_public_game_copy.sql",
-        "/sql/game_library_dev_db_public_game_category.sql",
-        "/sql/game_library_dev_db_public_game_creator.sql",
-        "/sql/game_library_dev_db_public_game_theme.sql",
-        "/sql/game_library_dev_db_public_loan.sql"}
-)
+@SpringBootTest
+@Testcontainers
+@Commit
 class GameRepositoryTest {
 
     private static final Logger logger = LoggerFactory.getLogger(GameRepositoryTest.class);
 
     @Autowired
     private GameRepository repository;
+
+    @Container
+    public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:14")
+            .withDatabaseName("game-library-test-db")
+            .withPassword("postgres")
+            .withUsername("postgres");
+
+    @DynamicPropertySource
+    static void postgresqlProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+    }
 
     @Test
     void test_findOverviewByKeyword() {

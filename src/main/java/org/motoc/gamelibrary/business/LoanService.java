@@ -1,8 +1,6 @@
 package org.motoc.gamelibrary.business;
 
 import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
-import org.motoc.gamelibrary.model.Account;
-import org.motoc.gamelibrary.model.GameCopy;
 import org.motoc.gamelibrary.model.Loan;
 import org.motoc.gamelibrary.repository.jpa.LoanRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
@@ -12,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Service
@@ -52,31 +49,31 @@ public class LoanService extends SimpleCrudMethodsImpl<Loan, JpaRepository<Loan,
         return this.loanRepository.save(loanFormDB);
     }
 
-    public Loan checkAndSave(Long accountId, Long gameCopyId) {
-        /* The three following methods throws exception if check result in fail */
-
-        // This one checks if member exists, then checks if the membership is active.
-        accountService.checkMembership(accountId);
-        // Checks if game exists, then checks its loanable status.
-        gameCopyService.checkLoanability(gameCopyId);
-        // check if an active loan collide with the requested one
-        this.checkActiveLoans(accountId, gameCopyId);
-
-
-        /* Verification are done, we can now create our entities to persist */
-        Loan loan;
-
-        Account account = new Account();
-        account.setId(accountId);
-
-        GameCopy gameCopy = new GameCopy();
-        gameCopy.setId(gameCopyId);
-
-        LocalDate present = LocalDate.now();
-
-        loan = new Loan(null, present, present.plusWeeks(4L), gameCopy, false, account);
-        return loanRepository.save(loan);
-    }
+//    public Loan checkAndSave(Long accountId, Long gameCopyId) {
+//        /* The three following methods throws exception if check result in fail */
+//
+//        // This one checks if member exists, then checks if the membership is active.
+//        accountService.checkMembership(accountId);
+//        // Checks if game exists, then checks its loanable status.
+//        gameCopyService.checkLoanability(gameCopyId);
+//        // check if an active loan collide with the requested one
+//        this.checkActiveLoans(accountId, gameCopyId);
+//
+//
+//        /* Verification are done, we can now create our entities to persist */
+//        Loan loan;
+//
+//        Account account = new Account();
+//        account.setId(accountId);
+//
+//        GameCopy gameCopy = new GameCopy();
+//        gameCopy.setId(gameCopyId);
+//
+//        LocalDate present = LocalDate.now();
+//
+//        loan = new Loan(null, present, present.plusWeeks(4L), gameCopy, false, account);
+//        return loanRepository.save(loan);
+//    }
 
     private void checkActiveLoans(Long accountId, Long gameCopyId) {
         Set<Loan> collidingLoans = loanRepository.findActiveLoans(accountId, gameCopyId);

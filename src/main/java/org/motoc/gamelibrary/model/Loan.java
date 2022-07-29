@@ -33,8 +33,7 @@ public class Loan {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    // todo weakness here, LAZY preferred
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 

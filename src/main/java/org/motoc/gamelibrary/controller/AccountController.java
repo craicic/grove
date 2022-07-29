@@ -7,8 +7,6 @@ import org.motoc.gamelibrary.mapper.AccountMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,11 +30,11 @@ public class AccountController {
         this.mapper = AccountMapper.INSTANCE;
     }
 
-    @GetMapping("/admin/accounts/count")
-    Long count() {
-        logger.trace("count called");
-        return service.count();
-    }
+//    @GetMapping("/admin/accounts/count")
+//    Long count() {
+//        logger.trace("count called");
+//        return service.count();
+//    }
 
     @GetMapping("/admin/accounts")
     List<AccountDto> findAll() {
@@ -47,14 +45,14 @@ public class AccountController {
     @GetMapping("/admin/accounts/{id}")
     AccountDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.accountToDto(service.findById(id));
+        return service.findById(id);
     }
 
-    @GetMapping("/admin/accounts/page")
-    Page<AccountDto> findPage(Pageable pageable) {
-        logger.trace("findPage(pageable) called");
-        return mapper.pageToPageDto(service.findPage(pageable));
-    }
+//    @GetMapping("/admin/accounts/page")
+//    Page<AccountDto> findPage(Pageable pageable) {
+//        logger.trace("findPage(pageable) called");
+//        return mapper.pageToPageDto(service.findPage(pageable));
+//    }
 
     @PostMapping("/admin/accounts")
     AccountDto save(@RequestBody @Valid AccountDto account,

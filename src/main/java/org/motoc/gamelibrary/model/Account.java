@@ -46,7 +46,7 @@ public class Account {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToOne
     @JoinColumn(name = "fk_contact")
     private Contact contact;
 

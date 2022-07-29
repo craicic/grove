@@ -1,14 +1,13 @@
 package org.motoc.gamelibrary.business;
 
-import org.motoc.gamelibrary.business.refactor.SimpleCrudMethodsImpl;
+import org.motoc.gamelibrary.dto.AccountDto;
+import org.motoc.gamelibrary.mapper.AccountMapper;
 import org.motoc.gamelibrary.model.Account;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
 import org.motoc.gamelibrary.repository.jpa.ContactRepository;
-import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,27 +17,39 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository<Account, Long>> {
+public class AccountService {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
-    final private AccountRepository accountRepository;
+    final private AccountRepository repository;
 
     final private ContactRepository contactRepository;
 
+    final private AccountMapper mapper;
+
     @Autowired
-    public AccountService(JpaRepository<Account, Long> genericRepository, AccountRepository accountRepository,
-                          ContactRepository contactRepository) {
-        super(genericRepository, Account.class);
-        this.accountRepository = accountRepository;
+    public AccountService(AccountRepository repository,
+                          ContactRepository contactRepository,
+                          AccountMapper mapper) {
+        this.repository = repository;
         this.contactRepository = contactRepository;
+        this.mapper = mapper;
     }
 
+    public AccountDto findById(Long accountId) {
+        return mapper.accountToDto(this.repository.find(accountId));
+    }
+
+    public List<Account> findAll() {
+        return this.repository.findAll();
+    }
+
+
     /**
-     * Edits a, account by id
+     * Edits an account by id
      */
     public Account edit(@Valid Account account, Long id) {
-        return accountRepository.findById(id)
+        return repository.findById(id)
                 .map(accountFromPersistence -> {
                     accountFromPersistence.setMembershipNumber(account.getMembershipNumber());
                     accountFromPersistence.setRenewalDate(account.getRenewalDate());
@@ -48,12 +59,12 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
                     accountFromPersistence.setContact(account.getContact());
                     accountFromPersistence.setLoan(account.getLoan());
                     logger.debug("Found account of id={} : {}", id, accountFromPersistence);
-                    return accountRepository.save(accountFromPersistence);
+                    return repository.save(accountFromPersistence);
                 })
                 .orElseGet(() -> {
                     account.setId(id);
                     logger.debug("No account of id={} found. Set account : {}", id, account);
-                    return accountRepository.save(account);
+                    return repository.save(account);
                 });
     }
 
@@ -65,37 +76,38 @@ public class AccountService extends SimpleCrudMethodsImpl<Account, JpaRepository
             long contactId = contactRepository.save(account.getContact()).getId();
             account.getContact().setId(contactId);
         }
-        return accountRepository.save(account);
+        return repository.save(account);
     }
 
     private boolean isMembershipUp(Account account) {
         return account.getRenewalDate().isAfter(LocalDate.now());
     }
 
-    public void checkMembership(Long accountId) {
-        String errorMessage = "";
-        // find active member by id
-        // if no result throw exception
-        Account account = this.findById(accountId);
+//    public void checkMembership(Long accountId) {
+//        String errorMessage = "";
+//        // find active member by id
+//        // if no result throw exception
+//        Account account = this.findById(accountId);
+//
+//        if (account == null) {
+//            // todo useless??
+//            errorMessage = "No account of id=" + accountId + " found in database.";
+//            logger.warn(errorMessage);
+//            throw new NotFoundException(errorMessage);
+//        }
+//
+//        // has member got an active membership
+//        // if not throw exception
+//        boolean isUp = this.isMembershipUp(account);
+//        if (isUp) {
+//            errorMessage = "Member of accountId=" + accountId + " has an expired membership";
+//            logger.warn(errorMessage);
+//            throw new IllegalStateException(errorMessage);
+//        }
+//    }
 
-        if (account == null) {
-            // todo useless??
-            errorMessage = "No account of id=" + accountId + " found in database.";
-            logger.warn(errorMessage);
-            throw new NotFoundException(errorMessage);
-        }
-
-        // has member got an active membership
-        // if not throw exception
-        boolean isUp = this.isMembershipUp(account);
-        if (isUp) {
-            errorMessage = "Member of accountId=" + accountId + " has an expired membership";
-            logger.warn(errorMessage);
-            throw new IllegalStateException(errorMessage);
-        }
-    }
 
     public List<Account> findAccountsWithNoCurrentLoan() {
-        return accountRepository.findAllNoLoan();
+        return repository.findAllNoLoan();
     }
 }

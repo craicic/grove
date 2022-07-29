@@ -56,17 +56,17 @@ public class Contact {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "contact")
     private Creator creator;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "contact")
     private Publisher publisher;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "contact")
     private Seller seller;
 
     @ToString.Exclude
