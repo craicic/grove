@@ -37,7 +37,6 @@ class AccountServiceTest {
     @Test
     void findById() {
         AccountDto account = service.findById(26L);
-
         assertThat(account).isNotNull();
 
     }

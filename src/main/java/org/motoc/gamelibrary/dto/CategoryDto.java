@@ -1,8 +1,9 @@
 package org.motoc.gamelibrary.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -10,7 +11,8 @@ import javax.validation.constraints.Size;
 /**
  * Category's DTO
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDto {

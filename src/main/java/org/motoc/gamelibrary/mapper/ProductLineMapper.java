@@ -25,6 +25,7 @@ public interface ProductLineMapper {
     ProductLineDto productLineToDto(ProductLine productLine);
 
     @Mapping(target = "games", ignore = true)
+    @Mapping(target = "lowerCaseName", ignore = true)
     ProductLine dtoToProductLine(ProductLineDto productLineDto);
 
     List<ProductLineDto> productLinesToDto(List<ProductLine> productLines);

@@ -16,7 +16,8 @@ import java.util.Set;
 /**
  * Game's DTO
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ConsistentAgeRange

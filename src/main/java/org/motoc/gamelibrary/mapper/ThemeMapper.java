@@ -26,5 +26,6 @@ public interface ThemeMapper {
     ThemeDto themeToDto(Theme theme);
 
     @Mapping(target = "games", ignore = true)
+    @Mapping(target = "lowerCaseName", ignore = true)
     Theme dtoToTheme(ThemeDto theme);
 }

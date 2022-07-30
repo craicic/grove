@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.motoc.gamelibrary.dto.CategoryDto;
 import org.motoc.gamelibrary.model.Category;
@@ -22,6 +23,8 @@ public interface CategoryMapper {
 
     List<CategoryDto> categoriesToDto(List<Category> categories);
 
+    @Mapping(target = "lowerCaseName", ignore = true)
+    @Mapping(target = "games", ignore = true)
     Category dtoToCategory(CategoryDto categoryDto);
 
     CategoryDto categoryToDto(Category category);

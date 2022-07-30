@@ -1,8 +1,9 @@
 package org.motoc.gamelibrary.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.motoc.gamelibrary.model.enumeration.CreatorRole;
 
 import javax.validation.constraints.NotBlank;
@@ -12,9 +13,10 @@ import javax.validation.constraints.Size;
 /**
  * Dto for creator, excluding contact informations
  */
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CreatorWithoutContactDto {
 
     private Long id;

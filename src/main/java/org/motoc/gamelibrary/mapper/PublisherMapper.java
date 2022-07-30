@@ -17,6 +17,7 @@ public interface PublisherMapper {
     PublisherDto publisherNameToDto(Publisher id);
 
     @Mapping(target = "copies", ignore = true)
+    @Mapping(target = "lowerCaseName", ignore = true)
     Publisher dtoToPublisher(PublisherDto publisherDto);
 
     default Page<PublisherDto> pageToPageDto(Page<Publisher> page) {

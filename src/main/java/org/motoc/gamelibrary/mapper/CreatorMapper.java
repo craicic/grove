@@ -31,6 +31,8 @@ CreatorDto creatorToDto(Creator creator);
 //    @Mapping(target = "phoneNumber", source="contact.phoneNumber")
 //    @Mapping(target = "website", source="contact.website")
 //    @Mapping(target = "mailAddress", source="contact.mailAddress")
+    @Mapping(target = "lowerCaseFirstName", ignore = true)
+    @Mapping(target = "lowerCaseLastName", ignore = true)
     Creator dtoToCreator(CreatorDto creatorDto);
 
     default Page<CreatorDto> pageToPageDto(Page<Creator> page) {
