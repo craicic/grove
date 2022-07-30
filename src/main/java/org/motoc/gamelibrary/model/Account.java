@@ -12,7 +12,8 @@ import java.util.UUID;
 /**
  * Contain some detail about the account
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -50,7 +51,7 @@ public class Account {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "account")
-    private Set<Loan> loan;
+    private Set<Loan> loans;
 
     @PrePersist
     public void prePersist() {

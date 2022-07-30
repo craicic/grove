@@ -1,6 +1,9 @@
 package org.motoc.gamelibrary.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.motoc.gamelibrary.validation.annotation.ConsistentDateTime;
 
 import javax.persistence.*;
@@ -12,7 +15,8 @@ import java.time.LocalDate;
  * Note taht loanStatus will not be used before V1.5
  */
 @ConsistentDateTime
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,8 +35,6 @@ public class Loan {
     @Column(name = "loan_end_time", nullable = false)
     private LocalDate loanEndTime;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
@@ -41,29 +43,8 @@ public class Loan {
     @Column(name = "is_closed", nullable = false)
     private boolean isClosed;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_account")
     private Account account;
 
-    /*Uncomment this for V1.5*/
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "fk_loan_status")
-//    private LoanStatus loanStatus;
-
-    // Helper methods
-
-    /*Uncomment this for V1.5*/
-//    public void addLoanStatus(LoanStatus loanStatus) {
-//        this.setLoanStatus(loanStatus);
-//        loanStatus.getLoans().add(this);
-//    }
-//
-//    public void removeLoanStatus(LoanStatus loanStatus) {
-//        this.setLoanStatus(null);
-//        loanStatus.getLoans().remove(this);
-//    }
 }

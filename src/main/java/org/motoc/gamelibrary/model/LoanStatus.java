@@ -38,27 +38,10 @@ public class LoanStatus {
     @Column(nullable = false)
     private String description;
 
-    /*Uncomment this for V1.5*/
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @OneToMany(mappedBy = "loanStatus")
-//    private Set<Loan> loans;
-
     // Overridden accessors
     public void setTag(String tag) {
         this.tag = tag;
         this.lowerCaseTag = tag.toLowerCase();
     }
 
-    /*Uncomment this for V1.5*/
-    // Helper methods
-//    public void addLoan(Loan loan) {
-//        this.loans.add(loan);
-//        loan.setLoanStatus(this);
-//    }
-//
-//    public void removeLoan(Loan loan) {
-//        this.loans.remove(loan);
-//        loan.setLoanStatus(null);
-//    }
 }

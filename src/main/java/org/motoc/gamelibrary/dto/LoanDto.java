@@ -1,6 +1,9 @@
 package org.motoc.gamelibrary.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -9,7 +12,8 @@ import java.time.LocalDate;
 /**
  * Loan's DTO
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanDto {
@@ -22,19 +26,9 @@ public class LoanDto {
     @NotNull(message = "Loan start time cannot be null")
     private LocalDate loanEndTime;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private GameCopyDto gameCopy;
-
-    //    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    private LoanStatus loanStatus;
+    private Long gameCopyId;
 
     @NotNull(message = "isClosed must have a value")
     private boolean isClosed;
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private AccountDto account;
 
 }

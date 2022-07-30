@@ -31,6 +31,7 @@ public class AccountService {
         this.mapper = mapper;
     }
 
+
     public AccountDto findById(Long accountId) {
         return mapper.accountToDto(this.repository.find(accountId));
     }
@@ -52,7 +53,6 @@ public class AccountService {
                     accountFromPersistence.setLastName(account.getLastName());
                     accountFromPersistence.setUsername(account.getUsername());
                     accountFromPersistence.setContact(account.getContact());
-                    accountFromPersistence.setLoan(account.getLoan());
                     logger.debug("Found account of id={} : {}", id, accountFromPersistence);
                     return repository.save(accountFromPersistence);
                 })
@@ -62,7 +62,7 @@ public class AccountService {
                     return repository.save(account);
                 });
     }
-
+//
 //    /**
 //     * Persist a new account by id (if a contact is associated, this one must be new)
 //     */

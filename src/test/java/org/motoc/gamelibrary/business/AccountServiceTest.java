@@ -1,8 +1,7 @@
-package org.motoc.gamelibrary.repository.fragment.implementation;
+package org.motoc.gamelibrary.business;
 
 import org.junit.jupiter.api.Test;
-import org.motoc.gamelibrary.model.Account;
-import org.motoc.gamelibrary.repository.jpa.AccountRepository;
+import org.motoc.gamelibrary.dto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Testcontainers
 @Commit
-class AccountFragmentRepositoryImplTest {
+class AccountServiceTest {
 
     @Container
     public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:14")
@@ -33,12 +32,13 @@ class AccountFragmentRepositoryImplTest {
     }
 
     @Autowired
-    private AccountRepository repository;
+    AccountService service;
 
     @Test
-    void find() {
-        Account account = this.repository.find(26L);
-        assertThat(account.getContact()).isNotNull();
+    void findById() {
+        AccountDto account = service.findById(26L);
+
+        assertThat(account).isNotNull();
 
     }
 }

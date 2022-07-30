@@ -32,19 +32,21 @@ public class AccountFragmentRepositoryImpl implements AccountFragmentRepository 
     public Account find(Long id) {
         String query = "SELECT a FROM Account a WHERE a.id = (:id)";
 
+
         EntityGraph<Account> graph = em.createEntityGraph(Account.class);
         graph.addSubgraph(Account_.contact);
-        graph.addSubgraph(Account_.loan);
+        graph.addSubgraph(Account_.loans);
+
 
         Account account = em.createQuery(query, Account.class)
                 .setParameter("id", id)
-                .setHint("javax.persistence.fetchgraph", graph)
+                .setHint("javax.persistence.loadgraph", graph)
                 .getSingleResult();
+
 
         if (account == null) {
             throw new NotFoundException("Could not find account of id:" + id);
         }
-        logger.info(account.toString());
         return account;
     }
 }

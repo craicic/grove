@@ -1,15 +1,18 @@
 package org.motoc.gamelibrary.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountDto {
@@ -29,6 +32,8 @@ public class AccountDto {
     private String membershipNumber;
 
     private LocalDate renewalDate;
+
+    private List<LoanDto> loans;
 
     @Valid
     private ContactDto contact;
