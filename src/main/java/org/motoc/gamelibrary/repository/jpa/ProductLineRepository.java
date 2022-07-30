@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.ProductLine;
+import org.motoc.gamelibrary.domain.model.ProductLine;
 import org.motoc.gamelibrary.repository.fragment.ProductLineFragmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

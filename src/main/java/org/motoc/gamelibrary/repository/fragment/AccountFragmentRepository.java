@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.model.Account;
+import org.motoc.gamelibrary.domain.model.Account;
 
 public interface AccountFragmentRepository {
 

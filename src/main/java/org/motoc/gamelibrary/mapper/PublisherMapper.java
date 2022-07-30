@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.PublisherDto;
-import org.motoc.gamelibrary.model.Publisher;
+import org.motoc.gamelibrary.domain.dto.PublisherDto;
+import org.motoc.gamelibrary.domain.model.Publisher;
 import org.springframework.data.domain.Page;
 
 @Mapper(componentModel = "spring")

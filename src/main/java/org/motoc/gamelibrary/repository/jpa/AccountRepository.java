@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Account;
+import org.motoc.gamelibrary.domain.model.Account;
 import org.motoc.gamelibrary.repository.fragment.AccountFragmentRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

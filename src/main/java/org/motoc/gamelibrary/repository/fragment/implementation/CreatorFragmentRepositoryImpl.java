@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.dto.CreatorNameDto;
+import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 import org.motoc.gamelibrary.repository.fragment.CreatorFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

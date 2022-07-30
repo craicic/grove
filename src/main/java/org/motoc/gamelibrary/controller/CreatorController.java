@@ -1,10 +1,10 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.CreatorService;
-import org.motoc.gamelibrary.dto.CreatorDto;
-import org.motoc.gamelibrary.dto.CreatorNameDto;
-import org.motoc.gamelibrary.dto.CreatorWithoutContactDto;
+import org.motoc.gamelibrary.domain.dto.CreatorDto;
+import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
+import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
 import org.motoc.gamelibrary.mapper.CreatorMapper;
+import org.motoc.gamelibrary.service.CreatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Loan;
+import org.motoc.gamelibrary.domain.model.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

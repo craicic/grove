@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Theme;
+import org.motoc.gamelibrary.domain.model.Theme;
 import org.motoc.gamelibrary.repository.fragment.ThemeFragmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.ThemeDto;
-import org.motoc.gamelibrary.model.Theme;
+import org.motoc.gamelibrary.domain.dto.ThemeDto;
+import org.motoc.gamelibrary.domain.model.Theme;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

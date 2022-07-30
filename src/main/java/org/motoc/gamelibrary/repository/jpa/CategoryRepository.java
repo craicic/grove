@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Category;
+import org.motoc.gamelibrary.domain.model.Category;
 import org.motoc.gamelibrary.repository.fragment.CategoryFragmentRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Seller;
+import org.motoc.gamelibrary.domain.model.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

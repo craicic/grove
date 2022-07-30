@@ -3,9 +3,9 @@ package org.motoc.gamelibrary.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.CreatorDto;
-import org.motoc.gamelibrary.dto.CreatorWithoutContactDto;
-import org.motoc.gamelibrary.model.Creator;
+import org.motoc.gamelibrary.domain.dto.CreatorDto;
+import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
+import org.motoc.gamelibrary.domain.model.Creator;
 import org.springframework.data.domain.Page;
 
 @Mapper(componentModel = "spring")

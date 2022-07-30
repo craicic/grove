@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.model.*;
+import org.motoc.gamelibrary.domain.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

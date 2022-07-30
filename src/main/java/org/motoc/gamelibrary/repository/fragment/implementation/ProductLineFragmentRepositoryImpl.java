@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.dto.ProductLineNameDto;
-import org.motoc.gamelibrary.model.Game;
-import org.motoc.gamelibrary.model.ProductLine;
+import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
+import org.motoc.gamelibrary.domain.model.Game;
+import org.motoc.gamelibrary.domain.model.ProductLine;
 import org.motoc.gamelibrary.repository.fragment.ProductLineFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

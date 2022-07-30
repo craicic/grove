@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.model.Category;
-import org.motoc.gamelibrary.model.Game;
+import org.motoc.gamelibrary.domain.model.Category;
+import org.motoc.gamelibrary.domain.model.Game;
 import org.motoc.gamelibrary.repository.fragment.CategoryFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

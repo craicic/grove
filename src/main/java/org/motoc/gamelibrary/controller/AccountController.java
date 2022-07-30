@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.controller;
 
 
-import org.motoc.gamelibrary.business.AccountService;
-import org.motoc.gamelibrary.dto.AccountDto;
+import org.motoc.gamelibrary.domain.dto.AccountDto;
 import org.motoc.gamelibrary.mapper.AccountMapper;
+import org.motoc.gamelibrary.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.ContactDto;
-import org.motoc.gamelibrary.model.Contact;
+import org.motoc.gamelibrary.domain.dto.ContactDto;
+import org.motoc.gamelibrary.domain.model.Contact;
 
 @Mapper(componentModel = "spring")
 public interface ContactMapper {

@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary;
 
 
-import org.motoc.gamelibrary.business.ImageService;
+import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

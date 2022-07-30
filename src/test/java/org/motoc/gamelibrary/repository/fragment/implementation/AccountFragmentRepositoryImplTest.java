@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.jupiter.api.Test;
-import org.motoc.gamelibrary.model.Account;
+import org.motoc.gamelibrary.domain.model.Account;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

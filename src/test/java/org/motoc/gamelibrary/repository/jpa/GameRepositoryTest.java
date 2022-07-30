@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.repository.jpa;
 
 import org.junit.jupiter.api.Test;
-import org.motoc.gamelibrary.model.Game;
+import org.motoc.gamelibrary.domain.model.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.ThemeService;
-import org.motoc.gamelibrary.dto.ThemeDto;
+import org.motoc.gamelibrary.domain.dto.ThemeDto;
 import org.motoc.gamelibrary.mapper.ThemeMapper;
+import org.motoc.gamelibrary.service.ThemeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

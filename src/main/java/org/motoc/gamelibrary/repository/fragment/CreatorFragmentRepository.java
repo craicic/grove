@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.dto.CreatorNameDto;
+import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 
 import java.util.List;
 

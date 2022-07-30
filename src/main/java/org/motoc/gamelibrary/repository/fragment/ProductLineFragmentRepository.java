@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.dto.ProductLineNameDto;
+import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
 
 import java.util.List;
 

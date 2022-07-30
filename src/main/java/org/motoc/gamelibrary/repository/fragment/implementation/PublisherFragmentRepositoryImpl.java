@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.dto.PublisherNameDto;
-import org.motoc.gamelibrary.model.Contact;
-import org.motoc.gamelibrary.model.GameCopy;
-import org.motoc.gamelibrary.model.Publisher;
+import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.model.Contact;
+import org.motoc.gamelibrary.domain.model.GameCopy;
+import org.motoc.gamelibrary.domain.model.Publisher;
 import org.motoc.gamelibrary.repository.fragment.PublisherFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

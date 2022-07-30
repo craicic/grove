@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.hibernate.engine.jdbc.BlobProxy;
-import org.motoc.gamelibrary.model.Game;
-import org.motoc.gamelibrary.model.Image;
-import org.motoc.gamelibrary.model.ImageBlob;
+import org.motoc.gamelibrary.domain.model.Game;
+import org.motoc.gamelibrary.domain.model.Image;
+import org.motoc.gamelibrary.domain.model.ImageBlob;
 import org.motoc.gamelibrary.repository.fragment.ImageFragmentRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

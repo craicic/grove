@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.model.GameCopy;
-import org.motoc.gamelibrary.model.Publisher;
-import org.motoc.gamelibrary.model.Seller;
+import org.motoc.gamelibrary.domain.model.GameCopy;
+import org.motoc.gamelibrary.domain.model.Publisher;
+import org.motoc.gamelibrary.domain.model.Seller;
 import org.motoc.gamelibrary.repository.fragment.GameCopyFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

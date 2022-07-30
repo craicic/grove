@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.model.GameCopy;
-import org.motoc.gamelibrary.model.Publisher;
-import org.motoc.gamelibrary.model.Seller;
+import org.motoc.gamelibrary.domain.model.GameCopy;
+import org.motoc.gamelibrary.domain.model.Publisher;
+import org.motoc.gamelibrary.domain.model.Seller;
 
 public interface GameCopyFragmentRepository {
     GameCopy addSeller(GameCopy copy, Seller seller);

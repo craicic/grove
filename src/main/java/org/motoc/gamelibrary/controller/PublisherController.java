@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.PublisherService;
-import org.motoc.gamelibrary.dto.PublisherDto;
-import org.motoc.gamelibrary.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.dto.PublisherDto;
+import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.mapper.PublisherMapper;
+import org.motoc.gamelibrary.service.PublisherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.LoanService;
-import org.motoc.gamelibrary.dto.LoanDto;
+import org.motoc.gamelibrary.domain.dto.LoanDto;
 import org.motoc.gamelibrary.mapper.LoanMapper;
+import org.motoc.gamelibrary.service.LoanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

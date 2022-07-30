@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
-import org.motoc.gamelibrary.model.Publisher;
+import org.motoc.gamelibrary.domain.model.Publisher;
 import org.motoc.gamelibrary.repository.fragment.PublisherFragmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
