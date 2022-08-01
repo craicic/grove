@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.domain.model;
 
 import lombok.*;
-import org.motoc.gamelibrary.domain.model.enumeration.GeneralStateEnum;
+import org.motoc.gamelibrary.domain.enumeration.GeneralState;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -53,7 +53,7 @@ public class GameCopy {
 
     @NotNull(message = "General State cannot be null")
     @Column(name = "general_state", nullable = false)
-    private GeneralStateEnum generalState;
+    private GeneralState generalState;
 
     @Column(name = "is_loanable")
     private boolean isLoanable;

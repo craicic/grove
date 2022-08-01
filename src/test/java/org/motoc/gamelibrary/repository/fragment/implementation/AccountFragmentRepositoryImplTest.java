@@ -39,6 +39,5 @@ class AccountFragmentRepositoryImplTest {
     void find() {
         Account account = this.repository.find(26L);
         assertThat(account.getContact()).isNotNull();
-
     }
 }

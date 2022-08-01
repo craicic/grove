@@ -2,7 +2,7 @@ package org.motoc.gamelibrary.domain.dto;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
-import org.motoc.gamelibrary.domain.model.enumeration.GameNatureEnum;
+import org.motoc.gamelibrary.domain.enumeration.GameNature;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentNumberOfPlayer;
 import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
@@ -74,7 +74,7 @@ public class GameDto {
     @Size(max = 15000, message = "Ending rules should not exceed 15000 characters")
     private String ending;
 
-    private GameNatureEnum nature;
+    private GameNature nature;
     private String size;
     private String editionNumber;
 

@@ -1,10 +1,10 @@
-package org.motoc.gamelibrary.domain.model.enumeration;
+package org.motoc.gamelibrary.domain.enumeration;
 
 /**
  * The general state of the game copy
  * ex : in activity, in repair, out of order
  */
-public enum GeneralStateEnum {
+public enum GeneralState {
 
 
     IN_ACTIVITY("En activité"),
@@ -18,7 +18,7 @@ public enum GeneralStateEnum {
     RESTOCKING("Réassort"),
     DONATION("Don à une association");
 
-    GeneralStateEnum(String frenchTranslation) {
+    GeneralState(String frenchTranslation) {
     }
 
 }

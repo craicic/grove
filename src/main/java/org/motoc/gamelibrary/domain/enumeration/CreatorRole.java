@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.domain.model.enumeration;
+package org.motoc.gamelibrary.domain.enumeration;
 
 /**
  * The role of a game creator

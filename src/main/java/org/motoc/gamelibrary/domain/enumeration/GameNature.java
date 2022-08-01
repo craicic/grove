@@ -1,9 +1,9 @@
-package org.motoc.gamelibrary.domain.model.enumeration;
+package org.motoc.gamelibrary.domain.enumeration;
 
 /**
  * An enumeration : Toy, board game, wooden game
  */
-public enum GameNatureEnum {
+public enum GameNature {
 
     TOY("Jouet"),
     BOARD_GAME("Jeu de société"),
@@ -11,6 +11,6 @@ public enum GameNatureEnum {
     OVERSIZE_GAME("Jeu surdimensionné"),
     WOODEN_GAME("Jeu en bois");
 
-    GameNatureEnum(String frenchTranslation) {
+    GameNature(String frenchTranslation) {
     }
 }

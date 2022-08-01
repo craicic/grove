@@ -2,7 +2,7 @@ package org.motoc.gamelibrary.domain.model;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
-import org.motoc.gamelibrary.domain.model.enumeration.GameNatureEnum;
+import org.motoc.gamelibrary.domain.enumeration.GameNature;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentNumberOfPlayer;
 import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
@@ -125,7 +125,7 @@ public class Game {
      * An enumeration : toy, board game, wooden game, etc...
      */
     @Column(length = 50)
-    private GameNatureEnum nature;
+    private GameNature nature;
 
     /**
      * The size of the game

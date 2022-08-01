@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.domain.dto;
 
 import lombok.*;
-import org.motoc.gamelibrary.domain.model.enumeration.GeneralStateEnum;
+import org.motoc.gamelibrary.domain.enumeration.GeneralState;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -40,7 +40,7 @@ public class GameCopyDto {
     private String wearCondition;
 
     @NotNull(message = "General State cannot be null")
-    private GeneralStateEnum generalState;
+    private GeneralState generalState;
 
     private boolean isLoanable;
 

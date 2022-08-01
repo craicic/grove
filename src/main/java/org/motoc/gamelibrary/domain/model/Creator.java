@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.domain.model;
 
 import lombok.*;
-import org.motoc.gamelibrary.domain.model.enumeration.CreatorRole;
+import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -3,7 +3,7 @@ package org.motoc.gamelibrary.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.motoc.gamelibrary.domain.model.enumeration.CreatorRole;
+import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
