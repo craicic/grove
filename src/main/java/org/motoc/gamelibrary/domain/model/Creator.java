@@ -21,7 +21,8 @@ import java.util.Set;
 public class Creator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "creator_seq_gen")
+    @SequenceGenerator(name = "creator_seq_gen", sequenceName = "creator_sequence", initialValue = 100)
     private Long id;
 
     @Size(max = 50, message = "First name should not exceed 50 characters")

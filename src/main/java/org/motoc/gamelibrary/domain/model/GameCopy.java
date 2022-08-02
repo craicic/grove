@@ -21,7 +21,8 @@ import java.util.Set;
 public class GameCopy {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_copy_seq_gen")
+    @SequenceGenerator(name = "game_copy_seq_gen", sequenceName = "game_copy_sequence", initialValue = 100)
     private Long id;
 
     @Pattern(regexp = "^[0-9]{1,5}$")

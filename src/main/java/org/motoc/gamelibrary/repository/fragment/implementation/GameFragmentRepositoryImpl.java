@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.domain.model.*;
-import org.motoc.gamelibrary.model.Game_;
 import org.motoc.gamelibrary.repository.fragment.GameFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

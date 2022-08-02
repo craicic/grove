@@ -20,7 +20,8 @@ public class Image {
      * <a href="https://thoughts-on-java.org/jpa-generate-primary-keys"></a>
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_seq_gen")
+    @SequenceGenerator(name = "image_seq_gen", sequenceName = "image_sequence", initialValue = 100)
     private Long id;
 
     @ToString.Exclude

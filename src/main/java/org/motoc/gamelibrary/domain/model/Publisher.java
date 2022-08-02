@@ -19,7 +19,8 @@ import java.util.Set;
 public class Publisher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisher_seq_gen")
+    @SequenceGenerator(name = "publisher_seq_gen", sequenceName = "publisher_sequence", initialValue = 100)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")

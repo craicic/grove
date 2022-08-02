@@ -1,7 +1,7 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.domain.model.Account;
-import org.motoc.gamelibrary.model.Account_;
+import org.motoc.gamelibrary.domain.model.Account_;
 import org.motoc.gamelibrary.repository.fragment.AccountFragmentRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;

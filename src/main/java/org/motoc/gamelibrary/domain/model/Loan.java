@@ -24,7 +24,8 @@ import java.time.LocalDate;
 public class Loan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_seq_gen")
+    @SequenceGenerator(name = "loan_seq_gen", sequenceName = "loan_sequence", initialValue = 100)
     private Long id;
 
     @NotNull(message = "Loan start time cannot be null")

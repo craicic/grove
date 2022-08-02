@@ -21,7 +21,8 @@ import java.util.UUID;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq_gen")
+    @SequenceGenerator(name = "account_seq_gen", sequenceName = "account_sequence", initialValue = 100)
     private Long id;
 
     @Size(max = 127, message = "User's firstname cannot exceed 127 characters")

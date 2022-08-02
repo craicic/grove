@@ -44,7 +44,7 @@ public class CommandLineStartupRunner
         InputStream is = new ByteArrayInputStream(os.toByteArray());
 
 
-        imageService.saveThenAttachToGame(is, 42L);
+        imageService.saveThenAttachToGame(is, 100L);
         os.close();
         is.close();
 

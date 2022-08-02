@@ -19,7 +19,8 @@ import java.util.Set;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq_gen")
+    @SequenceGenerator(name = "category_seq_gen", sequenceName = "category_sequence", initialValue = 100)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")

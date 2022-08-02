@@ -19,7 +19,8 @@ import java.util.Set;
 public class ProductLine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_line_seq_gen")
+    @SequenceGenerator(name = "product_line_seq_gen", sequenceName = "product_line_sequence", initialValue = 100)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")

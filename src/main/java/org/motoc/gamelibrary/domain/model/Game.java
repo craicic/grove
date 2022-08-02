@@ -16,12 +16,7 @@ import java.util.Set;
 /**
  * A game, it's a generic description of the item, not of a copy
  */
-//@NamedEntityGraphs({
-////        @NamedEntityGraph(name = "graph.GameCategories", attributeNodes = @NamedAttributeNode("categories")),
-////        @NamedEntityGraph(name = "graph.GameImages", attributeNodes = @NamedAttributeNode("images")),
-////        @NamedEntityGraph(name = "graph.GameCopies", attributeNodes = @NamedAttributeNode("gameCopies")),
-////        @NamedEntityGraph(name = "graph.GameCreators", attributeNodes = @NamedAttributeNode("creators"))
-////})
+
 @ConsistentNumberOfPlayer
 @ConsistentAgeRange
 @SelectYearOrMonth
@@ -34,7 +29,8 @@ import java.util.Set;
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_seq_gen")
+    @SequenceGenerator(name = "game_seq_gen", sequenceName = "game_sequence", initialValue = 100)
     private Long id;
 
     /**
