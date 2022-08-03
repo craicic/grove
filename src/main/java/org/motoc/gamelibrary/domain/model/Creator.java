@@ -25,6 +25,7 @@ public class Creator {
     @SequenceGenerator(name = "creator_seq_gen", sequenceName = "creator_sequence", initialValue = 100)
     private Long id;
 
+
     @Size(max = 50, message = "First name should not exceed 50 characters")
     @Column(length = 50)
     private String firstName;
@@ -38,7 +39,7 @@ public class Creator {
     private String lastName;
 
     @ToString.Exclude
-    @Column(name = "lower_case_first_name", nullable = false, length = 50)
+    @Column(name = "lower_case_first_name", length = 50)
     private String lowerCaseFirstName;
 
     @ToString.Exclude

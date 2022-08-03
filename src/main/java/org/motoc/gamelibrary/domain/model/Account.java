@@ -1,6 +1,9 @@
 package org.motoc.gamelibrary.domain.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -49,10 +52,21 @@ public class Account {
     @Embedded
     private Contact contact;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "account")
     private Set<Loan> loans;
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", membershipNumber='" + membershipNumber + '\'' +
+                ", renewalDate=" + renewalDate +
+                ", contact=" + contact +
+                '}';
+    }
 
     @PrePersist
     public void prePersist() {

@@ -46,4 +46,18 @@ public class Contact {
     @Size(max = 320, message = "Mail address cannot exceed 320 characters")
     @Column(length = 320)
     private String mailAddress;
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "postCode='" + postCode + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", country='" + country + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", website='" + website + '\'' +
+                ", mailAddress='" + mailAddress + '\'' +
+                '}';
+    }
 }

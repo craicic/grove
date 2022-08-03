@@ -188,10 +188,6 @@ public class Game {
                 ", ending='" + ending + '\'' +
                 ", nature=" + nature +
                 ", size='" + size + '\'' +
-                ", images=" + images +
-                ", creators=" + creators +
-                ", categories=" + categories +
-                ", gameCopies=" + gameCopies +
                 '}';
     }
 

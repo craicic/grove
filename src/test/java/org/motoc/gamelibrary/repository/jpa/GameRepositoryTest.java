@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.jpa;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.domain.model.Game;
@@ -17,6 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class GameRepositoryTest extends AbstractContainerBaseTest {
+
+    @BeforeAll
+    static void startAbstractContainer() {
+        postgreSQLContainer.start();
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(GameRepositoryTest.class);
 
