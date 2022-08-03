@@ -71,7 +71,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     game.setStuff(newGame.getStuff());
                     game.setNature(newGame.getNature());
                     game.setSize(newGame.getSize());
-                    game.setEditionNumber(newGame.getEditionNumber());
                     logger.debug("Found game of id={}, proceeding to its edit", id);
                     return gameRepository.save(game);
                 })
@@ -123,7 +122,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                     game.setEnding(newGame.getEnding());
                     game.setNature(newGame.getNature());
                     game.setSize(newGame.getSize());
-                    game.setEditionNumber(newGame.getEditionNumber());
                     logger.debug("Found game of id={}, proceeding to its edit", id);
                     return gameRepository.save(game);
                 })

@@ -39,6 +39,8 @@ public class GameCopyDto {
     @NotBlank(message = "Wear condition cannot be null or blank")
     private String wearCondition;
 
+    private String editionNumber;
+
     @NotNull(message = "General State cannot be null")
     private GeneralState generalState;
 

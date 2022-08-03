@@ -104,7 +104,6 @@ CREATE TABLE IF NOT EXISTS game
     id                   BIGINT       NOT NULL DEFAULT nextval('game_sequence'),
     core_rules           oid,
     description          VARCHAR(1000),
-    edition_number       VARCHAR(255),
     ending               oid,
     goal                 VARCHAR(1000),
     lower_case_name      VARCHAR(255) NOT NULL,
@@ -217,6 +216,7 @@ CREATE TABLE IF NOT EXISTS game_copy
 (
     id               BIGINT       NOT NULL DEFAULT nextval('game_copy_sequence'),
     date_of_purchase DATE,
+    edition_number   VARCHAR(255),
     general_state    INTEGER      NOT NULL,
     is_loanable      BOOLEAN,
     location         VARCHAR(255),

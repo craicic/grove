@@ -71,12 +71,11 @@ VALUES (nextval('publisher_sequence'), 'kosmos', 'Kosmos', 'Rennes', 'France', n
         '50', null);
 
 
-INSERT INTO public.game (id, core_rules, description, edition_number, ending, goal, lower_case_name, max_age,
+INSERT INTO public.game (id, core_rules, description, ending, goal, lower_case_name, max_age,
                          max_number_of_player, min_age, min_month, min_number_of_player, name, nature, play_time,
                          preparation, size, stuff, variant, core_game_id, fk_product_line)
 VALUES (nextval('game_sequence'), null,
-        'Chaque joueur dirige un monde voué à s''étendre afin de créer l''empire le plus prospère. ',
-        null, null,
+        'Chaque joueur dirige un monde voué à s''étendre afin de créer l''empire le plus prospère. ', null,
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit',
         'race for the galaxy', 0, 4, 10, 0, 2,
         'Race for the Galaxy', 1, '45 minutes', null, 'Petit',
@@ -85,7 +84,8 @@ VALUES (nextval('game_sequence'), null,
        (nextval('game_sequence'), null,
         'Vous voilà à la tête de colons fraîchement débarqués sur l''île de Catane. Votre but va être d''installer vos ouailles et de faire prospérer vos colonies en construisant des villes et en utilisant au mieux les matières premières qui sont à votre disposition.
 Les Colons de Catane est un jeu tactique de placement, de développement et de négociation. Le hasard y est présent et peut à tout moment contrarier vos plans.',
-        null, null, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit',
+        null,
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie, dui id blandit',
         'les colons de catane', 0, 4, 8, 0, 2,
         'Les Colons de Catane', 1, '90 minutes', null, 'Petit',
         null, null, null,

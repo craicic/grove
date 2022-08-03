@@ -76,7 +76,7 @@ public class GameDto {
 
     private GameNature nature;
     private String size;
-    private String editionNumber;
+
 
     private ProductLineDto productLine;
 

@@ -128,8 +128,6 @@ public class Game {
      */
     private String size;
 
-    private String editionNumber;
-
     /**
      * The product line of the game, if the game is part of a 'collection'
      */
@@ -190,7 +188,6 @@ public class Game {
                 ", ending='" + ending + '\'' +
                 ", nature=" + nature +
                 ", size='" + size + '\'' +
-                ", editionNumber='" + editionNumber + '\'' +
                 ", images=" + images +
                 ", creators=" + creators +
                 ", categories=" + categories +

@@ -25,6 +25,8 @@ public class GameCopy {
     @SequenceGenerator(name = "game_copy_seq_gen", sequenceName = "game_copy_sequence", initialValue = 100)
     private Long id;
 
+    private String editionNumber;
+
     @Pattern(regexp = "^[0-9]{1,5}$")
     @Column(name = "object_code", nullable = false)
     private String objectCode;

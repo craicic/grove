@@ -58,6 +58,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
         return copyRepository.findById(id)
                 .map(copy -> {
                     copy.setObjectCode(newCopy.getObjectCode());
+                    copy.setEditionNumber(newCopy.getEditionNumber());
                     copy.setLocation(newCopy.getLocation());
                     copy.setPrice(newCopy.getPrice());
                     copy.setDateOfPurchase(newCopy.getDateOfPurchase());
