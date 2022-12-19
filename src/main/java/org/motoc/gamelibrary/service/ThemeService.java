@@ -55,6 +55,13 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
                 });
     }
 
+    @Override
+    public Theme save(@Valid Theme t) {
+        Theme result = themeRepository.saveTheme(t);
+        logger.debug("Saved a theme : {}", result.toString());
+        return result;
+    }
+
     /**
      * Calls the DAO to delete a theme by id
      */

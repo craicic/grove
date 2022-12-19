@@ -20,7 +20,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq_gen")
-    @SequenceGenerator(name = "category_seq_gen", sequenceName = "category_sequence", initialValue = 100)
+    @SequenceGenerator(name = "category_seq_gen", sequenceName = "category_sequence", initialValue = 1)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")

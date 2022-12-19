@@ -22,7 +22,7 @@ public class LoanStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_status_seq_gen")
-    @SequenceGenerator(name = "loan_status_seq_gen", sequenceName = "loan_status_sequence", initialValue = 100)
+    @SequenceGenerator(name = "loan_status_seq_gen", sequenceName = "loan_status_sequence", initialValue = 1)
     private Long id;
 
     @NotBlank(message = "Tag cannot be null or blank")

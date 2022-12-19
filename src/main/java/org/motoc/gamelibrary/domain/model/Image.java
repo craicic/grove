@@ -21,7 +21,7 @@ public class Image {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_seq_gen")
-    @SequenceGenerator(name = "image_seq_gen", sequenceName = "image_sequence", initialValue = 100)
+    @SequenceGenerator(name = "image_seq_gen", sequenceName = "image_sequence", initialValue = 1)
     private Long id;
 
     @ToString.Exclude

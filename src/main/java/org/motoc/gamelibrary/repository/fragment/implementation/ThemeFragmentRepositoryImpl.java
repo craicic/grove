@@ -37,4 +37,12 @@ public class ThemeFragmentRepositoryImpl implements ThemeFragmentRepository {
         } else
             logger.info("Tried to delete, but theme of id={} doesn't exist", id);
     }
+
+    @Override
+    public Theme saveTheme(Theme theme) {
+        entityManager.persist(theme);
+        entityManager.flush();
+
+        return new Theme(theme.getId(), theme.getName());
+    }
 }

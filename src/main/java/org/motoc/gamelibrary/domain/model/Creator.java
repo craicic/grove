@@ -22,7 +22,7 @@ public class Creator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "creator_seq_gen")
-    @SequenceGenerator(name = "creator_seq_gen", sequenceName = "creator_sequence", initialValue = 100)
+    @SequenceGenerator(name = "creator_seq_gen", sequenceName = "creator_sequence", initialValue = 1)
     private Long id;
 
 

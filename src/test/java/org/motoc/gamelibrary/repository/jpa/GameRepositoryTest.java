@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.testcontainers.ext.ScriptUtils;
+import org.testcontainers.jdbc.JdbcDatabaseDelegate;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ class GameRepositoryTest extends AbstractContainerBaseTest {
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
+        JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
+        ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
+        ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
     private static final Logger logger = LoggerFactory.getLogger(GameRepositoryTest.class);

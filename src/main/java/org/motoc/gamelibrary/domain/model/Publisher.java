@@ -20,7 +20,7 @@ public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisher_seq_gen")
-    @SequenceGenerator(name = "publisher_seq_gen", sequenceName = "publisher_sequence", initialValue = 100)
+    @SequenceGenerator(name = "publisher_seq_gen", sequenceName = "publisher_sequence", initialValue = 1)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")

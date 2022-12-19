@@ -43,7 +43,6 @@ public class CommandLineStartupRunner
         ImageIO.write(imageA, "png", os);
         InputStream is = new ByteArrayInputStream(os.toByteArray());
 
-
         imageService.saveThenAttachToGame(is, 100L);
         os.close();
         is.close();

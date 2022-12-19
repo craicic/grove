@@ -22,7 +22,7 @@ public class GameCopy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_copy_seq_gen")
-    @SequenceGenerator(name = "game_copy_seq_gen", sequenceName = "game_copy_sequence", initialValue = 100)
+    @SequenceGenerator(name = "game_copy_seq_gen", sequenceName = "game_copy_sequence", initialValue = 1)
     private Long id;
 
     private String editionNumber;

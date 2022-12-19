@@ -20,7 +20,7 @@ public class ProductLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_line_seq_gen")
-    @SequenceGenerator(name = "product_line_seq_gen", sequenceName = "product_line_sequence", initialValue = 100)
+    @SequenceGenerator(name = "product_line_seq_gen", sequenceName = "product_line_sequence", initialValue = 1)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")

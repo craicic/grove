@@ -30,7 +30,7 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_seq_gen")
-    @SequenceGenerator(name = "game_seq_gen", sequenceName = "game_sequence", initialValue = 100)
+    @SequenceGenerator(name = "game_seq_gen", sequenceName = "game_sequence", initialValue = 1)
     private Long id;
 
     /**

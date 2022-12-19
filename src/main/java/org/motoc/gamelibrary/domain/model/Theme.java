@@ -21,7 +21,7 @@ public class Theme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "theme_seq_gen")
-    @SequenceGenerator(name = "theme_seq_gen", sequenceName = "theme_sequence", initialValue = 100)
+    @SequenceGenerator(name = "theme_seq_gen", sequenceName = "theme_sequence", initialValue = 1)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
