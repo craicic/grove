@@ -11,7 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public abstract class AbstractContainerBaseTest {
 
     public static final Logger abstractLogger = LoggerFactory.getLogger(AbstractContainerBaseTest.class);
-    public static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14-alpine")
+    public static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:15.1-alpine")
             .withDatabaseName("game-library-test-db")
             .withUsername("postgres")
             .withPassword("postgres")

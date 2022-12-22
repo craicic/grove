@@ -46,20 +46,13 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
                 .map(themeFromPersistence -> {
                     themeFromPersistence.setName(theme.getName());
                     logger.debug("Found theme of id={} : {}", id, themeFromPersistence);
-                    return themeRepository.save(themeFromPersistence);
+                    return themeRepository.saveTheme(themeFromPersistence);
                 })
                 .orElseGet(() -> {
                     theme.setId(id);
                     logger.debug("No theme of id={} found. Set theme : {}", id, theme);
-                    return themeRepository.save(theme);
+                    return themeRepository.saveTheme(theme);
                 });
-    }
-
-    @Override
-    public Theme save(@Valid Theme t) {
-        Theme result = themeRepository.saveTheme(t);
-        logger.debug("Saved a theme : {}", result.toString());
-        return result;
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.jpa;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.domain.model.Game;
@@ -27,6 +28,11 @@ class GameRepositoryTest extends AbstractContainerBaseTest {
         JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
+    }
+
+    @BeforeEach
+    void restartContainer() {
+        postgreSQLContainer.start();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(GameRepositoryTest.class);

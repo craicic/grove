@@ -28,10 +28,11 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
 
     @Override
     public T save(@Valid T t) {
-        T result = genericRepository.saveAndFlush(t);
+        T result = genericRepository.save(t);
         logger.debug("Saved a {} : {}", type.getSimpleName().toLowerCase(), result.toString());
         return result;
     }
+
 
     @Override
     public long count() {
@@ -53,6 +54,7 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
                 });
     }
 
+    @Override
     public List<T> findAll() {
         List<T> result = genericRepository.findAll();
         logger.debug("Found {} element(s) of type", result.size());

@@ -13,5 +13,4 @@ public interface ThemeFragmentRepository {
     void remove(Long id);
 
     Theme saveTheme(Theme theme);
-
 }

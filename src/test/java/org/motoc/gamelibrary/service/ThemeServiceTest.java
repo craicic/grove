@@ -101,7 +101,7 @@ class ThemeServiceTest {
         theme.setName(name);
 
         when(themeRepository.findById(id)).thenReturn(Optional.of(theme));
-        when(themeRepository.save(theme)).thenReturn(theme);
+        when(themeRepository.saveTheme(theme)).thenReturn(theme);
 
         assertThat(themeService.edit(theme, id)).isEqualTo(theme);
     }
@@ -114,7 +114,7 @@ class ThemeServiceTest {
         theme.setName(name);
 
         when(themeRepository.findById(id)).thenReturn(Optional.empty());
-        when(themeRepository.save(theme)).thenReturn(theme);
+        when(themeRepository.saveTheme(theme)).thenReturn(theme);
 
         assertThat(themeService.edit(theme, id)).isEqualTo(theme);
     }
