@@ -28,7 +28,6 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
     private final ThemeRepository themeRepository;
 
 
-
     @Autowired
     public ThemeService(ThemeRepository themeRepository,
                         JpaRepository<Theme, Long> themeGenericRepository) {
@@ -37,6 +36,18 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
     }
 
     // Methods
+
+    /**
+     * Calls the DAO to edit a new theme (id should be null)
+     */
+    public Theme save(@Valid Theme theme) {
+        if (theme.getId() == null) {
+            logger.debug("Trying to save new theme={}", theme.getName());
+        } else {
+            logger.debug("Trying to save new theme={} of id={}", theme.getName(), theme.getId());
+        }
+        return themeRepository.saveTheme(theme);
+    }
 
     /**
      * Calls the DAO to edit a theme by id
