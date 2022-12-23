@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
  * It's the theme custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 @Repository
-@Transactional
 public class ThemeFragmentRepositoryImpl implements ThemeFragmentRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ThemeFragmentRepositoryImpl.class);
@@ -29,6 +28,7 @@ public class ThemeFragmentRepositoryImpl implements ThemeFragmentRepository {
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
 
         Theme theme = em.find(Theme.class, id);
@@ -42,9 +42,14 @@ public class ThemeFragmentRepositoryImpl implements ThemeFragmentRepository {
             logger.info("Tried to delete, but theme of id={} doesn't exist", id);
     }
 
-
+    @Transactional
     public Theme saveTheme(Theme theme) {
         em.persist(theme);
+        if (theme != null && theme.getId() != null) {
+            logger.info("Successfully persisted theme of name={} and id={}", theme.getName(), theme.getId());
+        } else {
+            logger.info("Tried to persist a theme but an error occurred");
+        }
         return theme;
     }
 

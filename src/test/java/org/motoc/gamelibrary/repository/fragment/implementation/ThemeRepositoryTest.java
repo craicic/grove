@@ -1,9 +1,10 @@
-package org.motoc.gamelibrary.repository.jpa;
+package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.After;
 import org.junit.jupiter.api.*;
-import org.motoc.gamelibrary.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.domain.model.Theme;
+import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
+import org.motoc.gamelibrary.repository.jpa.ThemeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ThemeRepositoryTest extends AbstractContainerBaseTest {
 
-    @Autowired
-    private EntityManagerFactory emf;
-
-    @After
-    public void closeEMF() {
-        this.emf.close();
-    }
-
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
@@ -39,6 +32,13 @@ class ThemeRepositoryTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
+    @After
+    public void closeEMF() {
+        this.emf.close();
+    }
+
+    @Autowired
+    private EntityManagerFactory emf;
 
     private static final Logger logger = LoggerFactory.getLogger(ThemeRepositoryTest.class);
 

@@ -42,7 +42,7 @@ class ProductLineServiceTest {
         toReturn.setId(5L);
         toReturn.setName(name);
 
-        when(repository.saveAndFlush(toPersist)).thenReturn(toReturn);
+        when(repository.save(toPersist)).thenReturn(toReturn);
 
         assertThat(service.save(toPersist)).isSameAs(toReturn);
     }

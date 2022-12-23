@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary;
+package org.motoc.gamelibrary.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
