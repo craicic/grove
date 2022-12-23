@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.motoc.gamelibrary.domain.dto.ThemeDto;
+import org.motoc.gamelibrary.domain.dto.ThemeNameDto;
 import org.motoc.gamelibrary.domain.model.Theme;
 import org.springframework.data.domain.Page;
 
@@ -24,6 +25,8 @@ public interface ThemeMapper {
     List<ThemeDto> themesToDto(List<Theme> themes);
 
     ThemeDto themeToDto(Theme theme);
+
+    Theme themeNameDtoToTheme(ThemeNameDto themeNameDto);
 
     @Mapping(target = "games", ignore = true)
     @Mapping(target = "lowerCaseName", ignore = true)

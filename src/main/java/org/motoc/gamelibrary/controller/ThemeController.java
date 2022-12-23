@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.ThemeDto;
+import org.motoc.gamelibrary.domain.dto.ThemeNameDto;
 import org.motoc.gamelibrary.mapper.ThemeMapper;
 import org.motoc.gamelibrary.service.ThemeService;
 import org.slf4j.Logger;
@@ -64,9 +65,9 @@ public class ThemeController {
 
 
     @PostMapping("/admin/themes")
-    ThemeDto save(@RequestBody @Valid ThemeDto theme) {
+    ThemeDto save(@RequestBody @Valid ThemeNameDto themeNameDto) {
         logger.trace("save(theme) called");
-        return mapper.themeToDto(service.save(mapper.dtoToTheme(theme)));
+        return mapper.themeToDto(service.save(mapper.themeNameDtoToTheme(themeNameDto)));
     }
 
     @PutMapping("/admin/themes/{id}")
