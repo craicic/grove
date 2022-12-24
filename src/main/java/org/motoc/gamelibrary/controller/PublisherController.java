@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.PublisherDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
 import org.motoc.gamelibrary.mapper.PublisherMapper;
 import org.motoc.gamelibrary.service.PublisherService;
 import org.slf4j.Logger;
@@ -58,12 +59,11 @@ public class PublisherController {
         }
     }
 
-//    @PostMapping("/admin/publishers")
-//    PublisherDto save(@RequestBody @Valid PublisherDto publisherDto,
-//                      @RequestParam(value = "has-contact", required = false) boolean hasContact) {
-//        logger.trace("save(publisher) called");
-//        return mapper.publisherToDto(service.save(mapper.dtoToPublisher(publisherDto), hasContact));
-//    }
+    @PostMapping("/admin/publishers")
+    PublisherDto save(@RequestBody @Valid PublisherNoIdDto dto) {
+        logger.trace("save(publisher) called");
+        return mapper.publisherToDto(service.save(mapper.noIdDtoToPublisher(dto)));
+    }
 
     @PutMapping("/admin/publishers/{id}")
     PublisherDto edit(@RequestBody @Valid PublisherDto publisherDto,

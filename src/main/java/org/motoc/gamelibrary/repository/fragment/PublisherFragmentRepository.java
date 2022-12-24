@@ -26,4 +26,6 @@ public interface PublisherFragmentRepository {
      * Get all Publisher's name in a custom DTO
      */
     List<PublisherNameDto> findNames();
+
+    Publisher savePublisher(Publisher p);
 }

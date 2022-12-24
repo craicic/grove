@@ -23,28 +23,28 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
 
     private static final Logger logger = LoggerFactory.getLogger(PublisherFragmentRepositoryImpl.class);
 
-    private final EntityManager entityManager;
+    private final EntityManager em;
 
     @Autowired
-    public PublisherFragmentRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public PublisherFragmentRepositoryImpl(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     @Transactional
     public void remove(Long id) {
-        Publisher publisher = entityManager.find(Publisher.class, id);
+        Publisher publisher = em.find(Publisher.class, id);
 
         for (GameCopy copy : publisher.getCopies()) {
             copy.removePublisher(publisher);
         }
-        entityManager.remove(publisher);
+        em.remove(publisher);
     }
 
     @Override
     @Transactional
     public Publisher removeContact(Long pId) {
-        Publisher p = entityManager.find(Publisher.class, pId);
+        Publisher p = em.find(Publisher.class, pId);
         if (p != null) {
             p.setContact(null);
             return p;
@@ -56,9 +56,20 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     @Override
     public List<PublisherNameDto> findNames() {
 
-        TypedQuery<PublisherNameDto> q = entityManager.createQuery(
+        TypedQuery<PublisherNameDto> q = em.createQuery(
                 "SELECT new org.motoc.gamelibrary.domain.dto.PublisherNameDto(p.name) FROM Publisher as p",
                 PublisherNameDto.class);
         return q.getResultList();
+    }
+
+    @Override
+    public Publisher savePublisher(Publisher p) {
+        em.persist(p);
+        if (p != null && p.getId() != null) {
+            logger.info("Successfully persisted publisher of name={} and id={}", p.getName(), p.getId());
+        } else {
+            logger.info("Tried to persist a publisher but an error occurred");
+        }
+        return p;
     }
 }

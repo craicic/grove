@@ -70,7 +70,7 @@ public class ThemeService extends SimpleCrudMethodsImpl<Theme, JpaRepository<The
      * Calls the DAO to delete a theme by id
      */
     public void remove(Long id) {
-        logger.debug("deleting (if exist) theme of id=" + id);
+        logger.debug("Deleting (if exist) theme of id=" + id);
         themeRepository.remove(id);
     }
 

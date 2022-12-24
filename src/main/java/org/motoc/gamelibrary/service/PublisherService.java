@@ -87,5 +87,15 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
         logger.debug("Find all publishers' name");
         return publisherRepository.findNames();
     }
+
+    public Publisher save(Publisher p) {
+        logger.debug(" publishers' name");
+        if (p.getId() == null) {
+            logger.debug("Trying to save new p={}", p.getName());
+        } else {
+            logger.debug("Trying to save new p={} of id={}", p.getName(), p.getId());
+        }
+        return publisherRepository.savePublisher(p);
+    }
 }
 
