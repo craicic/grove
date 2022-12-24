@@ -68,7 +68,7 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
      * Calls the DAO to delete a publisher by id
      */
     public void remove(Long id) {
-        logger.debug("deleting (if exist) publisher of id=" + id);
+        logger.debug("Deleting (if exist) publisher of id=" + id);
         publisherRepository.remove(id);
     }
 
@@ -77,9 +77,10 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
         return publisherRepository.findByLowerCaseNameContaining(keyword, pageable);
     }
 
-    public void removeContact(Long publisherId, Long contactId) {
-        logger.debug("deleting (if exist) contact of id=" + contactId + " from publisher of id=" + publisherId);
-        publisherRepository.removeContact(publisherId, contactId);
+    public void removeContact(Long pId) {
+        logger.debug("Deleting contact from publisher of id=" + pId);
+        Publisher p = publisherRepository.removeContact(pId);
+        logger.debug("Successfully removed contact for Publisher of id={} : {}", pId, p);
     }
 
     public List<PublisherNameDto> findNames() {

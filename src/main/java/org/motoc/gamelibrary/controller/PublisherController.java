@@ -78,10 +78,9 @@ public class PublisherController {
         service.remove(id);
     }
 
-    @DeleteMapping("admin/publishers/{publisherId}/contact/{contactId}")
-    void deleteContact(@PathVariable Long publisherId,
-                       @PathVariable Long contactId) {
+    @DeleteMapping("admin/publishers/{publisherId}/contact/")
+    void deleteContact(@PathVariable Long publisherId) {
         logger.trace("deleteContact(publisherId, contactId) called");
-        service.removeContact(publisherId, contactId);
+        service.removeContact(publisherId);
     }
 }

@@ -1,10 +1,10 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
-import org.motoc.gamelibrary.domain.model.Contact;
 import org.motoc.gamelibrary.domain.model.GameCopy;
 import org.motoc.gamelibrary.domain.model.Publisher;
 import org.motoc.gamelibrary.repository.fragment.PublisherFragmentRepository;
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -30,17 +31,10 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
         Publisher publisher = entityManager.find(Publisher.class, id);
 
-        Contact contact = publisher.getContact();
-
-//        if (contact != null) {
-//            publisher.removeContact(contact);
-//            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
-//            if (contactFromDb.getCreator() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
-//                entityManager.remove(contactFromDb);
-//        }
         for (GameCopy copy : publisher.getCopies()) {
             copy.removePublisher(publisher);
         }
@@ -48,15 +42,14 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     }
 
     @Override
-    public void removeContact(Long publisherId, Long contactId) {
-        Publisher publisher = entityManager.find(Publisher.class, publisherId);
-        Contact contact = entityManager.find(Contact.class, contactId);
-        if (contact != null
-                && publisher != null
-                && publisher.getContact() == contact) {
-            logger.debug("passage ici!");
-//            publisher.removeContact(contact);
-            entityManager.remove(contact);
+    @Transactional
+    public Publisher removeContact(Long pId) {
+        Publisher p = entityManager.find(Publisher.class, pId);
+        if (p != null) {
+            p.setContact(null);
+            return p;
+        } else {
+            throw new NotFoundException("No publisher of id=" + pId + " found");
         }
     }
 
@@ -64,7 +57,7 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     public List<PublisherNameDto> findNames() {
 
         TypedQuery<PublisherNameDto> q = entityManager.createQuery(
-                "SELECT new org.motoc.gamelibrary.dto.PublisherNameDto(p.name) FROM Publisher as p",
+                "SELECT new org.motoc.gamelibrary.domain.dto.PublisherNameDto(p.name) FROM Publisher as p",
                 PublisherNameDto.class);
         return q.getResultList();
     }
