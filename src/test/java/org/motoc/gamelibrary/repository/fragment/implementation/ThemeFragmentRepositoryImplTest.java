@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ThemeRepositoryTest extends AbstractContainerBaseTest {
+class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -40,7 +40,7 @@ class ThemeRepositoryTest extends AbstractContainerBaseTest {
     @Autowired
     private EntityManagerFactory emf;
 
-    private static final Logger logger = LoggerFactory.getLogger(ThemeRepositoryTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThemeFragmentRepositoryImplTest.class);
 
     @Autowired
     private ThemeRepository repository;
@@ -50,7 +50,7 @@ class ThemeRepositoryTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(1)
-    void WhenSaveTheme_ThenReturnExpectedTheme() {
+    void whenSaveTheme_ThenReturnExpectedTheme() {
         final String tName = "Cthulhu";
         Theme t = new Theme();
         t.setName(tName);
@@ -63,7 +63,7 @@ class ThemeRepositoryTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(2)
-    void WhenDeleteTheme_ThenThemeCountDecreaseBy1() {
+    void whenDeleteTheme_ThenThemeCountDecreaseBy1() {
         final long preDeleteCount = repository.count();
         repository.remove(tId);
         final long postDeleteCount = repository.count();
@@ -100,7 +100,7 @@ class ThemeRepositoryTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(4)
-    void WhenSaveAlreadyExistingTheme_ThenThrowADataIntegrityViolationException() {
+    void whenSaveAlreadyExistingTheme_ThenThrowADataIntegrityViolationException() {
         EntityManager em = emf.createEntityManager();
         Theme t = new Theme();
         t.setName(em.find(Theme.class, 1L).getName());

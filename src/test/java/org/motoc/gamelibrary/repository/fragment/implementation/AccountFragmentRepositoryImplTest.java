@@ -11,7 +11,7 @@ import org.testcontainers.jdbc.JdbcDatabaseDelegate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AccountRepositoryTest extends AbstractContainerBaseTest {
+class AccountFragmentRepositoryImplTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {

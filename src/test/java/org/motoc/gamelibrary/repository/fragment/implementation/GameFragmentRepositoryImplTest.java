@@ -21,7 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-class GameRepositoryTest extends AbstractContainerBaseTest {
+class GameFragmentRepositoryImplTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -36,7 +36,7 @@ class GameRepositoryTest extends AbstractContainerBaseTest {
         postgreSQLContainer.start();
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(GameRepositoryTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameFragmentRepositoryImplTest.class);
 
     @Autowired
     private GameRepository repository;

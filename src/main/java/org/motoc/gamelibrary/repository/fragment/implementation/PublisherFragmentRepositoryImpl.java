@@ -63,6 +63,7 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     }
 
     @Override
+    @Transactional
     public Publisher savePublisher(Publisher p) {
         em.persist(p);
         if (p != null && p.getId() != null) {
