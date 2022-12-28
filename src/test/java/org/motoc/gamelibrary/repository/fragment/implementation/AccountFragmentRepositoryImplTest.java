@@ -27,7 +27,7 @@ class AccountFragmentRepositoryImplTest extends AbstractContainerBaseTest {
 
     @Test
     void find() {
-        Account account = this.repository.find(100L);
+        Account account = this.repository.find(1L);
         abstractLogger.info(account.toString());
         assertThat(account.getContact()).isNotNull();
     }

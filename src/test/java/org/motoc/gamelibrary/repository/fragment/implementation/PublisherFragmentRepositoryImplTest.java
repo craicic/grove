@@ -45,7 +45,7 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     private static final Logger logger = LoggerFactory.getLogger(PublisherFragmentRepositoryImplTest.class);
 
     private static final Long pId = 1L;
-    private static final Long nextPId = 4L;
+
     private static final Long wrongId = 1152L;
     @Autowired
     private PublisherRepository repository;
@@ -79,9 +79,7 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @Test
     @Order(5)
     void whenRemoveContact_WithWrongId_ThenThrowNotFoundException() {
-        Exception exception = assertThrows(NotFoundException.class, () -> {
-            repository.removeContact(wrongId);
-        });
+        Exception exception = assertThrows(NotFoundException.class, () -> repository.removeContact(wrongId));
 
         assertThat(exception).hasMessageContaining("No publisher of id=" + wrongId + " found");
 
@@ -105,9 +103,7 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         EntityManager em = emf.createEntityManager();
         Publisher p = new Publisher();
         p.setName(em.find(Publisher.class, 1L).getName());
-        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-            repository.savePublisher(p);
-        });
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.savePublisher(p));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);
     }

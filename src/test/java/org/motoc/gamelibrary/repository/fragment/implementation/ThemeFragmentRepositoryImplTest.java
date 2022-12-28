@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.model.Theme;
 import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
@@ -72,6 +73,7 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     }
 
     @Test
+    @Ignore
     @Order(3)
     void persistLotsOfThemes() {
         EntityManager em = emf.createEntityManager();
@@ -104,9 +106,7 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         EntityManager em = emf.createEntityManager();
         Theme t = new Theme();
         t.setName(em.find(Theme.class, 1L).getName());
-        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
-            repository.saveTheme(t);
-        });
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.saveTheme(t));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);
     }
