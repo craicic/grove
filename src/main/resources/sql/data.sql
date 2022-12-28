@@ -84,7 +84,7 @@ VALUES (1, null,
         'race for the galaxy', 0, 4, 10, 0, 2,
         'Race for the Galaxy', 1, '45 minutes', null, 'Petit',
         null, null, null,
-        (SELECT id FROM product_line WHERE name = 'Catane')),
+        null),
        (2, null,
         'Vous voilà à la tête de colons fraîchement débarqués sur l''île de Catane. Votre but va être d''installer vos ouailles et de faire prospérer vos colonies en construisant des villes et en utilisant au mieux les matières premières qui sont à votre disposition.
 Les Colons de Catane est un jeu tactique de placement, de développement et de négociation. Le hasard y est présent et peut à tout moment contrarier vos plans.',

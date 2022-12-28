@@ -51,41 +51,6 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     private PublisherRepository repository;
 
     @Test
-    @Order(4)
-    void whenDeletePublisher_ThenPublisherCountDecreaseBy1() {
-        final long preDeleteCount = repository.count();
-        repository.remove(pId);
-        final long postDeleteCount = repository.count();
-
-        assertThat(postDeleteCount).isEqualTo(preDeleteCount - 1L);
-    }
-
-
-    @Test
-    @Order(3)
-    void whenRemoveContact_ThenContactIsNull() {
-        EntityManager em = emf.createEntityManager();
-        Contact cBefore = em.find(Publisher.class, pId).getContact();
-        logger.info("Before removeContact Contact={}", cBefore);
-
-        assertThat(cBefore).isNotNull();
-
-        Contact cAfter = repository.removeContact(pId).getContact();
-        logger.info("After removeContact Contact={}", cAfter);
-
-        assertThat(cAfter).isNull();
-    }
-
-    @Test
-    @Order(5)
-    void whenRemoveContact_WithWrongId_ThenThrowNotFoundException() {
-        Exception exception = assertThrows(NotFoundException.class, () -> repository.removeContact(wrongId));
-
-        assertThat(exception).hasMessageContaining("No publisher of id=" + wrongId + " found");
-
-    }
-
-    @Test
     @Order(1)
     void whenSavePublisher_ThenReturnExpectedPublisher() {
         final String pName = "Matagot";
@@ -106,6 +71,40 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.savePublisher(p));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);
+    }
+
+    @Test
+    @Order(3)
+    void whenRemoveContact_ThenContactIsNull() {
+        EntityManager em = emf.createEntityManager();
+        Contact cBefore = em.find(Publisher.class, pId).getContact();
+        logger.info("Before removeContact Contact={}", cBefore);
+
+        assertThat(cBefore).isNotNull();
+
+        Contact cAfter = repository.removeContact(pId).getContact();
+        logger.info("After removeContact Contact={}", cAfter);
+
+        assertThat(cAfter).isNull();
+    }
+
+    @Test
+    @Order(4)
+    void whenDeletePublisher_ThenPublisherCountDecreaseBy1() {
+        final long preDeleteCount = repository.count();
+        repository.remove(pId);
+        final long postDeleteCount = repository.count();
+
+        assertThat(postDeleteCount).isEqualTo(preDeleteCount - 1L);
+    }
+
+
+    @Test
+    @Order(5)
+    void whenRemoveContact_WithWrongId_ThenThrowNotFoundException() {
+        Exception exception = assertThrows(NotFoundException.class, () -> repository.removeContact(wrongId));
+
+        assertThat(exception).hasMessageContaining("No publisher of id=" + wrongId + " found");
     }
 
     @Test

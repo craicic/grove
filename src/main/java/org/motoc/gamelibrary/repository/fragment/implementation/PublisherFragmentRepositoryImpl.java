@@ -54,15 +54,6 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     }
 
     @Override
-    public List<PublisherNameDto> findNames() {
-
-        TypedQuery<PublisherNameDto> q = em.createQuery(
-                "SELECT new org.motoc.gamelibrary.domain.dto.PublisherNameDto(p.name) FROM Publisher as p",
-                PublisherNameDto.class);
-        return q.getResultList();
-    }
-
-    @Override
     @Transactional
     public Publisher savePublisher(Publisher p) {
         em.persist(p);
@@ -73,4 +64,14 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
         }
         return p;
     }
+
+    @Override
+    public List<PublisherNameDto> findNames() {
+
+        TypedQuery<PublisherNameDto> q = em.createQuery(
+                "SELECT new org.motoc.gamelibrary.domain.dto.PublisherNameDto(p.name) FROM Publisher as p",
+                PublisherNameDto.class);
+        return q.getResultList();
+    }
+
 }
