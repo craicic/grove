@@ -71,12 +71,12 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
     @Override
     public void deleteOne(T t) {
         genericRepository.delete(t);
-        logger.debug("Deleted {} : {}", t.getClass().getSimpleName().toLowerCase(), t);
+        logger.debug("SpringData will now handle deletion for {} : {}", t.getClass().getSimpleName().toLowerCase(), t);
     }
 
     @Override
     public void deleteById(long id) {
         genericRepository.deleteById(id);
-        logger.debug("Deleted {} of id {}", type.getSimpleName().toLowerCase(), id);
+        logger.debug("SpringData will now handle deletion for the {} of id {}", type.getSimpleName().toLowerCase(), id);
     }
 }

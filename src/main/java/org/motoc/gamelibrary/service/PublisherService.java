@@ -34,18 +34,6 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
         this.publisherRepository = publisherRepository;
     }
 
-
-//    /**
-//     * Persist a new publisher by id (if a contact is associated, this one must be new)
-//     */
-//    public Publisher save(Publisher publisher, boolean hasContact) {
-//        if (hasContact) {
-//            long contactId = contactRepository.save(publisher.getContact()).getId();
-//            publisher.getContact().setId(contactId);
-//        }
-//        return publisherRepository.save(publisher);
-//    }
-
     /**
      * Edits a publisher by id
      */

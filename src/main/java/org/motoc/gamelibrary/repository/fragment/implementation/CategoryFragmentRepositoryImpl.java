@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class CategoryFragmentRepositoryImpl implements CategoryFragmentRepositor
 
 
     @Override
+    @Transactional
     public void remove(Long id) {
         Category category = entityManager.find(Category.class, id);
         if (category != null) {
@@ -36,7 +38,7 @@ public class CategoryFragmentRepositoryImpl implements CategoryFragmentRepositor
                 game.removeCategory(category);
             }
             entityManager.remove(category);
-            logger.info("Successfully deleted category of id={}", id);
+            logger.debug("Entity Manager will now handle deletion for the category of id={}", id);
         } else
             logger.info("Tried to delete, but category of id={} doesn't exist", id);
     }

@@ -67,7 +67,7 @@ public class PublisherFragmentRepositoryImpl implements PublisherFragmentReposit
     public Publisher savePublisher(Publisher p) {
         em.persist(p);
         if (p != null && p.getId() != null) {
-            logger.info("Successfully persisted publisher of name={} and id={}", p.getName(), p.getId());
+            logger.debug("Entity Manager will now handle persistence for the publisher of name={} and id={}", p.getName(), p.getId());
         } else {
             logger.info("Tried to persist a publisher but an error occurred");
         }

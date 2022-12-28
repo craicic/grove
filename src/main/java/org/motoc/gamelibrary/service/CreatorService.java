@@ -67,18 +67,20 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
                 });
     }
 
-//    /**
-//     * Removes a creator
-//     */
-//    public void remove(Long id) {
-//        logger.debug("deleting (if exist) creator of id=" + id);
-//        creatorRepository.remove(id);
-//    }
-//
-//    public void removeContact(Long creatorId, Long contactId) {
-//        logger.debug("deleting (if exist) contact of id=" + contactId + " from creator of id=" + creatorId);
-//        creatorRepository.removeContact(creatorId, contactId);
-//    }
+
+    /**
+     * Calls the DAO to delete a creator by id
+     */
+    public void remove(Long id) {
+        logger.debug("Deleting (if exist) creator of id=" + id);
+        creatorRepository.remove(id);
+    }
+
+    public void removeContact(Long cId) {
+        logger.debug("Deleting contact from creator of id=" + cId);
+        Creator c = creatorRepository.removeContact(cId);
+        logger.debug("Successfully removed contact for Creator of id={} : {}", cId, c);
+    }
 
     public Page<Creator> quickSearch(String keyword, Pageable pageable) {
         logger.debug("Find paged creators that contains : " + keyword);

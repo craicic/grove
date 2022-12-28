@@ -37,16 +37,17 @@ public class ThemeFragmentRepositoryImpl implements ThemeFragmentRepository {
                 game.removeTheme(theme);
             }
             em.remove(theme);
-            logger.info("Successfully deleted theme of id={}", id);
+            logger.debug("Entity Manager will now handle deletion for the theme of id={}", id);
         } else
             logger.info("Tried to delete, but theme of id={} doesn't exist", id);
     }
 
+    @Override
     @Transactional
     public Theme saveTheme(Theme theme) {
         em.persist(theme);
         if (theme != null && theme.getId() != null) {
-            logger.info("Successfully persisted theme of name={} and id={}", theme.getName(), theme.getId());
+            logger.debug("Entity Manager will now handle persistence for the theme of name={} and id={}", theme.getName(), theme.getId());
         } else {
             logger.info("Tried to persist a theme but an error occurred");
         }

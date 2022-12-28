@@ -36,7 +36,7 @@ public class ProductLineFragmentRepositoryImpl implements ProductLineFragmentRep
                 productLine.removeGame(game);
             }
             entityManager.remove(productLine);
-            logger.info("Successfully deleted product line of id={}", id);
+            logger.debug("Entity Manager will now handle deletion for the product line of id={}", id);
         } else
             logger.info("Tried to delete, but product line of id={} doesn't exist", id);
     }
@@ -44,7 +44,7 @@ public class ProductLineFragmentRepositoryImpl implements ProductLineFragmentRep
     @Override
     public List<ProductLineNameDto> findNames() {
         TypedQuery<ProductLineNameDto> q = entityManager.createQuery(
-                "SELECT new org.motoc.gamelibrary.dto.ProductLineNameDto(p.name) FROM ProductLine as p",
+                "SELECT new org.motoc.gamelibrary.domain.dto.ProductLineNameDto(p.name) FROM ProductLine as p",
                 ProductLineNameDto.class);
         return q.getResultList();
     }

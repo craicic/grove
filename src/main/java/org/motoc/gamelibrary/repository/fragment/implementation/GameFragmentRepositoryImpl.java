@@ -75,7 +75,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
             game.addExpansion(expansion);
         }
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -83,7 +83,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game addExpansion(Game game, Game expansion) {
         game.addExpansion(expansion);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -91,7 +91,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game addProductLine(Game game, ProductLine productLine) {
         game.addProductLine(productLine);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -99,7 +99,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game removeProductLine(Game game, ProductLine productLine) {
         game.removeProductLine(productLine);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -107,7 +107,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game addCoreGame(Game game, Game coreGame) {
         game.addCoreGame(coreGame);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
