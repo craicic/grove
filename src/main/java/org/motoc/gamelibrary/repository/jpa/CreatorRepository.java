@@ -12,6 +12,8 @@ import org.springframework.data.repository.query.Param;
  * This repository takes advantage of Spring data.sql / JPA
  */
 public interface CreatorRepository extends JpaRepository<Creator, Long>, CreatorFragmentRepository {
+
+    // todo method's name too long
     Page<Creator> findByLowerCaseFirstNameContainingOrLowerCaseLastNameContaining(String keyword,
                                                                                   String repeatKeyword,
                                                                                   Pageable pageable);
