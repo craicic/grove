@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.junit.After;
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.model.Theme;
@@ -33,7 +32,7 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-    @After
+    @AfterEach
     public void closeEMF() {
         this.emf.close();
     }

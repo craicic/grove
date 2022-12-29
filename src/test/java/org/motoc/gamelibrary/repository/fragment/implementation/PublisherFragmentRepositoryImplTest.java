@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.junit.After;
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.model.Contact;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.ext.ScriptUtils;
 import org.testcontainers.jdbc.JdbcDatabaseDelegate;
 
@@ -34,7 +32,7 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-    @After
+    @AfterEach
     public void closeEMF() {
         this.emf.close();
     }
@@ -108,11 +106,11 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     }
 
     @Test
-    @Sql({"/sql/truncate.sql", "/sql/data.sql"})
     @Order(6)
     void whenFindNames_ThenReturnAList() {
+        final long expectedCount = repository.count();
         List<PublisherNameDto> names = repository.findNames();
 
-        assertThat(names.size()).isEqualTo(3);
+        assertThat(names.size()).isEqualTo(expectedCount);
     }
 }
