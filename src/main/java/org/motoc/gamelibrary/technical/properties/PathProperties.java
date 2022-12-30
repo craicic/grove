@@ -1,8 +1,12 @@
 package org.motoc.gamelibrary.technical.properties;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "files")
+@ConfigurationProperties("files")
+@Getter
+@Setter
 public class PathProperties {
 
     /**
@@ -10,12 +14,4 @@ public class PathProperties {
      * * the full path of each image.</p>
      */
     private String pathRoot = "/opt/game-library/image/";
-
-    public String getPathRoot() {
-        return pathRoot;
-    }
-
-    public void setPathRoot(String pathRoot) {
-        this.pathRoot = pathRoot;
-    }
 }

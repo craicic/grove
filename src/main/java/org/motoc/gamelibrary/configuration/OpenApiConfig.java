@@ -26,9 +26,9 @@ public class OpenApiConfig {
 
     private Info getInfo(OpenApiProperties properties) {
         return new Info()
-                .title(properties.getProjectTitle())
-                .description(properties.getProjectDescription())
-                .version(properties.getProjectVersion())
+                .title(properties.projectTitle())
+                .description(properties.projectDescription())
+                .version(properties.projectVersion())
                 .license(getLicense());
     }
 

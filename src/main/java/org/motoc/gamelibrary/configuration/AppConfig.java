@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties({PathProperties.class, OpenApiProperties.class})
-
 public class AppConfig {
 
 }
