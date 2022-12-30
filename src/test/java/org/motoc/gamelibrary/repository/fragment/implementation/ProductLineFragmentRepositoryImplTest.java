@@ -27,13 +27,9 @@ class ProductLineFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-    @AfterEach
-    public void closeEMF() {
-        this.emf.close();
-    }
-
     @Autowired
     private EntityManagerFactory emf;
+
     @Autowired
     private ProductLineRepository repository;
     private static final Logger logger = LoggerFactory.getLogger(ProductLineFragmentRepositoryImplTest.class);

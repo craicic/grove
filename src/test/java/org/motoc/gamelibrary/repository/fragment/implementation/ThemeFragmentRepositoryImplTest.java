@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.model.Theme;
 import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
@@ -32,10 +31,6 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-    @AfterEach
-    public void closeEMF() {
-        this.emf.close();
-    }
 
     @Autowired
     private EntityManagerFactory emf;
@@ -72,7 +67,7 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @Order(3)
     void persistLotsOfThemes() {
         EntityManager em = emf.createEntityManager();

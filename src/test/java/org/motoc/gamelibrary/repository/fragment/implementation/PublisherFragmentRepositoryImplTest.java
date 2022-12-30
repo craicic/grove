@@ -32,10 +32,6 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-    @AfterEach
-    public void closeEMF() {
-        this.emf.close();
-    }
 
     @Autowired
     private EntityManagerFactory emf;
