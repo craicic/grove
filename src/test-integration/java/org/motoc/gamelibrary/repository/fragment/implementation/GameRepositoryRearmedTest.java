@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.domain.model.Game;
-import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.GameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-class GameFragmentRepositoryImplTest extends AbstractContainerBaseTest {
+class GameRepositoryRearmedTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -35,7 +34,7 @@ class GameFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(GameFragmentRepositoryImplTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameRepositoryRearmedTest.class);
 
     @Autowired
     private GameRepository repository;

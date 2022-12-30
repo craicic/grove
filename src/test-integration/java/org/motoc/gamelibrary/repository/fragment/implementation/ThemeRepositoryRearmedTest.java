@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.model.Theme;
-import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.ThemeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
+class ThemeRepositoryRearmedTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -38,7 +37,7 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @Autowired
     private EntityManagerFactory emf;
 
-    private static final Logger logger = LoggerFactory.getLogger(ThemeFragmentRepositoryImplTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThemeRepositoryRearmedTest.class);
 
     @Autowired
     private ThemeRepository repository;

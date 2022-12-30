@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.model.Contact;
 import org.motoc.gamelibrary.domain.model.Publisher;
-import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
+class PublisherRepositoryRearmedTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -40,7 +39,7 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @Autowired
     private EntityManagerFactory emf;
 
-    private static final Logger logger = LoggerFactory.getLogger(PublisherFragmentRepositoryImplTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(PublisherRepositoryRearmedTest.class);
 
     private static final Long pId = 1L;
 

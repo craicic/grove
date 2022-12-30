@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.jupiter.api.*;
+import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.domain.model.ProductLine;
-import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,13 @@ import org.testcontainers.jdbc.JdbcDatabaseDelegate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductLineFragmentRepositoryImplTest extends AbstractContainerBaseTest {
+class ProductLineRepositoryRearmedTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -37,7 +38,7 @@ class ProductLineFragmentRepositoryImplTest extends AbstractContainerBaseTest {
 
     @Autowired
     private ProductLineRepository repository;
-    private static final Logger logger = LoggerFactory.getLogger(ProductLineFragmentRepositoryImplTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductLineRepositoryRearmedTest.class);
 
     private static final Long pId = 1L;
 
@@ -76,4 +77,12 @@ class ProductLineFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         assertThat(postDeleteCount).isEqualTo(preDeleteCount - 1L);
     }
 
+    @Test
+    @Order(6)
+    void whenFindNames_ThenReturnAList() {
+        final long expectedCount = repository.count();
+        List<ProductLineNameDto> names = repository.findNames();
+
+        assertThat(names.size()).isEqualTo(expectedCount);
+    }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.domain.model.Account;
-import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.ext.ScriptUtils;
@@ -12,7 +11,7 @@ import org.testcontainers.jdbc.JdbcDatabaseDelegate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AccountFragmentRepositoryImplTest extends AbstractContainerBaseTest {
+class AccountRepositoryRearmedTest extends AbstractContainerBaseTest {
 
     @BeforeAll
     static void startAbstractContainer() {

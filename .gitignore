@@ -32,7 +32,8 @@ build/
 .vscode/
 
 ### Custom ###
-application.properties
+*.properties
+!test-unit.properties
 !*.sql
 !/src/main/resources/*.sql
 /src/main/resources/static/*

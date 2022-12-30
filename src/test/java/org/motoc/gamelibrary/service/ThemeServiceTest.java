@@ -42,7 +42,7 @@ class ThemeServiceTest {
         toReturn.setId(5L);
         toReturn.setName(themeName);
 
-        when(themeRepository.saveAndFlush(toPersist)).thenReturn(toReturn);
+        when(themeRepository.save(toPersist)).thenReturn(toReturn);
 
         assertThat(themeService.save(toPersist)).isSameAs(toReturn);
     }
