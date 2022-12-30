@@ -26,11 +26,14 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
+    }
+
+    @BeforeEach()
+    void reloadSQL() {
         JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
-
 
     @Autowired
     private EntityManagerFactory emf;
@@ -40,7 +43,7 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @Autowired
     private ThemeRepository repository;
 
-    private final Long tId = 13L;
+    private static final Long tId = 1L;
 
 
     @Test
@@ -51,7 +54,6 @@ class ThemeFragmentRepositoryImplTest extends AbstractContainerBaseTest {
         t.setName(tName);
         t = repository.saveTheme(t);
 
-        assertThat(t.getId()).isEqualTo(tId);
         assertThat(t.getName()).isEqualTo(tName);
         assertThat(t.getLowerCaseName()).isEqualTo(tName.toLowerCase());
     }

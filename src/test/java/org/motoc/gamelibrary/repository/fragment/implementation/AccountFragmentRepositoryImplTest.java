@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.domain.model.Account;
 import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
@@ -16,7 +17,10 @@ class AccountFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
+    }
 
+    @BeforeEach()
+    void reloadSQL() {
         JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");

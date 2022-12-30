@@ -26,14 +26,13 @@ class GameFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
+    }
+
+    @BeforeEach()
+    void reloadSQL() {
         JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
-    }
-
-    @BeforeEach
-    void restartContainer() {
-        postgreSQLContainer.start();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(GameFragmentRepositoryImplTest.class);

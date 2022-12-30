@@ -27,6 +27,10 @@ class PublisherFragmentRepositoryImplTest extends AbstractContainerBaseTest {
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
+    }
+
+    @BeforeEach()
+    void reloadSQL() {
         JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
