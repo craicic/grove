@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.domain.model.Account;
+import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.ext.ScriptUtils;

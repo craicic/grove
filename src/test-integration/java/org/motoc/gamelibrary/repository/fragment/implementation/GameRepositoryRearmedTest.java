@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.motoc.gamelibrary.domain.model.Game;
+import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.GameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

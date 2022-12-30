@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.repository.fragment.implementation;
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.domain.model.ProductLine;
+import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

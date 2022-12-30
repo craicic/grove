@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.model.Contact;
 import org.motoc.gamelibrary.domain.model.Publisher;
+import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
