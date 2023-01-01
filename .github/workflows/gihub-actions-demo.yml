@@ -1,9 +1,11 @@
-name: GitHub Actions Demo
+name: GitHub Actions Demo & Java CI with Maven
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [ push ]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    container:
+      image: node:14.15.0-alpine3.12
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -17,3 +19,15 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+      - run: echo "Now try to run a maven command."
+      - name: Set up JDK19
+        use: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -DskipTests -Dspring-boot.run.arguments="--spring.datasource.username=${{ secrets.DATASOURCE_USR }} --spring.datasource.username=${{ secrets.DATASOURCE_PWD }}"
+#      - name: Run Tests
+#        run: mvn -B test
