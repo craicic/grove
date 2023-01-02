@@ -1,12 +1,10 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.jupiter.api.*;
-import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
-import org.motoc.gamelibrary.domain.model.Contact;
-import org.motoc.gamelibrary.domain.model.Publisher;
-import org.motoc.gamelibrary.repository.AbstractContainerBaseTest;
-import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
-import org.motoc.gamelibrary.technical.exception.NotFoundException;
+import org.motoc.gamelibrary.AbstractContainerBaseIT;
+import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
+import org.motoc.gamelibrary.domain.model.ProductLine;
+import org.motoc.gamelibrary.repository.jpa.ProductLineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,39 +20,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PublisherRepositoryRearmedTest extends AbstractContainerBaseTest {
+class ProductLineRepositoryRearmedIT extends AbstractContainerBaseIT {
 
     @BeforeAll
     static void startAbstractContainer() {
         postgreSQLContainer.start();
     }
 
-    @BeforeEach()
+    @BeforeEach
     void reloadSQL() {
         JdbcDatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(postgreSQLContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "sql/schema.sql");
         ScriptUtils.runInitScript(containerDelegate, "sql/data.sql");
     }
 
-
     @Autowired
     private EntityManagerFactory emf;
 
-    private static final Logger logger = LoggerFactory.getLogger(PublisherRepositoryRearmedTest.class);
+    @Autowired
+    private ProductLineRepository repository;
+    private static final Logger logger = LoggerFactory.getLogger(ProductLineRepositoryRearmedIT.class);
 
     private static final Long pId = 1L;
 
     private static final Long wrongId = 1152L;
-    @Autowired
-    private PublisherRepository repository;
 
     @Test
     @Order(1)
-    void whenSavePublisher_ThenReturnExpectedPublisher() {
-        final String pName = "Matagot";
-        Publisher p = new Publisher();
+    void whenSaveProductLine_ThenReturnExpectedProductLine() {
+        final String pName = "Unlock";
+        ProductLine p = new ProductLine();
         p.setName(pName);
-        p = repository.savePublisher(p);
+        p = repository.saveProductLine(p);
 
         assertThat(p.getName()).isEqualTo(pName);
         assertThat(p.getLowerCaseName()).isEqualTo(pName.toLowerCase());
@@ -62,32 +59,17 @@ class PublisherRepositoryRearmedTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(2)
-    void whenSaveAlreadyExistingPublisher_ThenThrowADataIntegrityViolationException() {
+    void whenSaveAlreadyExistingProductLine_ThenThrowADataIntegrityViolationException() {
         EntityManager em = emf.createEntityManager();
-        Publisher p = new Publisher();
-        p.setName(em.find(Publisher.class, 1L).getName());
-        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.savePublisher(p));
+        ProductLine p = new ProductLine();
+        p.setName(em.find(ProductLine.class, 1L).getName());
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.saveProductLine(p));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);
     }
 
     @Test
     @Order(3)
-    void whenRemoveContact_ThenContactIsNull() {
-        EntityManager em = emf.createEntityManager();
-        Contact cBefore = em.find(Publisher.class, pId).getContact();
-        logger.info("Before removeContact Contact={}", cBefore);
-
-        assertThat(cBefore).isNotNull();
-
-        Contact cAfter = repository.removeContact(pId).getContact();
-        logger.info("After removeContact Contact={}", cAfter);
-
-        assertThat(cAfter).isNull();
-    }
-
-    @Test
-    @Order(4)
     void whenDeletePublisher_ThenPublisherCountDecreaseBy1() {
         final long preDeleteCount = repository.count();
         repository.remove(pId);
@@ -96,20 +78,11 @@ class PublisherRepositoryRearmedTest extends AbstractContainerBaseTest {
         assertThat(postDeleteCount).isEqualTo(preDeleteCount - 1L);
     }
 
-
-    @Test
-    @Order(5)
-    void whenRemoveContact_WithWrongId_ThenThrowNotFoundException() {
-        Exception exception = assertThrows(NotFoundException.class, () -> repository.removeContact(wrongId));
-
-        assertThat(exception).hasMessageContaining("No publisher of id=" + wrongId + " found");
-    }
-
     @Test
     @Order(6)
     void whenFindNames_ThenReturnAList() {
         final long expectedCount = repository.count();
-        List<PublisherNameDto> names = repository.findNames();
+        List<ProductLineNameDto> names = repository.findNames();
 
         assertThat(names.size()).isEqualTo(expectedCount);
     }
