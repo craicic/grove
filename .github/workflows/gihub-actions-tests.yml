@@ -24,7 +24,7 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml -DskipTests -Dspring-boot.run.arguments="--spring.datasource.username=${{ secrets.DATASOURCE_USR }} --spring.datasource.username=${{ secrets.DATASOURCE_PWD }}"
-#      - name: Run Tests
-#        run: mvn -B test
+      - name: Verify with Maven
+      - run: echo "Maven will now run VERIFY."
+      - run: mvn -B verify --file pom.xml
+#        run: mvn -B package --file pom.xml -DskipTests -Dspring-boot.run.arguments="--spring.datasource.username=${{ secrets.DATASOURCE_USR }} --spring.datasource.username=${{ secrets.DATASOURCE_PWD }}"
