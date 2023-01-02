@@ -37,4 +37,4 @@ secrets.properties
 ### Custom ###
 !*.sql
 !/src/main/resources/*.sql
-/src/main/resources/static/*
+!/src/main/resources/static/*
