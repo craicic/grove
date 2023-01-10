@@ -43,13 +43,12 @@ public class ImageController {
 
     @GetMapping("/admin/images/{id}")
     @ResponseBody
-    ResponseEntity<InputStreamResource> getContent(@PathVariable Long id) throws IOException {
+    ResponseEntity<InputStreamResource> getContent(@PathVariable Long id) {
         logger.trace("findDataById(id) called");
         InputStream is = service.retrieveBytes(id);
         InputStreamResource isr = new InputStreamResource(is);
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.IMAGE_PNG);
         return ResponseEntity.ok().headers(header).body(isr);
-
     }
 }

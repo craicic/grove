@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
@@ -25,7 +27,7 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
     }
 
     @Override
-    public Long persistLob(byte[] bytes, Long gameId) {
+    public Long persistImageAttachToGame(byte[] bytes, Long gameId) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -33,21 +35,11 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
 
         Image i = new Image();
         i.setGame(game);
-        em.persist(i);
-
-        ImageBlob ib = new ImageBlob();
-        ib.setImage(i);
-        ib.setContent(BlobProxy.generateProxy(bytes));
-        em.persist(ib);
-
-        em.getTransaction().commit();
-        em.close();
-
-        return i.getId();
+        return persistLob(bytes, em, i);
     }
 
     @Override
-    public InputStream findBlob(Long imageId) {
+    public InputStream findLob(Long imageId) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -61,5 +53,52 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Long persistImage(byte[] bytes) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Image i = new Image();
+        return persistLob(bytes, em, i);
+    }
+
+    @Override
+    public List<Long> persistAll(List<byte[]> bytesList) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        List<Long> ids = new ArrayList<>();
+        for (byte[] bytes : bytesList) {
+            Image i = new Image();
+            em.persist(i);
+
+            ImageBlob ib = new ImageBlob();
+            ib.setImage(i);
+            ib.setContent(BlobProxy.generateProxy(bytes));
+            em.persist(ib);
+
+            ids.add(i.getId());
+        }
+
+        em.getTransaction().commit();
+        em.close();
+
+        return ids;
+    }
+
+    private Long persistLob(byte[] bytes, EntityManager em, Image i) {
+        em.persist(i);
+
+        ImageBlob ib = new ImageBlob();
+        ib.setImage(i);
+        ib.setContent(BlobProxy.generateProxy(bytes));
+        em.persist(ib);
+
+        em.getTransaction().commit();
+        em.close();
+
+        return i.getId();
     }
 }

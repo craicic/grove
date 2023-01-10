@@ -1,13 +1,19 @@
 package org.motoc.gamelibrary.repository.fragment;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * It's the image custom repository, made to create / use javax persistence objects, criteria, queryDSL (if needed)
  */
 public interface ImageFragmentRepository {
 
-    Long persistLob(byte[] image, Long gameId);
+    Long persistImageAttachToGame(byte[] bytes, Long gameId);
 
-    InputStream findBlob(Long imageId);
+    InputStream findLob(Long imageId);
+
+    Long persistImage(byte[] bytes);
+
+
+    List<Long> persistAll(List<byte[]> bytesList);
 }

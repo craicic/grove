@@ -134,3 +134,9 @@ INSERT INTO public.game_theme (fk_game, fk_theme)
 VALUES ((SELECT id FROM game WHERE name = 'Les Colons de Catane'), (SELECT id FROM theme WHERE name = 'Médiéval')),
        ((SELECT id FROM game WHERE name = 'Race for the Galaxy'), (SELECT id FROM theme WHERE name = 'Espace'));
 
+-- INSERT INTO image (id, fk_game)
+-- VALUES (1, (SELECT id FROM game WHERE name = 'Les Colons de Catane'));
+--
+-- INSERT INTO image_blob (image_id, content)
+-- VALUES (1, lo_import(''));
+
