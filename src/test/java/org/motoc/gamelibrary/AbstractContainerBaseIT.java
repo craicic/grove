@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -15,7 +16,7 @@ public abstract class AbstractContainerBaseIT extends AbstractIntegrationBaseIT 
             .withDatabaseName("game-library-test-db")
             .withUsername("postgres")
             .withPassword("postgres")
-            .withReuse(true);
+            .withClasspathResourceMapping("static", "/data/", BindMode.READ_ONLY);
 
     @DynamicPropertySource
     static void postgresqlProperties(DynamicPropertyRegistry registry) {

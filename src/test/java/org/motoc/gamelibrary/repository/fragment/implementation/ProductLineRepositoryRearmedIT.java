@@ -39,8 +39,8 @@ class ProductLineRepositoryRearmedIT extends AbstractContainerBaseIT {
 
     @Autowired
     private ProductLineRepository repository;
-    private static final Logger logger = LoggerFactory.getLogger(ProductLineRepositoryRearmedIT.class);
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductLineRepositoryRearmedIT.class);
     private static final Long pId = 1L;
 
     private static final Long wrongId = 1152L;
@@ -62,7 +62,10 @@ class ProductLineRepositoryRearmedIT extends AbstractContainerBaseIT {
     void whenSaveAlreadyExistingProductLine_ThenThrowADataIntegrityViolationException() {
         EntityManager em = emf.createEntityManager();
         ProductLine p = new ProductLine();
+        em.getTransaction().begin();
         p.setName(em.find(ProductLine.class, 1L).getName());
+        em.getTransaction().commit();
+        em.close();
         Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.saveProductLine(p));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);

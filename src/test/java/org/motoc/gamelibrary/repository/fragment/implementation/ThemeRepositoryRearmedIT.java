@@ -101,7 +101,10 @@ class ThemeRepositoryRearmedIT extends AbstractContainerBaseIT {
     void whenSaveAlreadyExistingTheme_ThenThrowADataIntegrityViolationException() {
         EntityManager em = emf.createEntityManager();
         Theme t = new Theme();
+        em.getTransaction().begin();
         t.setName(em.find(Theme.class, 1L).getName());
+        em.getTransaction().commit();
+        em.close();
         Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.saveTheme(t));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);

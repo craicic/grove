@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  * It's the account custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)
@@ -20,16 +21,20 @@ public class AccountFragmentRepositoryImpl implements AccountFragmentRepository 
 
     private static final Logger logger = LoggerFactory.getLogger(AccountFragmentRepositoryImpl.class);
 
-    private final EntityManager em;
+    private final EntityManagerFactory emf;
+
 
     @Autowired
-    public AccountFragmentRepositoryImpl(EntityManager em) {
-        this.em = em;
+    public AccountFragmentRepositoryImpl(EntityManagerFactory emf) {
+        this.emf = emf;
     }
 
 
     @Override
     public Account find(Long id) {
+        EntityManager em = emf.createEntityManager();
+
+
         String query = "SELECT a FROM Account a WHERE a.id = (:id)";
 
 
@@ -37,16 +42,21 @@ public class AccountFragmentRepositoryImpl implements AccountFragmentRepository 
         graph.addSubgraph(Account_.contact);
         graph.addSubgraph(Account_.loans);
 
+        em.getTransaction().begin();
 
         Account account = em.createQuery(query, Account.class)
                 .setParameter("id", id)
                 .setHint("javax.persistence.loadgraph", graph)
                 .getSingleResult();
 
+        em.getTransaction().commit();
+        em.close();
 
         if (account == null) {
             throw new NotFoundException("Could not find account of id:" + id);
         }
+
+
         return account;
     }
 }

@@ -2,9 +2,9 @@ package org.motoc.gamelibrary.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.sql.Blob;
 
 @Getter
 @Setter
@@ -16,7 +16,8 @@ public class ImageBlob {
 
     @Column(name = "content", nullable = false)
     @Lob
-    private Blob content;
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] content;
 
     @OneToOne
     @MapsId

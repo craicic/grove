@@ -46,8 +46,8 @@ public class ImageService {
     /**
      * Given an image id, return the image bytes
      */
-    public InputStream retrieveBytes(Long id) {
-        return repository.findLob(id);
+    public byte[] retrieveBytes(Long id) {
+        return repository.findBytes(id);
     }
 
 

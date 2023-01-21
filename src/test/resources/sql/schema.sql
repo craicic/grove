@@ -165,7 +165,7 @@ ALTER TABLE image
 CREATE TABLE IF NOT EXISTS image_blob
 (
     image_id BIGINT NOT NULL,
-    content  oid    NOT NULL,
+    content  bytea  NOT NULL,
     FOREIGN KEY (image_id) REFERENCES image
 );
 
