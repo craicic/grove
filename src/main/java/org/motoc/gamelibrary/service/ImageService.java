@@ -40,7 +40,7 @@ public class ImageService {
      */
     public Long saveThenAttachToGame(InputStream imageStream, Long gameId) throws IOException {
         byte[] bytes = imageToByte(imageStream, true, ImageFormat.JPG, ImageFormat.JPG);
-        return repository.persistImageAttachToGame(bytes, gameId);
+        return repository.persistImageAndAttachToGame(bytes, gameId);
     }
 
     /**

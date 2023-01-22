@@ -29,7 +29,7 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
     }
 
     @Override
-    public Long persistImageAttachToGame(byte[] bytes, Long gameId) {
+    public Long persistImageAndAttachToGame(byte[] bytes, Long gameId) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -59,6 +59,7 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         return bytes;
     }
 
+
     @Override
     public Long persistImage(byte[] bytes) {
         EntityManager em = emf.createEntityManager();
@@ -70,7 +71,6 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         ib.setImage(i);
         ib.setContent(bytes);
         em.persist(ib);
-        logger.info("Image id :" + i.getId() + " and ImageBlob id :" + ib.getId());
 
         em.getTransaction().commit();
         em.close();
@@ -102,7 +102,7 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         return ids;
     }
 
-    public Long persistLob(byte[] bytes, EntityManager em, Image i) {
+    private Long persistLob(byte[] bytes, EntityManager em, Image i) {
         em.persist(i);
 
         ImageBlob ib = new ImageBlob();
