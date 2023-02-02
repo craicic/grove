@@ -16,6 +16,7 @@ public interface ImageFragmentRepository {
      * @param bytes  The byte array representing the image content.
      * @param gameId The ID of the game to which the image will be attached.
      * @return The ID of the persisted Image.
+     * @throws NotFoundException if a game of the given ID is not found.
      */
     Long persistImageAndAttachToGame(byte[] bytes, Long gameId);
 

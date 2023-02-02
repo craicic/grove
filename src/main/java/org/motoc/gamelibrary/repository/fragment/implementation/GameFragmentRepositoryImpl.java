@@ -31,13 +31,13 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     }
 
     @Override
-    public Page<Game> findOverview(String keyword, Pageable pageable) {
+    public Page<Game> findGamesByKeyword(String keyword, Pageable pageable) {
 
         String searchQuery = "SELECT g FROM Game as g " +
-                " WHERE g.id IN (:ids) ORDER BY g.name ";
+                             " WHERE g.id IN (:ids) ORDER BY g.name ";
 
         String idQuery = "SELECT g.id FROM Game as g" +
-                " WHERE (g.lowerCaseName LIKE CONCAT('%', LOWER(:keyword), '%'))";
+                         " WHERE (g.lowerCaseName LIKE CONCAT('%', LOWER(:keyword), '%'))";
 
         TypedQuery<Long> idQ = entityManager.createQuery(idQuery, Long.class);
 
@@ -187,5 +187,4 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
         entityManager.persist(game);
 
     }
-
 }

@@ -137,7 +137,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
     }
 
     public Page<Game> findPagedOverview(Pageable pageable, String keyword) {
-        return gameRepository.findOverview(keyword, pageable);
+        return gameRepository.findGamesByKeyword(keyword, pageable);
     }
 
     public Page<Game> findPagedOverview(Pageable pageable) {

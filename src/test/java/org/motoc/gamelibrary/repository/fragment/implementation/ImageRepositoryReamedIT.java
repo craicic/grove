@@ -30,7 +30,7 @@ import static org.motoc.gamelibrary.repository.TestResources.*;
 class ImageRepositoryReamedIT extends AbstractContainerBaseIT {
 
     @BeforeAll
-    static void startAbstractContainer() throws IOException {
+    static void startAbstractContainer() {
         postgreSQLContainer.start();
     }
 
@@ -85,7 +85,7 @@ class ImageRepositoryReamedIT extends AbstractContainerBaseIT {
 
         assertThat(actualImage).isEqualTo(expectedImage);
 
-        // Finally we test the imageData
+        // Test the imageData
         byte[] actualImageData = repository.findBytes(actualImageId);
 
         assertThat(actualImageData).isEqualTo(expectedImageData);

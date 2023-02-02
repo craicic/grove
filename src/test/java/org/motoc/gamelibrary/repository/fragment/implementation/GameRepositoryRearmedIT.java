@@ -45,7 +45,7 @@ class GameRepositoryRearmedIT extends AbstractContainerBaseIT {
         String keyword = "colons";
         Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
 
-        Page<Game> pagedGames = repository.findOverview(keyword, pageable);
+        Page<Game> pagedGames = repository.findGamesByKeyword(keyword, pageable);
         List<Game> games = pagedGames.getContent();
 
         for (Game game : games) {

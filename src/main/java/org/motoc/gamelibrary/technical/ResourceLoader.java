@@ -5,10 +5,6 @@ import java.io.InputStream;
 
 /**
  * This class contains a method to load resources as bytes.
- *
- * @author xxjokerx
- * @version 1.0
- * @since 2023
  */
 public class ResourceLoader {
 
