@@ -36,6 +36,7 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         Game game = em.find(Game.class, gameId);
 
         if (game == null) {
+            em.getTransaction().rollback();
             em.close();
             throw new NotFoundException("No game of id=" + gameId + " found.");
         }
@@ -52,6 +53,7 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         ImageBlob ib = em.find(ImageBlob.class, imageId);
 
         if (ib == null) {
+            em.getTransaction().rollback();
             em.close();
             throw new NotFoundException("No image of id " + imageId + " found.");
         }
