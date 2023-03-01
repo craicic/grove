@@ -33,7 +33,9 @@ build/
 
 ### SECRETS ####
 secrets.properties
-/docker/docker_secrets.env
+
+#### DOCKER ###
+/docker/
 
 ### Custom ###
 !*.sql
