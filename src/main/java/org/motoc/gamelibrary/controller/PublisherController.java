@@ -1,9 +1,10 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.PublisherService;
-import org.motoc.gamelibrary.dto.PublisherDto;
-import org.motoc.gamelibrary.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.dto.PublisherDto;
+import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
 import org.motoc.gamelibrary.mapper.PublisherMapper;
+import org.motoc.gamelibrary.service.PublisherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -59,10 +60,9 @@ public class PublisherController {
     }
 
     @PostMapping("/admin/publishers")
-    PublisherDto save(@RequestBody @Valid PublisherDto publisherDto,
-                      @RequestParam(value = "has-contact", required = false) boolean hasContact) {
+    PublisherDto save(@RequestBody @Valid PublisherNoIdDto dto) {
         logger.trace("save(publisher) called");
-        return mapper.publisherToDto(service.save(mapper.dtoToPublisher(publisherDto), hasContact));
+        return mapper.publisherToDto(service.save(mapper.noIdDtoToPublisher(dto)));
     }
 
     @PutMapping("/admin/publishers/{id}")
@@ -78,10 +78,9 @@ public class PublisherController {
         service.remove(id);
     }
 
-    @DeleteMapping("admin/publishers/{publisherId}/contact/{contactId}")
-    void deleteContact(@PathVariable Long publisherId,
-                       @PathVariable Long contactId) {
+    @DeleteMapping("admin/publishers/{publisherId}/contact/")
+    void deleteContact(@PathVariable Long publisherId) {
         logger.trace("deleteContact(publisherId, contactId) called");
-        service.removeContact(publisherId, contactId);
+        service.removeContact(publisherId);
     }
 }

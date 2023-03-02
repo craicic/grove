@@ -1,9 +1,14 @@
 package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.AccountDto;
-import org.motoc.gamelibrary.model.Account;
+import org.motoc.gamelibrary.domain.dto.AccountDto;
+import org.motoc.gamelibrary.domain.dto.ContactDto;
+import org.motoc.gamelibrary.domain.dto.LoanDto;
+import org.motoc.gamelibrary.domain.model.Account;
+import org.motoc.gamelibrary.domain.model.Contact;
+import org.motoc.gamelibrary.domain.model.Loan;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -22,8 +27,12 @@ public interface AccountMapper {
 
     List<AccountDto> accountsToDto(List<Account> accounts);
 
-    Account dtoToAccount(AccountDto accountDto);
-
     AccountDto accountToDto(Account account);
+
+    ContactDto contactToDto(Contact contact);
+
+    @Mapping(target = "gameCopyId", source = "gameCopy.id")
+    LoanDto loanToDto(Loan loan);
+
 
 }

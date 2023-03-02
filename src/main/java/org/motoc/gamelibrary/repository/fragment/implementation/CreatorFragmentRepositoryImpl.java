@@ -1,10 +1,10 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.dto.CreatorNameDto;
-import org.motoc.gamelibrary.model.Contact;
-import org.motoc.gamelibrary.model.Creator;
-import org.motoc.gamelibrary.model.Game;
+import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
+import org.motoc.gamelibrary.domain.model.Creator;
+import org.motoc.gamelibrary.domain.model.Game;
 import org.motoc.gamelibrary.repository.fragment.CreatorFragmentRepository;
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -22,50 +23,41 @@ public class CreatorFragmentRepositoryImpl implements CreatorFragmentRepository 
 
     private static final Logger logger = LoggerFactory.getLogger(CreatorFragmentRepositoryImpl.class);
 
-    private final EntityManager entityManager;
+    private final EntityManager em;
 
     @Autowired
-    public CreatorFragmentRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public CreatorFragmentRepositoryImpl(EntityManager em) {
+        this.em = em;
     }
 
 
     @Override
+    @Transactional
     public void remove(Long id) {
-        Creator creator = entityManager.find(Creator.class, id);
-        Contact contact = creator.getContact();
-
-        if (contact != null) {
-            creator.removeContact(contact);
-            Contact contactFromDb = entityManager.find(Contact.class, contact.getId());
-            if (contactFromDb.getPublisher() == null && contactFromDb.getAccount() == null && contactFromDb.getSeller() == null)
-                entityManager.remove(contactFromDb);
-        }
+        Creator creator = em.find(Creator.class, id);
 
         for (Game game : creator.getGames()) {
             game.removeCreator(creator);
         }
-
-        entityManager.remove(creator);
+        em.remove(creator);
     }
 
     @Override
-    public void removeContact(Long creatorId, Long contactId) {
-        Creator creator = entityManager.find(Creator.class, creatorId);
-        Contact contact = entityManager.find(Contact.class, contactId);
-
-        if (contact != null
-                && creator != null
-                && creator.getContact() == contact) {
-            creator.removeContact(contact);
-            entityManager.remove(contact);
+    @Transactional
+    public Creator removeContact(Long pId) {
+        Creator c = em.find(Creator.class, pId);
+        if (c != null) {
+            c.setContact(null);
+            return c;
+        } else {
+            throw new NotFoundException("No creator of id=" + pId + " found");
         }
     }
 
     @Override
     public List<CreatorNameDto> findNames() {
-        TypedQuery<CreatorNameDto> q = entityManager.createQuery(
-                "SELECT new org.motoc.gamelibrary.dto.CreatorNameDto(c.firstName, c.lastName) FROM Creator as c",
+        TypedQuery<CreatorNameDto> q = em.createQuery(
+                "SELECT new org.motoc.gamelibrary.domain.dto.CreatorNameDto(c.firstName, c.lastName) FROM Creator as c",
                 CreatorNameDto.class);
         return q.getResultList();
     }

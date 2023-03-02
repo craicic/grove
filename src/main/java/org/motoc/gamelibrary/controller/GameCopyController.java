@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.GameCopyService;
-import org.motoc.gamelibrary.dto.GameCopyDto;
+import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.mapper.GameCopyMapper;
+import org.motoc.gamelibrary.service.GameCopyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

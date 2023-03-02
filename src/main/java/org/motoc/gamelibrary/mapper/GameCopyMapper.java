@@ -3,8 +3,12 @@ package org.motoc.gamelibrary.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.GameCopyDto;
-import org.motoc.gamelibrary.model.GameCopy;
+import org.motoc.gamelibrary.domain.dto.GameCopyDto;
+import org.motoc.gamelibrary.domain.dto.PublisherDto;
+import org.motoc.gamelibrary.domain.dto.SellerDto;
+import org.motoc.gamelibrary.domain.model.GameCopy;
+import org.motoc.gamelibrary.domain.model.Publisher;
+import org.motoc.gamelibrary.domain.model.Seller;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -18,7 +22,8 @@ public interface GameCopyMapper {
         return page.map(this::copyToDto);
     }
 
-
+    @Mapping(target = "game", ignore = true)
+    @Mapping(target = "loans", ignore = true)
     GameCopy dtoToCopy(GameCopyDto dto);
 
     @Mapping(source = "game.id", target = "gameId")
@@ -26,4 +31,12 @@ public interface GameCopyMapper {
     GameCopyDto copyToDto(GameCopy copy);
 
     List<GameCopyDto> copiesToDto(List<GameCopy> copy);
+
+    @Mapping(target = "lowerCaseName", ignore = true)
+    @Mapping(target = "gameCopies", ignore = true)
+    Seller dtoToSeller(SellerDto dto);
+
+    @Mapping(target = "lowerCaseName", ignore = true)
+    @Mapping(target = "copies", ignore = true)
+    Publisher dtoToPublisher(PublisherDto publisher);
 }

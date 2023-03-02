@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.model.*;
+import org.motoc.gamelibrary.domain.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,7 +12,15 @@ import java.util.List;
  */
 public interface GameFragmentRepository {
 
-    Page<Game> findOverview(String keyword, Pageable pageable);
+    /**
+     * Finds an overview of {@link Game} entities based on a search keyword.
+     * The overview includes the game's categories, images, game copies and creators.
+     *
+     * @param keyword  The search keyword to use for filtering the games
+     * @param pageable The pagination information for the result set
+     * @return A {@link Page} of {@link Game} entities that match the search keyword
+     */
+    Page<Game> findGamesByKeyword(String keyword, Pageable pageable);
 
     /**
      * Get all Games' name in a custom DTO

@@ -1,17 +1,7 @@
 package org.motoc.gamelibrary.technical.properties;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
-@ConfigurationProperties(prefix = "openapi")
-@ConstructorBinding
-@AllArgsConstructor
-@Getter
-public class OpenApiProperties {
-
-    private final String projectTitle;
-    private final String projectDescription;
-    private final String projectVersion;
+@ConfigurationProperties("openapi")
+public record OpenApiProperties(String projectTitle, String projectDescription, String projectVersion) {
 }

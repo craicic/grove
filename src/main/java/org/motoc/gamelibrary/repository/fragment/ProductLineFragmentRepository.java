@@ -1,7 +1,9 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.dto.ProductLineNameDto;
+import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
+import org.motoc.gamelibrary.domain.model.ProductLine;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -18,4 +20,7 @@ public interface ProductLineFragmentRepository {
      * Get all Product line's name in a custom DTO
      */
     List<ProductLineNameDto> findNames();
+
+    @Transactional
+    ProductLine saveProductLine(ProductLine p);
 }

@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.repository.fragment;
 
-import org.motoc.gamelibrary.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.model.Publisher;
 
 import java.util.List;
 
@@ -15,12 +16,16 @@ public interface PublisherFragmentRepository {
     void remove(Long id);
 
     /**
-     * Removes a contact from a publisher, then delete the contact.
+     * Removes a contact from a publisher.
+     *
+     * @Return Publisher for service logging.
      */
-    void removeContact(Long publisherId, Long contactId);
+    Publisher removeContact(Long publisherId);
 
     /**
      * Get all Publisher's name in a custom DTO
      */
     List<PublisherNameDto> findNames();
+
+    Publisher savePublisher(Publisher p);
 }

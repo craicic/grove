@@ -31,8 +31,13 @@ build/
 ### VS Code ###
 .vscode/
 
+### SECRETS ####
+secrets.properties
+
+#### DOCKER ###
+/docker/
+
 ### Custom ###
-application.properties
-*.sql
+!*.sql
 !/src/main/resources/*.sql
-/src/main/resources/static/*
+!/src/main/resources/static/*

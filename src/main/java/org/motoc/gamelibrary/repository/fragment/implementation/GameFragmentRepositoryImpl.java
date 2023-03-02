@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
-import org.motoc.gamelibrary.model.*;
+import org.motoc.gamelibrary.domain.model.*;
 import org.motoc.gamelibrary.repository.fragment.GameFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +31,13 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     }
 
     @Override
-    public Page<Game> findOverview(String keyword, Pageable pageable) {
+    public Page<Game> findGamesByKeyword(String keyword, Pageable pageable) {
 
         String searchQuery = "SELECT g FROM Game as g " +
-                " WHERE g.id IN (:ids) ORDER BY g.name ";
+                             " WHERE g.id IN (:ids) ORDER BY g.name ";
 
         String idQuery = "SELECT g.id FROM Game as g" +
-                " WHERE (g.lowerCaseName LIKE CONCAT('%', LOWER(:keyword), '%'))";
+                         " WHERE (g.lowerCaseName LIKE CONCAT('%', LOWER(:keyword), '%'))";
 
         TypedQuery<Long> idQ = entityManager.createQuery(idQuery, Long.class);
 
@@ -75,7 +75,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
             game.addExpansion(expansion);
         }
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -83,7 +83,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game addExpansion(Game game, Game expansion) {
         game.addExpansion(expansion);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -91,7 +91,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game addProductLine(Game game, ProductLine productLine) {
         game.addProductLine(productLine);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -99,7 +99,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game removeProductLine(Game game, ProductLine productLine) {
         game.removeProductLine(productLine);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -107,7 +107,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Game addCoreGame(Game game, Game coreGame) {
         game.addCoreGame(coreGame);
         entityManager.persist(game);
-        logger.info("Successfully persisted game of id={}", game.getId());
+        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
         return game;
     }
 
@@ -187,5 +187,4 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
         entityManager.persist(game);
 
     }
-
 }
