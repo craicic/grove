@@ -4,7 +4,7 @@ A tool for game libraries
 
 ## Project description
 
-The purpose is to create a tool for a french game-library. The project is being design around this particular client
+The purpose is to create a tool for a French game-library. The project is being design around this particular client
 use cases.
 
 The project is composed by a REST API (this repo) and
@@ -61,17 +61,17 @@ Then run : `java -jar \target\game-library-1.0.1.jar`. The version may vary.
 
 ## Current version
 
-#### 1.0.1
-
-This version is the first release of Game Library.
-
-## Upcoming version
-
 #### 1.1.0
 
 Reworked several aspects of the repository\
 Removed Keycloak
-Test now uses TestContainers.
+Tests now uses TestContainers.
+
+## Upcoming version
+
+#### 1.2.0
+
+Reworks documentation and code.
 
 ## Changelog
 
