@@ -5,8 +5,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.*;
-import org.motoc.gamelibrary.model.*;
+import org.motoc.gamelibrary.domain.dto.*;
+import org.motoc.gamelibrary.domain.model.*;
 import org.springframework.data.domain.Page;
 
 import java.util.HashSet;

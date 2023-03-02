@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.ProductLineService;
-import org.motoc.gamelibrary.dto.ProductLineDto;
-import org.motoc.gamelibrary.dto.ProductLineNameDto;
+import org.motoc.gamelibrary.domain.dto.ProductLineDto;
+import org.motoc.gamelibrary.domain.dto.ProductLineNameDto;
 import org.motoc.gamelibrary.mapper.ProductLineMapper;
+import org.motoc.gamelibrary.service.ProductLineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,10 @@
 package org.motoc.gamelibrary.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.motoc.gamelibrary.dto.CategoryDto;
-import org.motoc.gamelibrary.model.Category;
+import org.motoc.gamelibrary.domain.dto.CategoryDto;
+import org.motoc.gamelibrary.domain.model.Category;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface CategoryMapper {
 
     List<CategoryDto> categoriesToDto(List<Category> categories);
 
+    @Mapping(target = "lowerCaseName", ignore = true)
+    @Mapping(target = "games", ignore = true)
     Category dtoToCategory(CategoryDto categoryDto);
 
     CategoryDto categoryToDto(Category category);

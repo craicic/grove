@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.LoanService;
-import org.motoc.gamelibrary.dto.LoanDto;
+import org.motoc.gamelibrary.domain.dto.LoanDto;
 import org.motoc.gamelibrary.mapper.LoanMapper;
+import org.motoc.gamelibrary.service.LoanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +58,13 @@ public class LoanController {
     /**
      * Create a new Loan, no body used here but request params
      */
-    @PostMapping("/admin/loans")
-    LoanDto save(@RequestParam(name = "accountId") long accountId,
-                 @RequestParam(name = "gameCopyId") long gameCopyId) {
-        logger.trace("save(loan) called");
-        return mapper.loanToDto(
-                service.checkAndSave(accountId, gameCopyId));
-    }
+//    @PostMapping("/admin/loans")
+//    LoanDto save(@RequestParam(name = "accountId") long accountId,
+//                 @RequestParam(name = "gameCopyId") long gameCopyId) {
+//        logger.trace("save(loan) called");
+//        return mapper.loanToDto(
+//                service.checkAndSave(accountId, gameCopyId));
+//    }
 
     /**
      * Close a loan if exist !

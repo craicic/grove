@@ -1,8 +1,9 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.ThemeService;
-import org.motoc.gamelibrary.dto.ThemeDto;
+import org.motoc.gamelibrary.domain.dto.ThemeDto;
+import org.motoc.gamelibrary.domain.dto.ThemeNameDto;
 import org.motoc.gamelibrary.mapper.ThemeMapper;
+import org.motoc.gamelibrary.service.ThemeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +31,6 @@ public class ThemeController {
     public ThemeController(ThemeService service) {
         this.service = service;
         this.mapper = ThemeMapper.INSTANCE;
-    }
-
-    // TODO remove
-    @GetMapping(path = {"/"})
-    String tempHome() {
-        return "You're at index";
-    }
-
-    // TODO remove
-    @GetMapping(path = {"/user"})
-    String tempUser() {
-        return "You're on the user page";
-    }
-
-    // TODO remove
-    @GetMapping(path = {"/admin"})
-    String tempAdmin() {
-        return "You're on the admin page";
     }
 
     @GetMapping("/admin/themes/count")
@@ -82,9 +65,9 @@ public class ThemeController {
 
 
     @PostMapping("/admin/themes")
-    ThemeDto save(@RequestBody @Valid ThemeDto theme) {
+    ThemeDto save(@RequestBody @Valid ThemeNameDto themeNameDto) {
         logger.trace("save(theme) called");
-        return mapper.themeToDto(service.save(mapper.dtoToTheme(theme)));
+        return mapper.themeToDto(service.save(mapper.themeNameDtoToTheme(themeNameDto)));
     }
 
     @PutMapping("/admin/themes/{id}")

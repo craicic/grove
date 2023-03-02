@@ -1,9 +1,9 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.GameService;
-import org.motoc.gamelibrary.dto.GameDto;
-import org.motoc.gamelibrary.dto.GameOverviewDto;
+import org.motoc.gamelibrary.domain.dto.GameDto;
+import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
 import org.motoc.gamelibrary.mapper.GameMapper;
+import org.motoc.gamelibrary.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,12 +61,11 @@ public class GameController {
 
     @GetMapping("/admin/games/page/overview")
     Page<GameOverviewDto> findPagedOverview(Pageable pageable,
-                                            @RequestParam(name = "search", required = false) String keyword) {
+                                            @RequestParam(name = "search", required = false, defaultValue = "")
+                                            String keyword) {
         logger.trace("findPagedOverview(pageable) called");
-        if (keyword != null)
-            return mapper.pageToOverviewDto(service.findPagedOverview(pageable, keyword));
-        else
-            return mapper.pageToOverviewDto(service.findPagedOverview(pageable));
+        return mapper.pageToOverviewDto(service.findPagedOverview(pageable, keyword));
+
     }
 
     @PostMapping("/admin/games")

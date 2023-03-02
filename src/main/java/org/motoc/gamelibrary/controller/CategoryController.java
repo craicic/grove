@@ -1,8 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.business.CategoryService;
-import org.motoc.gamelibrary.dto.CategoryDto;
+import org.motoc.gamelibrary.domain.dto.CategoryDto;
 import org.motoc.gamelibrary.mapper.CategoryMapper;
+import org.motoc.gamelibrary.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

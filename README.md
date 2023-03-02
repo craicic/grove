@@ -1,72 +1,77 @@
-# Game Library Service [![Build Status](https://travis-ci.org/xxjokerx/game-library-service.svg?branch=master)](https://travis-ci.org/xxjokerx/game-library-service)
+# Grove. A Game Library Service
 
 A tool for game libraries
 
 ## Project description
 
-The purpose is to create a tool for a french game-library. The project is being design around this particular client
+The purpose is to create a tool for a French game-library. The project is being design around this particular client
 use cases.
 
-The project is composed by a web service (this repo) and an [Angular web client](https://github.com/xxjokerx/game-library-webapp).
+The project is composed by a REST API (this repo) and
+an [Angular web client](https://github.com/xxjokerx/game-library-webapp).
 
 
 ## Technologies
 
 The project was set up with [Spring initializr](https://start.spring.io/).
-It will consume a PostgreSQL 9.6 database.
-The user session, login / logout, security and more are delegated to a [Keycloak](https://www.keycloak.org/) service.
-
+It will consume a PostgreSQL database.
 
 
 ## Deployment
 
 ##### 1 - Prepare Java Development Kit, PostgreSQL and Maven
-Download and [install JDK](https://adoptopenjdk.net/) version 11. 
 
-Install [postgreSQL9](https://www.postgresql.org/download/) and pgAdmin 4, remember the user/password you set during the installation\
+Download and [install JDK](https://adoptium.net/) version 17.
+
+Install [postgreSQL 15](https://www.postgresql.org/download/) and pgAdmin, remember the user/password you set during the
+installation\
 Run pgAdmin 4, go to Server/PostgreSQL right click Login/Group Roles and Create a new one.
 Fill the username in general, in Definition enter a password. In Privileges enable 'can login?' and 'create database'.
 
 Download and [install Maven](https://maven.apache.org/install.html).
 
-##### 2 - Deploy keycloak server
-Follow this guide : [Deploy and configure Keycloak](./KEYCLAOK.md)
+##### 2 - Create the database
 
-##### 3 - Create the database
-Run SQL Shell (psql), press enter 3 times then fill username and password. Then type : `CREATE DATABASE YOUR-DB-NAME WITH OWNER = YOUR-USERNAME;`.  
+Run SQL Shell (psql), press enter 3 times then fill username and password. Then
+type : `CREATE DATABASE YOUR-DB-NAME WITH OWNER = YOUR-USERNAME;`.  
 You can either do this step via pgAdmin 4.
 
-##### 4 - Import the project
+##### 3 - Import the project
+
 Download or clone this repository.
 
-##### 5 - Rename application.properties.placeholder
-Full path is `src/main/resources/application.properties.placeholder`.  
-Rename it into `application.properties`.
+##### 4 - Add secrets.properties file
 
-##### 6 - Configure application.properties
-Edit this file, you have 4 fields to complete.  
+In `src/main/resources`. create a file named `secrets.properties`.
+It has to contain the following lines
 
-In section DATA SOURCE : `spring.datasource.url`, `spring.datasource.username` & `spring.datasource.password`.  
-In section SECURITY / KEYCLOAK : `keycloak.credentials.secret`.
+```properties
+spring.datasource.username=YOUR-USERNAME
+spring.datasource.password=YOUR-PASSWORD
+```
 
-##### 7 - Compile and run the application
+Replace YOUR-USERNAME and YOUR-PASSWORD with value you set in set 1.
+
+##### 5 - Compile and run the application
 
 With a prompt in project root folder, run : `mvn package`. It will create a Target folder that contains your JAR.  
-Then run : `java -jar \target\game-library-0.3.0-ALPHA.jar`. The version may vary.
+Then run : `java -jar \target\game-library-1.0.1.jar`. The version may vary.
 
 *And it's done : the program will be launched through the embedded tomcat server using port 8080.*
 
 ## Current version
 
-#### 1.0.1
+#### 1.1.0
 
-This version is the first release of Game Library.
+Reworked several aspects of the repository\
+Removed Keycloak
+Tests now uses TestContainers.
 
 ## Upcoming version
 
-#### 1.1.0-BETA
+#### 1.2.0
 
-More realistic loan rules. Update most dependencies version.
+Reworks documentation and code.
 
 ## Changelog
 

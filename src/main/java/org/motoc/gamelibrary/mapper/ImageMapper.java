@@ -8,4 +8,5 @@ import org.mapstruct.factory.Mappers;
 public interface ImageMapper {
 
     ImageMapper INSTANCE = Mappers.getMapper(ImageMapper.class);
+
 }
