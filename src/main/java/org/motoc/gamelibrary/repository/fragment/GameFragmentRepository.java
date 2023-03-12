@@ -4,7 +4,6 @@ import org.motoc.gamelibrary.domain.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -27,22 +26,14 @@ public interface GameFragmentRepository {
      */
     List<String> findNames();
 
-    Game addExpansions(Game game, @NotNull List<Game> expansions);
-
-    Game addCoreGame(Game game, @NotNull Game coreGame);
-
-    void removeCoreGame(Game game);
-
-    void removeExpansion(Game game, Game expansion);
-
     Game addCategory(Game game, Category category);
 
     Game removeCategory(Game game, Category category);
 
 
-    Game addTheme(Game game, Theme theme);
+    Game addMechanism(Game game, Mechanism mechanism);
 
-    Game removeTheme(Game game, Theme theme);
+    Game removeMechanism(Game game, Mechanism mechanism);
 
 
     Game addGameCopy(Game game, GameCopy gameCopy);
@@ -56,9 +47,5 @@ public interface GameFragmentRepository {
 
     void attachImage(Game game, Image image);
 
-    Game addExpansion(Game game, Game expansion);
 
-    Game addProductLine(Game game, ProductLine productLine);
-
-    Game removeProductLine(Game game, ProductLine productLine);
 }

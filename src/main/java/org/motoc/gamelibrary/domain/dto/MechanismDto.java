@@ -9,13 +9,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * Theme's DTO
+ * Mechanism's DTO
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ThemeDto {
+public class MechanismDto {
 
     private Long id;
 

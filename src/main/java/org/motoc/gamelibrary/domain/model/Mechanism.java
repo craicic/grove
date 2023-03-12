@@ -10,38 +10,38 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A game theme
+ * A game mechanism
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "theme", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
-public class Theme {
+@Table(name = "mechanism", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_title"))
+public class Mechanism {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "theme_seq_gen")
-    @SequenceGenerator(name = "theme_seq_gen", sequenceName = "theme_sequence", initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mechanism_seq_gen")
+    @SequenceGenerator(name = "mechanism_seq_gen", sequenceName = "mechanism_sequence", initialValue = 1)
     private Long id;
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 50, message = "Name cannot exceed 50")
     @Column(nullable = false, length = 50)
-    private String name;
+    private String title;
 
     @ToString.Exclude
-    @Column(name = "lower_case_name", nullable = false, length = 50)
-    private String lowerCaseName;
+    @Column(name = "lower_case_title", nullable = false, length = 50)
+    private String lowerCaseTitle;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "themes")
+    @ManyToMany(mappedBy = "mechanisms")
     private Set<Game> games = new HashSet<>();
 
     // Other constructors
-    public Theme(Long id, String name) {
+    public Mechanism(Long id, String title) {
         this.id = id;
-        this.name = name;
+        this.title = title;
     }
 
 
@@ -53,17 +53,17 @@ public class Theme {
     @PrePersist
     @PreUpdate
     public void toLowerCase() {
-        this.lowerCaseName = name != null ? name.toLowerCase() : null;
+        this.lowerCaseTitle = title != null ? title.toLowerCase() : null;
     }
 
     public void addGame(Game game) {
         games.add(game);
-        game.getThemes().add(this);
+        game.getMechanisms().add(this);
     }
 
     public void removeGame(Game game) {
         games.remove(game);
-        game.getThemes().remove(this);
+        game.getMechanisms().remove(this);
     }
 }
 

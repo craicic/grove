@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name", name = "unique_cat"))
+@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_title", name = "unique_cat"))
 public class Category {
 
     @Id
@@ -23,14 +23,14 @@ public class Category {
     @SequenceGenerator(name = "category_seq_gen", sequenceName = "category_sequence", initialValue = 1)
     private Long id;
 
-    @NotBlank(message = "Name cannot be null or blank")
+    @NotBlank(message = "Title cannot be null or blank")
     @Size(max = 50, message = "Name cannot exceed 50")
     @Column(nullable = false, length = 50)
-    private String name;
+    private String title;
 
     @ToString.Exclude
-    @Column(name = "lower_case_name", nullable = false, length = 50)
-    private String lowerCaseName;
+    @Column(name = "lower_case_title", nullable = false, length = 50)
+    private String lowerCaseTitle;
 
 
     @ToString.Exclude
@@ -46,7 +46,7 @@ public class Category {
     @PrePersist
     @PreUpdate
     public void toLowerCase() {
-        this.lowerCaseName = name != null ? name.toLowerCase() : null;
+        this.lowerCaseTitle = title != null ? title.toLowerCase() : null;
     }
 
     public void addGame(Game game) {

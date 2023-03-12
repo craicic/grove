@@ -28,7 +28,7 @@ public interface LoanMapper {
 
 
     @Mapping(source = "game.id", target = "gameId")
-    @Mapping(source = "game.name", target = "gameName")
+    @Mapping(source = "game.title", target = "gameTitle")
     GameCopyDto copyToDto(GameCopy copy);
 
     @Mapping(target = "gameCopyId", source = "gameCopy.id")

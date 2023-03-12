@@ -2,8 +2,8 @@ package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.junit.jupiter.api.*;
 import org.motoc.gamelibrary.AbstractContainerBaseIT;
-import org.motoc.gamelibrary.domain.model.Theme;
-import org.motoc.gamelibrary.repository.jpa.ThemeRepository;
+import org.motoc.gamelibrary.domain.model.Mechanism;
+import org.motoc.gamelibrary.repository.jpa.MechanismRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ThemeRepositoryRearmedIT extends AbstractContainerBaseIT {
+class MechanismRepositoryRearmedIT extends AbstractContainerBaseIT {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -38,29 +38,29 @@ class ThemeRepositoryRearmedIT extends AbstractContainerBaseIT {
     @Autowired
     private EntityManagerFactory emf;
 
-    private static final Logger logger = LoggerFactory.getLogger(ThemeRepositoryRearmedIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(MechanismRepositoryRearmedIT.class);
 
     @Autowired
-    private ThemeRepository repository;
+    private MechanismRepository repository;
 
     private static final Long tId = 1L;
 
 
     @Test
     @Order(1)
-    void whenSaveTheme_ThenReturnExpectedTheme() {
-        final String tName = "Cthulhu";
-        Theme t = new Theme();
-        t.setName(tName);
-        t = repository.saveTheme(t);
+    void whenSaveMechanism_ThenReturnExpectedMechanism() {
+        final String mTitle = "Cthulhu";
+        Mechanism t = new Mechanism();
+        t.setTitle(mTitle);
+        t = repository.saveMechanism(t);
 
-        assertThat(t.getName()).isEqualTo(tName);
-        assertThat(t.getLowerCaseName()).isEqualTo(tName.toLowerCase());
+        assertThat(t.getTitle()).isEqualTo(mTitle);
+        assertThat(t.getLowerCaseTitle()).isEqualTo(mTitle.toLowerCase());
     }
 
     @Test
     @Order(2)
-    void whenDeleteTheme_ThenThemeCountDecreaseBy1() {
+    void whenDeleteMechanism_ThenMechanismCountDecreaseBy1() {
         final long preDeleteCount = repository.count();
         repository.remove(tId);
         final long postDeleteCount = repository.count();
@@ -71,14 +71,14 @@ class ThemeRepositoryRearmedIT extends AbstractContainerBaseIT {
     @Test
     @Disabled
     @Order(3)
-    void persistLotsOfThemes() {
+    void persistLotsOfMechanisms() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
         for (int i = 0; i < 51; i++) {
-            Theme t = new Theme();
-            t.setName("theme" + i);
-            em.persist(t);
+            Mechanism m = new Mechanism();
+            m.setTitle("mechanism" + i);
+            em.persist(m);
         }
 
         logger.info("Commit transaction");
@@ -86,26 +86,26 @@ class ThemeRepositoryRearmedIT extends AbstractContainerBaseIT {
 
         em.getTransaction().begin();
 
-        TypedQuery<Theme> tq = em.createQuery("SELECT t FROM Theme AS t", Theme.class);
+        TypedQuery<Mechanism> tq = em.createQuery("SELECT m FROM Mechanism AS m", Mechanism.class);
         em.getTransaction().commit();
-        List<Theme> themes = tq.getResultList();
+        List<Mechanism> mechanisms = tq.getResultList();
 
 
-        for (Theme t : themes) {
-            logger.debug("theme:" + t.getName() + " of id=" + t.getId());
+        for (Mechanism m : mechanisms) {
+            logger.debug("mechanism:" + m.getTitle() + " of id=" + m.getId());
         }
     }
 
     @Test
     @Order(4)
-    void whenSaveAlreadyExistingTheme_ThenThrowADataIntegrityViolationException() {
+    void whenSaveAlreadyExistingMechanism_ThenThrowADataIntegrityViolationException() {
         EntityManager em = emf.createEntityManager();
-        Theme t = new Theme();
+        Mechanism m = new Mechanism();
         em.getTransaction().begin();
-        t.setName(em.find(Theme.class, 1L).getName());
+        m.setTitle(em.find(Mechanism.class, 1L).getTitle());
         em.getTransaction().commit();
         em.close();
-        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.saveTheme(t));
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> repository.saveMechanism(m));
 
         assertThat(exception.getClass()).isEqualTo(DataIntegrityViolationException.class);
     }

@@ -57,6 +57,6 @@ public class GameCopyDto {
     private PublisherDto publisher;
 
     private Long gameId;
-    private String gameName;
+    private String gameTitle;
 
 }

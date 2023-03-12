@@ -30,11 +30,11 @@ class CategoryServiceTest {
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName(parentName);
+//        parent.setTitle(parentName);
 //
 //        Category category = new Category();
 //        category.setId(id);
-//        category.setName(name);
+//        category.setTitle(name);
 //        category.setParent(parent);
 //
 //        parent.getChildren().add(category);
@@ -56,15 +56,15 @@ class CategoryServiceTest {
 //
 //        Category toBeReplaced = new Category();
 //        toBeReplaced.setId(id);
-//        toBeReplaced.setName(nameToBeReplaced);
+//        toBeReplaced.setTitle(nameToBeReplaced);
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName(parentName);
+//        parent.setTitle(parentName);
 //
 //        Category category = new Category();
 //        category.setId(id);
-//        category.setName(name);
+//        category.setTitle(name);
 //        category.setParent(parent);
 //
 //        parent.getChildren().add(category);
@@ -95,7 +95,7 @@ class CategoryServiceTest {
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //        category.setParent(child);
 //
 //        when(repository.findById(catId)).thenReturn(Optional.of(category));
@@ -114,13 +114,13 @@ class CategoryServiceTest {
 //
 //        Category child = new Category();
 //        child.setId(1L);
-//        child.setName("Refléxion");
+//        child.setTitle("Refléxion");
 //        child.setParent(childParent);
 //
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //        List<Category> children = Arrays.asList(child);
 //
@@ -141,13 +141,13 @@ class CategoryServiceTest {
 //
 //        Category child = new Category();
 //        child.setId(1L);
-//        child.setName("Refléxion");
+//        child.setTitle("Refléxion");
 //        child.getChildren().add(childChild);
 //
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //        List<Category> children = Arrays.asList(child);
 //
@@ -166,7 +166,7 @@ class CategoryServiceTest {
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //
 //        when(repository.findById(catId)).thenReturn(Optional.of(category));
@@ -182,11 +182,11 @@ class CategoryServiceTest {
 //
 //        Category child = new Category();
 //        child.setId(1L);
-//        child.setName("Refléxion");
+//        child.setTitle("Refléxion");
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //        List<Category> children = Arrays.asList(child);
 //
@@ -195,7 +195,7 @@ class CategoryServiceTest {
 //
 //        Category toReturn = new Category();
 //        toReturn.setId(category.getId());
-//        toReturn.setName(category.getName());
+//        toReturn.setTitle(category.getTitle());
 //        toReturn.getChildren().add(child);
 //
 //        when(repositoryCustom.saveWithChildren(children, category)).thenReturn(toReturn);
@@ -209,7 +209,7 @@ class CategoryServiceTest {
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName("Refléxion");
+//        parent.setTitle("Refléxion");
 //
 //
 //        when(repository.findById(parentId)).thenReturn(Optional.empty());
@@ -226,11 +226,11 @@ class CategoryServiceTest {
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName("Refléxion");
+//        parent.setTitle("Refléxion");
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //
 //        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
@@ -238,7 +238,7 @@ class CategoryServiceTest {
 //
 //        parent.getChildren().add(category);
 //
-//        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category : " + parent.getName() + " is already the parent of " + category.getName());
+//        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category : " + parent.getTitle() + " is already the parent of " + category.getTitle());
 //
 //    }
 //
@@ -249,11 +249,11 @@ class CategoryServiceTest {
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName("Refléxion");
+//        parent.setTitle("Refléxion");
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
 //        when(repository.findById(catId)).thenReturn(Optional.of(category));
@@ -271,18 +271,18 @@ class CategoryServiceTest {
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName("Refléxion");
+//        parent.setTitle("Refléxion");
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
 //        when(repository.findById(catId)).thenReturn(Optional.of(category));
 //
 //        category.getChildren().add(parent);
 //
-//        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category " + category.getName() + " has at least one child : it can't have a parent");
+//        assertThatThrownBy(() -> service.addParent(parentId, catId)).hasMessageContaining("Category " + category.getTitle() + " has at least one child : it can't have a parent");
 //    }
 //
 //    @Test
@@ -292,18 +292,18 @@ class CategoryServiceTest {
 //
 //        Category parent = new Category();
 //        parent.setId(parentId);
-//        parent.setName("Refléxion");
+//        parent.setTitle("Refléxion");
 //
 //        Category category = new Category();
 //        category.setId(catId);
-//        category.setName("Stratégie");
+//        category.setTitle("Stratégie");
 //
 //        when(repository.findById(parentId)).thenReturn(Optional.of(parent));
 //        when(repository.findById(catId)).thenReturn(Optional.of(category));
 //
 //        Category toReturn = new Category();
 //        toReturn.setId(category.getId());
-//        toReturn.setName(category.getName());
+//        toReturn.setTitle(category.getTitle());
 //        toReturn.setParent(parent);
 //
 //        when(repositoryCustom.saveWithParent(parent, category)).thenReturn(toReturn);

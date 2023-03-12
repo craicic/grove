@@ -62,44 +62,10 @@ public class AccountService {
                     return repository.save(account);
                 });
     }
-//
-//    /**
-//     * Persist a new account by id (if a contact is associated, this one must be new)
-//     */
-//    public Account save(@Valid Account account, boolean hasContact) {
-//        if (hasContact) {
-//            long contactId = contactRepository.save(account.getContact()).getId();
-//            account.getContact().setId(contactId);
-//        }
-//        return repository.save(account);
-//    }
 
     private boolean isMembershipUp(Account account) {
         return account.getRenewalDate().isAfter(LocalDate.now());
     }
-
-//    public void checkMembership(Long accountId) {
-//        String errorMessage = "";
-//        // find active member by id
-//        // if no result throw exception
-//        Account account = this.findById(accountId);
-//
-//        if (account == null) {
-//            // todo useless??
-//            errorMessage = "No account of id=" + accountId + " found in database.";
-//            logger.warn(errorMessage);
-//            throw new NotFoundException(errorMessage);
-//        }
-//
-//        // has member got an active membership
-//        // if not throw exception
-//        boolean isUp = this.isMembershipUp(account);
-//        if (isUp) {
-//            errorMessage = "Member of accountId=" + accountId + " has an expired membership";
-//            logger.warn(errorMessage);
-//            throw new IllegalStateException(errorMessage);
-//        }
-//    }
 
 
     public List<Account> findAccountsWithNoCurrentLoan() {

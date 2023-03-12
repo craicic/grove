@@ -47,8 +47,8 @@ public class GameCopy {
 
     @PastOrPresent(message = "Date of purchase must be in the past or present")
     @NotNull(message = "Date of purchase cannot be null")
-    @Column(name = "register_date", nullable = false)
-    private LocalDate registerDate;
+    @Column(name = "date_of_registration", nullable = false)
+    private LocalDate dateOfRegistration;
 
     @NotBlank(message = "Wear condition cannot be null or blank")
     @Column(name = "wear_condition", nullable = false)
@@ -58,8 +58,8 @@ public class GameCopy {
     @Column(name = "general_state", nullable = false)
     private GeneralState generalState;
 
-    @Column(name = "is_loanable")
-    private boolean isLoanable;
+    @Column(name = "is_available_for_loan")
+    private boolean isAvailableForLoan;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -67,11 +67,6 @@ public class GameCopy {
     @JoinColumn(name = "fk_game")
     private Game game;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_seller")
-    private Seller seller;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -94,16 +89,6 @@ public class GameCopy {
     public void removeLoan(Loan loan) {
         this.loans.remove(loan);
         loan.setGameCopy(null);
-    }
-
-    public void addSeller(Seller seller) {
-        this.setSeller(seller);
-        seller.getGameCopies().add(this);
-    }
-
-    public void removeSeller(Seller seller) {
-        this.setSeller(null);
-        seller.getGameCopies().remove(this);
     }
 
     public void addPublisher(Publisher publisher) {

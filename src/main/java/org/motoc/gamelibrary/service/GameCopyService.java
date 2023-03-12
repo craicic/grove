@@ -2,10 +2,8 @@ package org.motoc.gamelibrary.service;
 
 import org.motoc.gamelibrary.domain.model.GameCopy;
 import org.motoc.gamelibrary.domain.model.Publisher;
-import org.motoc.gamelibrary.domain.model.Seller;
 import org.motoc.gamelibrary.repository.jpa.GameCopyRepository;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
-import org.motoc.gamelibrary.repository.jpa.SellerRepository;
 import org.motoc.gamelibrary.service.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
@@ -27,7 +25,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
     private final GameCopyRepository copyRepository;
 
 
-    private final SellerRepository sellerRepository;
+
 
     private final PublisherRepository publisherRepository;
 
@@ -35,12 +33,10 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
 
     public GameCopyService(JpaRepository<GameCopy, Long> genericRepository,
                            GameCopyRepository copyRepository,
-                           SellerRepository sellerRepository,
                            PublisherRepository publisherRepository) {
         super(genericRepository, GameCopy.class);
         this.gameCopyToReturn = null;
         this.copyRepository = copyRepository;
-        this.sellerRepository = sellerRepository;
         this.publisherRepository = publisherRepository;
     }
 
@@ -64,7 +60,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                     copy.setDateOfPurchase(newCopy.getDateOfPurchase());
                     copy.setWearCondition(newCopy.getWearCondition());
                     copy.setGeneralState(newCopy.getGeneralState());
-                    copy.setLoanable(newCopy.isLoanable());
+                    copy.setAvailableForLoan(newCopy.isAvailableForLoan());
                     logger.debug("Found game copy of id={}, proceeding to its edit", id);
                     return copyRepository.save(copy);
                 })
@@ -75,51 +71,9 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                 });
     }
 
-    public GameCopy addSeller(Long copyId, Long sellerId) {
-        Seller seller = sellerRepository
-                .findById(sellerId)
-                .orElseThrow(() -> {
-                            throw new NotFoundException("No Seller of id=" + sellerId + " found.");
-                        }
-                );
-        return copyRepository
-                .findById(copyId)
-                .map(copy -> {
-                    if (copy.getSeller() == seller)
-                        logger.warn("Game copy of id=" + copy.getId() +
-                                " is already linked to the given publisher of id=" + seller.getId());
-                    if (copy.getSeller() != null)
-                        throw new IllegalStateException("Game copy of id=" + copy.getId() +
-                                " is already linked to another seller of id=" + copy.getSeller().getId());
-                    return copyRepository.addSeller(copy, seller);
-                })
-                .orElseThrow(() -> {
-                            throw new NotFoundException("No copy of id=" + copyId + " found.");
-                        }
-                );
-    }
 
-    public GameCopy removeSeller(Long copyId, Long sellerId) {
-        this.gameCopyToReturn = null;
 
-        Seller seller = sellerRepository.findById(sellerId).orElseThrow(() -> {
-                    throw new NotFoundException("No seller of id={}" + sellerId + " found.");
-                }
-        );
 
-        copyRepository
-                .findById(copyId)
-                .ifPresentOrElse(copy -> {
-                    if (copy.getSeller() == null || copy.getSeller() != seller)
-                        throw new IllegalStateException("Copy of id=" + copy.getId() +
-                                " is not linked to seller of id=" + seller.getId());
-
-                    this.gameCopyToReturn = copyRepository.removeSeller(copy, seller);
-                }, () -> {
-                    throw new NotFoundException("No copy of id=" + copyId + " found.");
-                });
-        return this.gameCopyToReturn;
-    }
 
     public GameCopy addPublisher(Long copyId, Long publisherId) {
         Publisher publisher = publisherRepository
@@ -180,7 +134,7 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
 
         // check if game has marker 'loanable'
         // if not throw exception
-        if (!gc.isLoanable()) {
+        if (!gc.isAvailableForLoan()) {
             errorMessage = "Game copy of id=" + gameCopyId + " is set to Not Loanable";
             logger.warn(errorMessage);
             throw new IllegalStateException(errorMessage);

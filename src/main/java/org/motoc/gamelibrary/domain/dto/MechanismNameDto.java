@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ThemeNameDto {
+public class MechanismNameDto {
     private String name;
 }

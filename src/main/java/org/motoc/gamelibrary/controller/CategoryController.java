@@ -19,7 +19,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class CategoryController {
-    private static final Logger logger = LoggerFactory.getLogger(ProductLineController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     private final CategoryService service;
 

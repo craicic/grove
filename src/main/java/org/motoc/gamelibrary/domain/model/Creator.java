@@ -30,13 +30,14 @@ public class Creator {
     @Column(length = 50)
     private String firstName;
 
-    @Embedded
-    private Contact contact;
 
     @NotBlank(message = "Last name cannot be null or blank")
     @Size(max = 50, message = "Last name should not exceed 50 characters")
     @Column(nullable = false, length = 50)
     private String lastName;
+
+    @Embedded
+    private Contact contact;
 
     @ToString.Exclude
     @Column(name = "lower_case_first_name", length = 50)

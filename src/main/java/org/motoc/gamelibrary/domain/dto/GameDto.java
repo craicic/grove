@@ -78,8 +78,6 @@ public class GameDto {
     private String size;
 
 
-    private ProductLineDto productLine;
-
     private PublisherNameAndIdDto publisher;
 
     @ToString.Exclude
@@ -90,7 +88,7 @@ public class GameDto {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Valid
-    private Set<ThemeDto> themes = new HashSet<>();
+    private Set<MechanismDto> mechanisms = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
