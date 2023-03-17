@@ -1,5 +1,64 @@
-DROP SCHEMA IF EXISTS public CASCADE;
-CREATE SCHEMA public;
+drop table if exists public.administrator cascade;
+
+drop table if exists public.image_blob cascade;
+
+drop table if exists public.image cascade;
+
+drop table if exists public.loan cascade;
+
+drop table if exists public.account cascade;
+
+drop table if exists public.loan_status cascade;
+
+drop table if exists public.reservation cascade;
+
+drop table if exists public.game_category cascade;
+
+drop table if exists public.category cascade;
+
+drop table if exists public.game_copy_pre_reservation cascade;
+
+drop table if exists public.game_copy cascade;
+
+drop table if exists public.pre_reservation cascade;
+
+drop table if exists public.publisher cascade;
+
+drop table if exists public.game_creator cascade;
+
+drop table if exists public.creator cascade;
+
+drop table if exists public.game_mechanism cascade;
+
+drop table if exists public.game cascade;
+
+drop table if exists public.mechanism cascade;
+
+
+
+drop sequence if exists public.account_sequence;
+
+drop sequence if exists public.category_sequence;
+
+drop sequence if exists public.creator_sequence;
+
+drop sequence if exists public.game_copy_sequence;
+
+drop sequence if exists public.game_sequence;
+
+drop sequence if exists public.image_sequence;
+
+drop sequence if exists public.loan_sequence;
+
+drop sequence if exists public.loan_status_sequence;
+
+drop sequence if exists public.mechanism_sequence;
+
+drop sequence if exists public.pre_reservation_sequence;
+
+drop sequence if exists public.publisher_sequence;
+
+
 
 create table public.account
 (
@@ -17,6 +76,12 @@ create table public.account
     membership_number varchar(50)  not null,
     renewal_date      date,
     username          varchar(255) not null,
+    primary key (id)
+);
+
+create table public.administrator
+(
+    id int8 not null,
     primary key (id)
 );
 
@@ -91,6 +156,13 @@ create table public.image
     primary key (id)
 );
 
+create table public.image_blob
+(
+    content  bytea not null,
+    image_id int8  not null,
+    primary key (image_id)
+);
+
 create table public.loan
 (
     id              int8    not null,
@@ -119,6 +191,18 @@ create table public.mechanism
     primary key (id)
 );
 
+create table public.pre_reservation
+(
+    id                   int8    not null,
+    code                 int4,
+    date_of_ending       date,
+    date_of_start        date,
+    date_time_of_closure timestamp,
+    date_time_of_demand  timestamp,
+    is_closed            boolean not null,
+    primary key (id)
+);
+
 create table public.publisher
 (
     id              int8         not null,
@@ -132,6 +216,16 @@ create table public.publisher
     website         varchar(255),
     lower_case_name varchar(255) not null,
     name            varchar(255) not null,
+    primary key (id)
+);
+
+create table public.reservation
+(
+    id                   int8 not null,
+    date_of_ending       date,
+    date_of_start        date,
+    scheduled_return     timestamp,
+    scheduled_withdrawal timestamp,
     primary key (id)
 );
 
@@ -167,6 +261,7 @@ create sequence image_sequence start 1 increment 50;
 create sequence loan_sequence start 1 increment 50;
 create sequence loan_status_sequence start 1 increment 50;
 create sequence mechanism_sequence start 1 increment 50;
+create sequence pre_reservation_sequence start 1 increment 50;
 create sequence publisher_sequence start 1 increment 50;
 
 create table game_category
@@ -174,6 +269,13 @@ create table game_category
     fk_game     int8 not null,
     fk_category int8 not null,
     primary key (fk_game, fk_category)
+);
+
+create table game_copy_pre_reservation
+(
+    fk_pre_reservation int8 not null,
+    fk_game_copy       int8 not null,
+    primary key (fk_pre_reservation, fk_game_copy)
 );
 
 create table game_creator
@@ -190,13 +292,6 @@ create table game_mechanism
     primary key (fk_game, fk_mechanism)
 );
 
-create table image_blob
-(
-    content  bytea not null,
-    image_id int8  not null,
-    primary key (image_id)
-);
-
 alter table public.game_copy
     add constraint FKotj002ttbfm6dhl5up8anrfno
         foreign key (fk_game)
@@ -211,6 +306,11 @@ alter table public.image
     add constraint FK52ykfhxot45jfxiuky8ccqhvy
         foreign key (fk_game)
             references public.game;
+
+alter table public.image_blob
+    add constraint FKwh9ounh5rvc9m2wn4ssawvyc
+        foreign key (image_id)
+            references public.image;
 
 alter table public.loan
     add constraint FKld6heuq0u88f3k9yrg4r64sk0
@@ -232,6 +332,16 @@ alter table game_category
         foreign key (fk_game)
             references public.game;
 
+alter table game_copy_pre_reservation
+    add constraint FKlkcjrwb621pcv2nmndm4euke3
+        foreign key (fk_game_copy)
+            references public.game_copy;
+
+alter table game_copy_pre_reservation
+    add constraint FK3c0a82ygqqhetnb6239sg61t4
+        foreign key (fk_pre_reservation)
+            references public.pre_reservation;
+
 alter table game_creator
     add constraint FKshotpioqxxaqreebwecwwmnlt
         foreign key (fk_creator)
@@ -251,8 +361,3 @@ alter table game_mechanism
     add constraint FKbyrbldhddommq7238ex18c6ri
         foreign key (fk_game)
             references public.game;
-
-alter table image_blob
-    add constraint FKwh9ounh5rvc9m2wn4ssawvyc
-        foreign key (image_id)
-            references public.image;

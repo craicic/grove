@@ -67,6 +67,10 @@ public class GameCopy {
     @JoinColumn(name = "fk_game")
     private Game game;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(mappedBy = "gameCopies")
+    private Set<PreReservation> preReservations = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
