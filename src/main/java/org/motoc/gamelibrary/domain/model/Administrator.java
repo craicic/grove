@@ -35,6 +35,4 @@ public class Administrator {
     @Size(max = 255, message = "Password cannot exceed 255 characters")
     @Column(nullable = false)
     private String password;
-
-
 }

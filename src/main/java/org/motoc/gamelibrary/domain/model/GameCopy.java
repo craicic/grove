@@ -88,23 +88,6 @@ public class GameCopy {
     @JoinColumn(name = "fk_publisher")
     private Publisher publisher;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "gameCopy")
-    private Set<Loan> loans = new HashSet<>();
-
-    // Helper methods
-
-    public void addLoan(Loan loan) {
-        this.loans.add(loan);
-        loan.setGameCopy(this);
-    }
-
-    public void removeLoan(Loan loan) {
-        this.loans.remove(loan);
-        loan.setGameCopy(null);
-    }
-
     public void addPublisher(Publisher publisher) {
         this.setPublisher(publisher);
         publisher.getCopies().add(this);
