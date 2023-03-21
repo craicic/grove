@@ -46,6 +46,7 @@ public class PreReservation {
      */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "game_copy_pre_reservation",
+            schema = "public",
             joinColumns = @JoinColumn(name = "fk_pre_reservation"),
             inverseJoinColumns = @JoinColumn(name = "fk_game_copy"))
     private Set<GameCopy> gameCopies = new HashSet<>();

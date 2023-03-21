@@ -72,6 +72,16 @@ public class GameCopy {
     @ManyToMany(mappedBy = "gameCopies")
     private Set<PreReservation> preReservations = new HashSet<>();
 
+    /**
+     * I need a ManyToMany with attribute
+     * *
+     */
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "gameCopy")
+    private Set<GameCopyReservation> gameCopyReservations = new HashSet<>();
+
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)

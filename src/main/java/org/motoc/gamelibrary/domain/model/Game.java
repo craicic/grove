@@ -98,6 +98,7 @@ public class Game {
     @ManyToMany
     @JoinTable(
             name = "game_creator",
+            schema = "public",
             joinColumns = {@JoinColumn(name = "fk_game")},
             inverseJoinColumns = {@JoinColumn(name = "fk_creator")})
     private Set<Creator> creators = new HashSet<>();
@@ -106,6 +107,7 @@ public class Game {
     @ManyToMany
     @JoinTable(
             name = "game_category",
+            schema = "public",
             joinColumns = {@JoinColumn(name = "fk_game")},
             inverseJoinColumns = {@JoinColumn(name = "fk_category")})
     private Set<Category> categories = new HashSet<>();
@@ -114,6 +116,7 @@ public class Game {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "game_mechanism",
+            schema = "public",
             joinColumns = {@JoinColumn(name = "fk_game")},
             inverseJoinColumns = {@JoinColumn(name = "fk_mechanism")})
     private Set<Mechanism> mechanisms = new HashSet<>();
