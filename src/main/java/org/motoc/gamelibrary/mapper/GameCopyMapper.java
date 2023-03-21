@@ -21,7 +21,6 @@ public interface GameCopyMapper {
     }
 
     @Mapping(target = "game", ignore = true)
-    @Mapping(target = "loans", ignore = true)
     GameCopy dtoToCopy(GameCopyDto dto);
 
     @Mapping(source = "game.id", target = "gameId")
