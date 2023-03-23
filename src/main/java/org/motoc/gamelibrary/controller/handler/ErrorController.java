@@ -58,7 +58,7 @@ public class ErrorController {
                 ex.getMessage(),
                 request.getDescription(false),
                 HttpStatus.BAD_REQUEST);
-        logger.warn("In notFoundHandler, new error treated : " + error);
+        logger.info("In notFoundHandler, new error treated : " + error);
         return error;
     }
 
