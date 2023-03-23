@@ -5,6 +5,10 @@ import lombok.Setter;
 import org.motoc.gamelibrary.domain.enumeration.LoanStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.PastOrPresent;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -27,6 +31,16 @@ public class Reservation {
 
     @Column(nullable = false)
     private LoanStatus status;
+
+    @PastOrPresent
+    private LocalDateTime dateTimeOfCreation;
+
+    /**
+     * In euro
+     */
+    @DecimalMin(value = "0.0", inclusive = true, message = "Total amount value cannot be below 0.0")
+    @Digits(integer = 10, fraction = 2, message = "Total amount maximum integer part is 10, maximum fractional part is 2")
+    private BigDecimal totalAmount;
 
     @OneToMany(mappedBy = "reservation")
     private Set<GameCopyReservation> gameCopyReservations;
