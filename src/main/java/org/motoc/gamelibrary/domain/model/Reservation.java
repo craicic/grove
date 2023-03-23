@@ -51,5 +51,7 @@ public class Reservation {
     @JoinColumn(name = "fk_administrator")
     private Administrator administrator;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_adherent")
+    private Adherent adherent;
 }

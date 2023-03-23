@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,4 +33,7 @@ public class Adherent {
     @Size(max = 50, message = "Phone number cannot exceed 50 characters")
     @Column(name = "phone_number", length = 50)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "adherent")
+    private Set<Reservation> reservations;
 }

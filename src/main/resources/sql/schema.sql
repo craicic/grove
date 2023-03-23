@@ -1,6 +1,7 @@
 drop schema if exists public cascade;
 create schema public;
 
+
 create table public.adherent
 (
     id           int8 not null,
@@ -181,6 +182,7 @@ create table public.reservation
     date_time_of_withdrawal timestamp,
     status                  int4 not null,
     total_amount            numeric(12, 2),
+    fk_adherent             int8,
     fk_administrator        int8,
     primary key (id)
 );
@@ -283,6 +285,11 @@ alter table public.image_blob
     add constraint FKepjwu9m1yuf3p29gexxh59f2o
         foreign key (fk_image)
             references public.image;
+
+alter table public.reservation
+    add constraint FK67jy47w04wfv0ftl8kams6y8y
+        foreign key (fk_adherent)
+            references public.adherent;
 
 alter table public.reservation
     add constraint FKdrm0nye3pvouds2v4xutw01mp
