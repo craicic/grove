@@ -20,6 +20,8 @@ import java.util.Set;
 public class Reservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_seq_gen")
+    @SequenceGenerator(name = "reservation_seq_gen", sequenceName = "reservation_sequence", initialValue = 1)
     private Long id;
 
     private LocalDateTime dateTimeOfWithdrawal;
@@ -45,7 +47,8 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation")
     private Set<GameCopyReservation> gameCopyReservations;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_administrator")
     private Administrator administrator;
 
 

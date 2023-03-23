@@ -17,11 +17,13 @@ public class GameCopyReservation {
     private Long id;
 
     @ManyToOne
-    @MapsId("fk_game_copy")
+    @MapsId
+    @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 
     @ManyToOne
-    @MapsId("fk_reservation")
+    @MapsId
+    @JoinColumn(name = "fk_reservation")
     private Reservation reservation;
 
     private boolean isLate;

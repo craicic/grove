@@ -25,12 +25,6 @@ VALUES (1, 'stratégie', 'Stratégie'),
        (12, 'far west', 'Far West');
 SELECT setval('mechanism_sequence', 12, true);
 
-INSERT INTO public.account (id, first_name, last_name, membership_number, renewal_date, username, city, country,
-                            mail_address, phone_number, post_code, street, house_number, website)
-VALUES (1, 'John', 'Doe', 'f993a834-37ce-40d2-8863-a512813d689b', '2021-07-03', 'John-Doe',
-        'Paris', 'France', null, '+0331', '75000', 'foo street', '40', null);
-SELECT setval('account_sequence', 1, true);
-
 INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, city, country,
                             mail_address, phone_number, post_code, street, house_number, website)
 VALUES (1, 'Bruno', 'Cathala', 'bruno', 'cathala', 0, 'Marseille', 'France', null, '+0333',
@@ -83,11 +77,6 @@ VALUES (1, '2018-05-20', '2018-05-20', '02SE', 1
         (SELECT id FROM publisher WHERE name = 'Kosmos'));
 SELECT setval('game_copy_sequence', 1, true);
 
-INSERT INTO public.loan (id, is_closed, loan_end_time, loan_start_time, fk_account, fk_game_copy)
-VALUES (1, true, '2020-08-16', '2020-07-16',
-        (SELECT id FROM account WHERE first_name = 'John' AND last_name = 'Doe'),
-        (SELECT id FROM game_copy WHERE object_code = '00050'));
-SELECT setval('loan_sequence', 1, true);
 
 INSERT INTO public.game_category (fk_game, fk_category)
 VALUES ((SELECT id FROM game WHERE title = 'Les Colons de Catane'), (SELECT id FROM category WHERE title = 'Commerce')),

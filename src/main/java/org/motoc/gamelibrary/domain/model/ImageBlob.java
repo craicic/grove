@@ -22,6 +22,7 @@ public class ImageBlob {
 
     @OneToOne
     @MapsId
+    @JoinColumn(name = "fk_image")
     private Image image;
 
 }

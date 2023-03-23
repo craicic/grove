@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,4 +36,7 @@ public class Administrator {
     @Size(max = 255, message = "Password cannot exceed 255 characters")
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "administrator")
+    private Set<Reservation> reservations;
 }

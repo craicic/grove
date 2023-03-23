@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.motoc.gamelibrary.repository.TestResources.*;
 
-class ImageRepositoryReamedIT extends AbstractContainerBaseIT {
+class ImageRepositoryRearmedIT extends AbstractContainerBaseIT {
 
     @BeforeAll
     static void startAbstractContainer() {
@@ -50,7 +50,7 @@ class ImageRepositoryReamedIT extends AbstractContainerBaseIT {
     @Autowired
     private EntityManagerFactory emf;
 
-    private static final Logger logger = LoggerFactory.getLogger(ImageRepositoryReamedIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImageRepositoryRearmedIT.class);
 
     @Test
     void whenPersistImageAttachToGame_WorksAsExpected() throws IOException {
@@ -91,6 +91,7 @@ class ImageRepositoryReamedIT extends AbstractContainerBaseIT {
         assertThat(actualImageData).isEqualTo(expectedImageData);
     }
 
+
     @Test
     void whenPersistImageAttachToGame_ThrowNotFoundException() throws IOException {
         byte[] imageData = ResourceLoader.getBytesFromResource(imageLocationB);
@@ -109,7 +110,9 @@ class ImageRepositoryReamedIT extends AbstractContainerBaseIT {
 
         byte[] expectedBytes = ResourceLoader.getBytesFromResource(imageLocationA);
 
-        byte[] actualBytes = repository.findBytes(imageAId);
+        Long id = repository.persistImage(expectedBytes);
+
+        byte[] actualBytes = repository.findBytes(id);
 
         assertThat(actualBytes).isEqualTo(expectedBytes);
 
