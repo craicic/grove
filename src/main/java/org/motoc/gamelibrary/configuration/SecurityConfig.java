@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(SWAGGER_WHITELIST
                 ).permitAll()
-                .antMatchers("/").permitAll()
+                // Do not do this
+                .antMatchers("/**").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().denyAll()
