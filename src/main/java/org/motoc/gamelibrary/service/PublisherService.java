@@ -1,18 +1,21 @@
 package org.motoc.gamelibrary.service;
 
+import org.motoc.gamelibrary.domain.dto.PublisherDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
+import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
 import org.motoc.gamelibrary.domain.model.Publisher;
+import org.motoc.gamelibrary.mapper.PublisherMapper;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
-import org.motoc.gamelibrary.service.refactor.SimpleCrudMethodsImpl;
+import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,35 +23,57 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaRepository<Publisher, Long>> {
+public class PublisherService {
 
     private static final Logger logger = LoggerFactory.getLogger(PublisherService.class);
 
-    final private PublisherRepository publisherRepository;
-
+    final private PublisherRepository repository;
+    final private PublisherMapper mapper;
 
     @Autowired
-    public PublisherService(JpaRepository<Publisher, Long> genericRepository,
-                            PublisherRepository publisherRepository) {
-        super(genericRepository, Publisher.class);
-        this.publisherRepository = publisherRepository;
+    public PublisherService(PublisherMapper mapper,
+                            PublisherRepository repository) {
+        this.mapper = PublisherMapper.INSTANCE;
+        this.repository = repository;
+    }
+
+
+    public PublisherDto save(@Valid PublisherNoIdDto t) {
+        return mapper.publisherToDto(repository.save(mapper.noIdDtoToPublisher(t)));
+    }
+
+
+    public long count() {
+        return repository.count();
+    }
+
+
+    public PublisherDto findById(long id) {
+        return mapper.publisherToDto(repository.findById(id)
+                .orElseThrow(() -> {
+                    throw new NotFoundException("No publisher of id=" + id + " found.");
+                }));
+    }
+
+    public Page<PublisherDto> findPage(Pageable pageable) {
+        return mapper.pageToPageDto(repository.findAll(pageable));
     }
 
     /**
      * Edits a publisher by id
      */
     public Publisher edit(Publisher publisher, Long id) {
-        return publisherRepository.findById(id)
+        return repository.findById(id)
                 .map(publisherFromPersistence -> {
                     publisherFromPersistence.setName(publisher.getName());
                     publisherFromPersistence.setContact(publisher.getContact());
                     logger.debug("Found publisher of id={} : {}", id, publisherFromPersistence);
-                    return publisherRepository.save(publisherFromPersistence);
+                    return repository.save(publisherFromPersistence);
                 })
                 .orElseGet(() -> {
                     publisher.setId(id);
                     logger.debug("No publisher of id={} found. Set mechanism : {}", id, publisher);
-                    return publisherRepository.save(publisher);
+                    return repository.save(publisher);
                 });
     }
 
@@ -57,33 +82,33 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
      */
     public void remove(Long id) {
         logger.debug("Deleting (if exist) publisher of id=" + id);
-        publisherRepository.remove(id);
+        repository.remove(id);
     }
 
-    public Page<Publisher> quickSearch(String keyword, Pageable pageable) {
+    public Page<PublisherDto> quickSearch(String keyword, Pageable pageable) {
         logger.debug("Find paged publishers that contains : " + keyword);
-        return publisherRepository.findByLowerCaseNameContaining(keyword, pageable);
+        return mapper.pageToPageDto(repository.findByLowerCaseNameContaining(keyword, pageable));
     }
 
     public void removeContact(Long pId) {
         logger.debug("Deleting contact from publisher of id=" + pId);
-        Publisher p = publisherRepository.removeContact(pId);
+        Publisher p = repository.removeContact(pId);
         logger.debug("Successfully removed contact for Publisher of id={} : {}", pId, p);
     }
 
     public List<PublisherNameDto> findNames() {
         logger.debug("Find all publishers' name");
-        return publisherRepository.findNames();
+        return repository.findNames();
     }
 
-    public Publisher save(Publisher p) {
+    public PublisherDto save(PublisherDto p) {
         logger.debug(" publishers' name");
         if (p.getId() == null) {
             logger.debug("Trying to save new p={}", p.getName());
         } else {
             logger.debug("Trying to save new p={} of id={}", p.getName(), p.getId());
         }
-        return publisherRepository.savePublisher(p);
+        return mapper.publisherToDto(repository.savePublisher(mapper.dtoToPublisher(p)));
     }
 }
 

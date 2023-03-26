@@ -55,7 +55,7 @@ public class CreatorController {
     @GetMapping("/admin/creators/{id}")
     CreatorDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.creatorToDto(service.findById(id));
+        return service.findById(id);
     }
 
     @GetMapping("/admin/creators/page")
@@ -63,10 +63,10 @@ public class CreatorController {
                               @RequestParam(name = "search", required = false) String keyword) {
         logger.trace("findPage(pageable) called");
         if (keyword == null) {
-            return mapper.pageToPageDto(service.findPage(pageable));
+            return service.findPage(pageable);
         } else {
             logger.trace("findPage(" + keyword + ", pageable) called");
-            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+            return service.quickSearch(keyword, pageable);
         }
     }
 

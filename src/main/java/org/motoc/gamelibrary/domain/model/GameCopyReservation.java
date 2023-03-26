@@ -16,12 +16,12 @@ public class GameCopyReservation {
     @SequenceGenerator(name = "game_copy_reservation_seq_gen", sequenceName = "game_copy_reservation_sequence", initialValue = 1)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "fk_game_copy")
     private GameCopy gameCopy;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "fk_reservation")
     private Reservation reservation;

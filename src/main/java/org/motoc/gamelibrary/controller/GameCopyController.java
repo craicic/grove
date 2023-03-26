@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.GameCopyDto;
-import org.motoc.gamelibrary.mapper.GameCopyMapper;
 import org.motoc.gamelibrary.service.GameCopyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +22,10 @@ public class GameCopyController {
 
     private final GameCopyService service;
 
-    private final GameCopyMapper mapper;
 
     @Autowired
     public GameCopyController(GameCopyService service) {
         this.service = service;
-        this.mapper = GameCopyMapper.INSTANCE;
     }
 
     @GetMapping("/admin/game-copies/count")
@@ -40,26 +37,26 @@ public class GameCopyController {
     @GetMapping("/admin/game-copies/{id}")
     GameCopyDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.copyToDto(service.findById(id));
+        return service.findById(id);
     }
 
     @GetMapping("/admin/game-copies/object-code/{objectCode}")
     GameCopyDto findByObjectCode(@PathVariable @Pattern(regexp = "^[0-9]{1,5}$") String objectCode) {
         logger.trace("findByObjectCode(objectCode) called");
-        return mapper.copyToDto(service.findByObjectCode(objectCode));
+        return service.findByObjectCode(objectCode);
     }
 
     @PostMapping("/admin/game-copies")
     GameCopyDto save(@RequestBody @Valid GameCopyDto copyDto) {
         logger.trace("save(gameCopy) called");
-        return mapper.copyToDto(service.save(mapper.dtoToCopy(copyDto)));
+        return service.save(copyDto);
     }
 
     @PutMapping("/admin/game-copies/{id}")
     GameCopyDto edit(@RequestBody @Valid GameCopyDto copyDto,
                      @PathVariable Long id) {
         logger.trace("edit(gameCopy) called");
-        return mapper.copyToDto(service.edit(mapper.dtoToCopy(copyDto), id));
+        return service.edit(copyDto, id);
     }
 
     /* Maybe replace this endpoint by a endpoint in GAME */
@@ -67,9 +64,9 @@ public class GameCopyController {
     List<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady) {
         logger.trace("findAll() called");
         if (!loanReady)
-            return mapper.copiesToDto(service.findAll());
+            return service.findAll();
         else
-            return mapper.copiesToDto(service.findLoanReady());
+            return service.findLoanReady();
     }
 
     /* Maybe replace this endpoint by a endpoint in GAME */
@@ -78,22 +75,22 @@ public class GameCopyController {
                               Pageable pageable) {
         logger.trace("findAll() called");
         if (!loanReady)
-            return mapper.pageToPageDto(service.findPage(pageable));
+            return service.findPage(pageable);
         else
-            return mapper.pageToPageDto(service.findLoanReadyPage(pageable));
+            return service.findLoanReadyPage(pageable);
     }
     @PostMapping("/admin/game-copies/{copyId}/add-publisher/{publisherId}")
     GameCopyDto addPublisher(@PathVariable Long copyId,
                              @PathVariable Long publisherId) {
         logger.trace("addPublisher() called");
-        return mapper.copyToDto(service.addPublisher(copyId, publisherId));
+        return service.addPublisher(copyId, publisherId);
     }
 
     @DeleteMapping("/admin/game-copies/{copyId}/unlink-publisher/{publisherId}")
     GameCopyDto unlinkPublisher(@PathVariable Long copyId,
                                 @PathVariable Long publisherId) {
         logger.trace("unlinkPublisher() called");
-        return mapper.copyToDto(service.removePublisher(copyId, publisherId));
+        return service.removePublisher(copyId, publisherId);
     }
 
 

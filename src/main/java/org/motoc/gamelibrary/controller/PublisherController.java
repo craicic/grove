@@ -44,7 +44,7 @@ public class PublisherController {
     @GetMapping("/admin/publishers/{id}")
     PublisherDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.publisherToDto(service.findById(id));
+        return service.findById(id);
     }
 
     @GetMapping("/admin/publishers/page")
@@ -52,17 +52,17 @@ public class PublisherController {
                                 @RequestParam(name = "search", required = false) String keyword) {
         logger.trace("findPage(pageable) called");
         if (keyword == null) {
-            return mapper.pageToPageDto(service.findPage(pageable));
+            return service.findPage(pageable);
         } else {
             logger.trace("findPage(" + keyword + ", pageable) called");
-            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+            return service.quickSearch(keyword, pageable);
         }
     }
 
     @PostMapping("/admin/publishers")
     PublisherDto save(@RequestBody @Valid PublisherNoIdDto dto) {
         logger.trace("save(publisher) called");
-        return mapper.publisherToDto(service.save(mapper.noIdDtoToPublisher(dto)));
+        return service.save(dto);
     }
 
     @PutMapping("/admin/publishers/{id}")

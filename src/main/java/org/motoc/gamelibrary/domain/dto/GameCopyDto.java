@@ -34,7 +34,7 @@ public class GameCopyDto {
 
     @PastOrPresent(message = "Date of purchase must be in the past or present")
     @NotNull(message = "Date of purchase cannot be null")
-    private LocalDate registerDate;
+    private LocalDate dateOfRegistration;
 
     @NotBlank(message = "Wear condition cannot be null or blank")
     private String wearCondition;
@@ -44,7 +44,7 @@ public class GameCopyDto {
     @NotNull(message = "General State cannot be null")
     private GeneralState generalState;
 
-    private boolean isLoanable;
+    private boolean isAvailableForLoan;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

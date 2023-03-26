@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.MechanismDto;
 import org.motoc.gamelibrary.domain.dto.MechanismNameDto;
-import org.motoc.gamelibrary.mapper.MechanismMapper;
 import org.motoc.gamelibrary.service.MechanismService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +24,9 @@ public class MechanismController {
 
     private final MechanismService service;
 
-    private final MechanismMapper mapper;
-
     @Autowired
     public MechanismController(MechanismService service) {
         this.service = service;
-        this.mapper = MechanismMapper.INSTANCE;
     }
 
     @GetMapping("/admin/mechanisms/count")
@@ -42,13 +38,13 @@ public class MechanismController {
     @GetMapping("/admin/mechanisms")
     List<MechanismDto> findAll() {
         logger.trace("findAll called");
-        return mapper.mechanismsToDto(service.findAll());
+        return service.findAll();
     }
 
     @GetMapping("/admin/mechanisms/{id}")
     MechanismDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.mechanismToDto(service.findById(id));
+        return service.findById(id);
     }
 
     @GetMapping("/admin/mechanisms/page")
@@ -56,10 +52,10 @@ public class MechanismController {
                                 @RequestParam(required = false, name = "search") String keyword) {
         if (keyword == null) {
             logger.trace("findPage(pageable) called");
-            return mapper.pageToPageDto(service.findPage(pageable));
+            return service.findPage(pageable);
         } else {
             logger.trace("findPage(" + keyword + ", pageable) called");
-            return mapper.pageToPageDto(service.quickSearch(keyword, pageable));
+            return service.quickSearch(keyword, pageable);
         }
     }
 
@@ -67,14 +63,14 @@ public class MechanismController {
     @PostMapping("/admin/mechanisms")
     MechanismDto save(@RequestBody @Valid MechanismNameDto mechanismNameDto) {
         logger.trace("save(mechanism) called");
-        return mapper.mechanismToDto(service.save(mapper.mechanismNameDtoToMechanism(mechanismNameDto)));
+        return service.save(mechanismNameDto);
     }
 
     @PutMapping("/admin/mechanisms/{id}")
-    MechanismDto edit(@RequestBody @Valid MechanismDto mechanism,
+    MechanismDto edit(@RequestBody @Valid MechanismDto mechanismDto,
                       @PathVariable Long id) {
         logger.trace("edit(mechanism, id) called");
-        return mapper.mechanismToDto(service.edit(mapper.dtoToMechanism(mechanism), id));
+        return service.edit(mechanismDto, id);
     }
 
     @DeleteMapping("/admin/mechanisms/{id}")

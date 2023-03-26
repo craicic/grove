@@ -1,57 +1,78 @@
 package org.motoc.gamelibrary.service;
 
+import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.domain.model.GameCopy;
 import org.motoc.gamelibrary.domain.model.Publisher;
+import org.motoc.gamelibrary.mapper.GameCopyMapper;
 import org.motoc.gamelibrary.repository.jpa.GameCopyRepository;
 import org.motoc.gamelibrary.repository.jpa.PublisherRepository;
-import org.motoc.gamelibrary.service.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
 @Transactional
-public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaRepository<GameCopy, Long>> {
+public class GameCopyService {
 
     private static final Logger logger = LoggerFactory.getLogger(GameCopyService.class);
 
     private final GameCopyRepository copyRepository;
 
-
-
-
     private final PublisherRepository publisherRepository;
-
+    private final GameCopyMapper mapper;
     private GameCopy gameCopyToReturn;
 
-    public GameCopyService(JpaRepository<GameCopy, Long> genericRepository,
-                           GameCopyRepository copyRepository,
+    public GameCopyService(GameCopyRepository copyRepository,
                            PublisherRepository publisherRepository) {
-        super(genericRepository, GameCopy.class);
+        this.mapper = GameCopyMapper.INSTANCE;
         this.gameCopyToReturn = null;
         this.copyRepository = copyRepository;
         this.publisherRepository = publisherRepository;
     }
 
-    public GameCopy findByObjectCode(String code) {
+    public GameCopyDto save(@Valid GameCopyDto gc) {
+        return mapper.copyToDto(copyRepository.save(mapper.dtoToCopy(gc)));
+    }
+
+
+    public long count() {
+        return copyRepository.count();
+    }
+
+
+    public GameCopyDto findById(long id) {
+        return mapper.copyToDto(copyRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new NotFoundException("No game copy of id=" + id + " found.");
+                }));
+    }
+
+
+    public Page<GameCopyDto> findPage(Pageable pageable) {
+        return mapper.pageToPageDto(copyRepository.findAll(pageable));
+    }
+
+
+    public GameCopyDto findByObjectCode(String code) {
 
         GameCopy copy = copyRepository.findByObjectCode(code);
 
         if (copy == null) {
-            throw new NotFoundException("No existing game has the following code :" + code);
+            throw new NotFoundException("No existing game copy has the following code :" + code);
         }
-        return copy;
+        return mapper.copyToDto(copy);
     }
 
-    public GameCopy edit(GameCopy newCopy, Long id) {
-        return copyRepository.findById(id)
+    public GameCopyDto edit(GameCopyDto copyDto, Long id) {
+        GameCopy newCopy = mapper.dtoToCopy(copyDto);
+        return mapper.copyToDto(copyRepository.findById(id)
                 .map(copy -> {
                     copy.setObjectCode(newCopy.getObjectCode());
                     copy.setEditionNumber(newCopy.getEditionNumber());
@@ -68,38 +89,35 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                     newCopy.setId(id);
                     logger.debug("No game copy of id={} found. Set game copy : {}", id, newCopy);
                     return copyRepository.save(newCopy);
-                });
+                }));
     }
 
 
-
-
-
-    public GameCopy addPublisher(Long copyId, Long publisherId) {
+    public GameCopyDto addPublisher(Long copyId, Long publisherId) {
         Publisher publisher = publisherRepository
                 .findById(publisherId)
                 .orElseThrow(() -> {
                             throw new NotFoundException("No Publisher of id=" + publisherId + " found.");
                         }
                 );
-        return copyRepository
+        return mapper.copyToDto(copyRepository
                 .findById(copyId)
                 .map(gameCopy -> {
                     if (gameCopy.getPublisher() == publisher)
                         logger.warn("Game copy of id=" + gameCopy.getId() +
-                                " is already linked to the given publisher of id=" + publisher.getId());
+                                    " is already linked to the given publisher of id=" + publisher.getId());
                     if (gameCopy.getPublisher() != null)
                         throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
-                                " is already linked to another publisher of id=" + gameCopy.getPublisher().getId());
+                                                        " is already linked to another publisher of id=" + gameCopy.getPublisher().getId());
                     return copyRepository.addPublisher(gameCopy, publisher);
                 })
                 .orElseThrow(() -> {
                             throw new NotFoundException("No game copy of id=" + copyId + " found.");
                         }
-                );
+                ));
     }
 
-    public GameCopy removePublisher(Long copyId, Long publisherId) {
+    public GameCopyDto removePublisher(Long copyId, Long publisherId) {
         this.gameCopyToReturn = null;
         Publisher publisher = publisherRepository.findById(publisherId).orElseThrow(() -> {
                     throw new NotFoundException("No publisher of id={}" + publisherId + " found.");
@@ -117,14 +135,14 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
                 }, () -> {
                     throw new NotFoundException("No game copy of id=" + copyId + " found.");
                 });
-        return this.gameCopyToReturn;
+        return mapper.copyToDto(this.gameCopyToReturn);
     }
 
     public void checkLoanability(Long gameCopyId) {
         String errorMessage = "";
         // find game copy by id
         // if no result throw exception
-        GameCopy gc = this.findById(gameCopyId);
+        GameCopy gc = copyRepository.findById(gameCopyId).get();
         if (gc == null) {
             // todo useless??
             errorMessage = "No game copy of id=" + gameCopyId + " found in database.";
@@ -141,11 +159,15 @@ public class GameCopyService extends SimpleCrudMethodsImpl<GameCopy, JpaReposito
         }
     }
 
-    public Page<GameCopy> findLoanReadyPage(Pageable pageable) {
-        return copyRepository.findPageByLoanability(pageable);
+    public Page<GameCopyDto> findLoanReadyPage(Pageable pageable) {
+        return mapper.pageToPageDto(copyRepository.findPageByLoanability(pageable));
     }
 
-    public List<GameCopy> findLoanReady() {
-        return copyRepository.findByLoanability();
+    public List<GameCopyDto> findLoanReady() {
+        return mapper.copiesToDto(copyRepository.findByLoanability());
+    }
+
+    public List<GameCopyDto> findAll() {
+        return mapper.copiesToDto(copyRepository.findAll());
     }
 }

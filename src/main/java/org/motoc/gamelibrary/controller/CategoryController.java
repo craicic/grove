@@ -47,27 +47,25 @@ public class CategoryController {
     @GetMapping("/admin/categories")
     List<CategoryDto> findAll() {
         logger.trace("findAll() called");
-        return mapper.categoriesToDto(service.findAll());
+        return service.findAll();
     }
 
     @GetMapping("/admin/categories/{id}")
     CategoryDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.categoryToDto(service.findById(id));
+        return service.findById(id);
     }
 
     @GetMapping("/admin/categories/page")
     Page<CategoryDto> findPage(Pageable pageable) {
         logger.trace("findPage(pageable) called");
-        return mapper.pageToPageDto(service.findPage(pageable));
+        return service.findPage(pageable);
     }
 
     @PostMapping("/admin/categories")
     CategoryDto save(@RequestBody @Valid CategoryDto category) {
         logger.trace("save(category) called");
-        return mapper.categoryToDto(
-                service.save(mapper.dtoToCategory(category))
-        );
+        return service.save(category);
     }
 
     @PutMapping("/admin/categories/{id}")

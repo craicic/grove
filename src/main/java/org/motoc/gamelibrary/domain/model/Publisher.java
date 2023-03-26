@@ -11,9 +11,11 @@ import java.util.Set;
 /**
  * The publisher of a game
  */
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "publisher", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
 public class Publisher {
@@ -28,12 +30,10 @@ public class Publisher {
     @Column(nullable = false)
     private String name;
 
-    @ToString.Exclude
     @Column(name = "lower_case_name", nullable = false)
     private String lowerCaseName;
 
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "publisher")
     private Set<GameCopy> copies = new HashSet<>();
 
