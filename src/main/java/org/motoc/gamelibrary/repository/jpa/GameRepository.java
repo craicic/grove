@@ -14,4 +14,5 @@ public interface GameRepository extends JpaRepository<Game, Long>, GameFragmentR
 
     Page<Game> findAllByLowerCaseTitleContaining(@Param("keyword") String keyword, Pageable pageable);
 
+
 }

@@ -21,6 +21,8 @@ public interface GameFragmentRepository {
      */
     Page<Game> findGamesByKeyword(String keyword, Pageable pageable);
 
+    Game findGameById(Long id);
+
     /**
      * Get all Games' name in a custom DTO
      */

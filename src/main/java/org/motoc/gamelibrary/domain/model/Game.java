@@ -95,7 +95,7 @@ public class Game {
     private Set<Image> images = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "game_creator",
             schema = "public",
@@ -104,7 +104,7 @@ public class Game {
     private Set<Creator> creators = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "game_category",
             schema = "public",

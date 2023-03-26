@@ -31,6 +31,13 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     }
 
     @Override
+    public Game findGameById(Long id) {
+        Game g = entityManager.find(Game.class, id);
+        g.setImages(g.getImages());
+        return g;
+    }
+
+    @Override
     public Page<Game> findGamesByKeyword(String keyword, Pageable pageable) {
 
         String searchQuery = "SELECT g FROM Game as g " +

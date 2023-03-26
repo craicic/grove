@@ -42,7 +42,7 @@ public class GameController {
     @GetMapping("/admin/games/{id}")
     GameDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
-        return mapper.gameToDto(service.findById(id));
+        return service.findGameById(id);
     }
 
     @GetMapping("/admin/games/page")
@@ -55,7 +55,7 @@ public class GameController {
     GameDto edit(@RequestBody @Valid GameDto gameDto,
                  @PathVariable Long id) {
         logger.trace("edit(game) called\rAttached game to edit is =" + gameDto.toString());
-        return mapper.gameToDto(service.edit(mapper.dtoToGame(gameDto), id));
+        return service.edit(mapper.dtoToGame(gameDto), id);
     }
 
 
@@ -64,7 +64,7 @@ public class GameController {
                                             @RequestParam(name = "search", required = false, defaultValue = "")
                                             String keyword) {
         logger.trace("findPagedOverview(pageable) called");
-        return mapper.pageToOverviewDto(service.findPagedOverview(pageable, keyword));
+        return service.findPagedOverview(pageable, keyword);
 
     }
 
@@ -83,14 +83,14 @@ public class GameController {
     GameDto addCategory(@PathVariable Long gameId,
                         @PathVariable Long categoryId) {
         logger.trace("addCategory() called");
-        return mapper.gameToDto(service.addCategory(gameId, categoryId));
+        return service.addCategory(gameId, categoryId);
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-category/{categoryId}")
     GameDto unlinkCategory(@PathVariable Long gameId,
                            @PathVariable Long categoryId) {
         logger.trace("unlinkCategory() called");
-        return mapper.gameToDto(service.removeCategory(gameId, categoryId));
+        return service.removeCategory(gameId, categoryId);
 
     }
 
@@ -98,21 +98,21 @@ public class GameController {
     GameDto addMechanism(@PathVariable Long gameId,
                          @PathVariable Long mechanismId) {
         logger.trace("addMechanism() called");
-        return mapper.gameToDto(service.addMechanism(gameId, mechanismId));
+        return service.addMechanism(gameId, mechanismId);
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-mechanism/{mechanismId}")
     GameDto unlinkMechanism(@PathVariable Long gameId,
                             @PathVariable Long mechanismId) {
         logger.trace("unlinkMechanism() called");
-        return mapper.gameToDto(service.removeMechanism(gameId, mechanismId));
+        return service.removeMechanism(gameId, mechanismId);
     }
 
     @PostMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")
     GameDto addGameCopy(@PathVariable Long gameId,
                         @PathVariable Long gameCopyId) {
         logger.trace("addGameCopy() called");
-        return mapper.gameToDto(service.addGameCopy(gameId, gameCopyId));
+        return service.addGameCopy(gameId, gameCopyId);
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-game-copy/{gameCopyId}")
@@ -126,13 +126,13 @@ public class GameController {
     GameDto addCreator(@PathVariable Long gameId,
                        @PathVariable Long creatorId) {
         logger.trace("addCreator() called");
-        return mapper.gameToDto(service.addCreator(gameId, creatorId));
+        return service.addCreator(gameId, creatorId);
     }
 
     @DeleteMapping("/admin/games/{gameId}/unlink-creator/{creatorId}")
     GameDto unlinkCreator(@PathVariable Long gameId,
                           @PathVariable Long creatorId) {
         logger.trace("unlinkCreator() called");
-        return mapper.gameToDto(service.removeCreator(gameId, creatorId));
+        return service.removeCreator(gameId, creatorId);
     }
 }
