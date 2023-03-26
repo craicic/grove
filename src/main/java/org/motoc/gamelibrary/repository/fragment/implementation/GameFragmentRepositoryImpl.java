@@ -34,10 +34,10 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public Page<Game> findGamesByKeyword(String keyword, Pageable pageable) {
 
         String searchQuery = "SELECT g FROM Game as g " +
-                             " WHERE g.id IN (:ids) ORDER BY g.name ";
+                             " WHERE g.id IN (:ids) ORDER BY g.title ";
 
         String idQuery = "SELECT g.id FROM Game as g" +
-                         " WHERE (g.lowerCaseName LIKE CONCAT('%', LOWER(:keyword), '%'))";
+                         " WHERE (g.lowerCaseTitle LIKE CONCAT('%', LOWER(:keyword), '%'))";
 
         TypedQuery<Long> idQ = entityManager.createQuery(idQuery, Long.class);
 
@@ -63,66 +63,10 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     @Override
     public List<String> findNames() {
         TypedQuery<String> q = entityManager.createQuery(
-                "SELECT TRIM(LOWER(g.name)) FROM Game as g",
+                "SELECT TRIM(LOWER(g.title)) FROM Game as g",
                 String.class
         );
         return q.getResultList();
-    }
-
-    @Override
-    public Game addExpansions(Game game, List<Game> expansions) {
-        for (Game expansion : expansions) {
-            game.addExpansion(expansion);
-        }
-        entityManager.persist(game);
-        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
-        return game;
-    }
-
-    @Override
-    public Game addExpansion(Game game, Game expansion) {
-        game.addExpansion(expansion);
-        entityManager.persist(game);
-        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
-        return game;
-    }
-
-    @Override
-    public Game addProductLine(Game game, ProductLine productLine) {
-        game.addProductLine(productLine);
-        entityManager.persist(game);
-        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
-        return game;
-    }
-
-    @Override
-    public Game removeProductLine(Game game, ProductLine productLine) {
-        game.removeProductLine(productLine);
-        entityManager.persist(game);
-        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
-        return game;
-    }
-
-    @Override
-    public Game addCoreGame(Game game, Game coreGame) {
-        game.addCoreGame(coreGame);
-        entityManager.persist(game);
-        logger.debug("Entity Manager will now handle persistence for the game of id={}", game.getId());
-        return game;
-    }
-
-    @Override
-    public void removeCoreGame(Game game) {
-        game.removeCoreGame();
-        entityManager.persist(game);
-        logger.info("Successfully removed core game of game of id={}", game.getId());
-    }
-
-    @Override
-    public void removeExpansion(Game game, Game expansion) {
-        game.removeExpansion(expansion);
-        entityManager.persist(game);
-
     }
 
     @Override
@@ -140,15 +84,15 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     }
 
     @Override
-    public Game addTheme(Game game, Theme theme) {
-        game.addTheme(theme);
+    public Game addMechanism(Game game, Mechanism mechanism) {
+        game.addMechanism(mechanism);
         entityManager.persist(game);
         return game;
     }
 
     @Override
-    public Game removeTheme(Game game, Theme theme) {
-        game.removeTheme(theme);
+    public Game removeMechanism(Game game, Mechanism mechanism) {
+        game.removeMechanism(mechanism);
         entityManager.persist(game);
         return game;
     }

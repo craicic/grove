@@ -23,7 +23,7 @@ public interface CategoryMapper {
 
     List<CategoryDto> categoriesToDto(List<Category> categories);
 
-    @Mapping(target = "lowerCaseName", ignore = true)
+    @Mapping(target = "lowerCaseTitle", ignore = true)
     @Mapping(target = "games", ignore = true)
     Category dtoToCategory(CategoryDto categoryDto);
 

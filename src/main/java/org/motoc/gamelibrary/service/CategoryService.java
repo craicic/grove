@@ -37,7 +37,7 @@ public class CategoryService extends SimpleCrudMethodsImpl<Category, JpaReposito
     public Category edit(@Valid Category category, Long id) {
         return categoryRepository.findById(id)
                 .map(categoryFromPersistence -> {
-                    categoryFromPersistence.setName(category.getName());
+                    categoryFromPersistence.setTitle(category.getTitle());
                     logger.debug("Found category of id={} : {}", id, categoryFromPersistence);
                     return categoryRepository.save(categoryFromPersistence);
                 })

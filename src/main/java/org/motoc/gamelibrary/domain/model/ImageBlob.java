@@ -8,7 +8,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity(name = "image_blob")
+@Entity
+@Table(name = "image_blob", schema = "public")
 public class ImageBlob {
 
     @Id
@@ -21,6 +22,7 @@ public class ImageBlob {
 
     @OneToOne
     @MapsId
+    @JoinColumn(name = "fk_image")
     private Image image;
 
 }

@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.domain.model;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,21 +10,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A game category
+ * A game mechanism
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_title", name = "unique_cat"))
-public class Category {
+@Table(name = "mechanism", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_title"))
+public class Mechanism {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq_gen")
-    @SequenceGenerator(name = "category_seq_gen", sequenceName = "category_sequence", initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mechanism_seq_gen")
+    @SequenceGenerator(name = "mechanism_seq_gen", sequenceName = "mechanism_sequence", initialValue = 1)
     private Long id;
 
-    @NotBlank(message = "Title cannot be null or blank")
+    @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 50, message = "Name cannot exceed 50")
     @Column(nullable = false, length = 50)
     private String title;
@@ -32,11 +33,17 @@ public class Category {
     @Column(name = "lower_case_title", nullable = false, length = 50)
     private String lowerCaseTitle;
 
-
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "mechanisms")
     private Set<Game> games = new HashSet<>();
+
+    // Other constructors
+    public Mechanism(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
 
     // Helper methods
 
@@ -51,12 +58,12 @@ public class Category {
 
     public void addGame(Game game) {
         games.add(game);
-        game.getCategories().add(this);
+        game.getMechanisms().add(this);
     }
 
     public void removeGame(Game game) {
         games.remove(game);
-        game.getCategories().remove(this);
+        game.getMechanisms().remove(this);
     }
 }
 

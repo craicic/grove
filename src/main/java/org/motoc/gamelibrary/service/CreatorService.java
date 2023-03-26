@@ -36,17 +36,6 @@ public class CreatorService extends SimpleCrudMethodsImpl<Creator, JpaRepository
     }
 
 
-//    /**
-//     * Persist a new creator by id (if a contact is associated, this one must be new)
-//     */
-//    public Creator save(@Valid Creator creator, boolean hasContact) {
-//        if (hasContact) {
-//            long contactId = contactRepository.save(creator.getContact()).getId();
-//            creator.getContact().setId(contactId);
-//        }
-//        return creatorRepository.save(creator);
-//    }
-
     /**
      * Edits a creator by id
      */

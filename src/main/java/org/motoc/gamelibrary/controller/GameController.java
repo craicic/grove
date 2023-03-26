@@ -79,41 +79,6 @@ public class GameController {
         logger.trace("findNames() called");
         return service.findNames();
     }
-
-    @PostMapping("/admin/games/{gameId}/add-expansions/{expansionId}")
-    GameDto addExpansion(@PathVariable Long gameId,
-                         @PathVariable Long expansionId) {
-        logger.trace("addExpansion() called");
-        return mapper.gameToDto(service.addExpansion(gameId, expansionId));
-    }
-
-    @PostMapping("/admin/games/{gameId}/add-expansions")
-    GameDto addExpansions(@PathVariable Long gameId,
-                          @RequestBody List<Long> expansionsIds) {
-        logger.trace("addExpansions() called");
-        return mapper.gameToDto(service.addExpansions(gameId, expansionsIds));
-    }
-
-    @PostMapping("/admin/games/{gameId}/add-core-game/{coreGameId}")
-    GameDto addCoreGame(@PathVariable Long gameId,
-                        @PathVariable Long coreGameId) {
-        logger.trace("addCoreGame() called");
-        return mapper.gameToDto(service.addCoreGame(gameId, coreGameId));
-    }
-
-    @DeleteMapping("/admin/games/{gameId}/unlink-core-link")
-    void unlinkCoreGame(@PathVariable Long gameId) {
-        logger.trace("unlinkCoreGame(gameId) called");
-        service.removeCoreGame(gameId);
-    }
-
-    @DeleteMapping("/admin/games/{gameId}/unlink-expansion/{expansionId}")
-    void unlinkExpansion(@PathVariable Long gameId,
-                         @PathVariable Long expansionId) {
-        logger.trace("unlinkExpansion(gameId, expansionId) called");
-        service.removeExpansion(gameId, expansionId);
-    }
-
     @PostMapping("/admin/games/{gameId}/add-category/{categoryId}")
     GameDto addCategory(@PathVariable Long gameId,
                         @PathVariable Long categoryId) {
@@ -129,18 +94,18 @@ public class GameController {
 
     }
 
-    @PostMapping("/admin/games/{gameId}/add-theme/{themeId}")
-    GameDto addTheme(@PathVariable Long gameId,
-                     @PathVariable Long themeId) {
-        logger.trace("addTheme() called");
-        return mapper.gameToDto(service.addTheme(gameId, themeId));
+    @PostMapping("/admin/games/{gameId}/add-mechanism/{mechanismId}")
+    GameDto addMechanism(@PathVariable Long gameId,
+                         @PathVariable Long mechanismId) {
+        logger.trace("addMechanism() called");
+        return mapper.gameToDto(service.addMechanism(gameId, mechanismId));
     }
 
-    @DeleteMapping("/admin/games/{gameId}/unlink-theme/{themeId}")
-    GameDto unlinkTheme(@PathVariable Long gameId,
-                        @PathVariable Long themeId) {
-        logger.trace("unlinkTheme() called");
-        return mapper.gameToDto(service.removeTheme(gameId, themeId));
+    @DeleteMapping("/admin/games/{gameId}/unlink-mechanism/{mechanismId}")
+    GameDto unlinkMechanism(@PathVariable Long gameId,
+                            @PathVariable Long mechanismId) {
+        logger.trace("unlinkMechanism() called");
+        return mapper.gameToDto(service.removeMechanism(gameId, mechanismId));
     }
 
     @PostMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")
@@ -169,19 +134,5 @@ public class GameController {
                           @PathVariable Long creatorId) {
         logger.trace("unlinkCreator() called");
         return mapper.gameToDto(service.removeCreator(gameId, creatorId));
-    }
-
-    @PostMapping("/admin/games/{gameId}/add-product-line/{lineId}")
-    GameDto addProductLine(@PathVariable Long gameId,
-                           @PathVariable Long lineId) {
-        logger.trace("addProductLine() called");
-        return mapper.gameToDto(service.addProductLine(gameId, lineId));
-    }
-
-    @DeleteMapping("/admin/games/{gameId}/unlink-product-line/{lineId}")
-    GameDto unlinkProductLine(@PathVariable Long gameId,
-                              @PathVariable Long lineId) {
-        logger.trace("unlinkProductLine() called");
-        return mapper.gameToDto(service.removeProductLine(gameId, lineId));
     }
 }

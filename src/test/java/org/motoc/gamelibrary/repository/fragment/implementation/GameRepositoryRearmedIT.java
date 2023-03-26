@@ -43,7 +43,7 @@ class GameRepositoryRearmedIT extends AbstractContainerBaseIT {
     @Test
     void test_findOverviewByKeyword() {
         String keyword = "colons";
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("title")));
 
         Page<Game> pagedGames = repository.findGamesByKeyword(keyword, pageable);
         List<Game> games = pagedGames.getContent();
@@ -57,9 +57,9 @@ class GameRepositoryRearmedIT extends AbstractContainerBaseIT {
     @Test
     void test_findAllByLowerCaseNameContaining() {
         String keyword = "colons";
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("name")));
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.asc("title")));
 
-        Page<Game> pagedGames = repository.findAllByLowerCaseNameContaining(keyword, pageable);
+        Page<Game> pagedGames = repository.findAllByLowerCaseTitleContaining(keyword, pageable);
 
         logger.warn(pagedGames.toString());
         logger.warn("number of elements=" + pagedGames.getTotalElements());

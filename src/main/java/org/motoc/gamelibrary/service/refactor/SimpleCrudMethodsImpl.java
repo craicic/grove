@@ -49,7 +49,7 @@ public abstract class SimpleCrudMethodsImpl<T, T_Repo extends JpaRepository<T, L
                     return result;
                 })
                 .orElseThrow(() -> {
-                    logger.warn("No {} found for id={}", type.getSimpleName().toLowerCase(), id);
+                    logger.info("No {} found for id={}", type.getSimpleName().toLowerCase(), id);
                     throw new NotFoundException("No " + type.getSimpleName().toLowerCase() + " of id=" + id + " found.");
                 });
     }

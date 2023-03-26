@@ -12,6 +12,6 @@ import org.springframework.data.repository.query.Param;
  */
 public interface GameRepository extends JpaRepository<Game, Long>, GameFragmentRepository {
 
-    Page<Game> findAllByLowerCaseNameContaining(@Param("keyword") String keyword, Pageable pageable);
+    Page<Game> findAllByLowerCaseTitleContaining(@Param("keyword") String keyword, Pageable pageable);
 
 }

@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.repository.fragment.implementation;
 
 import org.motoc.gamelibrary.domain.model.GameCopy;
 import org.motoc.gamelibrary.domain.model.Publisher;
-import org.motoc.gamelibrary.domain.model.Seller;
 import org.motoc.gamelibrary.repository.fragment.GameCopyFragmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,20 +20,6 @@ public class GameCopyFragmentRepositoryImpl implements GameCopyFragmentRepositor
     @Autowired
     public GameCopyFragmentRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
-    }
-
-    @Override
-    public GameCopy addSeller(GameCopy copy, Seller seller) {
-        copy.addSeller(seller);
-        entityManager.persist(copy);
-        return copy;
-    }
-
-    @Override
-    public GameCopy removeSeller(GameCopy copy, Seller seller) {
-        copy.removeSeller(seller);
-        entityManager.persist(copy);
-        return copy;
     }
 
     @Override

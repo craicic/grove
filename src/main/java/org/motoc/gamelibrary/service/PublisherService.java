@@ -47,7 +47,7 @@ public class PublisherService extends SimpleCrudMethodsImpl<Publisher, JpaReposi
                 })
                 .orElseGet(() -> {
                     publisher.setId(id);
-                    logger.debug("No publisher of id={} found. Set theme : {}", id, publisher);
+                    logger.debug("No publisher of id={} found. Set mechanism : {}", id, publisher);
                     return publisherRepository.save(publisher);
                 });
     }

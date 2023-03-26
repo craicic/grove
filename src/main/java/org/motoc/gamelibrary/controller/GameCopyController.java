@@ -82,21 +82,6 @@ public class GameCopyController {
         else
             return mapper.pageToPageDto(service.findLoanReadyPage(pageable));
     }
-
-    @PostMapping("/admin/game-copies/{copyId}/add-seller/{sellerId}")
-    GameCopyDto addSeller(@PathVariable Long copyId,
-                          @PathVariable Long sellerId) {
-        logger.trace("addSeller() called");
-        return mapper.copyToDto(service.addSeller(copyId, sellerId));
-    }
-
-    @DeleteMapping("/admin/game-copies/{copyId}/unlink-seller/{sellerId}")
-    GameCopyDto unlinkSeller(@PathVariable Long copyId,
-                             @PathVariable Long sellerId) {
-        logger.trace("unlinkSeller() called");
-        return mapper.copyToDto(service.removeSeller(copyId, sellerId));
-    }
-
     @PostMapping("/admin/game-copies/{copyId}/add-publisher/{publisherId}")
     GameCopyDto addPublisher(@PathVariable Long copyId,
                              @PathVariable Long publisherId) {

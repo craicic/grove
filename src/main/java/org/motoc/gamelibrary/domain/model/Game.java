@@ -10,6 +10,7 @@ import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "game", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_name"))
+@Table(name = "game", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "lower_case_title"))
 public class Game {
 
     @Id
@@ -33,33 +34,20 @@ public class Game {
     @SequenceGenerator(name = "game_seq_gen", sequenceName = "game_sequence", initialValue = 1)
     private Long id;
 
-    /**
-     * Core game, if this game is an extension
-     */
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Game coreGame;
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "coreGame")
-    private Set<Game> expansions = new HashSet<>();
-
-    @NotBlank(message = "Name cannot be null or blank")
+    @NotBlank(message = "Title cannot be null or blank")
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @ToString.Exclude
-    @Column(nullable = false, name = "lower_case_name")
-    private String lowerCaseName;
+    @Column(nullable = false, name = "lower_case_title")
+    private String lowerCaseTitle;
 
-    @Size(max = 1000, message = "Description should not exceed 1000 characters")
-    @Column(length = 1000)
+    @Size(max = 2000, message = "Description should not exceed 1000 characters")
+    @Column(length = 2000)
     private String description;
 
-    @Size(max = 20, message = "Description should not exceed 20 characters")
-    @Column(length = 20)
+    @Size(max = 255, message = "Play time should not exceed 20 characters")
+    @Column
     private String playTime;
 
     @Range(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
@@ -75,33 +63,18 @@ public class Game {
     @Range(min = 0, max = 100, message = "Max age must be between 0 and 100")
     private short maxAge;
 
-    @Range(min = 0, max = 100, message = "Min months must be between 0 and 100")
+    @Range(min = 0, max = 100, message = "Min month must be between 0 and 100")
     private short minMonth;
 
     /**
      * Stuff the game contains (parts, meeples, cards, etc...)
      */
-    @Size(max = 1000, message = "Stuff should not exceed 1000 characters")
-    @Column(length = 1000)
-    private String stuff;
+    @Size(max = 2000, message = "Stuff should not exceed 1000 characters")
+    @Column(length = 2000)
+    private String material;
 
-    /**
-     * Description how to prepare stuff before the game starts
-     */
-    @Size(max = 15000, message = "Preparation should not exceed 15000 characters")
     @Lob
-    private String preparation;
-
-    /**
-     * Gaol = win condition
-     */
-    @Size(max = 1000, message = "Goal should not exceed 1000 characters")
-    @Column(length = 1000)
-    private String goal;
-
-    @Size(max = 15000, message = "Core rules should not exceed 15000 characters")
-    @Lob
-    private String coreRules;
+    private String rules;
 
     /**
      * Describes alternative version of the rules
@@ -111,29 +84,12 @@ public class Game {
     private String variant;
 
     /**
-     * Generally describes the last turn and how to
-     */
-    @Size(max = 15000, message = "Ending rules should not exceed 15000 characters")
-    @Lob
-    private String ending;
-
-    /**
      * An enumeration : toy, board game, wooden game, etc...
      */
-    @Column(length = 50)
+    @Column
     private GameNature nature;
 
-    /**
-     * The size of the game
-     */
-    private String size;
-
-    /**
-     * The product line of the game, if the game is part of a 'collection'
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_line")
-    private ProductLine productLine;
+    private LocalDate yearOfRelease;
 
     @OneToMany(mappedBy = "game")
     private Set<Image> images = new HashSet<>();
@@ -142,6 +98,7 @@ public class Game {
     @ManyToMany
     @JoinTable(
             name = "game_creator",
+            schema = "public",
             joinColumns = {@JoinColumn(name = "fk_game")},
             inverseJoinColumns = {@JoinColumn(name = "fk_creator")})
     private Set<Creator> creators = new HashSet<>();
@@ -150,6 +107,7 @@ public class Game {
     @ManyToMany
     @JoinTable(
             name = "game_category",
+            schema = "public",
             joinColumns = {@JoinColumn(name = "fk_game")},
             inverseJoinColumns = {@JoinColumn(name = "fk_category")})
     private Set<Category> categories = new HashSet<>();
@@ -157,38 +115,33 @@ public class Game {
     @EqualsAndHashCode.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "game_theme",
+            name = "game_mechanism",
+            schema = "public",
             joinColumns = {@JoinColumn(name = "fk_game")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_theme")})
-    private Set<Theme> themes = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "fk_mechanism")})
+    private Set<Mechanism> mechanisms = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "game")
     private Set<GameCopy> gameCopies = new HashSet<>();
 
-
     @Override
     public String toString() {
         return "Game{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lowerCaseName='" + lowerCaseName + '\'' +
-                ", description='" + description + '\'' +
-                ", playTime='" + playTime + '\'' +
-                ", minNumberOfPlayer=" + minNumberOfPlayer +
-                ", maxNumberOfPlayer=" + maxNumberOfPlayer +
-                ", minAge=" + minAge +
-                ", maxAge=" + maxAge +
-                ", minMonth=" + minMonth +
-                ", stuff='" + stuff + '\'' +
-                ", preparation='" + preparation + '\'' +
-                ", goal='" + goal + '\'' +
-                ", coreRules='" + coreRules + '\'' +
-                ", variant='" + variant + '\'' +
-                ", ending='" + ending + '\'' +
-                ", nature=" + nature +
-                ", size='" + size + '\'' +
-                '}';
+               "id=" + id +
+               ", title='" + title + '\'' +
+               ", lowerCaseTitle='" + lowerCaseTitle + '\'' +
+               ", description='" + description + '\'' +
+               ", playTime='" + playTime + '\'' +
+               ", minNumberOfPlayer=" + minNumberOfPlayer +
+               ", maxNumberOfPlayer=" + maxNumberOfPlayer +
+               ", minAge=" + minAge +
+               ", maxAge=" + maxAge +
+               ", material='" + material + '\'' +
+               ", rules='" + rules + '\'' +
+               ", variant='" + variant + '\'' +
+               ", nature=" + nature +
+               '}';
     }
 
 
@@ -200,7 +153,7 @@ public class Game {
     @PrePersist
     @PreUpdate
     public void toLowerCase() {
-        this.lowerCaseName = name != null ? name.toLowerCase() : null;
+        this.lowerCaseTitle = title != null ? title.toLowerCase() : null;
     }
 
     public void addImage(Image image) {
@@ -243,47 +196,13 @@ public class Game {
         gameCopy.setGame(null);
     }
 
-    public void addTheme(Theme theme) {
-        this.themes.add(theme);
-        theme.getGames().add(this);
+    public void addMechanism(Mechanism mechanism) {
+        this.mechanisms.add(mechanism);
+        mechanism.getGames().add(this);
     }
 
-    public void removeTheme(Theme theme) {
-        this.themes.remove(theme);
-        theme.getGames().remove(this);
-    }
-
-
-    // Self one to many helper methods
-    public void addProductLine(ProductLine productLine) {
-        productLine.getGames().add(this);
-        this.setProductLine(productLine);
-    }
-
-    public void removeProductLine(ProductLine productLine) {
-        productLine.getGames().remove(this);
-        this.setProductLine(null);
-    }
-
-    public void addCoreGame(Game coreGame) {
-        coreGame.getExpansions().add(this);
-        this.setCoreGame(coreGame);
-    }
-
-    public void removeCoreGame() {
-        if (this.getCoreGame() != null) {
-            this.getCoreGame().getExpansions().remove(this);
-            this.setCoreGame(null);
-        }
-    }
-
-    public void addExpansion(Game expansion) {
-        expansion.setCoreGame(this);
-        this.getExpansions().add(expansion);
-    }
-
-    public void removeExpansion(Game expansion) {
-        expansion.setCoreGame(null);
-        this.getExpansions().remove(expansion);
+    public void removeMechanism(Mechanism mechanism) {
+        this.mechanisms.remove(mechanism);
+        mechanism.getGames().remove(this);
     }
 }
