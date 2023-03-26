@@ -69,7 +69,7 @@ public class Game {
     /**
      * Stuff the game contains (parts, meeples, cards, etc...)
      */
-    @Size(max = 2000, message = "Stuff should not exceed 1000 characters")
+    @Size(max = 2000, message = "Material should not exceed 1000 characters")
     @Column(length = 2000)
     private String material;
 

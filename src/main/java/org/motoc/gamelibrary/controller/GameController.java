@@ -48,7 +48,7 @@ public class GameController {
     @GetMapping("/admin/games/page")
     Page<GameDto> findPage(Pageable pageable) {
         logger.trace("findPage(pageable) called");
-        return mapper.pageToPageDto(service.findPage(pageable));
+        return service.findPage(pageable);
     }
 
     @PutMapping("/admin/games/{id}")
@@ -71,7 +71,7 @@ public class GameController {
     @PostMapping("/admin/games")
     GameDto save(@RequestBody @Valid GameDto gameDto) {
         logger.trace("save(game) called");
-        return mapper.gameToDto(service.save(mapper.dtoToGame(gameDto)));
+        return service.save(gameDto);
     }
 
     @GetMapping("/admin/games/names")
@@ -79,6 +79,7 @@ public class GameController {
         logger.trace("findNames() called");
         return service.findNames();
     }
+
     @PostMapping("/admin/games/{gameId}/add-category/{categoryId}")
     GameDto addCategory(@PathVariable Long gameId,
                         @PathVariable Long categoryId) {
@@ -106,6 +107,12 @@ public class GameController {
                             @PathVariable Long mechanismId) {
         logger.trace("unlinkMechanism() called");
         return service.removeMechanism(gameId, mechanismId);
+    }
+
+    @DeleteMapping("/admin/games/{gameId}")
+    void deleteById(@PathVariable Long gameId) {
+        logger.trace("deleteById() called");
+        service.deleteById(gameId);
     }
 
     @PostMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")

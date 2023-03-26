@@ -1,6 +1,9 @@
 package org.motoc.gamelibrary.domain.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.Valid;
@@ -26,17 +29,14 @@ public class GameOverviewDto {
      */
     private long gameCopyCount;
 
-//    private GameNameAndIdDto coreGame;
-//
-//    private Set<GameNameAndIdDto> expansions = new HashSet<>();
 
     @NotBlank(message = "Name cannot be null or blank")
-    private String name;
+    private String title;
 
-    @Size(max = 1000, message = "Description should not exceed 1000 characters")
+    @Size(max = 2000, message = "Description should not exceed 1000 characters")
     private String description;
 
-    @Size(max = 20, message = "Description should not exceed 20 characters")
+    @Size(max = 255, message = "Play time should not exceed 20 characters")
     private String playTime;
 
     @Range(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
@@ -54,15 +54,11 @@ public class GameOverviewDto {
     @Range(min = 0, max = 100, message = "Min months must be between 1 and 100")
     private short minMonth;
 
-    @EqualsAndHashCode.Exclude
     @Valid
     private Set<CategoryDto> categories = new HashSet<>();
 
-    @EqualsAndHashCode.Exclude
     @Valid
     private Set<CreatorWithoutContactDto> creators = new HashSet<>();
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Set<Long> imageIds;
 }

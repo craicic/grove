@@ -42,7 +42,7 @@ public interface GameMapper {
     @Mapping(target = "imageIds", source = "images", qualifiedByName = "imageSetToIds")
     GameOverviewDto gameToOverviewDto(Game game);
 
-    GameNameAndIdDto gameToNameAndIdDto(Game game);
+    GameTitleAndIdDto gameToTitleAndIdDto(Game game);
 
     CategoryDto categoryToDto(Category category);
 

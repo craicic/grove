@@ -8,14 +8,16 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 
 /**
- * Game name's DTO
+ * Game name and Id DTO
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameNameDto {
+public class GameTitleAndIdDto {
 
-    @NotBlank(message = "Name cannot be null or blank")
-    private String name;
+    private Long id;
+
+    @NotBlank(message = "Title cannot be null or blank")
+    private String title;
 }

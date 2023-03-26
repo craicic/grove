@@ -5,14 +5,12 @@ import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
 import org.motoc.gamelibrary.domain.model.*;
 import org.motoc.gamelibrary.mapper.GameMapper;
 import org.motoc.gamelibrary.repository.jpa.*;
-import org.motoc.gamelibrary.service.refactor.SimpleCrudMethodsImpl;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,30 +22,26 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game, Long>> {
+public class GameService {
 
     private static final Logger logger = LoggerFactory.getLogger(GameService.class);
 
     private final GameMapper mapper;
     private final GameRepository gameRepository;
-
     private final CategoryRepository categoryRepository;
     private final MechanismRepository mechanismRepository;
     private final GameCopyRepository gameCopyRepository;
     private final CreatorRepository creatorRepository;
     private final ImageRepository imageRepository;
-
     private Game gameToReturn;
 
     @Autowired
-    public GameService(JpaRepository<Game, Long> genericRepository,
-                       GameRepository gameRepository,
+    public GameService(GameRepository gameRepository,
                        CategoryRepository categoryRepository,
                        MechanismRepository mechanismRepository,
                        GameCopyRepository gameCopyRepository,
                        CreatorRepository creatorRepository,
                        ImageRepository imageRepository) {
-        super(genericRepository, Game.class);
         this.mapper = GameMapper.INSTANCE;
         this.gameToReturn = null;
         this.gameRepository = gameRepository;
@@ -58,48 +52,35 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
         this.imageRepository = imageRepository;
     }
 
-    public Game gameEdit(@Valid Game newGame, Long id) {
-        return gameRepository.findById(id)
-                .map(game -> {
-                    game.setTitle(newGame.getTitle());
-                    game.setDescription(newGame.getDescription());
-                    game.setPlayTime(newGame.getPlayTime());
-                    game.setMinNumberOfPlayer(newGame.getMinNumberOfPlayer());
-                    game.setMaxNumberOfPlayer(newGame.getMaxNumberOfPlayer());
-                    game.setMinMonth(newGame.getMinMonth());
-                    game.setMinAge(newGame.getMinAge());
-                    game.setMaxAge(newGame.getMaxAge());
-                    game.setMaterial(newGame.getMaterial());
-                    game.setNature(newGame.getNature());
-                    logger.debug("Found game of id={}, proceeding to its edit", id);
-                    return gameRepository.save(game);
-                })
-                .orElseGet(() -> {
-                    newGame.setId(id);
-                    logger.debug("No game of id={} found. Set game : {}", id, newGame);
-                    return gameRepository.save(newGame);
-                });
+    public GameDto save(@Valid GameDto t) {
+        return mapper.gameToDto(gameRepository.save(mapper.dtoToGame(t)));
     }
+
+    public long count() {
+        return gameRepository.count();
+    }
+
+    public GameDto findById(long id) {
+        return mapper.gameToDto(gameRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new NotFoundException("No Game of id=" + id + " found.");
+                }));
+    }
+
+    public Page<GameDto> findPage(Pageable pageable) {
+        return mapper.pageToPageDto(gameRepository.findAll(pageable));
+    }
+
+
+    public void deleteById(long id) {
+        gameRepository.deleteById(id);
+    }
+
 
     public GameDto findGameById(Long id) {
         return mapper.gameToDto(gameRepository.findGameById(id));
     }
 
-    public Game ruleEdit(@Valid Game newGame, Long id) {
-        return gameRepository.findById(id)
-                .map(game -> {
-                    game.setRules(newGame.getRules());
-                    game.setVariant(newGame.getVariant());
-                    logger.debug("Found game of id={}, proceeding to its rules edit", id);
-                    return gameRepository.save(game);
-                })
-                .orElseGet(() -> {
-                    newGame.setId(id);
-                    logger.debug("No game of id={} found. Set game : {}", id, newGame);
-                    return gameRepository.save(newGame);
-                });
-
-    }
 
     /**
      * Edits (replace or add) a game by id, cascade set to default.
@@ -135,10 +116,6 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
 
     public Page<GameOverviewDto> findPagedOverview(Pageable pageable, String keyword) {
         return mapper.pageToOverviewDto(gameRepository.findGamesByKeyword(keyword, pageable));
-    }
-
-    public Page<Game> findPagedOverview(Pageable pageable) {
-        return gameRepository.findAll(pageable);
     }
 
 
@@ -263,7 +240,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 .ifPresentOrElse(game -> {
                     if (!game.getGameCopies().contains(gameCopy))
                         throw new IllegalStateException("Game of id=" + game.getId() +
-                                " is not linked to gameCopy of id=" + gameCopy.getId());
+                                                        " is not linked to gameCopy of id=" + gameCopy.getId());
                     gameRepository.removeGameCopy(game, gameCopy);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
@@ -305,7 +282,7 @@ public class GameService extends SimpleCrudMethodsImpl<Game, JpaRepository<Game,
                 .ifPresentOrElse(game -> {
                     if (game.getCreators().isEmpty() || !game.getCreators().contains(creator))
                         throw new IllegalStateException("Game of id=" + game.getId() +
-                                " is not linked to creator of id=" + creator.getId());
+                                                        " is not linked to creator of id=" + creator.getId());
                     gameToReturn = gameRepository.removeCreator(game, creator);
                 }, () -> {
                     throw new NotFoundException("No game of id=" + gameId + " found.");
