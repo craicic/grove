@@ -2,7 +2,6 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.GameDto;
 import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
-import org.motoc.gamelibrary.mapper.GameMapper;
 import org.motoc.gamelibrary.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +24,9 @@ public class GameController {
 
     private final GameService service;
 
-    private final GameMapper mapper;
-
     @Autowired
     public GameController(GameService service) {
         this.service = service;
-        this.mapper = GameMapper.INSTANCE;
     }
 
     @GetMapping("/admin/games/count")
@@ -54,8 +50,8 @@ public class GameController {
     @PutMapping("/admin/games/{id}")
     GameDto edit(@RequestBody @Valid GameDto gameDto,
                  @PathVariable Long id) {
-        logger.trace("edit(game) called\rAttached game to edit is =" + gameDto.toString());
-        return service.edit(mapper.dtoToGame(gameDto), id);
+        logger.trace("edit(game) called");
+        return service.edit(gameDto, id);
     }
 
 
@@ -74,20 +70,20 @@ public class GameController {
         return service.save(gameDto);
     }
 
-    @GetMapping("/admin/games/names")
-    List<String> findNames() {
-        logger.trace("findNames() called");
-        return service.findNames();
+    @GetMapping("/admin/games/titles")
+    List<String> findTitles() {
+        logger.trace("findTitles() called");
+        return service.findTitles();
     }
 
-    @PostMapping("/admin/games/{gameId}/add-category/{categoryId}")
+    @PutMapping("/admin/games/{gameId}/add-category/{categoryId}")
     GameDto addCategory(@PathVariable Long gameId,
                         @PathVariable Long categoryId) {
         logger.trace("addCategory() called");
         return service.addCategory(gameId, categoryId);
     }
 
-    @DeleteMapping("/admin/games/{gameId}/unlink-category/{categoryId}")
+    @PutMapping("/admin/games/{gameId}/unlink-category/{categoryId}")
     GameDto unlinkCategory(@PathVariable Long gameId,
                            @PathVariable Long categoryId) {
         logger.trace("unlinkCategory() called");
@@ -95,14 +91,14 @@ public class GameController {
 
     }
 
-    @PostMapping("/admin/games/{gameId}/add-mechanism/{mechanismId}")
+    @PutMapping("/admin/games/{gameId}/add-mechanism/{mechanismId}")
     GameDto addMechanism(@PathVariable Long gameId,
                          @PathVariable Long mechanismId) {
         logger.trace("addMechanism() called");
         return service.addMechanism(gameId, mechanismId);
     }
 
-    @DeleteMapping("/admin/games/{gameId}/unlink-mechanism/{mechanismId}")
+    @PutMapping("/admin/games/{gameId}/unlink-mechanism/{mechanismId}")
     GameDto unlinkMechanism(@PathVariable Long gameId,
                             @PathVariable Long mechanismId) {
         logger.trace("unlinkMechanism() called");
@@ -115,28 +111,28 @@ public class GameController {
         service.deleteById(gameId);
     }
 
-    @PostMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")
+    @PutMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")
     GameDto addGameCopy(@PathVariable Long gameId,
                         @PathVariable Long gameCopyId) {
         logger.trace("addGameCopy() called");
         return service.addGameCopy(gameId, gameCopyId);
     }
 
-    @DeleteMapping("/admin/games/{gameId}/unlink-game-copy/{gameCopyId}")
+    @PutMapping("/admin/games/{gameId}/unlink-game-copy/{gameCopyId}")
     void unlinkGameCopy(@PathVariable Long gameId,
                         @PathVariable Long gameCopyId) {
         logger.trace("unlinkGameCopy() called");
         service.removeGameCopy(gameId, gameCopyId);
     }
 
-    @PostMapping("/admin/games/{gameId}/add-creator/{creatorId}")
+    @PutMapping("/admin/games/{gameId}/add-creator/{creatorId}")
     GameDto addCreator(@PathVariable Long gameId,
                        @PathVariable Long creatorId) {
         logger.trace("addCreator() called");
         return service.addCreator(gameId, creatorId);
     }
 
-    @DeleteMapping("/admin/games/{gameId}/unlink-creator/{creatorId}")
+    @PutMapping("/admin/games/{gameId}/unlink-creator/{creatorId}")
     GameDto unlinkCreator(@PathVariable Long gameId,
                           @PathVariable Long creatorId) {
         logger.trace("unlinkCreator() called");

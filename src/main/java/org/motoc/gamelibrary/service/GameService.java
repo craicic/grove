@@ -85,7 +85,8 @@ public class GameService {
     /**
      * Edits (replace or add) a game by id, cascade set to default.
      */
-    public GameDto edit(@Valid Game newGame, Long id) {
+    public GameDto edit(@Valid GameDto newGameDto, Long id) {
+        Game newGame = mapper.dtoToGame(newGameDto);
         return mapper.gameToDto(gameRepository.findById(id)
                 .map(game -> {
                     game.setTitle(newGame.getTitle());
@@ -110,7 +111,7 @@ public class GameService {
                 }));
     }
 
-    public List<String> findNames() {
+    public List<String> findTitles() {
         return gameRepository.findNames();
     }
 

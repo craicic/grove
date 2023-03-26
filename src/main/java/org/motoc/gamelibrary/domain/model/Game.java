@@ -137,9 +137,6 @@ public class Game {
                ", maxNumberOfPlayer=" + maxNumberOfPlayer +
                ", minAge=" + minAge +
                ", maxAge=" + maxAge +
-               ", material='" + material + '\'' +
-               ", rules='" + rules + '\'' +
-               ", variant='" + variant + '\'' +
                ", nature=" + nature +
                '}';
     }
