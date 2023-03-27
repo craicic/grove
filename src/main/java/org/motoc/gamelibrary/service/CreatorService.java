@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.service;
 
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
+import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
 import org.motoc.gamelibrary.domain.model.Creator;
 import org.motoc.gamelibrary.mapper.CreatorMapper;
 import org.motoc.gamelibrary.repository.jpa.CreatorRepository;
@@ -62,8 +63,9 @@ public class CreatorService {
     /**
      * Edits a creator by id
      */
-    public Creator edit(@Valid Creator creator, Long id) {
-        return repository.findById(id)
+    public CreatorDto edit(@Valid CreatorDto creatorDto, Long id) {
+        Creator creator = mapper.dtoToCreator(creatorDto);
+        return mapper.creatorToDto(repository.findById(id)
                 .map(creatorFromPersistence -> {
                     creatorFromPersistence.setFirstName(creator.getFirstName());
                     creatorFromPersistence.setLastName(creator.getLastName());
@@ -76,7 +78,7 @@ public class CreatorService {
                     creator.setId(id);
                     logger.debug("No creator of id={} found. Set creator : {}", id, creator);
                     return repository.save(creator);
-                });
+                }));
     }
 
 
@@ -107,7 +109,7 @@ public class CreatorService {
         return repository.findNames();
     }
 
-    public Creator findByFullName(String name) {
-        return repository.findByFullName(name);
+    public CreatorWithoutContactDto findByFullName(String name) {
+        return mapper.creatorToCreatorWithoutContactDto(repository.findByFullName(name));
     }
 }

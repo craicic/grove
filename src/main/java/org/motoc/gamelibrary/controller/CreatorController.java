@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.controller;
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
-import org.motoc.gamelibrary.mapper.CreatorMapper;
 import org.motoc.gamelibrary.service.CreatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +25,10 @@ public class CreatorController {
 
     private final CreatorService service;
 
-    private final CreatorMapper mapper;
 
     @Autowired
     public CreatorController(CreatorService service) {
         this.service = service;
-        this.mapper = CreatorMapper.INSTANCE;
     }
 
     @GetMapping("/admin/creators/count")
@@ -49,7 +46,7 @@ public class CreatorController {
     @GetMapping("/admin/creators")
     CreatorWithoutContactDto findByName(@RequestParam(name = "full-name") String name) {
         logger.trace("findByName(name) called");
-        return mapper.creatorToCreatorWithoutContactDto(service.findByFullName(name));
+        return service.findByFullName(name);
     }
 
     @GetMapping("/admin/creators/{id}")
@@ -70,16 +67,6 @@ public class CreatorController {
         }
     }
 
-//    /**
-//     * Save a new creator with or without contact
-//     */
-//    @PostMapping("/admin/creators")
-//    CreatorDto save(@RequestBody @Valid CreatorDto creator,
-//                    @RequestParam(value = "has-contact", required = false) boolean hasContact) {
-//        logger.trace("save(creator) called");
-//        return mapper.creatorToDto(service.save(mapper.dtoToCreator(creator), hasContact));
-//    }
-
     /**
      * Edit an existing creator
      */
@@ -87,19 +74,19 @@ public class CreatorController {
     CreatorDto edit(@RequestBody @Valid CreatorDto creator,
                     @PathVariable Long id) {
         logger.trace("edit(creator), id) called");
-        return mapper.creatorToDto(service.edit(mapper.dtoToCreator(creator), id));
+        return service.edit(creator, id);
     }
 
-//    @DeleteMapping("/admin/creators/{id}")
-//    void deleteById(@PathVariable Long id) {
-//        logger.trace("deleteById(id) called");
-//        service.remove(id);
-//    }
-//
-//    @DeleteMapping("admin/creators/{creatorId}/contact/{contactId}")
-//    void deleteContact(@PathVariable Long creatorId,
-//                       @PathVariable Long contactId) {
-//        logger.trace("deleteContact(creatorId, contactId) called");
-//        service.removeContact(creatorId, contactId);
-//    }
+    @DeleteMapping("/admin/creators/{id}")
+    void deleteById(@PathVariable Long id) {
+        logger.trace("deleteById(id) called");
+        service.remove(id);
+    }
+
+
+    @PutMapping("admin/creators/{creatorId}")
+    void removeContact(@PathVariable Long creatorId) {
+        logger.trace("deleteContact(creatorId, contactId) called");
+        service.removeContact(creatorId);
+    }
 }

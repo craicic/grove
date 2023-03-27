@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.controller;
 import org.motoc.gamelibrary.domain.dto.PublisherDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
-import org.motoc.gamelibrary.mapper.PublisherMapper;
 import org.motoc.gamelibrary.service.PublisherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +21,8 @@ public class PublisherController {
 
     private final PublisherService service;
 
-    private final PublisherMapper mapper;
-
     public PublisherController(PublisherService service) {
         this.service = service;
-        this.mapper = PublisherMapper.INSTANCE;
     }
 
     @GetMapping("/admin/publishers/count")
@@ -69,7 +65,7 @@ public class PublisherController {
     PublisherDto edit(@RequestBody @Valid PublisherDto publisherDto,
                       @PathVariable Long id) {
         logger.trace("edit(publisher, id) called");
-        return mapper.publisherToDto(service.edit(mapper.dtoToPublisher(publisherDto), id));
+        return service.edit(publisherDto, id);
     }
 
     @DeleteMapping("/admin/publishers/{id}")

@@ -108,6 +108,6 @@ public class MechanismService {
      */
     public List<MechanismDto> findAll() {
         logger.debug("Find all mechanisms");
-        return mapper.mechanismsToDto(repository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+        return mapper.mechanismsToDto(repository.findAll(Sort.by(Sort.Direction.ASC, "title")));
     }
 }

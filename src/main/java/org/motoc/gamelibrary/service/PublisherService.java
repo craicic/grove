@@ -31,8 +31,7 @@ public class PublisherService {
     final private PublisherMapper mapper;
 
     @Autowired
-    public PublisherService(PublisherMapper mapper,
-                            PublisherRepository repository) {
+    public PublisherService(PublisherRepository repository) {
         this.mapper = PublisherMapper.INSTANCE;
         this.repository = repository;
     }
@@ -62,8 +61,9 @@ public class PublisherService {
     /**
      * Edits a publisher by id
      */
-    public Publisher edit(Publisher publisher, Long id) {
-        return repository.findById(id)
+    public PublisherDto edit(PublisherDto publisherDto, Long id) {
+        Publisher publisher = mapper.dtoToPublisher(publisherDto);
+        return mapper.publisherToDto(repository.findById(id)
                 .map(publisherFromPersistence -> {
                     publisherFromPersistence.setName(publisher.getName());
                     publisherFromPersistence.setContact(publisher.getContact());
@@ -74,7 +74,7 @@ public class PublisherService {
                     publisher.setId(id);
                     logger.debug("No publisher of id={} found. Set mechanism : {}", id, publisher);
                     return repository.save(publisher);
-                });
+                }));
     }
 
     /**

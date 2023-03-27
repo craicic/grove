@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.CategoryDto;
-import org.motoc.gamelibrary.mapper.CategoryMapper;
 import org.motoc.gamelibrary.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +22,9 @@ public class CategoryController {
 
     private final CategoryService service;
 
-    private final CategoryMapper mapper;
-
     @Autowired
     public CategoryController(CategoryService service) {
         this.service = service;
-        this.mapper = CategoryMapper.INSTANCE;
     }
 
 
@@ -72,9 +68,7 @@ public class CategoryController {
     CategoryDto edit(@RequestBody @Valid CategoryDto category,
                      @PathVariable Long id) {
         logger.trace("edit(category, id) called");
-        return mapper.categoryToDto(service.edit(
-                mapper.dtoToCategory(category), id)
-        );
+        return service.edit(category, id);
     }
 
     @DeleteMapping("/admin/categories/{id}")

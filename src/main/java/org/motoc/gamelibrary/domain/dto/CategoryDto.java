@@ -20,5 +20,5 @@ public class CategoryDto {
 
     @NotBlank(message = "Name cannot be null or blank")
     @Size(max = 50, message = "Name cannot exceed 50")
-    private String name;
+    private String title;
 }

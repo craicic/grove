@@ -1,7 +1,6 @@
 package org.motoc.gamelibrary.service;
 
 import org.motoc.gamelibrary.domain.dto.CategoryDto;
-import org.motoc.gamelibrary.domain.model.Category;
 import org.motoc.gamelibrary.mapper.CategoryMapper;
 import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
@@ -62,8 +61,8 @@ public class CategoryService {
     /**
      * Edits a category by id
      */
-    public Category edit(@Valid Category category, Long id) {
-        return repository.findById(id)
+    public CategoryDto edit(@Valid CategoryDto category, Long id) {
+        return mapper.categoryToDto(repository.findById(id)
                 .map(categoryFromPersistence -> {
                     categoryFromPersistence.setTitle(category.getTitle());
                     logger.debug("Found category of id={} : {}", id, categoryFromPersistence);
@@ -72,8 +71,8 @@ public class CategoryService {
                 .orElseGet(() -> {
                     category.setId(id);
                     logger.debug("No category of id={} found. Set category : {}", id, category);
-                    return repository.save(category);
-                });
+                    return repository.save(mapper.dtoToCategory(category));
+                }));
     }
 
     /**
@@ -96,6 +95,6 @@ public class CategoryService {
      * Find all categories
      */
     public List<CategoryDto> findAll() {
-        return mapper.categoriesToDto(repository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+        return mapper.categoriesToDto(repository.findAll(Sort.by(Sort.Direction.ASC, "title")));
     }
 }
