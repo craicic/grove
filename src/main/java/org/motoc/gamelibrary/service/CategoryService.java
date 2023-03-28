@@ -87,8 +87,8 @@ public class CategoryService {
     /**
      * Find all categories' names
      */
-    public List<String> findNames() {
-        return repository.findNames();
+    public List<String> findTitles() {
+        return repository.findTitles();
     }
 
     /**

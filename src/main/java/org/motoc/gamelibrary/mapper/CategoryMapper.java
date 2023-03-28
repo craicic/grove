@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * Maps model to dto and and dto to model
+ * Maps model to dto and dto to model
  */
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {

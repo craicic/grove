@@ -136,6 +136,5 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     public void attachImage(Game game, Image image) {
         game.addImage(image);
         entityManager.persist(game);
-
     }
 }

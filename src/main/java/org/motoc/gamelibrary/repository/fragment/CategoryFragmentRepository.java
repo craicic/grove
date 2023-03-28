@@ -16,5 +16,5 @@ public interface CategoryFragmentRepository {
     /**
      * Get all Categories' name in a custom DTO
      */
-    List<String> findNames();
+    List<String> findTitles();
 }

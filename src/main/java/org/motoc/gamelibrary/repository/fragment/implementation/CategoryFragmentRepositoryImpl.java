@@ -44,9 +44,9 @@ public class CategoryFragmentRepositoryImpl implements CategoryFragmentRepositor
     }
 
     @Override
-    public List<String> findNames() {
+    public List<String> findTitles() {
         TypedQuery<String> q = entityManager.createQuery(
-                "SELECT c.name FROM Category as c",
+                "SELECT c.title FROM Category as c",
                 String.class);
         return q.getResultList();
     }

@@ -138,4 +138,11 @@ public class GameController {
         logger.trace("unlinkCreator() called");
         return service.removeCreator(gameId, creatorId);
     }
+
+    @PutMapping("/admin/games/{gameId}/add-image/{imageId}")
+    void addImage(@PathVariable Long gameId,
+                  @PathVariable Long imageId) {
+        logger.trace("addImage() called");
+        service.addImage(gameId, imageId);
+    }
 }

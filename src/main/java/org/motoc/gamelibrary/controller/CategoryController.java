@@ -34,10 +34,10 @@ public class CategoryController {
         return service.count();
     }
 
-    @GetMapping("/admin/categories/names")
-    List<String> findNames() {
-        logger.trace("findNames called");
-        return service.findNames();
+    @GetMapping("/admin/categories/titles")
+    List<String> findTitles() {
+        logger.trace("findTitles called");
+        return service.findTitles();
     }
 
     @GetMapping("/admin/categories")
