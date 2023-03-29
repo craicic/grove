@@ -1,0 +1,39 @@
+<div class="row mb-3">
+  <div class="card" style="width: auto;">
+    <div class="card-body">
+      <h5 class="card-title">{{ publisher.name }}</h5>
+      <div *ngIf="publisher.contact">
+        <div class="card-text">{{ publisher.contact.country}}</div>
+        <div class="card-text"
+             *ngIf="publisher.contact.street">
+          <span *ngIf="publisher.contact.postalCode">{{publisher.contact.streetNumber}} </span>
+          {{ publisher.contact.street}}</div>
+        <div class="card-text">
+          <span *ngIf="publisher.contact.postalCode">{{ publisher.contact.postalCode}} </span>
+          <span *ngIf="publisher.contact.city">{{ publisher.contact.city}}</span>
+        </div>
+        <div class="card-text" *ngIf="publisher.contact.phoneNumber">☏ : {{ publisher.contact.phoneNumber}}</div>
+        <div class="card-text" *ngIf="publisher.contact.mailAddress">@ : {{ publisher.contact.mailAddress}}</div>
+        <div class="card-text">{{ publisher.contact.website}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <button
+    class="btn btn-secondary mr-2 mb-2"
+    type="button"
+    (click)="onEdit()">Éditer
+  </button>
+  <button
+    class="btn btn-danger mr-2 mb-2"
+    type="button"
+    (click)="onOpenConfirm(true)">Supprimer l'éditeur
+  </button>
+  <button
+    class="btn btn-outline-danger  mb-2"
+    type="button"
+    *ngIf="publisher.contact"
+    (click)="onOpenConfirm(false)">Supprimer uniquement les coordonnées
+  </button>
+</div>

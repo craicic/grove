@@ -1,0 +1,18 @@
+<div class="member-container">
+  <h2>Détail du compte</h2>
+  <ng-container *ngIf="accounts$ | async as accounts; else loading">
+    <ul class="list-group member-list" *ngFor="let account of accounts">
+      <li class="list-group-item">
+        <span><b>{{ account.username }}</b> | </span>
+        <span class="text-monospace">{{ account.membershipNumber }} | </span>
+        <span> {{ account.renewalDate | date }}</span>
+        <span class="lead"><a class="details-link" (click)="onNavigateToDetail(account.id)">Détail</a></span>
+
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="member-list member-info">Chargement des données...</div>
+  </ng-template>
+</div>

@@ -1,0 +1,105 @@
+<div class="grid-container">
+  <div class="detail-panel">
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'name']">
+      <h2>{{ game.title }}
+        <span class="info text-primary lead">Éditer</span>
+      </h2>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'categories']">
+      <h4>Catégories
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <span *ngFor="let category of game.categories">
+        <span class="badge-secondary badge mr-2">{{ category.title }}</span>
+      </span>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'mechanisms']">
+      <h4>Mécanismes
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+
+      <span *ngFor="let mechanism of game.mechanisms">
+        <span class="badge-secondary badge mr-2">{{ mechanism.title }}</span>
+      </span>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'infos']">
+      <h4>Informations
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <div> {{ game.nature | enumToString }}</div>
+      <div>{{ numberOfPlayers }}</div>
+      <div *ngIf="game.playTime">{{ game.playTime }}</div>
+      <div *ngIf="limitAge.length > 0">{{ limitAge }}</div>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'creators']">
+      <h4 *ngIf="game.creators">Créateurs
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <div *ngFor="let creator of game.creators">
+        <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
+      </div>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'description']">
+      <h4>Description
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <div *ngIf="game.description">{{ game.description }}</div>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'size']">
+      <h4>Taille / encombrement
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <div>{{ game.size }}</div>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'stuff']">
+      <h4>Materiel
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <div>{{ game.material }}</div>
+    </div>
+
+    <div class="highlightable"
+         routerLinkActive="active"
+         [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'images']">
+      <h4>Galerie
+        <span class="info text-primary lead">Éditer</span>
+      </h4>
+      <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0" class="mb-2">
+        <ng-template ngbSlide *ngFor="let dataUri of dataUriArray; let i = index">
+          <div class="text-center">
+            <img [src]="dataUri" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ i }}]">
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+  </div>
+
+  <div class="edit-panel bg-light">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

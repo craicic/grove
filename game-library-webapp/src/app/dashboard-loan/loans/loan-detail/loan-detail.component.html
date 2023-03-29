@@ -1,0 +1,37 @@
+<div class="loan-container">
+  <h2>Détail du prêt</h2>
+  <ng-container *ngIf="loan ; else error">
+    <div class="loan-details">
+
+      <div class="loan-info"><b>Date de début de prêt :</b> {{ loan.loanStartTime }} </div>
+      <div class="loan-info"><b>Date de fin de prêt :</b> {{ loan.loanEndTime }} </div>
+
+      <h4> Information sur l'adhérent</h4>
+      <div class="loan-info"><b>Pseudo :</b> {{ loan.account.username}} </div>
+      <div class="loan-info"><b>Nom :</b> {{ loan.account.lastName}} </div>
+      <div class="loan-info"><b>Prénom :</b> {{ loan.account.firstName}} </div>
+      <div class="loan-info"><b>Numéro d'adhérent :</b> {{ loan.account.membershipNumber}} </div>
+
+      <h4> Information sur le jeu</h4>
+      <div class="loan-info"><b>Jeu :</b> {{ loan.gameCopy.gameName }}</div>
+      <div class="loan-info"><b>Numéro objet :</b> {{ loan.gameCopy.objectCode }}</div>
+      <div class="loan-info"><b>Localisation :</b> {{ loan.gameCopy.location }}</div>
+
+      <ng-container *ngIf="loan.closed; else onClose">
+        <div class="loan-info badge badge-secondary">Prêt cloturé</div>
+      </ng-container>
+      <ng-template #onClose>
+        <button
+          type="button"
+          class="btn btn-secondary btn-lg"
+          (click)="onCloseLoan(loan.id)"
+        >Clore le prêt
+        </button>
+      </ng-template>
+    </div>
+
+  </ng-container>
+  <ng-template class="loan-details loan-info" #error>
+    Une erreur s'est produite !
+  </ng-template>
+</div>

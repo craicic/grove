@@ -1,0 +1,21 @@
+<div class="game-container">
+  <h2>Sélection d'un jeu</h2>
+  <ng-container *ngIf="copies$ | async as copies; else loading">
+    <ul class="list-group game-list" *ngFor="let copy of copies">
+      <li class="list-group-item">
+        <span><b>{{ copy.gameName }}</b> | </span>
+        <span class="text-monospace">{{ copy.objectCode }} | </span>
+        <span> {{ copy.location }}</span>
+        <span class="right-side-group">
+          <span class="lead"><a class="select-link" (click)="onSelectGameCopy(copy.id)">Sélectionner</a></span>
+          <span class="lead"><a class="details-link" (click)="onNavigateToDetail(copy.id)">Détails</a></span>
+        </span>
+
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="game-list game-info">Chargement des données...</div>
+  </ng-template>
+</div>

@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-8">
+    <h2>{{ game.title }}</h2>
+    <div class="text-primary">{{ game.copies ? game.copies.length : 0 }} exemplaire(s)</div>
+    <h4 class="mt-5">Catégories</h4>
+    <span *ngFor="let category of game.categories">
+     <span class="badge-secondary badge mr-2">{{ category.title }}</span>
+    </span>
+    <h4 class="mt-5">Mécanismes</h4>
+    <span *ngFor="let mechanism of game.mechanisms">
+     <span class="badge-secondary badge mr-2">{{ mechanism.title }}</span>
+    </span>
+    <div class="mt-5" *ngIf="game.description">
+      <h4>Description</h4>
+      <div>{{ game.description }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="float-right mb-5">
+      <button class="btn btn-warning m-2"
+              type="button"
+              (click)="onBack()">
+        <img
+          src="../../../../assets/icons/arrow-left.svg"
+          alt="X-square"/>
+      </button>
+      <button class="btn btn-success m-2"
+              type="button"
+              (click)="onEdit()">Mode édition
+      </button>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5> {{ game.nature | enumToString }}</h5>
+        <h5>{{ numberOfPlayers }}</h5>
+        <h5 *ngIf="game.playTime">{{ game.playTime }}</h5>
+        <h5 *ngIf="limitAge.length > 0">{{ limitAge }}</h5>
+      </div>
+    </div>
+    <div class="mt-5">
+      <ng-container *ngIf="game.creators">
+        <h4 class="mt-5">Créateurs</h4>
+        <div *ngFor="let creator of game.creators">
+          <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-md-12">
+    <h4 class="mb-2">Galerie</h4>
+    <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0">
+      <ng-template ngbSlide *ngFor="let dataUri of dataUriArray; let i = index">
+        <div class="text-center">
+          <img [src]="dataUri" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ i }}]">
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h4 class="mt-5">Taille / encombrement</h4>
+    <div>{{ game.size }}</div>
+    <h4 class="mt-5">Materiel</h4>
+    <div>{{ game.material }}</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6"></div>
+  <div class="col-lg-6">
+    <button class="btn btn-warning mt-5"
+            type="button"
+            (click)="onBack()">Retour aux jeux
+    </button>
+    <button class="btn btn-success mt-5 ml-3"
+            type="button"
+            (click)="onEdit()">Mode édition
+    </button>
+    <button class="btn btn-danger mt-5 ml-3"
+            type="button"
+            (click)="onBack()">Supprimer le jeu
+    </button>
+  </div>
+</div>
+<div class="row mt-5 mb-5">
+  <div class="col-md-12">
+    <h4 class="text-primary">
+      <span (click)="toggleRuleDisplay()" style="cursor: pointer;">
+      Afficher / masquer les règles</span></h4>
+  </div>
+</div>
+<div *ngIf="areRulesDisplayed">
+  <div class="col-md-12">
+    <hr>
+    <div *ngIf="game.goal" class="mt-5">
+      <h4>But du jeu</h4>
+      <p>{{ game.goal }}</p>
+    </div>
+    <div *ngIf="game.rules" class="mt-5">
+      <h4>Règles</h4>
+      <p>{{ game.rules }}</p>
+    </div>
+    <div *ngIf="game.variant" class="mt-5">
+      <h4>Variantes</h4>
+      <p>{{ game.variant }}</p>
+    </div>
+    <span class="mb-5"></span>
+  </div>
+</div>

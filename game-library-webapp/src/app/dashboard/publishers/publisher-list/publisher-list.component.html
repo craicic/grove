@@ -1,0 +1,34 @@
+<app-simple-filter-form
+  [filterForm]="filterForm"
+  (clickFilter)="onFilter()"
+  (clickRefresh)="onRefreshList()"
+  (clickDelete)="onDelete()"
+  class="mb-3"></app-simple-filter-form>
+
+<a *ngFor="let publisher of publishers"
+   style="cursor: pointer;"
+   routerLinkActive="active"
+   class="list-group-item list-group-item-action"
+   [routerLink]="['/admin/editor/publishers', publisher.id]">
+  {{ publisher.name }} (id:{{publisher.id}})</a>
+
+<div class="mb-3"></div>
+<ngb-pagination
+  [collectionSize]="totalElements"
+  [pageSize]="pageSize"
+  [(page)]="page"
+  (pageChange)="onPageChange()"></ngb-pagination>
+
+<hr/>
+
+<button
+  class="btn btn-secondary mr-2 mb-2"
+  type="button"
+  routerLink="/admin/editor/publishers/new">Ajouter un éditeur
+</button>
+
+<button
+  class="btn btn-secondary mr-2 mb-2"
+  type="button"
+  (click)="onRefreshList()">Rafraichir la liste
+</button>

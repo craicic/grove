@@ -1,0 +1,38 @@
+<div class="block-container">
+  <form
+    class="custom-form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+
+    <div class="left-column">
+      <div class="form-group">
+        <label for="title">Titre du jeu</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          class="form-control">
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <button
+            type="submit"
+            class="btn btn-success mr-2"
+            [disabled]="!form.valid">Sauvegarder
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary mr-2"
+            (click)="onNextPage()"
+          >Restaurer
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>
