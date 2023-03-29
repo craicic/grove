@@ -4,7 +4,6 @@ target/
 !**/src/main/**
 !**/src/test/**
 
-
 ### STS ###
 .apt_generated
 .classpath
@@ -35,7 +34,6 @@ build/
 secrets.properties
 
 #### DOCKER ###
-/game-library/docker/
 
 ### Custom ###
 !*.sql
@@ -57,3 +55,4 @@ Thumbs.db
 # Configuration
 /game-library-webapp/src/environments/*
 /game-library-webapp/src/properties/*
+/docker/
