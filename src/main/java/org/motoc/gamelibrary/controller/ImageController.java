@@ -1,6 +1,5 @@
 package org.motoc.gamelibrary.controller;
 
-import org.motoc.gamelibrary.mapper.ImageMapper;
 import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +25,10 @@ public class ImageController {
 
     private final ImageService service;
 
-    private final ImageMapper mapper;
 
     @Autowired
     public ImageController(ImageService service) {
         this.service = service;
-        this.mapper = ImageMapper.INSTANCE;
     }
 
     @PostMapping("/admin/images/games/{gameId}")

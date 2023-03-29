@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class CategoryDto {
     private Long id;
 
-    @NotBlank(message = "Name cannot be null or blank")
-    @Size(max = 50, message = "Name cannot exceed 50")
+    @NotBlank(message = "Title cannot be null or blank")
+    @Size(max = 50, message = "Title cannot exceed 50")
     private String title;
 }

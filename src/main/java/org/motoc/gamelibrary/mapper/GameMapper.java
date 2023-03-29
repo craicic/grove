@@ -44,6 +44,7 @@ public interface GameMapper {
 
     GameTitleAndIdDto gameToTitleAndIdDto(Game game);
 
+
     CategoryDto categoryToDto(Category category);
 
     CreatorWithoutContactDto toCreatorWithoutContactDto(Creator creator);
