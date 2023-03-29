@@ -1,9 +1,9 @@
-import {accountFormValueModel} from './account-form-value.model';
+import {AccountFormValueModel} from './account-form-value.model';
 import {Contact} from './contact.model';
 
 export class Account {
 
-  constructor(userForm: accountFormValueModel) {
+  constructor(userForm: AccountFormValueModel) {
     if (userForm.email) {
       this.contact = new Contact('France', userForm.email);
     }
