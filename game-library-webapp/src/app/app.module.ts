@@ -51,20 +51,32 @@ import {SizeHandlerComponent} from './dashboard/games/game-edit/size-handler/siz
 import {StuffHandlerComponent} from './dashboard/games/game-edit/stuff-handler/stuff-handler.component';
 import {ImageHandlerComponent} from './dashboard/games/game-edit/image-handler/image-handler.component';
 import {GameEditHelperComponent} from './dashboard/games/game-edit/game-edit-helper/game-edit-helper.component';
-import {CategoryPickerComponent} from './dashboard/games/game-edit/category-handler/category-picker/category-picker.component';
+import {
+  CategoryPickerComponent
+} from './dashboard/games/game-edit/category-handler/category-picker/category-picker.component';
 import {ObjectToStringPipe} from './shared/pipes/object-to-string.pipe';
-import {MechanismPickerComponent} from './dashboard/games/game-edit/mechanism-handler/mechanism-picker/mechanism-picker.component';
-import {CreatorPickerComponent} from './dashboard/games/game-edit/creator-handler/creator-picker/creator-picker.component';
-import {DescriptionHandlerComponent} from './dashboard/games/game-edit/description-handler/description-handler.component';
+import {
+  MechanismPickerComponent
+} from './dashboard/games/game-edit/mechanism-handler/mechanism-picker/mechanism-picker.component';
+import {
+  CreatorPickerComponent
+} from './dashboard/games/game-edit/creator-handler/creator-picker/creator-picker.component';
+import {
+  DescriptionHandlerComponent
+} from './dashboard/games/game-edit/description-handler/description-handler.component';
 import {BannerComponent} from './shared/components/banner/banner.component';
 import {LockedHeaderComponent} from './shared/components/locked-header/locked-header.component';
 import {BackButtonComponent} from './shared/components/back-button/back-button.component';
 import {NewGameBasicsComponent} from './dashboard/games/new-game/new-game-basics/new-game-basics.component';
 import {NewGameComponent} from './dashboard/games/new-game/new-game.component';
-import {NewGameParentChoiceComponent} from './dashboard/games/new-game/new-game-parent-choice/new-game-parent-choice.component';
+import {
+  NewGameParentChoiceComponent
+} from './dashboard/games/new-game/new-game-parent-choice/new-game-parent-choice.component';
 import {NewGameAddCoreComponent} from './dashboard/games/new-game/new-game-add-core/new-game-add-core.component';
 import {NewGameAddExtComponent} from './dashboard/games/new-game/new-game-add-ext/new-game-add-ext.component';
-import {NewGameCoreSummaryComponent} from './dashboard/games/new-game/new-game-core-summary/new-game-core-summary.component';
+import {
+  NewGameCoreSummaryComponent
+} from './dashboard/games/new-game/new-game-core-summary/new-game-core-summary.component';
 import {NewGameInfosComponent} from './dashboard/games/new-game/new-game-infos/new-game-infos.component';
 import {MemberListComponent} from './dashboard-user/members/member-list/member-list.component';
 import {MemberNewComponent} from './dashboard-user/members/member-new/member-new.component';
@@ -75,7 +87,6 @@ import {ConfirmLoanComponent} from './dashboard-loan/loans/confirm-loan/confirm-
 import {LoanListComponent} from './dashboard-loan/loans/loan-list/loan-list.component';
 import {LoanDetailComponent} from './dashboard-loan/loans/loan-detail/loan-detail.component';
 import {HomeComponent} from './home/home.component';
-import {SafePipe} from './shared/pipes/safe.pipe';
 
 
 @NgModule({
@@ -97,7 +108,6 @@ import {SafePipe} from './shared/pipes/safe.pipe';
     ConfirmModalComponent,
     EnumToValuePipe,
     ObjectToStringPipe,
-    SafePipe,
     ContactFormComponent,
     SimpleFilterFormComponent,
     PublishersComponent,

@@ -40,13 +40,17 @@ import {SizeHandlerComponent} from './dashboard/games/game-edit/size-handler/siz
 import {StuffHandlerComponent} from './dashboard/games/game-edit/stuff-handler/stuff-handler.component';
 import {ImageHandlerComponent} from './dashboard/games/game-edit/image-handler/image-handler.component';
 import {GameEditHelperComponent} from './dashboard/games/game-edit/game-edit-helper/game-edit-helper.component';
-import {DescriptionHandlerComponent} from './dashboard/games/game-edit/description-handler/description-handler.component';
+import {
+  DescriptionHandlerComponent
+} from './dashboard/games/game-edit/description-handler/description-handler.component';
 import {WrapperEditResolver} from './shared/resolvers/wrapper-edit-resolver.service';
 import {NavResolverService} from './shared/resolvers/nav-resolver.service';
 import {NewGameBasicsComponent} from './dashboard/games/new-game/new-game-basics/new-game-basics.component';
 import {WrapperNewResolver} from './shared/resolvers/wrapper-new-resolver.service';
 import {NewGameComponent} from './dashboard/games/new-game/new-game.component';
-import {NewGameParentChoiceComponent} from './dashboard/games/new-game/new-game-parent-choice/new-game-parent-choice.component';
+import {
+  NewGameParentChoiceComponent
+} from './dashboard/games/new-game/new-game-parent-choice/new-game-parent-choice.component';
 import {NewGameAddExtComponent} from './dashboard/games/new-game/new-game-add-ext/new-game-add-ext.component';
 import {NewGameAddCoreComponent} from './dashboard/games/new-game/new-game-add-core/new-game-add-core.component';
 import {NewGameInfosComponent} from './dashboard/games/new-game/new-game-infos/new-game-infos.component';
@@ -181,7 +185,7 @@ const routes: Routes = [
               {
                 path: 'list',
                 component: GameListComponent,
-                // resolve: [GameOverviewResolver],
+                // resolve: [CategoryResolver],
                 children: [
                   {path: ':id', component: GameSummaryComponent}]
               },
@@ -197,7 +201,11 @@ const routes: Routes = [
             component: MechanismsComponent,
             children: [
               {path: 'new', component: MechanismEditComponent, resolve: [ExistingMechanismsResolver]},
-              {path: ':id/edit', component: MechanismEditComponent, resolve: [MechanismResolver, ExistingMechanismsResolver]},
+              {
+                path: ':id/edit',
+                component: MechanismEditComponent,
+                resolve: [MechanismResolver, ExistingMechanismsResolver]
+              },
               {path: ':id', component: MechanismDetailComponent, resolve: [MechanismResolver]}
             ]
           },
@@ -215,7 +223,11 @@ const routes: Routes = [
             component: PublishersComponent,
             children: [
               {path: 'new', component: PublisherEditComponent, resolve: [PublishersNamesResolver]},
-              {path: ':id/edit', component: PublisherEditComponent, resolve: [PublishersResolver, PublishersNamesResolver]},
+              {
+                path: ':id/edit',
+                component: PublisherEditComponent,
+                resolve: [PublishersResolver, PublishersNamesResolver]
+              },
               {path: ':id', component: PublisherDetailComponent, resolve: [PublishersResolver]}
             ]
           },

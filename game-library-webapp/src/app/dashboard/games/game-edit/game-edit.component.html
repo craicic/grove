@@ -89,9 +89,9 @@
         <span class="info text-primary lead">Éditer</span>
       </h4>
       <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0" class="mb-2">
-        <ng-template ngbSlide *ngFor="let dataUri of dataUriArray; let i = index">
+        <ng-template ngbSlide *ngFor="let image of images; let i = index">
           <div class="text-center">
-            <img [src]="dataUri" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ i }}]">
+            <img src="{{ image.content }}" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ 2 }}]">
           </div>
         </ng-template>
       </ngb-carousel>

@@ -4,7 +4,7 @@ import {GameService} from '../game.service';
 import {ImageService} from '../../../shared/services/image.service';
 import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {Image} from '../../../model/image.model';
 
 @Component({
   selector: 'app-game-edit',
@@ -13,37 +13,55 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 })
 export class GameEditComponent implements OnInit, OnDestroy {
 
+  image: Image;
   game: Game;
   numberOfPlayers: string;
   limitAge: string;
-  dataUriArray: SafeResourceUrl[] = null;
   subscription: Subscription;
+  images: Image[];
 
   constructor(private service: GameService,
-              private sanitizer: DomSanitizer,
               private imageService: ImageService) {
   }
 
   ngOnInit(): void {
-    this.subscription = this.service.detailedGame$.pipe(map(game => this.game = game)).subscribe(() => {
-      this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
-      this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
-      this.dataUriArray ? console.log('loadAllImages was skipped') : this.loadAllImages();
-    });
+    this.subscription = this.service.detailedGame$
+      .pipe(map(game => {
+        this.game = game;
+      }))
+      .subscribe(() => {
+        this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
+        this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
+      });
+    this.images = [];
+    console.log('???');
+    // this.imageService
+    //   .fetchImage(1)
+    //   .subscribe(data => {
+    //     this.image = new Image();
+    //     this.image.id = data.id;
+    //     this.image.content = 'data:image/png;base64,' + data.content;
+    //     this.images.push(this.image);
+    //   });
+
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private loadAllImages(): void {
-    this.dataUriArray = [];
-    this.game.imageIds.forEach(id => {
+  private loadAllImages(ids: number[]): void {
+    console.log('load images! !!');
+    this.images = [];
+    ids.forEach(id => {
       this.imageService
         .fetchImage(id)
-        .subscribe(
-          imageData => this.dataUriArray.push(this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64, ' + imageData))
-        );
+        .subscribe(data => {
+          const image = new Image();
+          image.id = data.id;
+          image.content = 'data:image/png;base64,' + data.content;
+          this.images.push(image);
+        });
     });
   }
 }

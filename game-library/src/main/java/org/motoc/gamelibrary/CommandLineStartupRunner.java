@@ -23,7 +23,7 @@ public class CommandLineStartupRunner
 
     private final ImageService imageService;
 
-    private Path sourcePath = Path.of("src/main/resources/static");
+    private Path sourcePath = Path.of("game-library/src/main/resources/static");
     private ImageFormat outputFormat = ImageFormat.PNG;
 
     @Autowired

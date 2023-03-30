@@ -17,5 +17,5 @@ public class ImageDto {
 
     private Long id;
 
-
+    private byte[] content;
 }

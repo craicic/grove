@@ -15,8 +15,6 @@ export class GameService {
   games: GameOverview[];
   page: Page<GameOverview> = {};
   pageChanged: Subject<Page<GameOverview>> = new Subject<Page<GameOverview>>();
-
-  /* Used in locked mode */
   detailedGame$: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
 
   constructor(private http: HttpClient,

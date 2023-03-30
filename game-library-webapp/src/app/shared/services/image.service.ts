@@ -9,6 +9,7 @@ import {environment} from '../../../environments/environment';
 export class ImageService {
   apiUri: string;
   image: Image;
+  imageIds: number[];
 
   constructor(private http: HttpClient,
               private config: ConfigurationService) {
@@ -17,10 +18,11 @@ export class ImageService {
 
 
   /* ============================================== REST API METHODS =================================================================== */
-  fetchImage(id: number): Observable<any> {
+  fetchImage(id: number): Observable<Image> {
     return this.http
-      .get(this.apiUri + '/admin/images/' + id, {responseType: 'text'});
+      .get(this.apiUri + '/admin/images/' + id, {responseType: 'json'});
   }
 
   /* ================================================ OTHER METHODS ==================================================================== */
+
 }

@@ -15,7 +15,7 @@
   <div class="col-md-5">
     <img
       *ngIf="game.imageIds"
-      [src]="imageData | safe"
+      src = "{{ image.content }}"
       alt="{{ game.title }} image"
       class="img-fluid"/>
 

@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,16 @@ public class ImageController {
 
     @GetMapping("/admin/images/{id}")
     @ResponseBody
+    ImageDto getImage(@PathVariable Long id) {
+        logger.trace("findDataById(id) called");
+        ImageDto dto = new ImageDto();
+        dto.setId(id);
+        dto.setContent(service.retrieveBytes(id));
+        return dto;
+    }
+
+    @GetMapping(value = "/admin/images/{id}/content")
+    @ResponseBody
     ResponseEntity<InputStreamResource> getContent(@PathVariable Long id) {
         logger.trace("findDataById(id) called");
         InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(service.retrieveBytes(id)));
@@ -47,4 +58,5 @@ public class ImageController {
         header.setContentType(MediaType.IMAGE_PNG);
         return ResponseEntity.ok().headers(header).body(isr);
     }
+
 }

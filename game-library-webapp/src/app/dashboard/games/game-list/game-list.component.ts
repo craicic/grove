@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GameService} from '../game.service';
 import {Page} from '../../../model/page.model';
 import {GameOverview} from '../../../model/game-overview.model';
+import {ImageService} from '../../../shared/services/image.service';
 
 @Component({
   selector: 'app-game-list',
@@ -23,8 +24,10 @@ export class GameListComponent implements OnInit {
   page: number;
 
   constructor(private service: GameService,
+              private imageService: ImageService,
               private configurationService: ConfigurationService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {

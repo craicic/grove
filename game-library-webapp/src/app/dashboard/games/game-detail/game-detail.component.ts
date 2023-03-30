@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DeletionHandlerService} from '../../../shared/services/deletion-handler.service';
 import {ModelEnum} from '../../../model/enum/model.enum';
 import {EDITION, WrapperService} from '../../../shared/services/wrapper.service';
+import {Image} from '../../../model/image.model';
 
 @Component({
   selector: 'app-game-detail',
@@ -20,6 +21,7 @@ export class GameDetailComponent implements OnInit {
   numberOfPlayers: string;
   limitAge: string;
   areRulesDisplayed: boolean;
+  images: Image[] = [];
 
   constructor(private service: GameService,
               private imageService: ImageService,
@@ -61,7 +63,12 @@ export class GameDetailComponent implements OnInit {
       this.imageService
         .fetchImage(id)
         .subscribe(
-          imageData => this.dataUriArray.push('data:image/png;base64,' + imageData)
+          imageData => {
+            const i: Image = new Image();
+            i.id = imageData.id;
+            i.content = 'data:image/png;base64,' + imageData.content;
+            this.images.push(i);
+          }
         );
     });
   }
