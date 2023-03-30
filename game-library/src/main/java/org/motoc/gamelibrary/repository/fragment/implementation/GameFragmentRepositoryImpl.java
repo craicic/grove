@@ -55,7 +55,6 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
 
         EntityGraph<Game> graph = entityManager.createEntityGraph(Game.class);
         graph.addSubgraph(Game_.categories);
-        graph.addSubgraph(Game_.images);
         graph.addSubgraph(Game_.gameCopies);
         graph.addSubgraph(Game_.creators);
 

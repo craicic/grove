@@ -8,8 +8,6 @@ import {environment} from '../../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class ImageService {
   apiUri: string;
-  image: Image;
-  imageIds: number[];
 
   constructor(private http: HttpClient,
               private config: ConfigurationService) {

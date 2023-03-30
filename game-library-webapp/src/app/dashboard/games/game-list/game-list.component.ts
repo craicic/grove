@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {GameService} from '../game.service';
 import {Page} from '../../../model/page.model';
 import {GameOverview} from '../../../model/game-overview.model';
@@ -26,8 +26,7 @@ export class GameListComponent implements OnInit {
   constructor(private service: GameService,
               private imageService: ImageService,
               private configurationService: ConfigurationService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -71,5 +70,4 @@ export class GameListComponent implements OnInit {
       'keyword': new FormControl('', [Validators.required, Validators.maxLength(50)])
     });
   }
-
 }
