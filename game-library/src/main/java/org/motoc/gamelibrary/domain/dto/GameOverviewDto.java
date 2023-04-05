@@ -30,13 +30,13 @@ public class GameOverviewDto {
     private long gameCopyCount;
 
 
-    @NotBlank(message = "Name cannot be null or blank")
+    @NotBlank(message = "Title cannot be null or blank")
     private String title;
 
-    @Size(max = 2000, message = "Description should not exceed 1000 characters")
+    @Size(max = 2000, message = "Description should not exceed 2000 characters")
     private String description;
 
-    @Size(max = 255, message = "Play time should not exceed 20 characters")
+    @Size(max = 255, message = "Play time should not exceed 255 characters")
     private String playTime;
 
     @Range(min = 1, max = 100, message = "Min number of players must be between 1 and 100")

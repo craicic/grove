@@ -16,6 +16,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class GameTitleDto {
 
-    @NotBlank(message = "Name cannot be null or blank")
+    @NotBlank(message = "Title cannot be null or blank")
     private String title;
 }

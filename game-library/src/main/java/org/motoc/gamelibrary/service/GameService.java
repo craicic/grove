@@ -112,7 +112,7 @@ public class GameService {
     }
 
     public List<String> findTitles() {
-        return gameRepository.findNames();
+        return gameRepository.findTitles();
     }
 
     public Page<GameOverviewDto> findPagedOverview(Pageable pageable, String keyword) {

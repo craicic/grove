@@ -57,7 +57,6 @@ public interface GameMapper {
 
         Set<Long> ids = new HashSet<>();
         for (Image image : images) {
-            System.out.println("oula !");
             ids.add(image.getId());
         }
         return ids;

@@ -67,7 +67,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
     }
 
     @Override
-    public List<String> findNames() {
+    public List<String> findTitles() {
         TypedQuery<String> q = entityManager.createQuery(
                 "SELECT TRIM(LOWER(g.title)) FROM Game as g",
                 String.class

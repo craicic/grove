@@ -26,7 +26,7 @@ public interface GameFragmentRepository {
     /**
      * Get all Games' name in a custom DTO
      */
-    List<String> findNames();
+    List<String> findTitles();
 
     Game addCategory(Game game, Category category);
 

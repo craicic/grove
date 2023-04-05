@@ -1,9 +1,6 @@
 package org.motoc.gamelibrary.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.domain.enumeration.GameNature;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
@@ -29,7 +26,7 @@ import java.util.Set;
 public class GameDto {
     private Long id;
 
-    @NotBlank(message = "Name cannot be null or blank")
+    @NotBlank(message = "Title cannot be null or blank")
     private String title;
 
     @Size(max = 2000, message = "Description should not exceed 1000 characters")
@@ -65,6 +62,7 @@ public class GameDto {
     private String variant;
 
     private GameNature nature;
+
     private String size;
 
     @Valid
@@ -81,4 +79,24 @@ public class GameDto {
 
     private Set<Long> imageIds = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "GameDto{" +
+               "id=" + id +
+               ", title='" + title + '\'' +
+               ", description='" + description + '\'' +
+               ", playTime='" + playTime + '\'' +
+               ", minNumberOfPlayer=" + minNumberOfPlayer +
+               ", maxNumberOfPlayer=" + maxNumberOfPlayer +
+               ", minAge=" + minAge +
+               ", maxAge=" + maxAge +
+               ", minMonth=" + minMonth +
+               ", material='" + material + '\'' +
+               ", goal='" + goal + '\'' +
+               ", rules='" + rules + '\'' +
+               ", variant='" + variant + '\'' +
+               ", nature=" + nature +
+               ", size='" + size + '\'' +
+               '}';
+    }
 }
