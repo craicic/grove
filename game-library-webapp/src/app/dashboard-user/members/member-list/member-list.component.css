@@ -1,0 +1,32 @@
+h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.member-container {
+  padding: 5rem;
+}
+
+.details-link {
+  color: #007BFF;
+  cursor: pointer;
+  float: right;
+}
+
+.member-list {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 900px) {
+  .member-list {
+    width: 90%;
+  }
+}
+
+@media (max-width: 720px) {
+  .member-list {
+    width: 95%;
+  }
+}

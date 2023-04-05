@@ -1,0 +1,75 @@
+<div [ngClass]="{'row sidebar': true , 'h-100': innerWidth >= '768' , 'h-auto': innerWidth < '768' }">
+  <div
+    class="col-md-2 bg-secondary"
+    *ngIf="!isSideCollapsed">
+    <!--innerWidth >= '768' && !isSideCollapsed -->
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/editor/games/list"
+        routerLinkActive="text-dark bg-light"
+      >Jeux</a>
+    </div>
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/editor/mechanisms"
+        routerLinkActive="text-dark bg-light"
+      >Mécanismes</a>
+    </div>
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/editor/categories"
+        routerLinkActive="text-dark bg-light"
+      >Catégories</a>
+    </div>
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/editor/creators"
+        routerLinkActive="text-dark bg-light"
+      >Auteurs de jeux</a>
+    </div>
+    <hr
+      *ngIf="innerWidth >= '768'"
+      class="side-splitter">
+
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/editor/publishers"
+        routerLinkActive="text-dark bg-light"
+      >Éditeurs</a>
+    </div>
+
+    <hr
+      *ngIf="innerWidth >= '768'"
+      class="side-splitter">
+    <div class="row">
+
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/editor/configuration"
+        routerLinkActive="text-dark bg-light"
+        (click)="onCollapseNavbar()">Configuration</a>
+    </div>
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        (click)="onCollapseNavbar()">\<</a>
+    </div>
+
+  </div>
+  <div [ngClass]="{'col-md-10': innerWidth >= '768', 'col-md-12': innerWidth < '768'}">
+    <div class="y-spacer"></div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

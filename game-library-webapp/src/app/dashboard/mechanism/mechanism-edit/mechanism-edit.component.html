@@ -1,0 +1,35 @@
+<form
+  [formGroup]="mechanismForm"
+  (ngSubmit)="onSubmit()">
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="name">{{ label }}</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="form-control">
+      </div>
+    </div>
+  </div>
+  <span class="form-text"
+        *ngIf="!mechanismForm.pristine && mechanismForm.hasError('nameAlreadyExists', 'name')">
+  <span>Ce mécanisme existe déjà en base de données</span>
+  </span>
+  <div class="row ">
+    <div class="col-xl-12">
+      <button
+        type="submit"
+        class="btn btn-success mr-2"
+        [disabled]="!mechanismForm.valid">Sauvegarder
+      </button>
+      <button
+        type="button"
+        class="btn btn-warning"
+        (click)="onCancel()">Annuler
+      </button>
+    </div>
+  </div>
+</form>

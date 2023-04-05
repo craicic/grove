@@ -1,0 +1,35 @@
+<div [ngClass]="{'row sidebar': true , 'h-100': innerWidth >= '768' , 'h-auto': innerWidth < '768' }">
+  <div
+    class="col-md-2 bg-secondary"
+    *ngIf="innerWidth >= '768' || !isSideCollapsed">
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/members/new"
+        routerLinkActive="text-dark bg-light">Nouvelle adhésion</a>
+    </div>
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLink="/admin/members/list"
+        routerLinkActive="text-dark bg-light">Liste / Édition</a>
+    </div>
+    <hr
+      *ngIf="innerWidth >= '768'"
+      class="side-splitter">
+    <div class="row">
+      <a
+        class="nav-link text-light col-12"
+        style="cursor:pointer;"
+        routerLinkActive="text-dark bg-light"
+        (click)="onCollapseNavbar()">Configuration</a>
+    </div>
+    <div class="text-light">w: {{ innerWidth }}</div>
+  </div>
+  <div [ngClass]="{'col-md-10': innerWidth >= '768', 'col-md-12': innerWidth < '768'}">
+    <div class="y-spacer"></div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

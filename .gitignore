@@ -1,9 +1,8 @@
-HELP.md
+game-library/HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-
 
 ### STS ###
 .apt_generated
@@ -35,9 +34,25 @@ build/
 secrets.properties
 
 #### DOCKER ###
-/docker/
 
 ### Custom ###
 !*.sql
 !/src/main/resources/*.sql
 !/src/main/resources/static/*
+
+# compiled output
+/game-library-webapp/dist
+/game-library-webapp/tmp
+/game-library-webapp/out-tsc
+
+# dependencies
+/game-library-webapp/node_modules
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Configuration
+/game-library-webapp/src/environments/*
+/game-library-webapp/src/properties/*
+/docker/

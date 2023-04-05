@@ -1,0 +1,16 @@
+<div class="row">
+  <h4>{{ category.title }}</h4>
+</div>
+<div class="row">
+  <button
+    class="btn btn-secondary mr-2"
+    type="button"
+    (click)="onEdit()">Éditer cette catégorie
+  </button>
+  <button
+    class="btn btn-danger"
+    type="button"
+    (click)="onOpenConfirm()"
+  >Supprimer cette catégorie
+  </button>
+</div>

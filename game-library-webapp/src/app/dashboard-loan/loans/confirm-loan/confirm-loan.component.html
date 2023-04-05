@@ -1,0 +1,26 @@
+<div class="loan-container">
+  <h2>Confirmation du prêt</h2>
+  <ng-container *ngIf="account && copy ; else error">
+    <div class="loan-details">
+      <div class="loan-info"><b>Pseudo :</b> {{ account.username}} </div>
+      <div class="loan-info"><b>Nom :</b> {{ account.lastName}} </div>
+      <div class="loan-info"><b>Prénom :</b> {{ account.firstName}} </div>
+      <div class="loan-info"><b>Numéro d'adhérent :</b> {{ account.username}} </div>
+
+      <div class="loan-info"><b>Jeu :</b> {{ copy.gameName }}</div>
+      <div class="loan-info"><b>Numéro objet :</b> {{ copy.objectCode }}</div>
+      <div class="loan-info"><b>Localisation :</b> {{ copy.location }}</div>
+
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        (click)="onConfirm()"
+      >Confirmer le prêt
+      </button>
+    </div>
+
+  </ng-container>
+  <ng-template #error>
+    Une erreur s'est produite !
+  </ng-template>
+</div>

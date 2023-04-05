@@ -1,0 +1,40 @@
+<div class="row mb-3">
+  <div class="card" style="width: auto;">
+    <div class="card-body">
+      <h5 class="card-title">{{ creator.firstName }} {{ creator.lastName }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ creator.role | enumToString }}</h6>
+      <div *ngIf="creator.contact">
+        <div class="card-text">{{ creator.contact.country}}</div>
+        <div class="card-text"
+             *ngIf="creator.contact.street">
+          <span *ngIf="creator.contact.postalCode">{{creator.contact.streetNumber}} </span>
+          {{ creator.contact.street}}</div>
+        <div class="card-text">
+          <span *ngIf="creator.contact.postalCode">{{ creator.contact.postalCode}} </span>
+          <span *ngIf="creator.contact.city">{{ creator.contact.city}}</span>
+        </div>
+        <div class="card-text" *ngIf="creator.contact.phoneNumber">☏ : {{ creator.contact.phoneNumber}}</div>
+        <div class="card-text" *ngIf="creator.contact.mailAddress">@ : {{ creator.contact.mailAddress}}</div>
+        <div class="card-text">{{ creator.contact.website}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <button
+    class="btn btn-secondary mr-2 mb-2"
+    type="button"
+    (click)="onEdit()">Éditer cet auteur
+  </button>
+  <button
+    class="btn btn-danger mr-2 mb-2"
+    type="button"
+    (click)="onOpenConfirm(true)">Supprimer cet auteur
+  </button>
+  <button
+    class="btn btn-outline-danger  mb-2"
+    type="button"
+    *ngIf="creator.contact"
+    (click)="onOpenConfirm(false)">Supprimer uniquement les coordonnées
+  </button>
+</div>

@@ -1,0 +1,38 @@
+<div class="block-container">
+  <h4>Créateurs</h4>
+  <div class="creator-handler-body">
+    <ul>
+      <li class="creator-line" *ngFor="let creator of gameCreators$ | async">
+        <span class="name">{{ creator.firstName }} {{ creator.lastName}}</span>
+        <span class="role ml-3 badge-info badge">{{ actualEnumType[creator.role]}}</span>
+        <span class="creator-control ml-3 lead" (click)="onRemove(creator.id)">Retirer</span>
+      </li>
+    </ul>
+    <div class="add-nav" *ngIf="!addModeOn">
+      <a class="nav-link lead inline" (click)="onAddMode()">Associer un créateur</a>
+      <a class="nav-link lead inline" (click)="onBack()">Retour</a>
+    </div>
+    <div class="picker-component" *ngIf="addModeOn">
+      <ng-container *ngIf="{
+        all: allCreatorsName$ | async,
+        current: gameCreators$ | async }
+        as data">
+
+        <app-creator-picker
+          *ngIf="data.all && data.current ; else spinnerBlock"
+          [allCreators]="data.all"
+          [currentGameCreators]="data.current"
+          (backEvent)="attachCreator($event)"></app-creator-picker>
+
+        <ng-template #spinnerBlock>
+          <div class="text-center">
+            <div class="spinner-border text-info" role="status">
+              <span class="sr-only">Chargement...</span>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

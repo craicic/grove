@@ -1,0 +1,35 @@
+<form
+  [formGroup]="categoryForm"
+  (ngSubmit)="onSubmit()">
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="title">{{ label }}</label>
+        <input
+          id="title"
+          type="text"
+          formControlTitle="title"
+          class="form-control">
+      </div>
+    </div>
+  </div>
+  <span class="form-text"
+        *ngIf="!categoryForm.pristine && categoryForm.hasError('titleAlreadyExists')">
+  <span>Cette catégorie existe déjà en base de données</span>
+  </span>
+  <div class="row ">
+    <div class="col-xl-12">
+      <button
+        type="submit"
+        class="btn btn-success mr-2"
+        [disabled]="!categoryForm.valid">Sauvegarder
+      </button>
+      <button
+        type="button"
+        class="btn btn-warning"
+        (click)="onCancel()">Annuler
+      </button>
+    </div>
+  </div>
+</form>
