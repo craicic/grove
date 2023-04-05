@@ -29,7 +29,7 @@ export class StuffHandlerComponent implements OnInit {
 
   private initForm(): void {
     this.form = new FormGroup({
-      'stuff': new FormControl(this.game.material, [
+      'material': new FormControl(this.game.material, [
           Validators.maxLength(1000),
         ], []
       )
@@ -37,7 +37,7 @@ export class StuffHandlerComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.game.material = this.form.get('stuff').value;
+    this.game.material = this.form.get('material').value;
     this.service.editGame(this.game.id, this.game)
       .pipe(map(game => this.game = game)).subscribe(() => {
       this.initForm();
@@ -49,7 +49,7 @@ export class StuffHandlerComponent implements OnInit {
 
 
   onCancel(): void {
-    this.form.patchValue({stuff: this.game.material});
+    this.form.patchValue({material: this.game.material});
   }
 
   onBack(): void {

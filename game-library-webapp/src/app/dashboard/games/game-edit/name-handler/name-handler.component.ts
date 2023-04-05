@@ -29,7 +29,7 @@ export class NameHandlerComponent implements OnInit {
 
   private initForm(): void {
     this.form = new FormGroup({
-      'name': new FormControl(this.game.title, [
+      'title': new FormControl(this.game.title, [
           Validators.required,
           Validators.maxLength(255),
         ], [this.takenNameValidator.validate.bind(this.takenNameValidator)]
@@ -38,11 +38,11 @@ export class NameHandlerComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.game.title = this.form.get('name').value;
+    this.game.title = this.form.get('title').value;
     this.service.editGame(this.game.id, this.game)
       .pipe(map(game => this.game = game)).subscribe(() => {
       this.initForm();
-      this.takenNameValidator.updateTakenNames();
+      this.takenNameValidator.updateTakenTitles();
       this.service.updateDetailedGame(this.game);
     });
     this.router.navigate(['./..'], {relativeTo: this.route});

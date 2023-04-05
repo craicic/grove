@@ -34,7 +34,6 @@ export class GameEditComponent implements OnInit, OnDestroy {
         this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
       });
     this.images = [];
-    console.log('???');
     // this.imageService
     //   .fetchImage(1)
     //   .subscribe(data => {
@@ -51,7 +50,6 @@ export class GameEditComponent implements OnInit, OnDestroy {
   }
 
   private loadAllImages(ids: number[]): void {
-    console.log('load images! !!');
     this.images = [];
     ids.forEach(id => {
       this.imageService

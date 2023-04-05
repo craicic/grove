@@ -151,7 +151,7 @@ const routes: Routes = [
             component: SizeHandlerComponent
           },
           {
-            path: 'stuff',
+            path: 'material',
             component: StuffHandlerComponent
           },
           {

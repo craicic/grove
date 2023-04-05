@@ -25,7 +25,6 @@ export class ConfirmLoanComponent implements OnInit {
 
   onConfirm(): void {
     this.service.create(this.account.id, this.copy.id).subscribe(loan => {
-      console.log(loan);
       this.router.navigate(['admin/loans', loan.id]);
     });
   }

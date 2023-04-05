@@ -25,7 +25,7 @@ export class GameService {
   /* ============================================== REST API METHODS =================================================================== */
   /** Get paged overview games */
   fetchGames(page?: number, keyword?: string): Observable<Page<GameOverview>> {
-    console.log('fetchGames called!!');
+    console.log('Games list was fetched');
     if (!page) {
       page = 0;
     }
@@ -61,9 +61,15 @@ export class GameService {
   }
 
   /** */
-  fetchNames(): Observable<string[]> {
+  fetchTitles(): Observable<string[]> {
     return this.http
-      .get<string[]>(this.apiUri + '/admin/games/names', {responseType: 'json'});
+      .get<string[]>(this.apiUri + '/admin/games/titles', {responseType: 'json'});
+  }
+
+  /** Save a new game POST */
+  saveGame(game: Game): Observable<Game> {
+    return this.http
+      .post<Game>(this.apiUri + '/admin/games/', game, {responseType: 'json'});
   }
 
   /** Edit the game via PUT request */

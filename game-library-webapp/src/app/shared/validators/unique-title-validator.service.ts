@@ -5,24 +5,24 @@ import {Observable, of} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class UniqueTitleValidator implements AsyncValidator {
-  takenNames: string[];
+  takenTitles: string[];
   isTaken: boolean;
 
 
   constructor(private gameService: GameService) {
-    this.updateTakenNames();
+    this.updateTakenTitles();
   }
 
   validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    if (this.takenNames) {
-      this.isTaken = this.takenNames.includes(control.value.toLowerCase().trim());
+    if (this.takenTitles) {
+      this.isTaken = this.takenTitles.includes(control.value.toLowerCase().trim());
     }
     return of(this.isTaken ? {uniqueTitle: true} : null);
   }
 
-  updateTakenNames(): void {
+  updateTakenTitles(): void {
     this.isTaken = true;
-    this.gameService.fetchNames()
-      .subscribe(names => this.takenNames = names);
+    this.gameService.fetchTitles()
+      .subscribe(title => this.takenTitles = title);
   }
 }

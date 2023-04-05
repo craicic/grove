@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GameService} from '../../game.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Game} from '../../../../model/game.model';
 import {GameNatureEnum} from '../../../../model/enum/game-nature.enum';
 import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
+import {GameInfoHelper} from '../../../shared/refactoring/game-info-helper';
 
 @Component({
   selector: 'app-info-handler',
@@ -29,14 +30,14 @@ export class InfoHandlerComponent implements OnInit, OnDestroy {
   playerSubscription: Subscription;
   ageRangeSubscription: Subscription;
 
-  constructor(private service: GameService,
+  constructor(protected service: GameService,
+              private helper: GameInfoHelper,
               private route: ActivatedRoute,
               private router: Router) {
     this.natureList = Object.keys(GameNatureEnum);
     this.actualEnumType = GameNatureEnum;
     this.playerQuickDisplay = '';
     this.ageRangeQuickDisplay = '';
-
 
   }
 
@@ -56,15 +57,20 @@ export class InfoHandlerComponent implements OnInit, OnDestroy {
     }
 
     this.initForm();
-    this.playerQuickDisplay = this.buildPlayers(this.form.get('numberOfPlayers.min').value, this.form.get('numberOfPlayers.max').value);
-    this.ageRangeQuickDisplay = this.buildAge(this.form.get('ageRange.min').value, this.form.get('ageRange.max').value, this.form.get('ageRange.month').value);
+    this.playerQuickDisplay = this.helper
+      .buildPlayers(this.form.get('numberOfPlayers.min').value, this.form.get('numberOfPlayers.max').value);
+    this.ageRangeQuickDisplay =
+      this.helper.buildAge(
+        this.form.get('ageRange.min').value,
+        this.form.get('ageRange.max').value,
+        this.form.get('ageRange.month').value);
 
     this.playerSubscription = this.form.get('numberOfPlayers').valueChanges.subscribe(data => {
-      this.playerQuickDisplay = this.buildPlayers(data.min, data.max);
+      this.playerQuickDisplay = this.helper.buildPlayers(data.min, data.max);
     });
 
     this.ageRangeSubscription = this.form.get('ageRange').valueChanges.subscribe(data => {
-      this.ageRangeQuickDisplay = this.buildAge(data.min, data.max, data.month);
+      this.ageRangeQuickDisplay = this.helper.buildAge(data.min, data.max, data.month);
     });
   }
 
@@ -79,15 +85,14 @@ export class InfoHandlerComponent implements OnInit, OnDestroy {
       'numberOfPlayers': new FormGroup({
         'min': new FormControl(this.game.minNumberOfPlayer, [Validators.min(1), Validators.required]),
         'max': new FormControl(this.game.maxNumberOfPlayer, [Validators.min(0), Validators.required]),
-      }, [this.playerRangeValidator.bind(this)]),
+      }, [this.helper.playerRangeValidator.bind(this)]),
       'duration': new FormControl(this.game.playTime, [Validators.maxLength(20)]),
       'ageRange': new FormGroup({
         'month': new FormControl(this.game.minMonth, [Validators.min(0), Validators.required]),
         'min': new FormControl(this.game.minAge, [Validators.min(0), Validators.required]),
         'max': new FormControl(this.game.maxAge, [Validators.min(0), Validators.required])
-      }, [this.ageRangeValidator.bind(this)]),
+      }, [this.helper.ageRangeValidator.bind(this)]),
     });
-    console.log(this.form);
   }
 
   onSubmit(): void {
@@ -137,24 +142,6 @@ export class InfoHandlerComponent implements OnInit, OnDestroy {
     this.hasMaxP = true;
   }
 
-  playerRangeValidator: ValidatorFn = (fg: FormGroup) => {
-    const min = fg.get('min').value;
-    const max = fg.get('max').value;
-    return (min >= 1 && min <= max) || max === 0
-      ? null
-      : {playerRangeError: true};
-  };
-
-  ageRangeValidator: ValidatorFn = (fg: FormGroup) => {
-    const month = fg.get('month').value;
-    const min = fg.get('min').value;
-    const max = fg.get('max').value;
-    if ((min >= 0 && min < max && month < max * 12) || max === 0) {
-      return null;
-    }
-    return {ageRangeError: true};
-  };
-
   onRemoveMaxA(): void {
     this.hasMaxA = false;
     this.form.patchValue({ageRange: {max: 0}});
@@ -178,25 +165,5 @@ export class InfoHandlerComponent implements OnInit, OnDestroy {
 
     this.form.patchValue({ageRange: {min: this.form.get('ageRange.month').value}});
     this.form.patchValue({ageRange: {month: 0}});
-  }
-
-  buildPlayers(min?: number, max?: number): string {
-    if (min === null || max === null) {
-      return '';
-    }
-    if (max >= min || max === 0) {
-      return this.service.buildPLayers(min, max);
-    }
-    return '';
-  }
-
-  buildAge(minAge: number, maxAge: number, minMonth: number): string {
-    if (minAge === null || maxAge === null || minMonth === null) {
-      return '';
-    }
-    if (maxAge === 0 || (maxAge > minAge && maxAge * 12 > minMonth)) {
-      return this.service.buildAge(minAge, maxAge, minMonth);
-    }
-    return '';
   }
 }

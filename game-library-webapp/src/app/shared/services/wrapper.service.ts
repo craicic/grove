@@ -24,14 +24,12 @@ export class WrapperService implements OnDestroy {
     this.MODE_NAMES[CREATION] = 'Création';
     this.MODE_NAMES[EDITION] = 'Édition';
     this.MODE_NAMES[NAV] = 'Navigation';
-    console.log(this.MODE_NAMES);
 
     /* this method seems not secured */
     // this.subscription = this.router.events
     //   .pipe(filter(event => event instanceof NavigationStart))
     //   .subscribe(() => {
     //     if (!this.router.url.startsWith('/admin/locked-mode/')) {
-    //       console.log(true);
     //       this.mode = NAV;
     //     }
     //   });

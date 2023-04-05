@@ -54,7 +54,7 @@ export class GameSummaryComponent implements OnInit, OnDestroy {
 
   fetchFirstImage(): void {
     this.image = new Image();
-    if (!(this.game.imageIds.length === 0)) {
+    if (this.game.imageIds && this.game.imageIds.length > 0) {
       this.imageService
         .fetchImage(this.game.imageIds[0])
         .subscribe(data => {

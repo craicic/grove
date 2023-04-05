@@ -16,8 +16,6 @@ import {Image} from '../../../model/image.model';
 export class GameDetailComponent implements OnInit {
 
   game: Game;
-  dataUri;
-  dataUriArray: string[] = [];
   numberOfPlayers: string;
   limitAge: string;
   areRulesDisplayed: boolean;
@@ -35,7 +33,9 @@ export class GameDetailComponent implements OnInit {
     this.game = this.service.getDetailedGame();
     this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
     this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
-    this.loadAllImages();
+    if (this.game.imageIds && this.game.imageIds.length > 0) {
+      this.loadAllImages();
+    }
     this.areRulesDisplayed = false;
   }
 
