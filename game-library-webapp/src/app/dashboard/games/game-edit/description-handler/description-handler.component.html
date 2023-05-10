@@ -13,7 +13,7 @@
         formControlName="description"
         class="form-control">
       </textarea>
-      <div>{{ this.form.get('description').value.length}} / 1000</div>
+      <div>{{ this.form.get('description').value ? this.form.get('description').value.length : 0 }} / 2000</div>
     </div>
     <div class="row mt-5">
       <div class="col-md-12">

@@ -29,7 +29,7 @@ export class DescriptionHandlerComponent implements OnInit {
   private initForm(): void {
     this.form = new FormGroup({
       'description': new FormControl(this.game.description, [
-          Validators.maxLength(1000),
+          Validators.maxLength(2000),
         ], []
       )
     });

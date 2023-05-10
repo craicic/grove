@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.controller;
 
 import org.motoc.gamelibrary.domain.dto.GameDto;
 import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,12 @@ public class GameController {
     List<String> findTitles() {
         logger.trace("findTitles() called");
         return service.findTitles();
+    }
+
+    @GetMapping("/admin/games/{id}/images")
+    List<ImageDto> findImagesById(@PathVariable Long id) {
+        logger.trace("findImagesById() called");
+        return service.findImagesById(id);
     }
 
     @PutMapping("/admin/games/{gameId}/add-category/{categoryId}")

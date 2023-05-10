@@ -6,11 +6,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-stuff-handler',
-  templateUrl: './stuff-handler.component.html',
-  styleUrls: ['./stuff-handler.component.css']
+  selector: 'app-material-handler',
+  templateUrl: './material-handler.component.html',
+  styleUrls: ['./material-handler.component.css']
 })
-export class StuffHandlerComponent implements OnInit {
+export class MaterialHandlerComponent implements OnInit {
 
 
   form: FormGroup;
@@ -30,7 +30,7 @@ export class StuffHandlerComponent implements OnInit {
   private initForm(): void {
     this.form = new FormGroup({
       'material': new FormControl(this.game.material, [
-          Validators.maxLength(1000),
+          Validators.maxLength(2000),
         ], []
       )
     });

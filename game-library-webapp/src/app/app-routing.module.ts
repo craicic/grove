@@ -32,12 +32,12 @@ import {GameDetailComponent} from './dashboard/games/game-detail/game-detail.com
 import {GameResolver} from './dashboard/games/game-resolver.service';
 import {GameEditComponent} from './dashboard/games/game-edit/game-edit.component';
 import {CategoryHandlerComponent} from './dashboard/games/game-edit/category-handler/category-handler.component';
-import {NameHandlerComponent} from './dashboard/games/game-edit/name-handler/name-handler.component';
+import {TitleHandlerComponent} from './dashboard/games/game-edit/title-handler/title-handler.component';
 import {InfoHandlerComponent} from './dashboard/games/game-edit/info-handler/info-handler.component';
 import {CreatorHandlerComponent} from './dashboard/games/game-edit/creator-handler/creator-handler.component';
 import {PublisherHandlerComponent} from './dashboard/games/game-edit/publisher-handler/publisher-handler.component';
 import {SizeHandlerComponent} from './dashboard/games/game-edit/size-handler/size-handler.component';
-import {StuffHandlerComponent} from './dashboard/games/game-edit/stuff-handler/stuff-handler.component';
+import {MaterialHandlerComponent} from './dashboard/games/game-edit/material-handler/material-handler.component';
 import {ImageHandlerComponent} from './dashboard/games/game-edit/image-handler/image-handler.component';
 import {GameEditHelperComponent} from './dashboard/games/game-edit/game-edit-helper/game-edit-helper.component';
 import {
@@ -120,7 +120,7 @@ const routes: Routes = [
           },
           {
             path: 'name',
-            component: NameHandlerComponent
+            component: TitleHandlerComponent
           },
           {
             path: 'categories',
@@ -152,7 +152,7 @@ const routes: Routes = [
           },
           {
             path: 'material',
-            component: StuffHandlerComponent
+            component: MaterialHandlerComponent
           },
           {
             path: 'images',

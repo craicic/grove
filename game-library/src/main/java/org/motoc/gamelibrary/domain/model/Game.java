@@ -42,7 +42,7 @@ public class Game {
     @Column(nullable = false, name = "lower_case_title")
     private String lowerCaseTitle;
 
-    @Size(max = 2000, message = "Description should not exceed 1000 characters")
+    @Size(max = 2000, message = "Description should not exceed 2000 characters")
     @Column(length = 2000)
     private String description;
 
@@ -67,9 +67,9 @@ public class Game {
     private short minMonth;
 
     /**
-     * Stuff the game contains (parts, meeples, cards, etc...)
+     * Material that the game contains (parts, meeples, cards, etc...)
      */
-    @Size(max = 2000, message = "Material should not exceed 1000 characters")
+    @Size(max = 2000, message = "Material should not exceed 2000 characters")
     @Column(length = 2000)
     private String material;
 

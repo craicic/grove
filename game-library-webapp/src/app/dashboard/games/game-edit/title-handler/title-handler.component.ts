@@ -8,10 +8,10 @@ import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-name-handler',
-  templateUrl: './name-handler.component.html',
-  styleUrls: ['./name-handler.component.css']
+  templateUrl: './title-handler.component.html',
+  styleUrls: ['./title-handler.component.css']
 })
-export class NameHandlerComponent implements OnInit {
+export class TitleHandlerComponent implements OnInit {
 
   form: FormGroup;
   game: Game;

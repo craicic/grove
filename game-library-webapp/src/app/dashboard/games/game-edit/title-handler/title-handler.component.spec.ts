@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {StuffHandlerComponent} from './stuff-handler.component';
+import {TitleHandlerComponent} from './title-handler.component';
 
-describe('StuffHandlerComponent', () => {
-  let component: StuffHandlerComponent;
-  let fixture: ComponentFixture<StuffHandlerComponent>;
+describe('TitleHandlerComponent', () => {
+  let component: TitleHandlerComponent;
+  let fixture: ComponentFixture<TitleHandlerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StuffHandlerComponent]
+      declarations: [TitleHandlerComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StuffHandlerComponent);
+    fixture = TestBed.createComponent(TitleHandlerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

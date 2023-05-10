@@ -10,6 +10,7 @@ import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,11 +51,8 @@ public class GameDto {
     @Range(min = 0, max = 100, message = "Min months must be between 0 and 100")
     private short minMonth;
 
-    @Size(max = 2000, message = "Material should not exceed 1000 characters")
+    @Size(max = 2000, message = "Material should not exceed 2000 characters")
     private String material;
-
-    @Size(max = 1000, message = "Goal should not exceed 1000 characters")
-    private String goal;
 
     private String rules;
 
@@ -63,7 +61,7 @@ public class GameDto {
 
     private GameNature nature;
 
-    private String size;
+    private LocalDate yearOfRelease;
 
     @Valid
     private Set<CategoryDto> categories = new HashSet<>();
@@ -92,11 +90,10 @@ public class GameDto {
                ", maxAge=" + maxAge +
                ", minMonth=" + minMonth +
                ", material='" + material + '\'' +
-               ", goal='" + goal + '\'' +
                ", rules='" + rules + '\'' +
                ", variant='" + variant + '\'' +
                ", nature=" + nature +
-               ", size='" + size + '\'' +
+               ", yearOfRelease=" + yearOfRelease +
                '}';
     }
 }

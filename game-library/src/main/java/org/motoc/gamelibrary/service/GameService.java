@@ -2,6 +2,7 @@ package org.motoc.gamelibrary.service;
 
 import org.motoc.gamelibrary.domain.dto.GameDto;
 import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.domain.model.*;
 import org.motoc.gamelibrary.mapper.GameMapper;
 import org.motoc.gamelibrary.repository.jpa.*;
@@ -15,7 +16,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Perform service logic on the entity Game
@@ -309,5 +313,22 @@ public class GameService {
                             throw new NotFoundException("No game of id=" + gameId + " found.");
                         });
     }
+
+    public List<ImageDto> findImagesById(Long id) {
+        Game g;
+        Optional<Game> opt = gameRepository.findById(id);
+        if (opt.isPresent()) {
+            g = opt.get();
+        } else {
+            throw new NotFoundException("No game of id=" + id + " found.");
+        }
+        List<ImageDto> images = new ArrayList<>();
+        for (Image i :
+                g.getImages()) {
+            images.add(new ImageDto(i.getId(), imageRepository.findBytes(i.getId())));
+        }
+        return images;
+    }
+
 }
 

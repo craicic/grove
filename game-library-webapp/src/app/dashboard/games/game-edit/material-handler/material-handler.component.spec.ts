@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {NameHandlerComponent} from './name-handler.component';
+import {MaterialHandlerComponent} from './material-handler.component';
 
-describe('NameHandlerComponent', () => {
-  let component: NameHandlerComponent;
-  let fixture: ComponentFixture<NameHandlerComponent>;
+describe('MaterialHandlerComponent', () => {
+  let component: MaterialHandlerComponent;
+  let fixture: ComponentFixture<MaterialHandlerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NameHandlerComponent]
+      declarations: [MaterialHandlerComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NameHandlerComponent);
+    fixture = TestBed.createComponent(MaterialHandlerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
