@@ -55,4 +55,4 @@ Thumbs.db
 # Configuration
 /game-library-webapp/src/environments/*
 /game-library-webapp/src/properties/*
-/docker/
+/docker/pgadmin/servers.json
