@@ -1,6 +1,20 @@
-# Grove. A Game Library Service
+# Grove. A game library application
 
 A tool for game libraries, the goal is to manage a set of game the library owns and borrows.
+
+# How it's done ?
+
+It composed by three component :
+
+- ##### Data : a postgresQL database.
+    That runs on a native postgresQL server for production. In a containers for development and tests.
+
+- ##### Backend : a Spring REST service.
+    Built with Maven, it relies on Hibernate/Spring data JPA repositories. Also using Testcontainers for IT. \
+    [README is here !](./game-library/README.md)
+ 
+- ##### Frontend : an angular client app.
+  You can find the [README here](./game-library-webapp/README.md)
 
 # Project Guidelines
 
@@ -62,7 +76,7 @@ Add the following environment variable for docker with the values you defined be
 
 Execute a `docker-compose up` and check that all went green.
 
-## Spring REST application setup
+## Spring REST service setup
 
 Download and [install JDK](https://adoptium.net/temurin/releases/?version=19) version 19.
 
@@ -72,4 +86,4 @@ Run the application.
 
 ## Angular client app setup
 
-Run a `ng serve` command with the node argument `--openssl-legacy-provider`
+Run a `ng serve` command with the node argument `--openssl-legacy-provider`.
