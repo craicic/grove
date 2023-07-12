@@ -8,7 +8,7 @@ The purpose is to create a tool for a French game-library. The project is being 
 use cases.
 
 The project is composed by a REST API (this repo) and
-an [Angular web client](https://github.com/xxjokerx/game-library-webapp).
+an [Angular web client](https://github.com/craicic/game-library-webapp).
 
 
 ## Technologies
