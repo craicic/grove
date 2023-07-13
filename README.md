@@ -66,6 +66,7 @@ Create a new file `docker/pgadmin/servers.json` that contains :
       }
     }
 ```
+it avoids to expose your database credential. That's why this file is a git-ignored.
 
 ##### 3 : Environment
 
@@ -82,8 +83,18 @@ Download and [install JDK](https://adoptium.net/temurin/releases/?version=19) ve
 
 Download and [install Maven](https://maven.apache.org/install.html).
 
+Create a new file `game-library/src/test/resources/secrets.properties` \
+It should contain following line, with the correct credentials.
+
+```properties
+spring.datasource.username=[insert the postgres username you defined]
+spring.datasource.password=[insert the postgres password you defined]
+```
+This file is referenced in the `application.properties` and it avoids to expose your database credential. That's why
+this file is a git-ignored.
+
 Run the application.
 
 ## Angular client app setup
 
-Run a `ng serve` command with the node argument `--openssl-legacy-provider`.
+Run a `ng serve` with the node argument `--openssl-legacy-provider`.
