@@ -30,8 +30,8 @@ english.
 
 - ### Git Workflow
 
-Versioning practices should be based on Vincent Driessen's
-article : [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
+Versioning practices should be based on Github Flow
+article : [https://docs.github.com/fr/get-started/quickstart/github-flow](https://docs.github.com/fr/get-started/quickstart/github-flow)
 
 # Prepare your environnement to start coding
 

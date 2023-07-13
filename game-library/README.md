@@ -63,8 +63,8 @@ Then run : `java -jar \target\game-library-1.0.1.jar`. The version may vary.
 
 #### 1.1.0
 
-Reworked several aspects of the repository\
-Removed Keycloak
+Reworked several aspects of the repository \
+Removed Keycloak \
 Tests now uses TestContainers.
 
 ## Upcoming version
