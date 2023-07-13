@@ -53,6 +53,5 @@ secrets.properties
 Thumbs.db
 
 # Configuration
-/game-library-webapp/src/environments/*
-/game-library-webapp/src/properties/*
+/game-library-webapp/src/environments/environment.prod.ts
 /docker/pgadmin/servers.json
