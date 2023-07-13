@@ -4,17 +4,17 @@ A tool for game libraries, the goal is to manage a set of game the library owns 
 
 # How it's done ?
 
-It composed by three component :
+THe tool is composed by three components :
 
 - ##### Data : a postgresQL database.
-    That runs on a native postgresQL server for production. In a containers for development and tests.
+    That runs on a native postgresQL server for production. The server is in a containers for development and tests.
 
 - ##### Backend : a Spring REST service.
     Built with Maven, it relies on Hibernate/Spring data JPA repositories. Also using Testcontainers for IT. \
     [README is here !](./game-library/README.md)
  
 - ##### Frontend : an angular client app.
-  You can find the [README here](./game-library-webapp/README.md)
+  You can find the [README here](./game-library-webapp/README.md).
 
 # Project Guidelines
 
