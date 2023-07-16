@@ -1,10 +1,11 @@
-# Grove. A game library application
+# Grove, a tool for game libraries
 
-A tool for game libraries, the goal is to manage a set of game the library owns and borrows.
+A tool for game libraries, the goal is to manage a set of game the library owns and borrows. \
+[Current version is 1.1.0](./CHANGELOG.md)
 
 # How it's done ?
 
-THe tool is composed by three components :
+The tool is composed by three components :
 
 - ##### Data : a postgresQL database.
     That runs on a native postgresQL server for production. The server is in a containers for development and tests.
@@ -15,6 +16,7 @@ THe tool is composed by three components :
  
 - ##### Frontend : an angular client app.
   You can find the [README here](./game-library-webapp/README.md).
+
 
 # Project Guidelines
 
@@ -30,8 +32,15 @@ english.
 
 - ### Git Workflow
 
-Versioning practices should be based on Github Flow
-article : [https://docs.github.com/fr/get-started/quickstart/github-flow](https://docs.github.com/fr/get-started/quickstart/github-flow)
+Versioning practices should be based on the following Vincent Driessen's
+article : [https://nvie.com/posts/a-successful-git-branching-model/](https://nvie.com/posts/a-successful-git-branching-model/)
+
+Release branches are optional : tags in main branch may be enough.
+
+# Deploy the application
+You'll find a [guide's here](./game-library/README.md) to deploy the backend. \
+The angular app should be built using `ng build`. More info [here](./game-library-webapp/README.md).
+ 
 
 # Prepare your environnement to start coding
 
@@ -97,4 +106,7 @@ Run the application.
 
 ## Angular client app setup
 
-Run a `ng serve` with the node argument `--openssl-legacy-provider`.
+Run a `ng serve` with the node option `--openssl-legacy-provider`.
+
+### *Happy coding !*
+

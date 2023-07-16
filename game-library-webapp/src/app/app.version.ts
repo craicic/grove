@@ -1,3 +1,3 @@
 export class AppVersion {
-  public static appVersion = '0.1.0';
+  public static appVersion = '1.1.0';
 }
