@@ -1,0 +1,54 @@
+<form
+  [formGroup]="publisherForm"
+  (ngSubmit)="onSubmit()">
+  <h5>{{ label }}</h5>
+
+  <div class="form-row">
+
+    <div class="form-group col-md-6">
+      <label for="name"></label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="form-control">
+    </div>
+  </div>
+  <span class="form-text"
+        *ngIf="!publisherForm.pristine && publisherForm.hasError('nameAlreadyExists', 'name')">
+  <span>Cet éditeur existe déjà en base de données</span>
+  </span>
+  <app-contact-form
+    *ngIf="hasContact"
+    [contactForm]="contactForm">
+  </app-contact-form>
+
+  <div class="form-row">
+    <div class="col-xl-12">
+      <button
+        type="submit"
+        class="btn btn-success mr-2 mb-2"
+        [disabled]="!publisherForm.valid">Sauvegarder
+      </button>
+      <span class="x-spacer"></span>
+      <button
+        type="button"
+        class="btn btn-warning mr-2 mb-2"
+        (click)="onCancel()">Annuler
+      </button>
+      <span class="x-spacer"></span>
+      <button
+        type="button"
+        class="btn btn-secondary mr-2 mb-2"
+        *ngIf="!hasContact"
+        (click)="onAddContactForm()">Ajouter les coordonnées
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger mr-2 mb-2"
+        *ngIf="hasContact"
+        (click)="onRemoveContactForm()">Retirer les coordonnées
+      </button>
+    </div>
+  </div>
+</form>

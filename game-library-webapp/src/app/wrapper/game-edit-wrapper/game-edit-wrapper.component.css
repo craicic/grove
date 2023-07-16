@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  display: grid;
+  height: calc(100vh - 40px);
+  grid-template-columns: 48px auto;
+}
+
+.sidenav {
+  white-space: nowrap;
+  width: 48px;
+  height: calc(100vh - 40px);
+  overflow-x: hidden;
+  background: #28a745;
+  /*border-right: #28a745 2px solid;*/
+}

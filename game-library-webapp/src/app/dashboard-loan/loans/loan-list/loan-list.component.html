@@ -1,0 +1,27 @@
+<div class="loan-container">
+  <h2>Liste des prêts</h2>
+  <ng-container *ngIf="loans$ | async as loans; else loading">
+    <ul class="list-group loan-list" *ngFor="let loan of loans">
+      <li class="list-group-item">
+        <span><b>{{ loan.id }}</b> | </span>
+        <span class="text-monospace" *ngIf="loan.account">{{ loan.account.username }} | </span>
+        <span *ngIf="loan.gameCopy"> {{ loan.gameCopy.gameName }}</span>
+        <span
+          *ngIf="!loan.closed; else closed"
+          class="badge badge-primary details-link">En cours</span>
+        <ng-template #closed>
+          <span class="badge badge-secondary details-link ">Fermé</span>
+        </ng-template>
+
+        <span class="right-side-group">
+           <span class="lead"><a class="details-link" (click)="onNavigateToDetail(loan.id)">Détails</a></span>
+        </span>
+
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="loan-list loan-info">Chargement des données...</div>
+  </ng-template>
+</div>

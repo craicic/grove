@@ -1,0 +1,60 @@
+.grid-container {
+  margin: 0;
+  display: grid;
+  height: calc(100vh - 40px);
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.edit-panel {
+  padding: 1em;
+  overflow-y: auto;
+}
+
+.detail-panel {
+  padding: 1em;
+  overflow-y: scroll;
+}
+
+ngb-carousel {
+  background: darkgrey;
+  border-radius: 15px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.carousel-img {
+  height: 30vh;
+  border-radius: 5px;
+}
+
+.highlightable {
+  padding: 1em;
+  margin: 0.5em;
+}
+
+.info {
+  display: none;
+}
+
+.highlightable:hover {
+  cursor: pointer;
+  background-color: lightgray;
+  border-radius: 15px;
+}
+
+.active {
+  cursor: pointer;
+  background-color: lightgray;
+  border-radius: 15px;
+  border: 2px #28a745 solid;
+}
+
+.highlightable:hover .info {
+  display: inline;
+  float: right;
+}
+
+
+

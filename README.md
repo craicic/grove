@@ -1,108 +1,112 @@
-# Grove. A Game Library Service
+# Grove, a tool for game libraries
 
-A tool for game libraries
+A tool for game libraries, the goal is to manage a set of game the library owns and borrows. \
+[Current version is 1.1.0](./CHANGELOG.md)
 
-## Project description
+# How it's done ?
 
-The purpose is to create a tool for a French game-library. The project is being design around this particular client
-use cases.
+The tool is composed by three components :
 
-The project is composed by a REST API (this repo) and
-an [Angular web client](https://github.com/xxjokerx/game-library-webapp).
+- ##### Data : a postgresQL database.
+    That runs on a native postgresQL server for production. The server is in a containers for development and tests.
+
+- ##### Backend : a Spring REST service.
+    Built with Maven, it relies on Hibernate/Spring data JPA repositories. Also using Testcontainers for IT. \
+    [README is here !](./game-library/README.md)
+ 
+- ##### Frontend : an angular client app.
+  You can find the [README here](./game-library-webapp/README.md).
 
 
-## Technologies
+# Project Guidelines
 
-The project was set up with [Spring initializr](https://start.spring.io/).
-It will consume a PostgreSQL database.
+- ### Project language
 
+Documentation, Github issues and discutions, Javadoc, and comments in code should be written in english.
+An exception is made for all client-wise documents.
 
-## Deployment
+- ### Naming
 
-##### 1 - Prepare Java Development Kit, PostgreSQL and Maven
+Naming should follow Java / Typescript practices. Name of variables, classes, files, folders etc... should be written in
+english.
 
-Download and [install JDK](https://adoptium.net/) version 17.
+- ### Git Workflow
 
-Install [postgreSQL 15](https://www.postgresql.org/download/) and pgAdmin, remember the user/password you set during the
-installation\
-Run pgAdmin 4, go to Server/PostgreSQL right click Login/Group Roles and Create a new one.
-Fill the username in general, in Definition enter a password. In Privileges enable 'can login?' and 'create database'.
+Versioning practices should be based on the following Vincent Driessen's
+article : [https://nvie.com/posts/a-successful-git-branching-model/](https://nvie.com/posts/a-successful-git-branching-model/)
+
+Release branches are optional : tags in main branch may be enough.
+
+# Deploy the application
+You'll find a [guide's here](./game-library/README.md) to deploy the backend. \
+The angular app should be built using `ng build`. More info [here](./game-library-webapp/README.md).
+ 
+
+# Prepare your environnement to start coding
+
+Before you start, define a username `POSTGRES_USR` and a password `POSTGRES_PWD` for the postgres database. Do the same
+for pgadmin `PG_EMAIL` and `PG_PWD`.
+
+## Docker containers setup
+
+There is two containers for this project : the first is a postgres server, the second one is a pgadmin server.
+
+##### 1 : Install Compose (or docker desktop)
+
+Here's the guide : [docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+
+##### 2 : Create the pgadmin server file
+
+Create a new file `docker/pgadmin/servers.json` that contains :
+
+```    json
+    {
+      "Servers": {
+        "1": {
+          "Name": "localhost",
+          "Group": "Servers",
+          "Port": 5432,
+          "Username": "[insert the postgres username you defined]",
+          "Password": "[insert the postgres password you defined]",
+          "Host": "game-library-dev-db",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        }
+      }
+    }
+```
+it avoids to expose your database credential. That's why this file is a git-ignored.
+
+##### 3 : Environment
+
+Add the following environment variable for docker with the values you defined before you start :
+`POSTGRES_USR`, `POSTGRES_PWD`, `PG_EMAIL` and `PG_PWD`.
+
+##### 4 : run the docker compose
+
+Execute a `docker-compose up` and check that all went green.
+
+## Spring REST service setup
+
+Download and [install JDK](https://adoptium.net/temurin/releases/?version=19) version 19.
 
 Download and [install Maven](https://maven.apache.org/install.html).
 
-##### 2 - Create the database
-
-Run SQL Shell (psql), press enter 3 times then fill username and password. Then
-type : `CREATE DATABASE YOUR-DB-NAME WITH OWNER = YOUR-USERNAME;`.  
-You can either do this step via pgAdmin 4.
-
-##### 3 - Import the project
-
-Download or clone this repository.
-
-##### 4 - Add secrets.properties file
-
-In `src/main/resources`. create a file named `secrets.properties`.
-It has to contain the following lines
+Create a new file `game-library/src/test/resources/secrets.properties` \
+It should contain following line, with the correct credentials.
 
 ```properties
-spring.datasource.username=YOUR-USERNAME
-spring.datasource.password=YOUR-PASSWORD
+spring.datasource.username=[insert the postgres username you defined]
+spring.datasource.password=[insert the postgres password you defined]
 ```
+This file is referenced in the `application.properties` and it avoids to expose your database credential. That's why
+this file is a git-ignored.
 
-Replace YOUR-USERNAME and YOUR-PASSWORD with value you set in set 1.
+Run the application.
 
-##### 5 - Compile and run the application
+## Angular client app setup
 
-With a prompt in project root folder, run : `mvn package`. It will create a Target folder that contains your JAR.  
-Then run : `java -jar \target\game-library-1.0.1.jar`. The version may vary.
+Run a `ng serve` with the node option `--openssl-legacy-provider`.
 
-*And it's done : the program will be launched through the embedded tomcat server using port 8080.*
+### *Happy coding !*
 
-## Current version
-
-#### 1.1.0
-
-Reworked several aspects of the repository\
-Removed Keycloak
-Tests now uses TestContainers.
-
-## Upcoming version
-
-#### 1.2.0
-
-Reworks documentation and code.
-
-## Changelog
-
-#### 0.0.1-SNAPSHOT - 1 May 2020
-
-Project structure is done.
-
-#### 0.2.0-ALPHA - 20 May 2020
-
-Repository fundamentals set, database is fill with demo data on startup.
-
-#### 0.3.0-ALPHA
-
-Theme CRUD feature, exposed on the service's API.
-
-#### 0.4.0-ALPHA
-
-Game related CRUD feature, exposed on the service's API.
-
-#### 0.5.0-ALPHA
-
-User / member features are done.
-
-#### 0.6.0-ALPHA
-
-Loans features are done.
-
-#### 1.0.0
-
-This version is the first release, not fully complete yet
-
-#### 1.0.1
-
-Fix bugs

@@ -1,0 +1,40 @@
+<div class="block-container">
+  <h4>Description du jeu</h4>
+  <form
+    class="custom-form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="description"></label>
+      <textarea
+        id="description"
+        rows="20"
+        formControlName="description"
+        class="form-control">
+      </textarea>
+      <div>{{ this.form.get('description').value ? this.form.get('description').value.length : 0 }} / 2000</div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <button
+          type="submit"
+          class="btn btn-success mr-2"
+          [disabled]="!form.valid">Sauvegarder
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary mr-2"
+          (click)="onCancel()"
+        >Restaurer
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning mr-2"
+          (click)="onBack()"
+        >Retour
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
