@@ -42,7 +42,7 @@ You'll find a [guide's here](./game-library/README.md) to deploy the backend. \
 The angular app should be built using `ng build`. More info [here](./game-library-webapp/README.md).
  
 
-# Prepare your environnement to start coding
+# Prepare your environment to start coding
 
 Before you start, define a username `POSTGRES_USR` and a password `POSTGRES_PWD` for the postgres database. Do the same
 for pgadmin `PG_EMAIL` and `PG_PWD`.
