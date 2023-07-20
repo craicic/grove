@@ -1,4 +1,4 @@
-game-library/HELP.md
+grove-service/HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -41,17 +41,17 @@ secrets.properties
 !/src/main/resources/static/*
 
 # compiled output
-/game-library-webapp/dist
-/game-library-webapp/tmp
-/game-library-webapp/out-tsc
+/grove-webapp/dist
+/grove-webapp/tmp
+/grove-webapp/out-tsc
 
 # dependencies
-/game-library-webapp/node_modules
+/grove-webapp/node_modules
 
 # System Files
 .DS_Store
 Thumbs.db
 
 # Configuration
-/game-library-webapp/src/environments/environment.prod.ts
+/grove-webapp/src/environments/environment.prod.ts
 /docker/pgadmin/servers.json

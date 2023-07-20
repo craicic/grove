@@ -12,10 +12,10 @@ The tool is composed by three components :
 
 - ##### Backend : a Spring REST service.
     Built with Maven, it relies on Hibernate/Spring data JPA repositories. Also using Testcontainers for IT. \
-    [README is here !](./game-library/README.md)
+    [README is here !](./grove-service/README.md)
  
 - ##### Frontend : an angular client app.
-  You can find the [README here](./game-library-webapp/README.md).
+  You can find the [README here](./grove-webapp/README.md).
 
 
 # Project Guidelines
@@ -38,8 +38,8 @@ article : [https://nvie.com/posts/a-successful-git-branching-model/](https://nvi
 Release branches are optional : tags in main branch may be enough.
 
 # Deploy the application
-You'll find a [guide's here](./game-library/README.md) to deploy the backend. \
-The angular app should be built using `ng build`. More info [here](./game-library-webapp/README.md).
+You'll find a [guide's here](./grove-service/README.md) to deploy the backend. \
+The angular app should be built using `ng build`. More info [here](./grove-webapp/README.md).
  
 
 # Prepare your environment to start coding
