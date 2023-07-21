@@ -6,6 +6,7 @@
 
 Reworked the project structure.
 
+
 ## Upcoming version
 
 #### 1.2.0
