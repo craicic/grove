@@ -1,7 +1,7 @@
 # Grove, a tool for game libraries
 
 A tool for game libraries, the goal is to manage a set of game the library owns and borrows. \
-[Current version is 1.1.0](./CHANGELOG.md)
+[Current version is 1.1.1](./CHANGELOG.md)
 
 # How it's done ?
 
@@ -12,10 +12,10 @@ The tool is composed by three components :
 
 - ##### Backend : a Spring REST service.
     Built with Maven, it relies on Hibernate/Spring data JPA repositories. Also using Testcontainers for IT. \
-    [README is here !](./game-library/README.md)
+    [README is here !](./grove-service/README.md)
  
 - ##### Frontend : an angular client app.
-  You can find the [README here](./game-library-webapp/README.md).
+  You can find the [README here](./grove-webapp/README.md).
 
 
 # Project Guidelines
@@ -38,8 +38,8 @@ article : [https://nvie.com/posts/a-successful-git-branching-model/](https://nvi
 Release branches are optional : tags in main branch may be enough.
 
 # Deploy the application
-You'll find a [guide's here](./game-library/README.md) to deploy the backend. \
-The angular app should be built using `ng build`. More info [here](./game-library-webapp/README.md).
+You'll find a [guide's here](./grove-service/README.md) to deploy the backend. \
+The angular app should be built using `ng build`. More info [here](./grove-webapp/README.md).
  
 
 # Prepare your environment to start coding
@@ -92,7 +92,7 @@ Download and [install JDK](https://adoptium.net/temurin/releases/?version=19) ve
 
 Download and [install Maven](https://maven.apache.org/install.html).
 
-Create a new file `game-library/src/test/resources/secrets.properties` \
+Create a new file `grove-service/src/test/resources/secrets.properties` \
 It should contain following line, with the correct credentials.
 
 ```properties

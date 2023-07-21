@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "game-library-webapp": {
+    "grove-webapp": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/game-library-webapp",
+            "outputPath": "dist/grove-webapp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "game-library-webapp:build"
+            "browserTarget": "grove-webapp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "game-library-webapp:build:production"
+              "browserTarget": "grove-webapp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "game-library-webapp:build"
+            "browserTarget": "grove-webapp:build"
           }
         },
         "test": {
@@ -110,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "game-library-webapp:serve"
+            "devServerTarget": "grove-webapp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "game-library-webapp:serve:production"
+              "devServerTarget": "grove-webapp:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "game-library-webapp"
+  "defaultProject": "grove-webapp"
 }

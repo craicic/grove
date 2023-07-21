@@ -17,7 +17,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: echo "Now try to run a maven command."
+      - run: echo "Now install JDK19 and then try to run a maven command."
       - name: Set up JDK19
         uses: actions/setup-java@v3
         with:
