@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.motoc</groupId>
     <artifactId>grove-service</artifactId>
-    <version>${revisison}</version>
+    <version>${revision}</version>
     <name>Grove API</name>
     <description>A tool for game libraries - This is the REST service</description>
 

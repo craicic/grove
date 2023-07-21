@@ -15,7 +15,7 @@
 
     <properties>
         <java.version>19</java.version>
-        <revision>1.1.0</revision>
+        <revision>1.1.1</revision>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
 
@@ -26,8 +26,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>

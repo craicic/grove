@@ -1,7 +1,7 @@
 # Grove, a tool for game libraries
 
 A tool for game libraries, the goal is to manage a set of game the library owns and borrows. \
-[Current version is 1.1.0](./CHANGELOG.md)
+[Current version is 1.1.1](./CHANGELOG.md)
 
 # How it's done ?
 
@@ -92,7 +92,7 @@ Download and [install JDK](https://adoptium.net/temurin/releases/?version=19) ve
 
 Download and [install Maven](https://maven.apache.org/install.html).
 
-Create a new file `game-library/src/test/resources/secrets.properties` \
+Create a new file `grove-service/src/test/resources/secrets.properties` \
 It should contain following line, with the correct credentials.
 
 ```properties

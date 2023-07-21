@@ -7,7 +7,7 @@ import {NAV, WrapperService} from './shared/services/wrapper.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'game-library-webapp';
+  title = 'grove-webapp';
 
   constructor(private wrapperService: WrapperService) {
     this.wrapperService.mode = NAV;
