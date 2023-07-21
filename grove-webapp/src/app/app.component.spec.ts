@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'game-library-webapp'`, () => {
+  it(`should have as title 'grove-webapp'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('game-library-webapp');
+    expect(app.title).toEqual('grove-webapp');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('game-library-webapp app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('grove-webapp app is running!');
   });
 });

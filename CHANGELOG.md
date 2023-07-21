@@ -2,11 +2,11 @@
 
 ## Current version
 
-#### 1.1.0
+#### 1.1.1
 
-Reworked several aspects of the repository \
-Removed Keycloak \
-Tests now uses TestContainers.
+Reworked the project structure.
+
+
 
 ## Upcoming version
 
@@ -47,3 +47,9 @@ This version is the first release, not fully complete yet
 #### 1.0.1
 
 Fix bugs
+
+#### 1.1.0
+
+Reworked several aspects of the repository \
+Removed Keycloak \
+Tests now uses TestContainers.

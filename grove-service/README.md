@@ -4,11 +4,10 @@ A tool for game libraries
 
 ## Project description
 
-The purpose is to create a tool for a French game-library. The project is being design around this particular client
+The purpose is to create a tool for a French game library. The project is being design around this particular client
 use cases.
 
-The project is composed by a REST API (this repo) and
-an [Angular web client](https://github.com/craicic/game-library-webapp).
+The project is composed by a REST API and an Angular SPA.
 
 
 ## Technologies
@@ -55,6 +54,6 @@ Replace YOUR-USERNAME and YOUR-PASSWORD with value you set in set 1.
 ##### 5 - Compile and run the application
 
 With a prompt in project root folder, run : `mvn package`. It will create a Target folder that contains your JAR.  
-Then run : `java -jar \target\game-library-1.0.1.jar`. The version may vary.
+Then run : `java -jar \target\Grove-1.1.1.jar`. The version may vary.
 
 *And it's done : the program will be launched through the embedded tomcat server using port 8080.*
