@@ -36,7 +36,7 @@
 
 - [ ] Improve logs.
 - [ ] Improve documentation.
-- [ ] New constraint person concat(firstname,lastname) unique
+- [X] New constraint person concat(firstname,lastname) unique
 - [ ] Membership number handling
 
 ## V2 (Update)
