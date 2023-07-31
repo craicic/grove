@@ -5,13 +5,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.7</version>
+    <version>2.7.14</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>org.motoc</groupId>
   <artifactId>grove-webapp</artifactId>
   <version>${revision}</version>
   <name>Grove SPA</name>
+  <packaging>pom</packaging>
   <description>A tool for game libraries - This is the angular Single page application</description>
 
 </project>
