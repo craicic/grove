@@ -86,22 +86,10 @@ export class MechanismEditComponent implements OnInit {
     });
   }
 
+
   nameAlreadyExists(control: FormControl): { [s: string]: boolean } {
     /* We need spit the case edit mode or not to allow save the current edited name */
-    if (
-      (
-        !this.editMode
-        &&
-        this.mechanismsService.getExistingMechanisms().indexOf(control.value.toLowerCase().trim()) !== -1
-      )
-      || (
-        this.editMode
-        &&
-        control.value.toLowerCase().trim() !== this.mechanismsService.getMechanismById(this.id).title.toLowerCase().trim()
-        &&
-        this.mechanismsService.getExistingMechanisms().indexOf(control.value.toLowerCase().trim()) !== -1
-      )
-    ) {
+    if (this.mechanismsService.getExistingMechanisms().indexOf(control.value.toLowerCase().trim()) !== -1) {
       return {'nameAlreadyExists': true};
     }
     return null;
