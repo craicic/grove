@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.domain.dto;
 import lombok.*;
 import org.motoc.gamelibrary.domain.enumeration.GeneralState;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

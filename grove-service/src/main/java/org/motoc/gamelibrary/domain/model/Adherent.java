@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import java.util.Set;
 
 @Getter

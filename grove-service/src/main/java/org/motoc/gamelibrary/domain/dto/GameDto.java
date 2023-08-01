@@ -7,9 +7,9 @@ import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentNumberOfPlayer;
 import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;

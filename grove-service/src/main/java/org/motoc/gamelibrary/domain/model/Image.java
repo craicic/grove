@@ -3,7 +3,7 @@ package org.motoc.gamelibrary.domain.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * Article's image : store a file path
