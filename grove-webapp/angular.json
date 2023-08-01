@@ -127,6 +127,6 @@
           "defaultConfiguration": "development"
         }
       }
-    }},
-  "defaultProject": "grove-webapp"
+    }
+  }
 }
