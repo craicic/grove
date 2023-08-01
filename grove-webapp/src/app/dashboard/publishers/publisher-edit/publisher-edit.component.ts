@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {CountryDataService} from '../../../shared/services/country-data.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Publisher} from '../../../model/publisher.model';
@@ -17,8 +17,8 @@ export class PublisherEditComponent implements OnInit {
   hasContact: boolean;
   private subscription: Subscription;
   private id: number;
-  publisherForm: FormGroup;
-  contactForm: FormGroup;
+  publisherForm: UntypedFormGroup;
+  contactForm: UntypedFormGroup;
   label: string;
   existingNames: string[];
 
@@ -109,19 +109,19 @@ export class PublisherEditComponent implements OnInit {
       this.label = 'Création d\'un éditeur';
     }
 
-    this.contactForm = new FormGroup({
-      'postalCode': new FormControl(postalCode, [Validators.maxLength(50)]),
-      'street': new FormControl(street, [Validators.maxLength(255)]),
-      'city': new FormControl(city, [Validators.maxLength(50)]),
-      'country': new FormControl(country, [Validators.required, Validators.maxLength(50)]),
-      'streetNumber': new FormControl(streetNumber, [Validators.maxLength(10)]),
-      'phoneNumber': new FormControl(phoneNumber, [Validators.maxLength(50)]),
-      'website': new FormControl(website, [Validators.maxLength(75)]),
-      'mailAddress': new FormControl(mailAddress, [Validators.maxLength(320)])
+    this.contactForm = new UntypedFormGroup({
+      'postalCode': new UntypedFormControl(postalCode, [Validators.maxLength(50)]),
+      'street': new UntypedFormControl(street, [Validators.maxLength(255)]),
+      'city': new UntypedFormControl(city, [Validators.maxLength(50)]),
+      'country': new UntypedFormControl(country, [Validators.required, Validators.maxLength(50)]),
+      'streetNumber': new UntypedFormControl(streetNumber, [Validators.maxLength(10)]),
+      'phoneNumber': new UntypedFormControl(phoneNumber, [Validators.maxLength(50)]),
+      'website': new UntypedFormControl(website, [Validators.maxLength(75)]),
+      'mailAddress': new UntypedFormControl(mailAddress, [Validators.maxLength(320)])
     });
 
-    this.publisherForm = new FormGroup({
-      'name': new FormControl(name, [Validators.required, Validators.maxLength(255), this.nameAlreadyExists.bind(this)])
+    this.publisherForm = new UntypedFormGroup({
+      'name': new UntypedFormControl(name, [Validators.required, Validators.maxLength(255), this.nameAlreadyExists.bind(this)])
     });
 
     if (this.hasContact) {
@@ -129,7 +129,7 @@ export class PublisherEditComponent implements OnInit {
     }
   }
 
-  nameAlreadyExists(control: FormControl): { [s: string]: boolean } {
+  nameAlreadyExists(control: UntypedFormControl): { [s: string]: boolean } {
     /* We need spit the case edit mode or not to allow save the current edited name */
     if ((
         !this.editMode

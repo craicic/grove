@@ -1,4 +1,4 @@
-import {FormGroup, ValidatorFn} from '@angular/forms';
+import {UntypedFormGroup, ValidatorFn} from '@angular/forms';
 import {GameService} from '../../games/game.service';
 import {Injectable} from '@angular/core';
 import {IGNORE_WARNINGS} from '@angular-devkit/build-angular/src/webpack/utils/stats';
@@ -11,13 +11,13 @@ export class GameInfoHelper {
   }
 
 
-  playerRangeValidator: ValidatorFn = (fg: FormGroup) => {
+  playerRangeValidator: ValidatorFn = (fg: UntypedFormGroup) => {
     const min = fg.get('min').value;
     const max = fg.get('max').value;
     return ((min >= 1 && min <= max) || max === 0) ? null : {playerRangeError: true};
   };
 
-  ageRangeValidator: ValidatorFn = (fg: FormGroup) => {
+  ageRangeValidator: ValidatorFn = (fg: UntypedFormGroup) => {
     const month = fg.get('month').value;
     const min = fg.get('min').value;
     const max = fg.get('max').value;

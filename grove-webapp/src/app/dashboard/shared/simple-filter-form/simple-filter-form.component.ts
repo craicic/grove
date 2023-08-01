@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-simple-filter-form',
@@ -7,7 +7,7 @@ import {FormGroup} from '@angular/forms';
   styleUrls: ['./simple-filter-form.component.css']
 })
 export class SimpleFilterFormComponent implements OnInit {
-  @Input() filterForm: FormGroup;
+  @Input() filterForm: UntypedFormGroup;
   @Output() clickFilter: EventEmitter<any> = new EventEmitter();
   @Output() clickRefresh: EventEmitter<any> = new EventEmitter();
   @Output() clickDelete: EventEmitter<any> = new EventEmitter();

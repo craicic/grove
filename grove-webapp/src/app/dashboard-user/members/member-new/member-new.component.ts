@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AccountService} from '../account.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,20 +12,20 @@ import {Account} from '../../../model/account.model';
 })
 export class MemberNewComponent implements OnInit, OnDestroy {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   nameGroupSub: Subscription;
 
   constructor(private accountService: AccountService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.form = new FormGroup({
-      'name': new FormGroup({
-          'firstname': new FormControl('', [Validators.maxLength(128)]),
-          'lastname': new FormControl('', [Validators.maxLength(128)])
+    this.form = new UntypedFormGroup({
+      'name': new UntypedFormGroup({
+          'firstname': new UntypedFormControl('', [Validators.maxLength(128)]),
+          'lastname': new UntypedFormControl('', [Validators.maxLength(128)])
         }
       ),
-      'email': new FormControl('', [Validators.maxLength(255), Validators.email]),
-      'username': new FormControl('', [Validators.maxLength(255), Validators.required])
+      'email': new UntypedFormControl('', [Validators.maxLength(255), Validators.email]),
+      'username': new UntypedFormControl('', [Validators.maxLength(255), Validators.required])
     });
   }
 

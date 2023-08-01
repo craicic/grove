@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {Category} from '../../../model/category.model';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -13,7 +13,7 @@ import {PageCustom} from '../../../model/page-custom.model';
   styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
-  filterForm: FormGroup;
+  filterForm: UntypedFormGroup;
   private subscription: Subscription;
 
   /* Pagination */
@@ -70,8 +70,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.filterForm = new FormGroup({
-      'keyword': new FormControl('', [Validators.required, Validators.maxLength(50)])
+    this.filterForm = new UntypedFormGroup({
+      'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
   }
 

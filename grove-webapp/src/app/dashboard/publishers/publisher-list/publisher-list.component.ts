@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Router} from '@angular/router';
 import {Page} from '../../../model/page.model';
@@ -19,7 +19,7 @@ export class PublisherListComponent implements OnInit, OnDestroy {
   totalElements: number;
   pageSize: number;
   page: number;
-  filterForm: FormGroup;
+  filterForm: UntypedFormGroup;
 
   constructor(private publishersService: PublisherService,
               private publishersDataService: PublisherDataService,
@@ -70,8 +70,8 @@ export class PublisherListComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.filterForm = new FormGroup({
-      'keyword': new FormControl('', [Validators.required, Validators.maxLength(50)])
+    this.filterForm = new UntypedFormGroup({
+      'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
   }
 }

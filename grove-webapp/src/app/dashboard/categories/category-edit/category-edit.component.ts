@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {CategoryService} from '../category.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Category} from '../../../model/category.model';
@@ -14,7 +14,7 @@ export class CategoryEditComponent implements OnInit {
   private subscription: Subscription;
   private editMode: boolean;
   private id: number;
-  categoryForm: FormGroup;
+  categoryForm: UntypedFormGroup;
   label: string;
 
   constructor(private service: CategoryService,
@@ -67,13 +67,13 @@ export class CategoryEditComponent implements OnInit {
       this.label = 'Création d\'une catégorie';
     }
     this.service.setLowerCasedAndTrimmedCategoryTitles();
-    this.categoryForm = new FormGroup({
-        'title': new FormControl(categoryTitle, [Validators.required, Validators.maxLength(50)]),
+    this.categoryForm = new UntypedFormGroup({
+        'title': new UntypedFormControl(categoryTitle, [Validators.required, Validators.maxLength(50)]),
       },
       (!this.editMode) ? {validators: this.titlesExistValidator.bind(this)} : {validators: this.titlesExistEditModeValidator.bind(this)});
   }
 
-  titlesExistValidator(control: FormControl): ValidationErrors | null {
+  titlesExistValidator(control: UntypedFormControl): ValidationErrors | null {
     const currentTitle = control.get('title').value.toLowerCase().trim();
     const titles = this.service.getLowerCasedAndTrimmedCategoryTitles();
 
@@ -83,7 +83,7 @@ export class CategoryEditComponent implements OnInit {
     return null;
   }
 
-  titlesExistEditModeValidator(control: FormControl): ValidationErrors | null {
+  titlesExistEditModeValidator(control: UntypedFormControl): ValidationErrors | null {
     const currentTitle = control.get('title').value.toLowerCase().trim();
     const titles = this.service.getLowerCasedAndTrimmedCategoryTitles();
 
