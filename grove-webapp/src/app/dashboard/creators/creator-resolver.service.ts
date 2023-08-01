@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Creator} from '../../model/creator.model';
 import {Page} from '../../model/page.model';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable} from 'rxjs';
 import {CreatorService} from './creator.service';
 import {CreatorDataService} from './creator-data.service';
 
 @Injectable({providedIn: 'root'})
-export class CreatorResolver implements Resolve<Page<Creator>> {
+export class CreatorResolver  {
 
   constructor(private creatorService: CreatorService,
               private creatorDataService: CreatorDataService) {

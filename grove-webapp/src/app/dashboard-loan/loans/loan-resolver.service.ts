@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Loan} from '../../model/loan.model';
 import {Observable} from 'rxjs';
 import {LoanService} from './loan.service';
 import {tap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
-export class LoanResolver implements Resolve<Loan> {
+export class LoanResolver  {
 
 
   constructor(private service: LoanService) {

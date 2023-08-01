@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable} from 'rxjs';
 import {MechanismDataService} from './mechanism-data.service';
 import {MechanismService} from './mechanism.service';
@@ -7,7 +7,7 @@ import {Mechanism} from '../../model/mechansim.model';
 import {Page} from '../../model/page.model';
 
 @Injectable({providedIn: 'root'})
-export class MechanismResolver implements Resolve<Page<Mechanism>> {
+export class MechanismResolver  {
 
   constructor(private mechanismsDataService: MechanismDataService,
               private mechanismsService: MechanismService) {

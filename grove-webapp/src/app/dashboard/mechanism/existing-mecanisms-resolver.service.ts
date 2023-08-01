@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {MechanismDataService} from './mechanism-data.service';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable} from 'rxjs';
 import {Mechanism} from '../../model/mechansim.model';
 
 @Injectable({providedIn: 'root'})
-export class ExistingMechanismsResolver implements Resolve<Mechanism[]> {
+export class ExistingMechanismsResolver  {
 
   constructor(private mechanismsDataService: MechanismDataService) {
   }

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {ImpersonalInterface} from '../../model/interface/impersonal.interface';
 import {Observable} from 'rxjs';
 import {PublisherDataService} from './publisher-data.service';
 
 @Injectable({providedIn: 'root'})
-export class PublishersNamesResolver implements Resolve<ImpersonalInterface[]> {
+export class PublishersNamesResolver  {
 
   constructor(private dataService: PublisherDataService) {
   }

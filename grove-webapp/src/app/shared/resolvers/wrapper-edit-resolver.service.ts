@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable} from 'rxjs';
 import {EDITION, WrapperService} from '../services/wrapper.service';
 
 @Injectable({providedIn: 'root'})
-export class WrapperEditResolver implements Resolve<void> {
+export class WrapperEditResolver  {
 
   constructor(private wrapperService: WrapperService) {
   }

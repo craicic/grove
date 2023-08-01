@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable} from 'rxjs';
 import {GameService} from './game.service';
 import {Game} from '../../model/game.model';
 
 @Injectable({providedIn: 'root'})
-export class GameResolver implements Resolve<Game> {
+export class GameResolver  {
   constructor(private service: GameService) {
   }
 
