@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class Mechanism {\n  constructor(title, id) {\n    this.title = title;\n    this.id = id;\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

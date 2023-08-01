@@ -1,7 +1,6 @@
 import {UntypedFormGroup, ValidatorFn} from '@angular/forms';
 import {GameService} from '../../games/game.service';
 import {Injectable} from '@angular/core';
-import {IGNORE_WARNINGS} from '@angular-devkit/build-angular/src/webpack/utils/stats';
 
 @Injectable({providedIn: 'root'})
 export class GameInfoHelper {

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const configuration = {\n  pagination: {\n    numberOfElementsPerPage: 10\n  }\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
