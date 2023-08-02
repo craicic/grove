@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class Contact {\n  constructor(country, mailAddress) {\n    this.country = country;\n    this.mailAddress = mailAddress;\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

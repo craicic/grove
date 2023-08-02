@@ -1,1 +1,0 @@
-{"ast":null,"code":"export let AppVersion = /*#__PURE__*/(() => {\n  class AppVersion {}\n  AppVersion.appVersion = '1.1.1';\n  return AppVersion;\n})();","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
