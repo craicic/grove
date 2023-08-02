@@ -14,5 +14,8 @@
   <name>Grove SPA</name>
   <packaging>pom</packaging>
   <description>A tool for game libraries - This is the angular Single page application</description>
+  <properties>
+    <revision>1.1.2</revision>
+  </properties>
 
 </project>

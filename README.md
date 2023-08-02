@@ -1,7 +1,7 @@
 # Grove, a tool for game libraries
 
 A tool for game libraries, the goal is to manage a set of game the library owns and borrows. \
-[Current version is 1.1.1](./CHANGELOG.md)
+[Current version is 1.1.2](./CHANGELOG.md)
 
 # How it's done ?
 
