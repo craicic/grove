@@ -1,7 +1,7 @@
 # Grove, a tool for game libraries
 
 A tool for game libraries, the goal is to manage a set of game the library owns and borrows. \
-[Current version is 1.1.1](./CHANGELOG.md)
+[Current version is 1.1.2](./CHANGELOG.md)
 
 # How it's done ?
 
@@ -15,7 +15,7 @@ The tool is composed by three components :
     [README is here !](./grove-service/README.md)
  
 - ##### Frontend : an angular client app.
-  You can find the [README here](./grove-webapp/README.md).
+  You can find the [README here](./grove-webapp/README.md). 
 
 
 # Project Guidelines

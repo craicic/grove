@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {merge, Observable, OperatorFunction, Subject} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {GameService} from '../../../game.service';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {Mechanism} from '../../../../../model/mechansim.model';
@@ -30,7 +30,7 @@ export class MechanismPickerComponent implements OnInit {
   availableMechanisms: Mechanism[];
   availableMechanismsTitle: string[] = [];
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private service: GameService) {
   }
@@ -39,8 +39,8 @@ export class MechanismPickerComponent implements OnInit {
     this.gameMechanisms.forEach(t => this.gameIds.push(t.id));
     this.availableMechanisms = this.mechanisms.filter(t => !this.gameIds.includes(t.id));
     this.availableMechanisms.forEach(t => this.availableMechanismsTitle.push(t.title));
-    this.form = new FormGroup({
-      'mechanismField': new FormControl('', [
+    this.form = new UntypedFormGroup({
+      'mechanismField': new UntypedFormControl('', [
           Validators.required,
           this.mechanismAvailable.bind(this)
         ]
@@ -74,7 +74,7 @@ export class MechanismPickerComponent implements OnInit {
     return this.availableMechanisms.find(c => c.title === title);
   }
 
-  mechanismAvailable(control: FormControl): { [s: string]: boolean } {
+  mechanismAvailable(control: UntypedFormControl): { [s: string]: boolean } {
     return !this.availableMechanismsTitle.includes(control.value) ? {'notAvailableMechanism': true} : null;
   }
 

@@ -3,7 +3,7 @@ import {CreatorService} from '../creator.service';
 import {CreatorDataService} from '../creator-data.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Creator} from '../../../model/creator.model';
 import {CreatorRoleEnum} from '../../../model/enum/creator-role.enum';
 import {CountryDataService} from '../../../shared/services/country-data.service';
@@ -18,8 +18,8 @@ export class CreatorEditComponent implements OnInit {
   hasContact: boolean;
   private subscription: Subscription;
   private id: number;
-  creatorForm: FormGroup;
-  contactForm: FormGroup;
+  creatorForm: UntypedFormGroup;
+  contactForm: UntypedFormGroup;
   rolesList: Array<string>;
   actualEnumType: typeof CreatorRoleEnum;
   label: string;
@@ -120,21 +120,21 @@ export class CreatorEditComponent implements OnInit {
       this.label = 'Création d\'un auteur';
     }
 
-    this.contactForm = new FormGroup({
-      'postalCode': new FormControl(postalCode, [Validators.maxLength(50)]),
-      'street': new FormControl(street, [Validators.maxLength(255)]),
-      'city': new FormControl(city, [Validators.maxLength(50)]),
-      'country': new FormControl(country, [Validators.required, Validators.maxLength(50)]),
-      'streetNumber': new FormControl(streetNumber, [Validators.maxLength(10)]),
-      'phoneNumber': new FormControl(phoneNumber, [Validators.maxLength(50)]),
-      'website': new FormControl(website, [Validators.maxLength(75)]),
-      'mailAddress': new FormControl(mailAddress, [Validators.maxLength(320)])
+    this.contactForm = new UntypedFormGroup({
+      'postalCode': new UntypedFormControl(postalCode, [Validators.maxLength(50)]),
+      'street': new UntypedFormControl(street, [Validators.maxLength(255)]),
+      'city': new UntypedFormControl(city, [Validators.maxLength(50)]),
+      'country': new UntypedFormControl(country, [Validators.required, Validators.maxLength(50)]),
+      'streetNumber': new UntypedFormControl(streetNumber, [Validators.maxLength(10)]),
+      'phoneNumber': new UntypedFormControl(phoneNumber, [Validators.maxLength(50)]),
+      'website': new UntypedFormControl(website, [Validators.maxLength(75)]),
+      'mailAddress': new UntypedFormControl(mailAddress, [Validators.maxLength(320)])
     });
 
-    this.creatorForm = new FormGroup({
-      'firstName': new FormControl(firstname, [Validators.maxLength(50)]),
-      'lastName': new FormControl(lastname, [Validators.required, Validators.maxLength(50)]),
-      'role': new FormControl(role, [Validators.required, Validators.maxLength(50)]),
+    this.creatorForm = new UntypedFormGroup({
+      'firstName': new UntypedFormControl(firstname, [Validators.maxLength(50)]),
+      'lastName': new UntypedFormControl(lastname, [Validators.required, Validators.maxLength(50)]),
+      'role': new UntypedFormControl(role, [Validators.required, Validators.maxLength(50)]),
     }, (!this.editMode) ? {validators: this.namesExistValidator} : {validators: this.namesExistEditModeValidator});
 
     if (this.hasContact) {
@@ -147,7 +147,7 @@ export class CreatorEditComponent implements OnInit {
     this.actualEnumType = CreatorRoleEnum;
   }
 
-  namesExistValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  namesExistValidator: ValidatorFn = (control: UntypedFormGroup): ValidationErrors | null => {
 
     const names = this.creatorsService.getExistingNames();
     const currentFirstName: string = control.get('firstName').value.toLowerCase().trim();
@@ -161,7 +161,7 @@ export class CreatorEditComponent implements OnInit {
     return null;
   }
 
-  namesExistEditModeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  namesExistEditModeValidator: ValidatorFn = (control: UntypedFormGroup): ValidationErrors | null => {
 
     let names = this.creatorsService.getExistingNames();
     const currentFirstName: string = control.get('firstName').value.toLowerCase().trim();

@@ -3,7 +3,7 @@ import {Category} from '../../../../../model/category.model';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {merge, Observable, OperatorFunction, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {GameService} from '../../../game.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class CategoryPickerComponent implements OnInit {
   availableCategories: Category[];
   availableCategoriesTitle: string[] = [];
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private service: GameService) {
   }
@@ -37,8 +37,8 @@ export class CategoryPickerComponent implements OnInit {
     this.gameCategories.forEach(c => this.gameIds.push(c.id));
     this.availableCategories = this.categories.filter(c => !this.gameIds.includes(c.id));
     this.availableCategories.forEach(c => this.availableCategoriesTitle.push(c.title));
-    this.form = new FormGroup({
-      'categoryField': new FormControl('', [
+    this.form = new UntypedFormGroup({
+      'categoryField': new UntypedFormControl('', [
           Validators.required,
           this.categoryAvailable.bind(this)
         ]
@@ -72,7 +72,7 @@ export class CategoryPickerComponent implements OnInit {
     return this.availableCategories.find(c => c.title === title);
   }
 
-  categoryAvailable(control: FormControl): { [s: string]: boolean } {
+  categoryAvailable(control: UntypedFormControl): { [s: string]: boolean } {
     return !this.availableCategoriesTitle.includes(control.value) ? {'notAvailableCategory': true} : null;
   }
 }

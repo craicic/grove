@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.technical.validation;
 import org.motoc.gamelibrary.domain.model.Game;
 import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the selection of minimal age. You must choose minAge (in year) XOR minMonth

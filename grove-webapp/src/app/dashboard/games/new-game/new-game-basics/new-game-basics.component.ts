@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Game} from '../../../../model/game.model';
 import {GameService} from '../../game.service';
 import {GameNatureEnum} from '../../../../model/enum/game-nature.enum';
@@ -15,7 +15,7 @@ import {map} from 'rxjs/operators';
 })
 export class NewGameBasicsComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   game: Game = new Game();
   natureList: Array<string>;
   actualEnumType: typeof GameNatureEnum;
@@ -69,20 +69,20 @@ export class NewGameBasicsComponent implements OnInit {
   }
 
   initForm(): void {
-    this.form = new FormGroup({
-      'title': new FormControl('', [Validators.maxLength(255), Validators.required]),
-      'ageRange': new FormGroup({
-        'min': new FormControl(12, [Validators.min(0), Validators.required]),
-        'month': new FormControl(0, [Validators.min(0), Validators.required]),
-        'max': new FormControl(0, [Validators.min(0), Validators.required]),
+    this.form = new UntypedFormGroup({
+      'title': new UntypedFormControl('', [Validators.maxLength(255), Validators.required]),
+      'ageRange': new UntypedFormGroup({
+        'min': new UntypedFormControl(12, [Validators.min(0), Validators.required]),
+        'month': new UntypedFormControl(0, [Validators.min(0), Validators.required]),
+        'max': new UntypedFormControl(0, [Validators.min(0), Validators.required]),
       }, [this.helper.ageRangeValidator.bind(this)]),
-      'duration': new FormControl('', [Validators.maxLength(20)]),
-      'numberOfPlayers': new FormGroup({
-        'min': new FormControl(1, [Validators.min(1), Validators.required]),
-        'max': new FormControl(0, [Validators.min(0), Validators.required])
+      'duration': new UntypedFormControl('', [Validators.maxLength(20)]),
+      'numberOfPlayers': new UntypedFormGroup({
+        'min': new UntypedFormControl(1, [Validators.min(1), Validators.required]),
+        'max': new UntypedFormControl(0, [Validators.min(0), Validators.required])
       }, [this.helper.playerRangeValidator.bind(this)]),
-      'gameNature': new FormControl(this.natureList[4], [Validators.required]),
-      'description': new FormControl('')
+      'gameNature': new UntypedFormControl(this.natureList[4], [Validators.required]),
+      'description': new UntypedFormControl('')
     });
   }
 

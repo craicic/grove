@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {GameService} from '../../game.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Game} from '../../../../model/game.model';
@@ -14,7 +14,7 @@ import {GameInfoHelper} from '../../../shared/refactoring/game-info-helper';
   styleUrls: ['./info-handler.component.css']
 })
 export class InfoHandlerComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   game: Game;
   natureList: Array<string>;
   actualEnumType: typeof GameNatureEnum;
@@ -80,17 +80,17 @@ export class InfoHandlerComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.form = new FormGroup({
-      'gameNature': new FormControl(this.game.nature, [Validators.required]),
-      'numberOfPlayers': new FormGroup({
-        'min': new FormControl(this.game.minNumberOfPlayer, [Validators.min(1), Validators.required]),
-        'max': new FormControl(this.game.maxNumberOfPlayer, [Validators.min(0), Validators.required]),
+    this.form = new UntypedFormGroup({
+      'gameNature': new UntypedFormControl(this.game.nature, [Validators.required]),
+      'numberOfPlayers': new UntypedFormGroup({
+        'min': new UntypedFormControl(this.game.minNumberOfPlayer, [Validators.min(1), Validators.required]),
+        'max': new UntypedFormControl(this.game.maxNumberOfPlayer, [Validators.min(0), Validators.required]),
       }, [this.helper.playerRangeValidator.bind(this)]),
-      'duration': new FormControl(this.game.playTime, [Validators.maxLength(20)]),
-      'ageRange': new FormGroup({
-        'month': new FormControl(this.game.minMonth, [Validators.min(0), Validators.required]),
-        'min': new FormControl(this.game.minAge, [Validators.min(0), Validators.required]),
-        'max': new FormControl(this.game.maxAge, [Validators.min(0), Validators.required])
+      'duration': new UntypedFormControl(this.game.playTime, [Validators.maxLength(20)]),
+      'ageRange': new UntypedFormGroup({
+        'month': new UntypedFormControl(this.game.minMonth, [Validators.min(0), Validators.required]),
+        'min': new UntypedFormControl(this.game.minAge, [Validators.min(0), Validators.required]),
+        'max': new UntypedFormControl(this.game.maxAge, [Validators.min(0), Validators.required])
       }, [this.helper.ageRangeValidator.bind(this)]),
     });
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {GameService} from '../../game.service';
 import {Game} from '../../../../model/game.model';
 import {UniqueTitleValidator} from '../../../../shared/validators/unique-title-validator.service';
@@ -13,7 +13,7 @@ import {map} from 'rxjs/operators';
 })
 export class TitleHandlerComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   game: Game;
 
   constructor(private service: GameService,
@@ -28,8 +28,8 @@ export class TitleHandlerComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = new FormGroup({
-      'title': new FormControl(this.game.title, [
+    this.form = new UntypedFormGroup({
+      'title': new UntypedFormControl(this.game.title, [
           Validators.required,
           Validators.maxLength(255),
         ], [this.takenNameValidator.validate.bind(this.takenNameValidator)]

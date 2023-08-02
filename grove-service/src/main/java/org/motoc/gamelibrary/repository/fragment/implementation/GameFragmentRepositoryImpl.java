@@ -10,9 +10,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -60,7 +60,7 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
 
         List<Game> games = entityManager.createQuery(searchQuery, Game.class)
                 .setParameter("ids", ids)
-                .setHint("javax.persistence.fetchgraph", graph)
+                .setHint("jakarta.persistence.fetchgraph", graph)
                 .getResultList();
 
         return new PageImpl<>(games, pageable, games.size());

@@ -15,9 +15,10 @@
 
     <properties>
         <java.version>19</java.version>
-        <revision>1.1.1</revision>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <revision>1.1.2</revision>
     </properties>
+
 
     <build>
         <plugins>

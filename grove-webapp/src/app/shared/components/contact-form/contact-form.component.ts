@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {ContactService} from './contact.service';
 import {CountryDataService} from '../../services/country-data.service';
 
@@ -9,7 +9,7 @@ import {CountryDataService} from '../../services/country-data.service';
   styleUrls: ['./contact-form.component.css']
 })
 export class ContactFormComponent implements OnInit {
-  @Input() contactForm: FormGroup;
+  @Input() contactForm: UntypedFormGroup;
   countries;
 
   constructor(private contactService: ContactService,

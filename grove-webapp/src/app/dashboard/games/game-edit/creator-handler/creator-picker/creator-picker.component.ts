@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {merge, Observable, OperatorFunction, Subject} from 'rxjs';
 import {Creator} from '../../../../../model/creator.model';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 
 @Component({
@@ -28,7 +28,7 @@ export class CreatorPickerComponent implements OnInit {
   availableCreators: Creator[] = [];
   availableCreatorsFullName: string[] = [];
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor() {
   }
@@ -36,8 +36,8 @@ export class CreatorPickerComponent implements OnInit {
   ngOnInit(): void {
     this.convertToFullNameString();
     this.availableCreatorsFullName = this.allCreatorsFullName.filter(element => !this.currentGameCreatorsFullName.includes(element));
-    this.form = new FormGroup({
-      'creatorField': new FormControl('', [
+    this.form = new UntypedFormGroup({
+      'creatorField': new UntypedFormControl('', [
           Validators.required,
           this.creatorAvailable.bind(this)
         ]
@@ -71,7 +71,7 @@ export class CreatorPickerComponent implements OnInit {
     return this.availableCreatorsFullName.find(c => c === fullName);
   }
 
-  creatorAvailable(control: FormControl): { [s: string]: boolean } {
+  creatorAvailable(control: UntypedFormControl): { [s: string]: boolean } {
     return !this.availableCreatorsFullName.includes(control.value) ? {'notAvailableCreator': true} : null;
   }
 

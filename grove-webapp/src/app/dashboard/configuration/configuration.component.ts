@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigurationService} from './configuration.service';
 
@@ -9,7 +9,7 @@ import {ConfigurationService} from './configuration.service';
   styleUrls: ['./configuration.component.css']
 })
 export class ConfigurationComponent implements OnInit {
-  configForm: FormGroup;
+  configForm: UntypedFormGroup;
   numberOfElementsPerPage: number;
   numbers: number[] = [1, 2, 3, 5, 7, 10, 20, 25, 50, 100];
 
@@ -25,8 +25,8 @@ export class ConfigurationComponent implements OnInit {
   private initForm(): void {
     this.numberOfElementsPerPage = this.configurationService.getNumberOfElements();
 
-    this.configForm = new FormGroup({
-      'numberOfElementsControl': new FormControl(this.numberOfElementsPerPage, [Validators.required])
+    this.configForm = new UntypedFormGroup({
+      'numberOfElementsControl': new UntypedFormControl(this.numberOfElementsPerPage, [Validators.required])
     });
   }
 

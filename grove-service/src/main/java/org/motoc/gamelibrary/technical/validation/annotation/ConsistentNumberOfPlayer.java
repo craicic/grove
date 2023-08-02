@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.technical.validation.annotation;
 import org.motoc.gamelibrary.technical.validation.ConsistentNumberOfPlayerDtoValidator;
 import org.motoc.gamelibrary.technical.validation.ConsistentNumberOfPlayerValidator;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 /**

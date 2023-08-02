@@ -2,9 +2,9 @@
 
 ## Current version
 
-#### 1.1.1
+#### 1.1.2
 
-Reworked the project structure.
+Migration Spring Boot 2 to Spring Boot 3 & Angular 11 to Angular 16
 
 
 
@@ -53,3 +53,7 @@ Fix bugs
 Reworked several aspects of the repository \
 Removed Keycloak \
 Tests now uses TestContainers.
+
+#### 1.1.1
+
+Reworked the project structure.

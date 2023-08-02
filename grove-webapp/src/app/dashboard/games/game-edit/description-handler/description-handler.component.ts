@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Game} from '../../../../model/game.model';
 import {GameService} from '../../game.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {map} from 'rxjs/operators';
 })
 export class DescriptionHandlerComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   game: Game;
 
   constructor(private service: GameService,
@@ -27,8 +27,8 @@ export class DescriptionHandlerComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = new FormGroup({
-      'description': new FormControl(this.game.description, [
+    this.form = new UntypedFormGroup({
+      'description': new UntypedFormControl(this.game.description, [
           Validators.maxLength(2000),
         ], []
       )

@@ -56,19 +56,24 @@
                   "maximumError": "10kb"
                 }
               ]
-            }
-          }
+            },
+            "development": {}
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "grove-webapp:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "grove-webapp:build:production"
+            },
+            "development": {
+              "browserTarget": "grove-webapp:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -109,16 +114,19 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "grove-webapp:serve"
+            "protractorConfig": "e2e/protractor.conf.js"
           },
           "configurations": {
             "production": {
               "devServerTarget": "grove-webapp:serve:production"
+            },
+            "development": {
+              "devServerTarget": "grove-webapp:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         }
       }
-    }},
-  "defaultProject": "grove-webapp"
+    }
+  }
 }

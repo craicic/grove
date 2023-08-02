@@ -3,8 +3,8 @@ package org.motoc.gamelibrary.technical.validation;
 import org.motoc.gamelibrary.domain.model.Game;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * A custom validator in order to check the consistency of age range

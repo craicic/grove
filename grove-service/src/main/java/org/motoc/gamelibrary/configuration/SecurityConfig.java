@@ -2,16 +2,20 @@ package org.motoc.gamelibrary.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     private static final String[] SWAGGER_WHITELIST = {
             "/v3/api-docs/**",
@@ -19,15 +23,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html"
     };
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("game-library-user").password(getEncoder().encode("azertyui")).roles("USER")
-                .and()
-                .withUser("game-library-admin").password(getEncoder().encode("simplePassword")).roles("ADMIN")
-                .and()
-                .withUser("swagger").password(getEncoder().encode("123")).roles("SWAGGER");
-
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("game-library-user")
+                .password("azertyui")
+                .roles("USER")
+                .build();
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("game-library-admin")
+                .password("simplePassword")
+                .roles("ADMIN")
+                .build();
+        UserDetails swagger = User.withDefaultPasswordEncoder()
+                .username("swagger")
+                .password("123")
+                .roles("SWAGGER")
+                .build();
+        List<UserDetails> users = List.of(user, admin, swagger);
+        return new InMemoryUserDetailsManager(users);
     }
 
     @Bean
@@ -35,19 +49,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(SWAGGER_WHITELIST
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(request ->
+                request.requestMatchers(SWAGGER_WHITELIST
                 ).permitAll()
                 // Do not do this
-                .antMatchers("/**").permitAll()
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/**").permitAll()
+                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().denyAll()
-                .and()
-                .httpBasic()
-                .and().csrf().disable();
+        );
+        return http.build();
     }
 }

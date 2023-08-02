@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
 import org.motoc.gamelibrary.domain.enumeration.ImageFormat;
 import org.motoc.gamelibrary.repository.jpa.ImageRepository;
 import org.slf4j.Logger;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

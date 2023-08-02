@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Router} from '@angular/router';
@@ -14,7 +14,7 @@ import {ImageService} from '../../../shared/services/image.service';
   styleUrls: ['./game-list.component.css']
 })
 export class GameListComponent implements OnInit {
-  filterForm: FormGroup;
+  filterForm: UntypedFormGroup;
   private subscription: Subscription;
 
   /* Pagination */
@@ -66,8 +66,8 @@ export class GameListComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.filterForm = new FormGroup({
-      'keyword': new FormControl('', [Validators.required, Validators.maxLength(50)])
+    this.filterForm = new UntypedFormGroup({
+      'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
   }
 }

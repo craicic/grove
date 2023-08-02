@@ -6,7 +6,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Page} from '../../../model/page.model';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-creator-list',
@@ -19,7 +19,7 @@ export class CreatorListComponent implements OnInit, OnDestroy {
   totalElements: number;
   pageSize: number;
   page: number;
-  filterForm: FormGroup;
+  filterForm: UntypedFormGroup;
 
   constructor(private creatorService: CreatorService,
               private creatorDataService: CreatorDataService,
@@ -70,8 +70,8 @@ export class CreatorListComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.filterForm = new FormGroup({
-      'keyword': new FormControl('', [Validators.required, Validators.maxLength(50)])
+    this.filterForm = new UntypedFormGroup({
+      'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
   }
 }

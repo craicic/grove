@@ -45,7 +45,7 @@ create table public.creator
     last_name             varchar(50) not null,
     lower_case_first_name varchar(50),
     lower_case_last_name  varchar(50) not null,
-    role                  int4        not null,
+    role                  smallint    not null,
     primary key (id)
 );
 
@@ -60,7 +60,7 @@ create table public.game
     min_age              int2         not null check (min_age >= 0 AND min_age <= 100),
     min_month            int2         not null check (min_month >= 0 AND min_month <= 100),
     min_number_of_player int2         not null check (min_number_of_player >= 1 AND min_number_of_player <= 100),
-    nature               int4,
+    nature               smallint,
     play_time            varchar(255),
     rules                oid,
     title                varchar(255) not null,
@@ -82,7 +82,7 @@ create table public.game_copy
     date_of_purchase      date,
     date_of_registration  date         not null,
     edition_number        varchar(255),
-    general_state         int4         not null,
+    general_state         smallint         not null,
     is_available_for_loan boolean,
     location              varchar(255),
     object_code           varchar(255) not null,
@@ -180,7 +180,7 @@ create table public.reservation
     date_time_of_creation   timestamp,
     date_time_of_return     timestamp,
     date_time_of_withdrawal timestamp,
-    status                  int4 not null,
+    status                  smallint not null,
     total_amount            numeric(12, 2),
     fk_adherent             int8,
     fk_administrator        int8,

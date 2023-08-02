@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable} from 'rxjs';
 import {Person} from '../../model/interface/person.interface';
 import {CreatorDataService} from './creator-data.service';
 
 @Injectable({providedIn: 'root'})
-export class CreatorNameResolver implements Resolve<Person[]> {
+export class CreatorNameResolver  {
 
   constructor(private dataService: CreatorDataService) {
   }

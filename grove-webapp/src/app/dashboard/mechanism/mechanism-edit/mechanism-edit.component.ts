@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {MechanismService} from '../mechanism.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Mechanism} from '../../../model/mechansim.model';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {MechanismDataService} from '../mechanism-data.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class MechanismEditComponent implements OnInit {
   private subscription: Subscription;
   private editMode: boolean;
   private id: number;
-  mechanismForm: FormGroup;
+  mechanismForm: UntypedFormGroup;
   label: string;
 
   constructor(private mechanismsService: MechanismService,
@@ -78,30 +78,18 @@ export class MechanismEditComponent implements OnInit {
       this.label = 'Création d\'un mécanisme';
     }
 
-    this.mechanismForm = new FormGroup({
-      'name': new FormControl(mechanismName, [
+    this.mechanismForm = new UntypedFormGroup({
+      'name': new UntypedFormControl(mechanismName, [
         Validators.required,
         Validators.maxLength(50),
         this.nameAlreadyExists.bind(this)])
     });
   }
 
-  nameAlreadyExists(control: FormControl): { [s: string]: boolean } {
+
+  nameAlreadyExists(control: UntypedFormControl): { [s: string]: boolean } {
     /* We need spit the case edit mode or not to allow save the current edited name */
-    if (
-      (
-        !this.editMode
-        &&
-        this.mechanismsService.getExistingMechanisms().indexOf(control.value.toLowerCase().trim()) !== -1
-      )
-      || (
-        this.editMode
-        &&
-        control.value.toLowerCase().trim() !== this.mechanismsService.getMechanismById(this.id).title.toLowerCase().trim()
-        &&
-        this.mechanismsService.getExistingMechanisms().indexOf(control.value.toLowerCase().trim()) !== -1
-      )
-    ) {
+    if (this.mechanismsService.getExistingMechanisms().indexOf(control.value.toLowerCase().trim()) !== -1) {
       return {'nameAlreadyExists': true};
     }
     return null;
