@@ -30,6 +30,10 @@ public class GameController {
         this.service = service;
     }
 
+    /**
+     * Give the total amount of games.
+     * @return Return the amount of games in collection
+     */
     @GetMapping("/admin/games/count")
     Long count() {
         logger.trace("count called");
