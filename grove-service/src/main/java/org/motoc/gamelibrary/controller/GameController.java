@@ -1,6 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.GameDto;
 import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
 import org.motoc.gamelibrary.domain.dto.ImageDto;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
