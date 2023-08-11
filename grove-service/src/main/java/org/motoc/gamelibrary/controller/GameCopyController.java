@@ -30,6 +30,10 @@ public class GameCopyController {
         this.service = service;
     }
 
+    /**
+     * Get the total game-copy count.
+     * @return Return the number of copy in collection.
+     */
     @GetMapping("/admin/game-copies/count")
     Long count() {
         logger.trace("count called");
