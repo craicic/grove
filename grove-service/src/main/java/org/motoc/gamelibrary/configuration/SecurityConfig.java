@@ -10,12 +10,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
     private static final String[] SWAGGER_WHITELIST = {
             "/v3/api-docs/**",
@@ -25,41 +29,49 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("game-library-user")
-                .password("azertyui")
+        UserDetails user = User
+                .withUsername("user")
+                .password(encoder().encode("123"))
                 .roles("USER")
                 .build();
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("game-library-admin")
-                .password("simplePassword")
-                .roles("ADMIN")
+        UserDetails admin = User
+                .withUsername("admin")
+                .password(encoder().encode("123"))
+                .roles("USER", "ADMIN")
                 .build();
-        UserDetails swagger = User.withDefaultPasswordEncoder()
-                .username("swagger")
-                .password("123")
-                .roles("SWAGGER")
-                .build();
-        List<UserDetails> users = List.of(user, admin, swagger);
-        return new InMemoryUserDetailsManager(users);
+        return new InMemoryUserDetailsManager(List.of(user, admin));
     }
 
     @Bean
-    protected PasswordEncoder getEncoder() {
+    protected PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(request ->
-                request.requestMatchers(SWAGGER_WHITELIST
-                ).permitAll()
-                // Do not do this
-                .requestMatchers("/**").permitAll()
-                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().denyAll()
-        );
+        http
+                .cors(withDefaults())
+                .authorizeHttpRequests(request ->
+                        request
+                                // Remove this horror when user session is done in frontend
+                                //  .requestMatchers("/**").permitAll()
+                                .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/user/**").hasAnyRole("USER")
+                                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                                .anyRequest().denyAll()
+
+                )
+                .httpBasic(withDefaults());
         return http.build();
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE")
+                .allowedOrigins("http://localhost:4200")
+                .allowCredentials(true);
+    }
+
 }
