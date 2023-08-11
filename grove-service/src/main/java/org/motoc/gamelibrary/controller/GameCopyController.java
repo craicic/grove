@@ -14,6 +14,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.util.List;
 
+/**
+ * Defines game copy endpoints
+ */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @SecurityRequirement(name="basicAuth")
