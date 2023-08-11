@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.GameDto;
 import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
@@ -20,6 +21,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("admin/games")
+@SecurityRequirement(name="basicAuth")
 public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);

@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.service.GameCopyService;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@SecurityRequirement(name="basicAuth")
 public class GameCopyController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameCopyController.class);

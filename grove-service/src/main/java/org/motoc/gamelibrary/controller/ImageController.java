@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.io.IOException;
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@SecurityRequirement(name="basicAuth")
 public class ImageController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
