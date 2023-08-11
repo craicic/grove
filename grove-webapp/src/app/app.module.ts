@@ -7,7 +7,7 @@ import {MechanismsComponent} from './dashboard/mechanism/mechanisms.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HeaderComponent} from './shared/components/header/header.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MechanismEditComponent} from './dashboard/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismListComponent} from './dashboard/mechanism/mechanism-list/mechanism-list.component';
 import {MechanismDetailComponent} from './dashboard/mechanism/mechanism-detail/mechanism-detail.component';
@@ -87,6 +87,7 @@ import {ConfirmLoanComponent} from './dashboard-loan/loans/confirm-loan/confirm-
 import {LoanListComponent} from './dashboard-loan/loans/loan-list/loan-list.component';
 import {LoanDetailComponent} from './dashboard-loan/loans/loan-detail/loan-detail.component';
 import {HomeComponent} from './home/home.component';
+import {AuthInterceptor} from './auth.interceptor';
 
 
 @NgModule({
@@ -171,6 +172,11 @@ import {HomeComponent} from './home/home.component';
     AppRoutingModule
   ],
   providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi   : true,
+    }
   ],
   bootstrap: [AppComponent]
 })
