@@ -34,6 +34,13 @@ public class ImageController {
         this.service = service;
     }
 
+    /**
+     * Store an image and attach it to the game of ID given in param
+     * @param file The image to store
+     * @param gameId The game to link
+     * @return The ID of the stored image
+     * @throws IOException If something went wrong during IO operation
+     */
     @PostMapping("/admin/images/games/{gameId}")
     Long save(@RequestParam(name = "file") MultipartFile file,
               @PathVariable Long gameId) throws IOException {
@@ -41,6 +48,11 @@ public class ImageController {
         return service.saveThenAttachToGame(file.getInputStream(), gameId);
     }
 
+    /**
+     * Get an item containing an image and its ID given an ID
+     * @param id The ID of the image wanted to fetch
+     * @return An object containing the image and its ID
+     */
     @GetMapping("/admin/images/{id}")
     @ResponseBody
     ImageDto getImage(@PathVariable Long id) {
@@ -51,6 +63,11 @@ public class ImageController {
         return dto;
     }
 
+    /**
+     * Get an image content given its ID
+     * @param id The ID of the image wanted to fetch
+     * @return An image
+     */
     @GetMapping(value = "/admin/images/{id}/content")
     @ResponseBody
     ResponseEntity<InputStreamResource> getContent(@PathVariable Long id) {

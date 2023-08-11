@@ -67,7 +67,6 @@ public class GameController {
 
     /**
      * Update an existing game.
-     * @apiNote TEST
      * @param gameDto The edited game
      * @param id The ID of the game to edit
      * @return The edited game
