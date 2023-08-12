@@ -23,6 +23,8 @@ public interface GameMapper {
 
     /* ======================================= GAME DTO METHODS (AND MORE) ========================================= */
     @Mapping(target = "images", ignore = true)
+    @Mapping(target = "lowerCaseTitle", ignore = true)
+    @Mapping(target = "gameCopies", ignore = true)
     Game dtoToGame(GameDto dto);
 
     @Mappings(
@@ -40,14 +42,28 @@ public interface GameMapper {
     }
 
     @Mapping(target = "imageIds", source = "images", qualifiedByName = "imageSetToIds")
+    @Mapping(target = "gameCopyCount", ignore = true)
     GameOverviewDto gameToOverviewDto(Game game);
 
     GameTitleAndIdDto gameToTitleAndIdDto(Game game);
 
-
     CategoryDto categoryToDto(Category category);
 
+    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "lowerCaseTitle", ignore = true)
+    Category dtoToCategory(CategoryDto categoryDto);
+
+    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "lowerCaseTitle", ignore = true)
+    Mechanism dtoToMechanism(MechanismDto mechanismDto);
+
     CreatorWithoutContactDto toCreatorWithoutContactDto(Creator creator);
+
+    @Mapping(target = "games", ignore = true)
+    @Mapping(target = "contact", ignore = true)
+    @Mapping(target = "lowerCaseFirstName", ignore = true)
+    @Mapping(target = "lowerCaseLastName", ignore = true)
+    Creator dtoToCreator(CreatorWithoutContactDto creatorWithoutContactDto);
 
     @Named("imageSetToIds")
     default Set<Long> imageSetToIdSet(Set<Image> images) {

@@ -19,6 +19,7 @@ public interface PublisherMapper {
 
     @Mapping(target = "copies", ignore = true)
     @Mapping(target = "lowerCaseName", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Publisher noIdDtoToPublisher(PublisherNoIdDto noIdDto);
 
     @Mapping(target = "copies", ignore = true)
