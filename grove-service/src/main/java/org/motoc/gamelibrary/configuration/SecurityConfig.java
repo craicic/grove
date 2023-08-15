@@ -57,6 +57,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 //  .requestMatchers("/**").permitAll()
                                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .requestMatchers("/").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/user/**").hasAnyRole("USER")
                                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                                 .anyRequest().denyAll()

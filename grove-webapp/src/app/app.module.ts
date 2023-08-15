@@ -88,6 +88,8 @@ import {LoanListComponent} from './dashboard-loan/loans/loan-list/loan-list.comp
 import {LoanDetailComponent} from './dashboard-loan/loans/loan-detail/loan-detail.component';
 import {HomeComponent} from './home/home.component';
 import {AuthInterceptor} from './auth.interceptor';
+import {LoginComponent} from './auth/login/login.component';
+import {XhrInterceptor} from './shared/interceptor/xhr.interceptor';
 
 
 @NgModule({
@@ -160,7 +162,8 @@ import {AuthInterceptor} from './auth.interceptor';
     ConfirmLoanComponent,
     LoanListComponent,
     LoanDetailComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -173,9 +176,9 @@ import {AuthInterceptor} from './auth.interceptor';
   ],
   providers: [
     {
-      provide : HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi   : true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: XhrInterceptor,
+      multi: true,
     }
   ],
   bootstrap: [AppComponent]
