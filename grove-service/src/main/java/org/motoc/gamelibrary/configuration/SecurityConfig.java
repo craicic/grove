@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -51,16 +52,23 @@ public class SecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(withDefaults())
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                )
                 .authorizeHttpRequests(request ->
                         request
+
                                 // Remove this horror when user session is done in frontend
                                 //  .requestMatchers("/**").permitAll()
                                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/logout").permitAll()
-                                .requestMatchers("/user/**").hasAnyRole("USER")
-                                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/user/**")
+                                .hasAnyRole("USER")
+                                .requestMatchers("/admin/**")
+                                .authenticated()
+//                                .hasAnyRole("ADMIN")
                                 .anyRequest().denyAll()
 
                 )
