@@ -21,6 +21,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: npm
+          cache-dependency-path: grove-webapp
       - name: Npm Dependencies
         run: |
           cd grove-webapp
@@ -28,7 +30,7 @@ jobs:
       - name: Npm Build
         run: |
           cd grove-webapp
-          npm build
+          npm ci
 
       - run: echo "Now install JDK19 and then try to run a maven command."
       - name: Set up JDK19
