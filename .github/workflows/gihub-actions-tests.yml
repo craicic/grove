@@ -28,7 +28,7 @@ jobs:
       - name: Npm Build
         run: |
           cd grove-webapp
-          npm run
+          npm build
 
       - run: echo "Now install JDK19 and then try to run a maven command."
       - name: Set up JDK19
@@ -39,5 +39,5 @@ jobs:
           cache: maven
       - name: Verify with Maven
         run: mvn -B verify --file pom.xml
-      - run: echo "Maven will now run VERIFY."
+#      - run: echo "Maven will now run VERIFY."
 #        run: mvn -B package --file pom.xml -DskipTests -Dspring-boot.run.arguments="--spring.datasource.username=${{ secrets.DATASOURCE_USR }} --spring.datasource.username=${{ secrets.DATASOURCE_PWD }}"
