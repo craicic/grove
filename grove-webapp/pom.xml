@@ -70,9 +70,9 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>ng</executable>
+              <executable>npm</executable>
               <arguments>
-                <argument>build</argument>
+                <argument>start</argument>
               </arguments>
             </configuration>
           </execution>
