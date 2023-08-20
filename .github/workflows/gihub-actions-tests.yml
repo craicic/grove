@@ -28,7 +28,7 @@ jobs:
       - name: Npm Build
         run: |
           cd grove-webapp
-          npm run build:prod
+          npm run
 
       - run: echo "Now install JDK19 and then try to run a maven command."
       - name: Set up JDK19
