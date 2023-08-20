@@ -43,6 +43,7 @@ secrets.properties
 !/src/main/resources/static/*
 
 # compiled output
+/grove-webapp/src/main/resources/dist/
 /grove-webapp/dist
 /grove-webapp/tmp
 /grove-webapp/out-tsc

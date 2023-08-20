@@ -57,9 +57,6 @@ public class SecurityConfig implements WebMvcConfigurer {
                 )
                 .authorizeHttpRequests(request ->
                         request
-
-                                // Remove this horror when user session is done in frontend
-                                //  .requestMatchers("/**").permitAll()
                                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/login").permitAll()
@@ -67,8 +64,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 .requestMatchers("/user/**")
                                 .hasAnyRole("USER")
                                 .requestMatchers("/admin/**")
-                                .authenticated()
-//                                .hasAnyRole("ADMIN")
+                                .hasAnyRole("ADMIN")
                                 .anyRequest().denyAll()
 
                 )

@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>org.motoc</groupId>
+        <artifactId>Grove</artifactId>
+        <version>1.1.2</version>
     </parent>
-    <groupId>org.motoc</groupId>
+
     <artifactId>grove-service</artifactId>
-    <version>${revision}</version>
     <name>Grove API</name>
     <description>A tool for game libraries - This is the REST service</description>
+    <version>1.1.2</version>
 
     <properties>
         <java.version>19</java.version>
@@ -24,8 +24,6 @@
         <webjars.version>5.2.0</webjars.version>
         <testcontainers.version>1.18.0</testcontainers.version>
         <commons-cli.version>1.5.0</commons-cli.version>
-        <therapi.version>0.15.0</therapi.version>
-        <revision>1.1.2</revision>
     </properties>
 
     <dependencies>
@@ -64,15 +62,9 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
-        <!-- Runtime library -->
-        <dependency>
-            <groupId>com.github.therapi</groupId>
-            <artifactId>therapi-runtime-javadoc</artifactId>
-            <version>${therapi.version}</version>
-        </dependency>
         <!-- Tests -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -167,7 +159,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${project.parent.version}</version>
+                <version>3.1.2</version>
                 <configuration>
                     <!-- Prevent the repackaged goal from adding the dependency into the fat jar -->
                     <excludes>
@@ -215,21 +207,42 @@
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${jpamodelgen.version}</version>
                         </path>
-                        <path>
-                            <groupId>com.github.therapi</groupId>
-                            <artifactId>therapi-runtime-javadoc-scribe</artifactId>
-                            <version>${therapi.version}</version>
-                        </path>
                         <!-- Workaround because we have lombok and mapstruct processors -->
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>${project.parent.version}</version>
+                            <version>3.1.2</version>
                         </path>
                     </annotationProcessorPaths>
 
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+
+                        <configuration>
+                            <outputDirectory>${project.parent.basedir}/grove-delivery/target/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/target/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
