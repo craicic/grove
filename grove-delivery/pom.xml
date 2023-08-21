@@ -49,7 +49,7 @@
                 </executions>
                 <configuration>
                     <mainClass>org.motoc.gamelibrary.GameLibraryApplication</mainClass>
-<!--                    <classifier>exec</classifier>-->
+                    <layout>JAR</layout>
                 </configuration>
             </plugin>
         </plugins>

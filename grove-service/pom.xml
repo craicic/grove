@@ -225,7 +225,7 @@
                 <executions>
                     <execution>
                         <id>copy</id>
-                        <phase>install</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -235,8 +235,13 @@
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/target/</directory>
+                                    <excludes>
+                                        <exclude>*.jar</exclude>
+                                        <exclude>*.original</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
+
                         </configuration>
 
                     </execution>
