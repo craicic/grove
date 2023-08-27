@@ -16,9 +16,12 @@ export class AuthenticationService {
 
     authenticate(credentials: { username: string; password: string; }, callback: () => any): any {
         this.headers = new HttpHeaders(credentials ?
-            {authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)} : {});
+            {authorization: ' ' + btoa(credentials.username + ':' + credentials.password)} : {});
 
-        this.http.get(environment.apiUri + '/api/login', {headers: this.headers}).subscribe((response: { name: string; }) => {
+        this.http.post(environment.apiUri + '/api/login', {
+            username: credentials.username,
+            password: credentials.password
+        }).subscribe((response: { name: string; }) => {
             if (response.name) {
                 this.authenticated = true;
             } else {
