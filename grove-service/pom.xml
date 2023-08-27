@@ -24,6 +24,7 @@
         <webjars.version>5.2.0</webjars.version>
         <testcontainers.version>1.18.0</testcontainers.version>
         <commons-cli.version>1.5.0</commons-cli.version>
+        <java-jwt.version>4.4.0</java-jwt.version>
     </properties>
 
     <dependencies>
@@ -64,6 +65,14 @@
             <artifactId>postgresql</artifactId>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Security -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
+        </dependency>
+        <!-- END of Security -->
 
         <!-- Tests -->
         <dependency>

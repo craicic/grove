@@ -71,7 +71,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 const routes: Routes = [
     {
-        path: '',
+        path: ''
         // component:
     },
     {
@@ -219,7 +219,11 @@ const routes: Routes = [
                         component: CreatorsComponent,
                         children: [
                             {path: 'new', component: CreatorEditComponent, resolve: [CreatorNameResolver]},
-                            {path: ':id/edit', component: CreatorEditComponent, resolve: [CreatorResolver, CreatorNameResolver]},
+                            {
+                                path: ':id/edit',
+                                component: CreatorEditComponent,
+                                resolve: [CreatorResolver, CreatorNameResolver]
+                            },
                             {path: ':id', component: CreatorDetailComponent, resolve: [CreatorResolver]}
                         ]
                     },

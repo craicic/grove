@@ -18,7 +18,7 @@ export class AuthenticationService {
         this.headers = new HttpHeaders(credentials ?
             {authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)} : {});
 
-        this.http.get(environment.apiUri + '/login', {headers: this.headers}).subscribe((response: { name: string; }) => {
+        this.http.get(environment.apiUri + '/api/login', {headers: this.headers}).subscribe((response: { name: string; }) => {
             if (response.name) {
                 this.authenticated = true;
             } else {

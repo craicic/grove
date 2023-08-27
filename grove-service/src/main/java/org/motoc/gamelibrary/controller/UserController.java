@@ -11,6 +11,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@RequestMapping("api")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -24,13 +25,13 @@ public class UserController {
         return user;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/logout")
     void logout() {
         logger.info("Disconnected");
     }
 
-    @RequestMapping("/token")
-    public Map<String,String> token(HttpSession session) {
-        return Collections.singletonMap("token", session.getId());
-    }
+//    @RequestMapping("/token")
+//    public Map<String,String> token(HttpSession session) {
+//        return Collections.singletonMap("token", session.getId());
+//    }
 }

@@ -35,7 +35,6 @@
               <resources>
                 <resource>
                   <directory>${project.basedir}/src/main/resources/dist/${project.artifactId}</directory>
-                  <targetPath>public</targetPath>
                   <filtering>false</filtering>
                 </resource>
               </resources>

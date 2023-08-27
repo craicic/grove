@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {SidebarControlService} from '../../services/sidebar-control.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AuthenticationService} from '../../../auth/authentication.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout(): void {
-    this.http.post('logout', {}).subscribe(() => {
+    this.http.post(environment.apiUri + '/api/logout', {}).subscribe(() => {
       this.auth.authenticated = false;
       this.router.navigate(['/admin/home']);
     }, () => {});
