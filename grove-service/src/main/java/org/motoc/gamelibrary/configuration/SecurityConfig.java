@@ -3,6 +3,7 @@ package org.motoc.gamelibrary.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -69,18 +70,18 @@ public class SecurityConfig
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/api/login").permitAll()
+                                .requestMatchers("/api/logout").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/token").permitAll()
+                                .requestMatchers("/error").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/user/**")
                                 .hasAnyRole("USER")
                                 .requestMatchers("/admin/**")
                                 .hasAnyRole("ADMIN")
-                                .anyRequest().permitAll()
+
+                                .anyRequest().denyAll()
                 ).apply(MyCustomDsl.customDsl());
-
-
         return http.build();
     }
-
-
 }
 

@@ -4,25 +4,23 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.util.InMemoryResource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.EOFException;
 import java.io.IOException;
-import java.security.Principal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -31,18 +29,12 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private InMemoryUserDetailsManager detailsManager;
+    private final InMemoryUserDetailsManager detailsManager;
 
     @Autowired
     public UserController(InMemoryUserDetailsManager detailsManager) {
         this.detailsManager = detailsManager;
     }
-
-//    @GetMapping("/login")
-//    Principal login(Principal user) {
-//        logger.info(user.getName());
-//        return user;
-//    }
 
     @PostMapping("/logout")
     void logout() {
@@ -50,7 +42,8 @@ public class UserController {
     }
 
     @GetMapping("/token")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Map<String,String>> refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Refresh token");
         String authToken = request.getHeader("Authorization");
         if (authToken != null && authToken.startsWith("Bearer ")) {
             try {
@@ -60,22 +53,23 @@ public class UserController {
                 DecodedJWT decodedJWT = jwtVerifier.verify(jwtRefreshToken);
                 String username = decodedJWT.getSubject();
                 UserDetails user = detailsManager.loadUserByUsername(username);
-
+                System.out.println(user.getUsername());
                 String jwtAccessToken = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 5 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getAuthorities().stream().toList())
+                        .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                         .sign(algorithm);
 
                 Map<String, String> idToken = new HashMap<>();
-                idToken.put("access-token", jwtAccessToken);
-                idToken.put("refresh-token", jwtRefreshToken);
+                idToken.put("access_token", jwtAccessToken);
+                idToken.put("refresh_token", jwtRefreshToken);
 
                 response.setContentType("application/json");
-                new ObjectMapper().writeValue(response.getOutputStream(), idToken);
+                return ResponseEntity.ok(idToken);
             } catch (Exception e) {
-                throw e;
+                System.out.println(e.getMessage());
+                throw new IOException(e.getMessage());
             }
         } else {
             throw new RuntimeException("Refresh token required!!");
