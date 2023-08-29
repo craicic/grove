@@ -13,9 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -60,7 +64,6 @@ public class SecurityConfig
     @Order(1)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -68,6 +71,13 @@ public class SecurityConfig
                         request
                                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .requestMatchers("/").permitAll()
+                                .requestMatchers("/index.html").permitAll()
+                                .requestMatchers("/style.css").permitAll()
+                                .requestMatchers("/main.js").permitAll()
+                                .requestMatchers("/polyfills.js").permitAll()
+                                .requestMatchers("/runtime.js").permitAll()
+                                .requestMatchers("/favicon.ico").permitAll()
+
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/api/login").permitAll()
                                 .requestMatchers("/api/logout").permitAll()
@@ -79,9 +89,19 @@ public class SecurityConfig
                                 .requestMatchers("/admin/**")
                                 .hasAnyRole("ADMIN")
 
-                                .anyRequest().denyAll()
+                                .anyRequest().permitAll()
                 ).apply(MyCustomDsl.customDsl());
         return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
 

@@ -174,13 +174,13 @@ import {XhrInterceptor} from './shared/interceptor/xhr.interceptor';
     NgbModule,
     AppRoutingModule
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: XhrInterceptor,
-      multi: true,
-    }
-  ],
+  // providers: [
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: XhrInterceptor,
+  //     multi: true,
+  //   }
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

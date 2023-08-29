@@ -15,7 +15,7 @@ export class LoginComponent {
   });
 
   constructor(private auth: AuthenticationService, private router: Router) {
-    this.auth.authenticate(undefined, undefined);
+    // this.auth.authenticate(undefined, undefined);
   }
 
   authenticated(): boolean {

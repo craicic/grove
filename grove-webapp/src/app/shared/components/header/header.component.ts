@@ -35,13 +35,13 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
   onLogout(): void {
     this.http.post(environment.apiUri + '/api/logout', {}).subscribe(() => {
       this.auth.authenticated = false;
-      this.router.navigate(['/admin/home']);
+      this.router.navigate(['/']);
     }, () => {});
   }
 
