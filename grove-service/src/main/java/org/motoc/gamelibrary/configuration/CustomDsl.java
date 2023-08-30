@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
+public class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity> {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
@@ -15,12 +15,14 @@ public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurit
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
-        http.addFilter(jwtAuthenticationFilter)
+        http
+                .addFilter(jwtAuthenticationFilter)
+//                .addFilterBefore(new BeforeEncodeUrlFilter(), DisableEncodeUrlFilter.class)
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    public static MyCustomDsl customDsl() {
-        return new MyCustomDsl();
+    public static CustomDsl customDsl() {
+        return new CustomDsl();
     }
 
 }

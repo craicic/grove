@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Defines creator's endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class CreatorController {
 

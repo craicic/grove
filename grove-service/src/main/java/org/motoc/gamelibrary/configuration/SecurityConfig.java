@@ -3,7 +3,6 @@ package org.motoc.gamelibrary.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,7 +18,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -65,6 +63,7 @@ public class SecurityConfig
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request ->
@@ -77,28 +76,42 @@ public class SecurityConfig
                                 .requestMatchers("/polyfills.js").permitAll()
                                 .requestMatchers("/runtime.js").permitAll()
                                 .requestMatchers("/favicon.ico").permitAll()
-
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/api/login").permitAll()
                                 .requestMatchers("/api/logout").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/token").permitAll()
+                                .requestMatchers("/api/token").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/user/**")
                                 .hasAnyRole("USER")
                                 .requestMatchers("/admin/**")
                                 .hasAnyRole("ADMIN")
-
                                 .anyRequest().permitAll()
-                ).apply(MyCustomDsl.customDsl());
+                ).apply(CustomDsl.customDsl());
         return http.build();
+
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("OPTIONS", "GET", "POST", "PUT", "DELETE", "HEAD"));
+        configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(List.of("Authorization",
+                "Accept",
+                "Cache-Control",
+                "Content-Type",
+                "Origin",
+                "x-csrf-token",
+                "x-requested-with"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Requestor-Type",
+                "Accept",
+                "Cache-Control",
+                "Content-Type",
+                "Origin",
+                "x-csrf-token",
+                "x-requested-with"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

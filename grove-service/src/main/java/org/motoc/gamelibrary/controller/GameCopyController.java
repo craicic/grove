@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Defines game copy endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @SecurityRequirement(name="basicAuth")
 public class GameCopyController {

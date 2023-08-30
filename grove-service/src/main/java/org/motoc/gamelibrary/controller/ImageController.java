@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * Images endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @SecurityRequirement(name="basicAuth")
 public class ImageController {

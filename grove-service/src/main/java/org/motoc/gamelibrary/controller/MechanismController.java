@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Defines mechanism endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class MechanismController {
 

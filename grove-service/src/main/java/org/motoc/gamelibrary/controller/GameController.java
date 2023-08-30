@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Defines game endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("admin/games")
 @SecurityRequirement(name="basicAuth")

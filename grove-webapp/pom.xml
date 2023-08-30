@@ -17,7 +17,17 @@
 
   <build>
     <plugins>
-
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${project.basedir}/src/main/resources/dist</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -29,7 +39,6 @@
             <goals>
               <goal>copy-resources</goal>
             </goals>
-
             <configuration>
               <outputDirectory>${project.parent.basedir}/grove-delivery/target/classes/static</outputDirectory>
               <resources>
@@ -39,7 +48,6 @@
                 </resource>
               </resources>
             </configuration>
-
           </execution>
         </executions>
       </plugin>
@@ -51,7 +59,7 @@
         <executions>
           <execution>
             <id>install-dependencies</id>
-            <phase>package</phase>
+            <phase>compile</phase>
             <goals>
               <goal>exec</goal>
             </goals>
@@ -64,7 +72,7 @@
           </execution>
           <execution>
             <id>build-frontend</id>
-            <phase>package</phase>
+            <phase>compile</phase>
             <goals>
               <goal>exec</goal>
             </goals>
@@ -72,6 +80,7 @@
               <executable>npm</executable>
               <arguments>
                 <argument>run</argument>
+                <argument>build</argument>
               </arguments>
             </configuration>
           </execution>

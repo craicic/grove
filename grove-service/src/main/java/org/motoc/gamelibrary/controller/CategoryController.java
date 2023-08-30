@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Defines category endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class CategoryController {
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
