@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
  * Handles most of the errors and formats the output
  */
 @ControllerAdvice
+@RequestMapping("api")
 public class ErrorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);

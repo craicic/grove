@@ -39,10 +39,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout(): void {
-    this.http.post(environment.apiUri + '/api/logout', {}).subscribe(() => {
-      this.auth.authenticated = false;
-      this.router.navigate(['/']);
-    }, () => {});
+    this.auth.invalidate(() => this.router.navigate(['/'])
+    );
   }
 
   onOpenGamesNavbar(): void {

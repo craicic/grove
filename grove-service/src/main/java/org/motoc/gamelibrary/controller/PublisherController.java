@@ -15,6 +15,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequestMapping("api")
 public class PublisherController {
 
     private static final Logger logger = LoggerFactory.getLogger(PublisherController.class);

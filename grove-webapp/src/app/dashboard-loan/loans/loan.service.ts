@@ -30,23 +30,23 @@ export class LoanService {
   }
 
   fetchAvailableCopies(): Observable<GameCopy[]> {
-    return this.http.get<GameCopy[]>(this.apiUri + '/admin/game-copies?loan-ready=true');
+    return this.http.get<GameCopy[]>(this.apiUri + '/api/admin/game-copies?loan-ready=true');
   }
 
   create(accountId: number, copyId: number): Observable<Loan> {
-    return this.http.post<Loan>(this.apiUri + '/admin/loans?accountId=' + accountId + '&gameCopyId=' + copyId, null);
+    return this.http.post<Loan>(this.apiUri + '/api/admin/loans?accountId=' + accountId + '&gameCopyId=' + copyId, null);
   }
 
   fetchAll(): Observable<Loan[]> {
-    return this.http.get<Loan[]>(this.apiUri + '/admin/loans').pipe(tap(l => console.log(l)));
+    return this.http.get<Loan[]>(this.apiUri + '/api/admin/loans').pipe(tap(l => console.log(l)));
   }
 
   closeLoan(loanId: number): Observable<Loan> {
-    return this.http.post<Loan>(this.apiUri + '/admin/loans/' + loanId + '/close', null);
+    return this.http.post<Loan>(this.apiUri + '/api/admin/loans/' + loanId + '/close', null);
 
   }
 
   fetchById(loanId: number): Observable<Loan> {
-    return this.http.get<Loan>(this.apiUri + '/admin/loans/' + loanId);
+    return this.http.get<Loan>(this.apiUri + '/api/admin/loans/' + loanId);
   }
 }

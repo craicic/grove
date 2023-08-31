@@ -22,6 +22,7 @@ import java.io.IOException;
 @CrossOrigin
 @RestController
 @SecurityRequirement(name="basicAuth")
+@RequestMapping("api")
 public class ImageController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);

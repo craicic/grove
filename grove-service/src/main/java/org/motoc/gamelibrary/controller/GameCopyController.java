@@ -19,6 +19,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
+@RequestMapping("api")
 @SecurityRequirement(name="basicAuth")
 public class GameCopyController {
 

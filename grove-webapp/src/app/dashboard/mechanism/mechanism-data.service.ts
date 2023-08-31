@@ -29,7 +29,7 @@ export class MechanismDataService {
 
     fetchNames(): Observable<Mechanism[]> {
         return this.http
-            .get<Mechanism[]>(this.apiUri + '/admin/mechanisms', {responseType: 'json'})
+            .get<Mechanism[]>(this.apiUri + '/api/admin/mechanisms', {responseType: 'json'})
             .pipe(
                 tap(mechanisms => {
                     this.mechanismsService.setNames(mechanisms);
@@ -49,7 +49,7 @@ export class MechanismDataService {
         const args = '?page=' + page + '&size=' + size + '&sort=title' + keywordParam;
 
         return this.http
-            .get<Page<Mechanism>>(this.apiUri + '/admin/mechanisms/page' + args, {responseType: 'json'})
+            .get<Page<Mechanism>>(this.apiUri + '/api/admin/mechanisms/page' + args, {responseType: 'json'})
             .pipe(
                 tap(pagedMechanisms => {
                     this.mechanismsService.setPagedMechanisms(pagedMechanisms);
@@ -59,15 +59,15 @@ export class MechanismDataService {
 
     editMechanism(id: number, editedMechanism: Mechanism): any {
         return this.http
-            .put<Mechanism>(this.apiUri + '/admin/mechanisms/' + id, editedMechanism, {responseType: 'json'});
+            .put<Mechanism>(this.apiUri + '/api/admin/mechanisms/' + id, editedMechanism, {responseType: 'json'});
     }
 
     addMechanism(newMechanism: Mechanism): any {
         return this.http
-            .post<Mechanism>(this.apiUri + '/admin/mechanisms', newMechanism, {responseType: 'json'});
+            .post<Mechanism>(this.apiUri + '/api/admin/mechanisms', newMechanism, {responseType: 'json'});
     }
 
     removeMechanism(id: number): any {
-        return this.http.delete<Mechanism>(this.apiUri + '/admin/mechanisms/' + id);
+        return this.http.delete<Mechanism>(this.apiUri + '/api/admin/mechanisms/' + id);
     }
 }

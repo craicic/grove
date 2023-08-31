@@ -20,7 +20,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("admin/games")
+@RequestMapping("api/admin/games")
 @SecurityRequirement(name="basicAuth")
 public class GameController {
 

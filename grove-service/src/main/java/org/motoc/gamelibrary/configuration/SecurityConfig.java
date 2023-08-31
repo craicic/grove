@@ -86,8 +86,9 @@ public class SecurityConfig
                                 .hasAnyRole("USER")
                                 .requestMatchers("/admin/**")
                                 .hasAnyRole("ADMIN")
-                                .anyRequest().permitAll()
-                ).apply(CustomDsl.customDsl());
+                                .anyRequest().denyAll()
+                )
+                .apply(CustomDsl.customDsl());
         return http.build();
 
     }

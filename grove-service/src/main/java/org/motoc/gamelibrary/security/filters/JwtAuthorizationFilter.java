@@ -23,12 +23,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return !request.getServletPath().equals("/api/**");
+        return request.getServletPath().equals("/api/login");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/api/token")) {
+            System.out.println("request ignored : " + request.getServletPath());
             filterChain.doFilter(request, response);
         } else {
             System.out.println("Filtering request ... " + request.getServletPath());
@@ -46,6 +47,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                             .forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    authorities.forEach(a -> System.out.println(a.getAuthority()));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {

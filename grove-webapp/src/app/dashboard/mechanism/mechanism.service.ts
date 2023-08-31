@@ -19,7 +19,7 @@ export class MechanismService {
   /* ============================================== REST API METHODS =================================================================== */
   fetchAll(): Observable<Mechanism[]> {
     return this.http
-      .get<Mechanism[]>(this.apiUri + '/admin/mechanisms', {responseType: 'json'});
+      .get<Mechanism[]>(this.apiUri + '/api/admin/mechanisms', {responseType: 'json'});
   }
 
   /* ================================================ OTHER METHODS ==================================================================== */

@@ -36,11 +36,6 @@ public class UserController {
         this.detailsManager = detailsManager;
     }
 
-    @PostMapping("/logout")
-    void logout() {
-        logger.info("Disconnected");
-    }
-
     @GetMapping("/token")
     public ResponseEntity<Map<String,String>> refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Refresh token");

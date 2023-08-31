@@ -24,7 +24,7 @@ export class CreatorDataService {
 
   fetchNames(): Observable<Person[]> {
     return this.http
-      .get<Person[]>(this.apiUri + '/admin/creators/names', {responseType: 'json'})
+      .get<Person[]>(this.apiUri + '/api/admin/creators/names', {responseType: 'json'})
       .pipe(
         tap(names => {
           this.creatorsService.setNames(names);
@@ -44,7 +44,7 @@ export class CreatorDataService {
     const params = '?page=' + page + '&size=' + size + '&sort=id' + keywordParam;
 
     return this.http
-      .get<Page<Creator>>(this.apiUri + '/admin/creators/page' + params, {responseType: 'json'})
+      .get<Page<Creator>>(this.apiUri + '/api/admin/creators/page' + params, {responseType: 'json'})
       .pipe(
         tap(pagedCreators => {
           this.creatorsService.setPagedCreators(pagedCreators);
@@ -54,17 +54,17 @@ export class CreatorDataService {
 
   removeCreator(id: number): any {
     return this.http
-      .delete(this.apiUri + '/admin/creators/' + id);
+      .delete(this.apiUri + '/api/admin/creators/' + id);
   }
 
   removeContact(creatorId: number, contactId): any {
     return this.http
-      .delete(this.apiUri + '/admin/allCreatorsName/' + creatorId + '/contact/' + contactId);
+      .delete(this.apiUri + '/api/admin/allCreatorsName/' + creatorId + '/contact/' + contactId);
   }
 
   editCreator(id: number, editedCreator: Creator): void {
     this.http
-      .put<Creator>(this.apiUri + '/admin/creators/' + id, editedCreator, {responseType: 'json'})
+      .put<Creator>(this.apiUri + '/api/admin/creators/' + id, editedCreator, {responseType: 'json'})
       .subscribe(creator => this.creatorsService.updateCreators(creator));
   }
 
@@ -74,7 +74,7 @@ export class CreatorDataService {
       contactParam = '?has-contact=true';
     }
     this.http
-      .post<Creator>(this.apiUri + '/admin/creators' + contactParam, newCreator, {responseType: 'json'})
+      .post<Creator>(this.apiUri + '/api/admin/creators' + contactParam, newCreator, {responseType: 'json'})
       .subscribe(creator => this.creatorsService.updateCreators(creator));
   }
 }
