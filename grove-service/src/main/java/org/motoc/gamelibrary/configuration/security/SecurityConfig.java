@@ -91,25 +91,11 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(List.of("OPTIONS", "GET", "POST", "PUT", "DELETE", "HEAD"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(List.of("Authorization",
-                "Accept",
-                "Cache-Control",
-                "Content-Type",
-                "Origin",
-                "x-csrf-token",
-                "x-requested-with"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Requestor-Type",
-                "Accept",
-                "Cache-Control",
-                "Content-Type",
-                "Origin",
-                "x-csrf-token",
-                "x-requested-with"));
+        configuration.setAllowedHeaders(List.of("Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }
-
