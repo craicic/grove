@@ -1,10 +1,12 @@
-package org.motoc.gamelibrary.configuration;
+package org.motoc.gamelibrary.configuration.security;
 
+import org.motoc.gamelibrary.configuration.HttpConfigAppendix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,21 +17,27 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig
-        implements WebMvcConfigurer {
+public class SecurityConfig {
 
 
     private static final String[] SWAGGER_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html"
+    };
+
+    private static final String[] ANGULAR_WHITELIST = {
+            "/index.html",
+            "/style.css",
+            "/main.js",
+            "/polyfills.js",
+            "/runtime.js",
+            "/favicon.ico"
     };
 
     @Bean
@@ -52,43 +60,29 @@ public class SecurityConfig
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        WebMvcConfigurer.super.addViewControllers(registry);
-        registry.addViewController("/").setViewName("forward:/index.html");
-    }
-
     @Bean
     @Order(1)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request ->
                         request
                                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                                .requestMatchers(ANGULAR_WHITELIST).permitAll()
                                 .requestMatchers("/").permitAll()
-                                .requestMatchers("/index.html").permitAll()
-                                .requestMatchers("/style.css").permitAll()
-                                .requestMatchers("/main.js").permitAll()
-                                .requestMatchers("/polyfills.js").permitAll()
-                                .requestMatchers("/runtime.js").permitAll()
-                                .requestMatchers("/favicon.ico").permitAll()
-                                .requestMatchers("/login").permitAll()
                                 .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/api/logout").permitAll()
                                 .requestMatchers("/api/token").permitAll()
-                                .requestMatchers("/error").permitAll()
-                                .requestMatchers("/logout").permitAll()
-                                .requestMatchers("/user/**")
+                                .requestMatchers("/api/error").permitAll()
+                                .requestMatchers("/api/user/**")
                                 .hasAnyRole("USER")
-                                .requestMatchers("/admin/**")
+                                .requestMatchers("/api/admin/**")
                                 .hasAnyRole("ADMIN")
                                 .anyRequest().denyAll()
                 )
-                .apply(CustomDsl.customDsl());
+                .apply(HttpConfigAppendix.getInstance());
         return http.build();
 
     }

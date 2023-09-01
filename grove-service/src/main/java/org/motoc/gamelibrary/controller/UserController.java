@@ -15,12 +15,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.motoc.gamelibrary.technical.ApiConstants.*;
 
 @RestController
 @CrossOrigin
@@ -28,7 +29,6 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     private final InMemoryUserDetailsManager detailsManager;
 
     @Autowired
@@ -37,37 +37,37 @@ public class UserController {
     }
 
     @GetMapping("/token")
-    public ResponseEntity<Map<String,String>> refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("Refresh token");
-        String authToken = request.getHeader("Authorization");
-        if (authToken != null && authToken.startsWith("Bearer ")) {
+    public ResponseEntity<Map<String, String>> refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("Refresh token");
+        String authToken = request.getHeader(AUTH_HEADER);
+        if (authToken != null && authToken.startsWith(PREFIX)) {
             try {
-                String jwtRefreshToken = authToken.substring(7);
-                Algorithm algorithm = Algorithm.HMAC256("secret");
+                String jwtRefreshToken = authToken.substring(LENGTH);
+                Algorithm algorithm = Algorithm.HMAC256(HMAC_SECRET);
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = jwtVerifier.verify(jwtRefreshToken);
                 String username = decodedJWT.getSubject();
                 UserDetails user = detailsManager.loadUserByUsername(username);
-                System.out.println(user.getUsername());
+                logger.info("User : " + user.getUsername() + " was fetched... Checking roles...");
                 String jwtAccessToken = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 5 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                        .withClaim(CLAIM_ROLES, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                         .sign(algorithm);
 
                 Map<String, String> idToken = new HashMap<>();
-                idToken.put("access_token", jwtAccessToken);
-                idToken.put("refresh_token", jwtRefreshToken);
+                idToken.put(ACCESS_TOKEN, jwtAccessToken);
+                idToken.put(REFRESH_TOKEN, jwtRefreshToken);
 
                 response.setContentType("application/json");
                 return ResponseEntity.ok(idToken);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.warn(e.getMessage());
                 throw new IOException(e.getMessage());
             }
         } else {
-            throw new RuntimeException("Refresh token required!!");
+            throw new RuntimeException("Refresh token is required!");
         }
     }
 }

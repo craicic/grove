@@ -1,12 +1,14 @@
-package org.motoc.gamelibrary.security.filters;
+package org.motoc.gamelibrary.configuration.security.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.motoc.gamelibrary.controller.UserController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,11 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.motoc.gamelibrary.technical.ApiConstants.*;
+
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final AuthenticationManager authenticationManager;
-
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -33,40 +37,36 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("Attempt Authentication");
-        System.out.println(request.getRequestURL());
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        System.out.println(username);
-        System.out.println(password);
+        logger.info("Attempt Authentication from " + request.getRequestURL());
+        String username = request.getParameter(USERNAME);
+        String password = request.getParameter(PASSWORD);
+        logger.debug("User : " + username + " tries to authenticate");
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, password);
-
         return authenticationManager.authenticate(authenticationToken);
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println("Successful Authentication");
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+        logger.info("Successful Authentication");
         User user = (User) authResult.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret");
+        Algorithm algorithm = Algorithm.HMAC256(HMAC_SECRET);
         String jwtAccessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 5 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN))
                 .withIssuer(request.getRequestURL().toString())
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim(CLAIM_ROLES, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String jwtRefreshToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 5 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
         Map<String, String> idToken = new HashMap<>();
-        idToken.put("access_token", jwtAccessToken);
-        idToken.put("refresh_token", jwtRefreshToken);
+        idToken.put(ACCESS_TOKEN, jwtAccessToken);
+        idToken.put(REFRESH_TOKEN, jwtRefreshToken);
 
         response.setContentType("application/json");
         new ObjectMapper().writeValue(response.getOutputStream(), idToken);

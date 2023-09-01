@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.security.filters;
+package org.motoc.gamelibrary.configuration.security.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -8,6 +8,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +21,11 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.List;
 
+import static org.motoc.gamelibrary.technical.ApiConstants.*;
+
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -29,25 +35,24 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/api/token")) {
-            System.out.println("request ignored : " + request.getServletPath());
+            logger.info("request ignored : " + request.getServletPath());
             filterChain.doFilter(request, response);
         } else {
-            System.out.println("Filtering request ... " + request.getServletPath());
-            String authorizationToken = request.getHeader("Authorization");
-            if (authorizationToken != null && authorizationToken.startsWith("Bearer ")) {
+            logger.info("Filtering request ... " + request.getServletPath());
+            String authorizationToken = request.getHeader(AUTH_HEADER);
+            if (authorizationToken != null && authorizationToken.startsWith(PREFIX)) {
                 try {
-                    String jwt = authorizationToken.substring(7);
-                    Algorithm algorithm = Algorithm.HMAC256("secret");
+                    String jwt = authorizationToken.substring(LENGTH);
+                    Algorithm algorithm = Algorithm.HMAC256(HMAC_SECRET);
                     JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
                     String username = decodedJWT.getSubject();
                     Collection<GrantedAuthority> authorities = new ArrayDeque<>();
-                    List.of(decodedJWT.getClaim("roles")
+                    List.of(decodedJWT.getClaim(CLAIM_ROLES)
                                     .asArray(String.class))
                             .forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(username, null, authorities);
-                    authorities.forEach(a -> System.out.println(a.getAuthority()));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
