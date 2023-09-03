@@ -10,7 +10,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.authService.authenticated) {
+    console.log(req.url);
+    if (this.authService.authenticated && req.url.endsWith('/api/token')) {
+      req.clone(
+        {headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('refresh_token').toString().trim())}
+      );
+    } else if (this.authService.authenticated) {
       req = req.clone(
         {headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('access_token').toString().trim())}
       );

@@ -47,7 +47,7 @@ export class GameService {
             this.page = pagedGameOverviews;
           }, error => {
             console.log(error);
-            this.authService.invalidateOnly();
+            this.authService.resetProfile();
             this.router.navigate(['/error']);
           }
         )

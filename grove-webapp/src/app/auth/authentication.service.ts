@@ -5,6 +5,7 @@ import {JwtService} from './jwt.service';
 import {AccessToken} from './access-token';
 import {interval, Subscription} from 'rxjs';
 import {take} from 'rxjs/operators';
+import {RefreshToken} from './refresh-token';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,13 @@ import {take} from 'rxjs/operators';
 export class AuthenticationService {
 
   authenticated: boolean;
-  timer: Subscription;
+  private roles: string[];
+  private username: string;
+  private expiresIn: number;
+  private timer: Subscription;
+  private token: AccessToken;
+  private refresh: RefreshToken;
+
 
   constructor(private http: HttpClient,
               private jwtService: JwtService) {
@@ -25,10 +32,8 @@ export class AuthenticationService {
     this.http.post<Jwt>(environment.apiUri + '/api/login', params)
       .subscribe((response: Jwt) => {
         if (response.access_token && response.refresh_token) {
-          this.authenticated = true;
-          localStorage.setItem('access_token', response.access_token);
-          localStorage.setItem('refresh_token', response.refresh_token);
-          this.timer = this.refreshTask(response.access_token);
+          this.loadProfile(response);
+          this.timer = this.refreshTask();
         } else {
           this.authenticated = false;
         }
@@ -37,45 +42,54 @@ export class AuthenticationService {
       }, (error) => console.log(error));
   }
 
+  loadProfile(data: Jwt): void {
+    this.token = this.jwtService.decode(data.access_token);
+    this.refresh = this.jwtService.decode(data.refresh_token);
+    this.expiresIn = this.token.exp - this.token.iat;
+    this.username = this.token.sub;
+    this.roles = this.token.roles.slice();
+    localStorage.setItem('access_token', data.access_token);
+    localStorage.setItem('refresh_token', data.refresh_token);
+    this.authenticated = true;
+  }
+
   refreshToken(): void {
-    let encodedToken: string;
     console.log('Refreshing access token !');
     this.http.get<Jwt>(environment.apiUri + '/api/token')
-      .subscribe((response) => {
-          console.log(response);
-          encodedToken = response.access_token;
+      .subscribe((response: Jwt) => {
+          this.loadProfile(response);
         },
         (error) => console.log(error),
-      () => {
-        this.timer.unsubscribe();
-        this.timer = this.refreshTask(encodedToken);
-        console.log('post completed');
-      }
+        () => {
+          this.timer.unsubscribe();
+          this.timer = this.refreshTask();
+        }
       );
   }
 
   invalidate(callback: () => any): any {
     console.log('Logout initiated');
-    this.authenticated = false;
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    this.resetProfile();
     if (this.timer !== null) {
       this.timer.unsubscribe();
     }
     return callback && callback();
   }
 
-  invalidateOnly(): any {
+  resetProfile(): any {
+    this.expiresIn = null;
+    this.username = null;
+    this.roles = null;
+    this.token = null;
+    this.refresh = null;
     this.authenticated = false;
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
   }
 
-  refreshTask(encodedToken: string): Subscription {
+  refreshTask(): Subscription {
     console.log('refresh tasks starts');
-    const token: AccessToken = this.jwtService.extractData(encodedToken);
-    const expiresIn: number = token.exp - token.iat;
-    const refreshInterval: number = Math.floor(expiresIn * 0.85);
+    const refreshInterval: number = Math.floor(this.expiresIn * 0.85);
     return interval(1000).pipe(take(refreshInterval)).subscribe(
       (t) => (t % 10) === 0 ? console.log('Refreshing access in ' + (refreshInterval - t) + 's') : t,
       (error) => console.log(error),
