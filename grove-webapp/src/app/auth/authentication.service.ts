@@ -95,6 +95,10 @@ export class AuthenticationService {
       (error) => console.log(error),
       () => this.refreshToken());
   }
+
+  getRoles(): string[] {
+    return this.roles.slice();
+  }
 }
 
 type Jwt = {

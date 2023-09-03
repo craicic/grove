@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MechanismsComponent} from './dashboard/mechanism/mechanisms.component';
-import {AuthGuard} from './auth.guard';
+import {AuthGuard, PermissionService} from './permission.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {MechanismEditComponent} from './dashboard/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismDetailComponent} from './dashboard/mechanism/mechanism-detail/mechanism-detail.component';
@@ -41,7 +41,7 @@ import {MaterialHandlerComponent} from './dashboard/games/game-edit/material-han
 import {ImageHandlerComponent} from './dashboard/games/game-edit/image-handler/image-handler.component';
 import {GameEditHelperComponent} from './dashboard/games/game-edit/game-edit-helper/game-edit-helper.component';
 import {
-    DescriptionHandlerComponent
+  DescriptionHandlerComponent
 } from './dashboard/games/game-edit/description-handler/description-handler.component';
 import {WrapperEditResolver} from './shared/resolvers/wrapper-edit-resolver.service';
 import {NavResolverService} from './shared/resolvers/nav-resolver.service';
@@ -49,7 +49,7 @@ import {NewGameBasicsComponent} from './dashboard/games/new-game/new-game-basics
 import {WrapperNewResolver} from './shared/resolvers/wrapper-new-resolver.service';
 import {NewGameComponent} from './dashboard/games/new-game/new-game.component';
 import {
-    NewGameParentChoiceComponent
+  NewGameParentChoiceComponent
 } from './dashboard/games/new-game/new-game-parent-choice/new-game-parent-choice.component';
 import {NewGameAddExtComponent} from './dashboard/games/new-game/new-game-add-ext/new-game-add-ext.component';
 import {NewGameAddCoreComponent} from './dashboard/games/new-game/new-game-add-core/new-game-add-core.component';
@@ -66,8 +66,6 @@ import {LoanResolver} from './dashboard-loan/loans/loan-resolver.service';
 import {HomeComponent} from './home/home.component';
 import {MechanismHandlerComponent} from './dashboard/games/game-edit/mechanism-handler/mechanism-handler.component';
 import {LoginComponent} from './auth/login/login.component';
-import {XhrInterceptor} from './shared/interceptor/xhr.interceptor';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ErrorPageComponent} from './error/error-page/error-page.component';
 
 const routes: Routes = [
@@ -175,7 +173,7 @@ const routes: Routes = [
             {
                 path: 'home',
                 component: HomeComponent,
-                canActivate: [AuthGuard],
+                canActivate: [PermissionService],
             },
             {
                 path: 'editor',
