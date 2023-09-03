@@ -16,6 +16,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +44,7 @@ public class UserController {
         String authToken = request.getHeader(AUTH_HEADER);
         if (authToken != null && authToken.startsWith(PREFIX)) {
             try {
-                String jwtRefreshToken = authToken.substring(LENGTH);
+                String jwtRefreshToken = authToken.substring(PREFIX_LENGTH);
                 Algorithm algorithm = Algorithm.HMAC256(HMAC_SECRET);
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = jwtVerifier.verify(jwtRefreshToken);
@@ -51,7 +53,8 @@ public class UserController {
                 logger.info("User : " + user.getUsername() + " was fetched... Checking roles...");
                 String jwtAccessToken = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN))
+                        .withExpiresAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).plusSeconds(TOKEN_EXPIRES_IN).toInstant()))
+                        .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim(CLAIM_ROLES, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                         .sign(algorithm);

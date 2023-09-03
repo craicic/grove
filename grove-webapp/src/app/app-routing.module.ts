@@ -68,6 +68,7 @@ import {MechanismHandlerComponent} from './dashboard/games/game-edit/mechanism-h
 import {LoginComponent} from './auth/login/login.component';
 import {XhrInterceptor} from './shared/interceptor/xhr.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {ErrorPageComponent} from './error/error-page/error-page.component';
 
 const routes: Routes = [
     {
@@ -306,16 +307,16 @@ const routes: Routes = [
             }
         ]
     },
-    // {
-    //   path: 'not-found',
-    //   resolve: [NavResolverService],
-    //   component: ErrorPageComponent,
-    //   data: {message: 'page not found!'}
-    // },
-    // {
-    //   path: '**',
-    //   redirectTo: '/not-found'
-    // }
+    {
+      path: 'not-found',
+      resolve: [NavResolverService],
+      component: ErrorPageComponent,
+      data: {message: 'page not found!'}
+    },
+    {
+      path: '**',
+      redirectTo: '/not-found'
+    }
 ];
 
 @NgModule({

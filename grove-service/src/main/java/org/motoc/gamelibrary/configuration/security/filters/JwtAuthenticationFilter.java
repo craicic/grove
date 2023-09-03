@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,14 +54,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Algorithm algorithm = Algorithm.HMAC256(HMAC_SECRET);
         String jwtAccessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN))
+                .withExpiresAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).plusSeconds(TOKEN_EXPIRES_IN).toInstant()))
+                .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim(CLAIM_ROLES, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String jwtRefreshToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN))
+                .withExpiresAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).plusMonths(1).toInstant()))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 

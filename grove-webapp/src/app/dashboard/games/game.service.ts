@@ -7,6 +7,8 @@ import {tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {GameOverview} from '../../model/game-overview.model';
 import {Game} from '../../model/game.model';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../../auth/authentication.service';
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -18,6 +20,8 @@ export class GameService {
   detailedGame$: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
 
   constructor(private http: HttpClient,
+              private router: Router,
+              private authService: AuthenticationService,
               private config: ConfigurationService) {
     this.apiUri = environment.apiUri;
   }
@@ -41,7 +45,11 @@ export class GameService {
         tap(
           pagedGameOverviews => {
             this.page = pagedGameOverviews;
-          }, error => console.log(error)
+          }, error => {
+            console.log(error);
+            this.authService.invalidateOnly();
+            this.router.navigate(['/error']);
+          }
         )
       );
   }
