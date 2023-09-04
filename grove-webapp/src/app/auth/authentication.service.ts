@@ -58,14 +58,14 @@ export class AuthenticationService {
     this.http
       .get<Jwt>(environment.apiUri + '/api/token')
       .subscribe((response: Jwt) => {
-        this.loadProfile(response);
-      },
-      (error) => console.log(error),
-      () => {
-        this.timer.unsubscribe();
-        this.timer = this.refreshTask();
-      }
-    );
+          this.loadProfile(response);
+        },
+        (error) => console.log(error),
+        () => {
+          this.timer.unsubscribe();
+          this.timer = this.refreshTask();
+        }
+      );
   }
 
   invalidate(callback: () => any): any {

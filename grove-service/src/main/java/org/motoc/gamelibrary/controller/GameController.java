@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/games")
-@SecurityRequirement(name="basicAuth")
+@SecurityRequirement(name="jwtAuth")
 public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);

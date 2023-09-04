@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 @CrossOrigin
 @RestController
-@SecurityRequirement(name="basicAuth")
+@SecurityRequirement(name="jwtAuth")
 @RequestMapping("api")
 public class ImageController {
 

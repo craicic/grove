@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api")
-@SecurityRequirement(name="basicAuth")
+@SecurityRequirement(name="jwtAuth")
 public class GameCopyController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameCopyController.class);

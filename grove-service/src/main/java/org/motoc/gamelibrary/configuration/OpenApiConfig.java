@@ -13,8 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition
 @io.swagger.v3.oas.annotations.security.SecurityScheme(
         type = SecuritySchemeType.HTTP,
-        scheme = "basic",
-        name = "basicAuth")
+        scheme = "bearer",
+        bearerFormat = "jwt",
+        name = "jwtAuth")
 public class OpenApiConfig {
 
     @Bean
