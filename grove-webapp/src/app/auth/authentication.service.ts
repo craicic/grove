@@ -55,16 +55,17 @@ export class AuthenticationService {
 
   refreshToken(): void {
     console.log('Refreshing access token !');
-    this.http.get<Jwt>(environment.apiUri + '/api/token')
+    this.http
+      .get<Jwt>(environment.apiUri + '/api/token')
       .subscribe((response: Jwt) => {
-          this.loadProfile(response);
-        },
-        (error) => console.log(error),
-        () => {
-          this.timer.unsubscribe();
-          this.timer = this.refreshTask();
-        }
-      );
+        this.loadProfile(response);
+      },
+      (error) => console.log(error),
+      () => {
+        this.timer.unsubscribe();
+        this.timer = this.refreshTask();
+      }
+    );
   }
 
   invalidate(callback: () => any): any {
@@ -89,7 +90,7 @@ export class AuthenticationService {
 
   refreshTask(): Subscription {
     console.log('refresh tasks starts');
-    const refreshInterval: number = Math.floor(this.expiresIn * 0.85);
+    const refreshInterval: number = Math.floor(this.expiresIn * 0.92);
     return interval(1000).pipe(take(refreshInterval)).subscribe(
       (t) => (t % 10) === 0 ? console.log('Refreshing access in ' + (refreshInterval - t) + 's') : t,
       (error) => console.log(error),
