@@ -4,7 +4,7 @@ import {GameService} from '../../dashboard/games/game.service';
 import {NAV, WrapperService} from '../../shared/services/wrapper.service';
 
 @Component({
-  selector: 'app-locked-mode-wrapper',
+  selector: 'app-game-edit-wrapper',
   templateUrl: './game-edit-wrapper.component.html',
   styleUrls: ['./game-edit-wrapper.component.css']
 })
