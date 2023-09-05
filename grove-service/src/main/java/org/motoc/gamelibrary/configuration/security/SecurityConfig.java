@@ -33,7 +33,7 @@ public class SecurityConfig {
 
     private static final String[] ANGULAR_WHITELIST = {
             "/index.html",
-            "/style.css",
+            "/styles.css",
             "/main.js",
             "/polyfills.js",
             "/runtime.js",
