@@ -17,6 +17,21 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: grove-webapp
+      - name: Npm Dependencies
+        run: |
+          cd grove-webapp
+          npm install
+      - name: Npm Build
+        run: |
+          cd grove-webapp
+          npm ci
+
       - run: echo "Now install JDK19 and then try to run a maven command."
       - name: Set up JDK19
         uses: actions/setup-java@v3
@@ -26,5 +41,5 @@ jobs:
           cache: maven
       - name: Verify with Maven
         run: mvn -B verify --file pom.xml
-      - run: echo "Maven will now run VERIFY."
+#      - run: echo "Maven will now run VERIFY."
 #        run: mvn -B package --file pom.xml -DskipTests -Dspring-boot.run.arguments="--spring.datasource.username=${{ secrets.DATASOURCE_USR }} --spring.datasource.username=${{ secrets.DATASOURCE_PWD }}"

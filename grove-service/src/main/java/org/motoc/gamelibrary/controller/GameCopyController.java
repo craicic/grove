@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.service.GameCopyService;
 import org.slf4j.Logger;
@@ -13,8 +14,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+/**
+ * Defines game copy endpoints
+ */
+@CrossOrigin
 @RestController
+@RequestMapping("api/admin/game-copies/")
+@SecurityRequirement(name="jwtAuth")
 public class GameCopyController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameCopyController.class);
@@ -28,39 +34,68 @@ public class GameCopyController {
         this.service = service;
     }
 
-    @GetMapping("/admin/game-copies/count")
+    /**
+     * Get the total number of copies.
+     * @return Return the number of copies in collection.
+     */
+    @GetMapping("/count")
     Long count() {
         logger.trace("count called");
         return service.count();
     }
 
-    @GetMapping("/admin/game-copies/{id}")
+    /**
+     * Get copy of a game by ID
+     * @param id The game copy ID that need to be fetched
+     * @return The copy matching the ID
+     */
+    @GetMapping("/{id}")
     GameCopyDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return service.findById(id);
     }
 
-    @GetMapping("/admin/game-copies/object-code/{objectCode}")
+    /**
+     * Get a game copy by object code.
+     * @param objectCode The objectCode that is link to a copy, object code is a unique identifier.
+     * @return The copy matching the objectCode
+     */
+    @GetMapping("/object-code/{objectCode}")
     GameCopyDto findByObjectCode(@PathVariable @Pattern(regexp = "^[0-9]{1,5}$") String objectCode) {
         logger.trace("findByObjectCode(objectCode) called");
         return service.findByObjectCode(objectCode);
     }
 
-    @PostMapping("/admin/game-copies")
+    /**
+     * Save a new game copy
+     * @param copyDto The copy to save
+     * @return The saved copy
+     */
+    @PostMapping("/")
     GameCopyDto save(@RequestBody @Valid GameCopyDto copyDto) {
         logger.trace("save(gameCopy) called");
         return service.save(copyDto);
     }
 
-    @PutMapping("/admin/game-copies/{id}")
+    /**
+     * Update an existing game copy.
+     * @param copyDto The edited copy
+     * @param id The ID of the copy to edit
+     * @return The edited copy
+     */
+    @PutMapping("/{id}")
     GameCopyDto edit(@RequestBody @Valid GameCopyDto copyDto,
                      @PathVariable Long id) {
         logger.trace("edit(gameCopy) called");
         return service.edit(copyDto, id);
     }
 
-    /* Maybe replace this endpoint by a endpoint in GAME */
-    @GetMapping("/admin/game-copies")
+    /**
+     * Find a list of all copies, can be filtered by ready-for-loan boolean
+     * @param loanReady An optional filter, when true, only fetch copies that can be loan
+     * @return A list of game copies
+     */
+    @GetMapping("/")
     List<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady) {
         logger.trace("findAll() called");
         if (!loanReady)
@@ -69,8 +104,13 @@ public class GameCopyController {
             return service.findLoanReady();
     }
 
-    /* Maybe replace this endpoint by a endpoint in GAME */
-    @GetMapping("/admin/game-copies/page")
+    /**
+     * Find a page of copies, can be filtered by ready-for-loan boolean
+     * @param loanReady An optional filter, when true, only fetch copies that can be loan
+     * @param pageable An object to configure the page (item per page, current page, etc...)
+     * @return A page of game copies
+     */
+    @GetMapping("/page")
     Page<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady,
                               Pageable pageable) {
         logger.trace("findAll() called");
@@ -79,14 +119,27 @@ public class GameCopyController {
         else
             return service.findLoanReadyPage(pageable);
     }
-    @PostMapping("/admin/game-copies/{copyId}/add-publisher/{publisherId}")
+
+    /**
+     * Attach a publisher to a copy. Base on their IDs
+     * @param copyId The ID of the copy you want to link the given publisher
+     * @param publisherId The ID of the publisher you want to attach to the copy
+     * @return The updated copy of the given ID.
+     */
+    @PostMapping("/{copyId}/add-publisher/{publisherId}")
     GameCopyDto addPublisher(@PathVariable Long copyId,
                              @PathVariable Long publisherId) {
         logger.trace("addPublisher() called");
         return service.addPublisher(copyId, publisherId);
     }
 
-    @DeleteMapping("/admin/game-copies/{copyId}/unlink-publisher/{publisherId}")
+    /**
+     * Detach a publisher from a copy. Base on their IDs
+     * @param copyId The ID of the copy you want to unlink the given publisher
+     * @param publisherId The ID of the publisher you want to detach from the copy
+     * @return The updated copy of the given ID.
+     */
+    @DeleteMapping("/{copyId}/unlink-publisher/{publisherId}")
     GameCopyDto unlinkPublisher(@PathVariable Long copyId,
                                 @PathVariable Long publisherId) {
         logger.trace("unlinkPublisher() called");

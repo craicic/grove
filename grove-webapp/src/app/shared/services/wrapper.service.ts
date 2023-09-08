@@ -17,8 +17,6 @@ export class WrapperService implements OnDestroy {
   entity: string;
   subscription: Subscription;
 
-  // subscription: Subscription;
-
   constructor(private router: Router,
               private route: ActivatedRoute) {
     this.MODE_NAMES[CREATION] = 'Création';

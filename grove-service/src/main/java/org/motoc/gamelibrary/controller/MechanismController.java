@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.MechanismDto;
 import org.motoc.gamelibrary.domain.dto.MechanismNameDto;
 import org.motoc.gamelibrary.service.MechanismService;
@@ -16,8 +17,10 @@ import java.util.List;
 /**
  * Defines mechanism endpoints
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
+@RequestMapping("api/admin/mechanisms")
+@SecurityRequirement(name="jwtAuth")
 public class MechanismController {
 
     private static final Logger logger = LoggerFactory.getLogger(MechanismController.class);
@@ -29,25 +32,44 @@ public class MechanismController {
         this.service = service;
     }
 
-    @GetMapping("/admin/mechanisms/count")
+    /**
+     * Get the total mechanism count.
+     * @return The number of mechanisms in collection.
+     */
+    @GetMapping("/count")
     Long count() {
         logger.trace("count called");
         return service.count();
     }
 
-    @GetMapping("/admin/mechanisms")
+    /**
+     * Get all mechanisms.
+     * @return A list of mechanisms.
+     */
+    @GetMapping("/")
     List<MechanismDto> findAll() {
         logger.trace("findAll called");
         return service.findAll();
     }
 
-    @GetMapping("/admin/mechanisms/{id}")
+    /**
+     * Get mechanism by ID.
+     * @param id The mechanism ID that need to be fetched.
+     * @return The mechanism matching the ID.
+     */
+    @GetMapping("/{id}")
     MechanismDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return service.findById(id);
     }
 
-    @GetMapping("/admin/mechanisms/page")
+    /**
+     * Fetch a paginated list of mechanisms, based on the pageable parameter.
+     * @param pageable The pageable item to fetch a page of mechanisms.
+     * @param keyword The keyword to fetch a page of mechanism.
+     * @return The paginated list of mechanisms.
+     */
+    @GetMapping("/page")
     Page<MechanismDto> findPage(Pageable pageable,
                                 @RequestParam(required = false, name = "search") String keyword) {
         if (keyword == null) {
@@ -59,21 +81,35 @@ public class MechanismController {
         }
     }
 
-
-    @PostMapping("/admin/mechanisms")
+    /**
+     * Save a new mechanism.
+     * @param mechanismNameDto The mechanism to save.
+     * @return The save mechanism.
+     */
+    @PostMapping("/")
     MechanismDto save(@RequestBody @Valid MechanismNameDto mechanismNameDto) {
         logger.trace("save(mechanism) called");
         return service.save(mechanismNameDto);
     }
 
-    @PutMapping("/admin/mechanisms/{id}")
+    /**
+     * Update an existing mechanism.
+     * @param mechanismDto The edited mechanism.
+     * @param id The ID of the mechanism to edit.
+     * @return The edited mechanism.
+     */
+    @PutMapping("/{id}")
     MechanismDto edit(@RequestBody @Valid MechanismDto mechanismDto,
                       @PathVariable Long id) {
         logger.trace("edit(mechanism, id) called");
         return service.edit(mechanismDto, id);
     }
 
-    @DeleteMapping("/admin/mechanisms/{id}")
+    /**
+     * Delete a mechanism based on the given ID.
+     * @param id The ID of the mechanism to delete.
+     */
+    @DeleteMapping("/{id}")
     void deleteById(@PathVariable Long id) {
         logger.trace("deleteById(id) called");
         service.remove(id);

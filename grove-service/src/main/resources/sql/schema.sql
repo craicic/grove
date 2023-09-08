@@ -150,8 +150,8 @@ create table public.pre_reservation
     code                 int4,
     date_of_ending       date,
     date_of_start        date,
-    date_time_of_closure timestamp,
-    date_time_of_demand  timestamp,
+    date_time_of_closure timestamptz,
+    date_time_of_demand  timestamptz,
     is_closed            boolean not null,
     primary key (id)
 );
@@ -177,9 +177,9 @@ create table public.reservation
     id                      int8 not null,
     date_of_ending          date,
     date_of_start           date not null,
-    date_time_of_creation   timestamp,
-    date_time_of_return     timestamp,
-    date_time_of_withdrawal timestamp,
+    date_time_of_creation   timestamptz,
+    date_time_of_return     timestamptz,
+    date_time_of_withdrawal timestamptz,
     status                  smallint not null,
     total_amount            numeric(12, 2),
     fk_adherent             int8,

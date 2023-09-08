@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MechanismsComponent} from './dashboard/mechanism/mechanisms.component';
-import {AuthGuard} from './auth.guard';
+import {AuthGuard, PermissionService} from './permission.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {MechanismEditComponent} from './dashboard/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismDetailComponent} from './dashboard/mechanism/mechanism-detail/mechanism-detail.component';
@@ -65,255 +65,263 @@ import {LoanDetailComponent} from './dashboard-loan/loans/loan-detail/loan-detai
 import {LoanResolver} from './dashboard-loan/loans/loan-resolver.service';
 import {HomeComponent} from './home/home.component';
 import {MechanismHandlerComponent} from './dashboard/games/game-edit/mechanism-handler/mechanism-handler.component';
+import {LoginComponent} from './auth/login/login.component';
+import {ErrorPageComponent} from './error/error-page/error-page.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/admin/home',
-    resolve: [NavResolverService],
-    pathMatch: 'full',
-  },
-  {
-    path: 'admin/locked-mode',
-    canActivate: [AuthGuard],
-    resolve: [WrapperNewResolver],
-    data: {roles: ['ADMIN']},
-    children: [
-      {
-        path: 'games/new',
-        component: NewGameComponent,
-        children: [
-          {
-            path: 'basics',
-            component: NewGameBasicsComponent
-          },
-          {
-            path: 'parent-choice',
-            component: NewGameParentChoiceComponent
-          },
-          {
-            path: 'add-extension',
-            component: NewGameAddExtComponent
-          },
-          {
-            path: 'add-core',
-            component: NewGameAddCoreComponent
-          },
-          {
-            path: 'add-core-summary',
-            component: GameSummaryComponent
-          },
-          {
-            path: 'infos',
-            component: NewGameInfosComponent
-          },
-        ]
-      },
-      {
-        path: 'games/:id/edit',
-        component: GameEditComponent,
-        resolve: [GameResolver, WrapperEditResolver],
-        children: [
-          {
-            path: '',
-            component: GameEditHelperComponent,
-          },
-          {
-            path: 'name',
-            component: TitleHandlerComponent
-          },
-          {
-            path: 'categories',
-            component: CategoryHandlerComponent
-          },
-          {
-            path: 'mechanisms',
-            component: MechanismHandlerComponent
-          },
-          {
-            path: 'infos',
-            component: InfoHandlerComponent
-          },
-          {
-            path: 'creators',
-            component: CreatorHandlerComponent
-          },
-          {
-            path: 'publisher',
-            component: PublisherHandlerComponent
-          },
-          {
-            path: 'description',
-            component: DescriptionHandlerComponent
-          },
-          {
-            path: 'size',
-            component: SizeHandlerComponent
-          },
-          {
-            path: 'material',
-            component: MaterialHandlerComponent
-          },
-          {
-            path: 'images',
-            component: ImageHandlerComponent
-          },
-        ]
-      }
-    ]
-  },
-  {
-    path: 'admin',
-    resolve: [NavResolverService],
-    children: [
-      {
-        path: 'home',
-        component: HomeComponent,
+    {
+        path: ''
+        // component:
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+    },
+    {
+        path: 'admin/locked-mode',
         canActivate: [AuthGuard],
-      },
-      {
-        path: 'editor',
-        component: DashboardComponent,
-        canActivate: [AuthGuard],
+        resolve: [WrapperNewResolver],
         data: {roles: ['ADMIN']},
         children: [
-          {
-            path: 'games',
-            component: GamesComponent,
-            resolve: [GameOverviewResolver],
-            children: [
-              {
-                path: 'list',
-                component: GameListComponent,
-                // resolve: [CategoryResolver],
+            {
+                path: 'games/new',
+                component: NewGameComponent,
                 children: [
-                  {path: ':id', component: GameSummaryComponent}]
-              },
-              {
-                path: 'detail/:id',
-                component: GameDetailComponent,
-                resolve: [GameResolver]
-              }
-            ]
-          },
-          {
-            path: 'mechanisms',
-            component: MechanismsComponent,
-            children: [
-              {path: 'new', component: MechanismEditComponent, resolve: [ExistingMechanismsResolver]},
-              {
-                path: ':id/edit',
-                component: MechanismEditComponent,
-                resolve: [MechanismResolver, ExistingMechanismsResolver]
-              },
-              {path: ':id', component: MechanismDetailComponent, resolve: [MechanismResolver]}
-            ]
-          },
-          {
-            path: 'creators',
-            component: CreatorsComponent,
-            children: [
-              {path: 'new', component: CreatorEditComponent, resolve: [CreatorNameResolver]},
-              {path: ':id/edit', component: CreatorEditComponent, resolve: [CreatorResolver, CreatorNameResolver]},
-              {path: ':id', component: CreatorDetailComponent, resolve: [CreatorResolver]}
-            ]
-          },
-          {
-            path: 'publishers',
-            component: PublishersComponent,
-            children: [
-              {path: 'new', component: PublisherEditComponent, resolve: [PublishersNamesResolver]},
-              {
-                path: ':id/edit',
-                component: PublisherEditComponent,
-                resolve: [PublishersResolver, PublishersNamesResolver]
-              },
-              {path: ':id', component: PublisherDetailComponent, resolve: [PublishersResolver]}
-            ]
-          },
-          {
-            path: 'categories',
-            component: CategoriesComponent,
-            resolve: [CategoryResolver],
-            children: [
-              {path: 'new', component: CategoryEditComponent},
-              {path: ':id/edit', component: CategoryEditComponent, resolve: [CategoryResolver]},
-              {path: ':id', component: CategoryDetailComponent, resolve: [CategoryResolver]}
-            ]
-          },
-          {
-            path: 'configuration',
-            component: ConfigurationComponent
-          }]
-      },
-      {
-        path: 'loans',
-        component: DashboardLoanComponent,
-        canActivate: [AuthGuard],
-        data: {roles: ['ADMIN']},
-        children: [
-          {
-            path: 'select-member',
-            component: SelectMemberComponent
-          },
-          {
-            path: ':accountId/select-game',
-            component: SelectGameComponent
-          },
-          {
-            path: 'confirm',
-            component: ConfirmLoanComponent
-          },
-          {
-            path: 'list',
-            component: LoanListComponent
-          },
-          {
-            path: ':id',
-            component: LoanDetailComponent,
-            resolve: [LoanResolver]
-          }
+                    {
+                        path: 'basics',
+                        component: NewGameBasicsComponent
+                    },
+                    {
+                        path: 'parent-choice',
+                        component: NewGameParentChoiceComponent
+                    },
+                    {
+                        path: 'add-extension',
+                        component: NewGameAddExtComponent
+                    },
+                    {
+                        path: 'add-core',
+                        component: NewGameAddCoreComponent
+                    },
+                    {
+                        path: 'add-core-summary',
+                        component: GameSummaryComponent
+                    },
+                    {
+                        path: 'infos',
+                        component: NewGameInfosComponent
+                    },
+                ]
+            },
+            {
+                path: 'games/:id/edit',
+                component: GameEditComponent,
+                resolve: [GameResolver, WrapperEditResolver],
+                children: [
+                    {
+                        path: '',
+                        component: GameEditHelperComponent,
+                    },
+                    {
+                        path: 'name',
+                        component: TitleHandlerComponent
+                    },
+                    {
+                        path: 'categories',
+                        component: CategoryHandlerComponent
+                    },
+                    {
+                        path: 'mechanisms',
+                        component: MechanismHandlerComponent
+                    },
+                    {
+                        path: 'infos',
+                        component: InfoHandlerComponent
+                    },
+                    {
+                        path: 'creators',
+                        component: CreatorHandlerComponent
+                    },
+                    {
+                        path: 'publisher',
+                        component: PublisherHandlerComponent
+                    },
+                    {
+                        path: 'description',
+                        component: DescriptionHandlerComponent
+                    },
+                    {
+                        path: 'size',
+                        component: SizeHandlerComponent
+                    },
+                    {
+                        path: 'material',
+                        component: MaterialHandlerComponent
+                    },
+                    {
+                        path: 'images',
+                        component: ImageHandlerComponent
+                    },
+                ]
+            }
         ]
-      },
-      {
-        path: 'members',
-        component: DashboardUserComponent,
-        canActivate: [AuthGuard],
-        data: {roles: ['ADMIN']},
+    },
+    {
+        path: 'admin',
+        resolve: [NavResolverService],
         children: [
-          {
-            path: 'new',
-            component: MemberNewComponent
-          },
-          {
-            path: 'list',
-            component: MemberListComponent
-          },
-          {
-            path: ':id',
-            component: MemberDetailComponent
-          }
+            {
+                path: 'home',
+                component: HomeComponent,
+                canActivate: [PermissionService],
+            },
+            {
+                path: 'editor',
+                component: DashboardComponent,
+                canActivate: [AuthGuard],
+                data: {roles: ['ADMIN']},
+                children: [
+                    {
+                        path: 'games',
+                        component: GamesComponent,
+                        resolve: [GameOverviewResolver],
+                        children: [
+                            {
+                                path: 'list',
+                                component: GameListComponent,
+                                // resolve: [CategoryResolver],
+                                children: [
+                                    {path: ':id', component: GameSummaryComponent}]
+                            },
+                            {
+                                path: 'detail/:id',
+                                component: GameDetailComponent,
+                                resolve: [GameResolver]
+                            }
+                        ]
+                    },
+                    {
+                        path: 'mechanisms',
+                        component: MechanismsComponent,
+                        children: [
+                            {path: 'new', component: MechanismEditComponent, resolve: [ExistingMechanismsResolver]},
+                            {
+                                path: ':id/edit',
+                                component: MechanismEditComponent,
+                                resolve: [MechanismResolver, ExistingMechanismsResolver]
+                            },
+                            {path: ':id', component: MechanismDetailComponent, resolve: [MechanismResolver]}
+                        ]
+                    },
+                    {
+                        path: 'creators',
+                        component: CreatorsComponent,
+                        children: [
+                            {path: 'new', component: CreatorEditComponent, resolve: [CreatorNameResolver]},
+                            {
+                                path: ':id/edit',
+                                component: CreatorEditComponent,
+                                resolve: [CreatorResolver, CreatorNameResolver]
+                            },
+                            {path: ':id', component: CreatorDetailComponent, resolve: [CreatorResolver]}
+                        ]
+                    },
+                    {
+                        path: 'publishers',
+                        component: PublishersComponent,
+                        children: [
+                            {path: 'new', component: PublisherEditComponent, resolve: [PublishersNamesResolver]},
+                            {
+                                path: ':id/edit',
+                                component: PublisherEditComponent,
+                                resolve: [PublishersResolver, PublishersNamesResolver]
+                            },
+                            {path: ':id', component: PublisherDetailComponent, resolve: [PublishersResolver]}
+                        ]
+                    },
+                    {
+                        path: 'categories',
+                        component: CategoriesComponent,
+                        resolve: [CategoryResolver],
+                        children: [
+                            {path: 'new', component: CategoryEditComponent},
+                            {path: ':id/edit', component: CategoryEditComponent, resolve: [CategoryResolver]},
+                            {path: ':id', component: CategoryDetailComponent, resolve: [CategoryResolver]}
+                        ]
+                    },
+                    {
+                        path: 'configuration',
+                        component: ConfigurationComponent
+                    }]
+            },
+            {
+                path: 'loans',
+                component: DashboardLoanComponent,
+                canActivate: [AuthGuard],
+                data: {roles: ['ADMIN']},
+                children: [
+                    {
+                        path: 'select-member',
+                        component: SelectMemberComponent
+                    },
+                    {
+                        path: ':accountId/select-game',
+                        component: SelectGameComponent
+                    },
+                    {
+                        path: 'confirm',
+                        component: ConfirmLoanComponent
+                    },
+                    {
+                        path: 'list',
+                        component: LoanListComponent
+                    },
+                    {
+                        path: ':id',
+                        component: LoanDetailComponent,
+                        resolve: [LoanResolver]
+                    }
+                ]
+            },
+            {
+                path: 'members',
+                component: DashboardUserComponent,
+                canActivate: [AuthGuard],
+                data: {roles: ['ADMIN']},
+                children: [
+                    {
+                        path: 'new',
+                        component: MemberNewComponent
+                    },
+                    {
+                        path: 'list',
+                        component: MemberListComponent
+                    },
+                    {
+                        path: ':id',
+                        component: MemberDetailComponent
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
-  // {
-  //   path: 'not-found',
-  //   resolve: [NavResolverService],
-  //   component: ErrorPageComponent,
-  //   data: {message: 'page not found!'}
-  // },
-  // {
-  //   path: '**',
-  //   redirectTo: '/not-found'
-  // }
+    },
+    {
+      path: 'not-found',
+      resolve: [NavResolverService],
+      component: ErrorPageComponent,
+      data: {message: 'page not found!'}
+    },
+    {
+      path: '**',
+      redirectTo: '/not-found'
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes
+    imports: [RouterModule.forRoot(routes
 // , {enableTracing: true}
-    , {})],
-  exports: [RouterModule]
+        , {})],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 

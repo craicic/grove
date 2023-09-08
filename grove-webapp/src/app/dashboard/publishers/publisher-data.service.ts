@@ -21,7 +21,7 @@ export class PublisherDataService {
 
   fetchNames(): any {
     return this.http
-      .get<ImpersonalInterface[]>(this.apiUri + '/admin/publishers/names', {responseType: 'json'})
+      .get<ImpersonalInterface[]>(this.apiUri + '/api/admin/publishers/names', {responseType: 'json'})
       .pipe(
         tap(names => {
           this.publishersService.setNames(names);
@@ -41,7 +41,7 @@ export class PublisherDataService {
     const params = '?page=' + page + '&size=' + size + '&sort=id' + keywordParam;
 
     return this.http
-      .get<Page<Publisher>>(this.apiUri + '/admin/publishers/page' + params, {responseType: 'json'})
+      .get<Page<Publisher>>(this.apiUri + '/api/admin/publishers/page' + params, {responseType: 'json'})
       .pipe(
         tap(pagedPublishers => {
           this.publishersService.setPagedPublishers(pagedPublishers);
@@ -51,17 +51,17 @@ export class PublisherDataService {
 
   removePublisher(id: number): any {
     return this.http
-      .delete(this.apiUri + '/admin/publishers/' + id);
+      .delete(this.apiUri + '/api/admin/publishers/' + id);
   }
 
   removeContact(publisherId: number, contactId): any {
     return this.http
-      .delete(this.apiUri + '/admin/publishers/' + publisherId + '/contact/' + contactId);
+      .delete(this.apiUri + '/api/admin/publishers/' + publisherId + '/contact/' + contactId);
   }
 
   editPublisher(id: number, editedPublisher: Publisher): void {
     this.http
-      .put<Publisher>(this.apiUri + '/admin/publishers/' + id, editedPublisher, {responseType: 'json'})
+      .put<Publisher>(this.apiUri + '/api/admin/publishers/' + id, editedPublisher, {responseType: 'json'})
       .subscribe(publisher => this.publishersService.updatePublishers(publisher));
   }
 
@@ -71,7 +71,7 @@ export class PublisherDataService {
       contactParam = '?has-contact=true';
     }
     this.http
-      .post<Publisher>(this.apiUri + '/admin/publishers' + contactParam, newPublisher, {responseType: 'json'})
+      .post<Publisher>(this.apiUri + '/api/admin/publishers' + contactParam, newPublisher, {responseType: 'json'})
       .subscribe(publisher => this.publishersService.updatePublishers(publisher));
   }
 }

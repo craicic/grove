@@ -26,6 +26,9 @@ public interface MechanismMapper {
 
     MechanismDto mechanismToDto(Mechanism mechanism);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "lowerCaseTitle", ignore = true)
+    @Mapping(target = "games", ignore = true)
     Mechanism mechanismNameDtoToMechanism(MechanismNameDto mechanismNameDto);
 
     @Mapping(target = "games", ignore = true)

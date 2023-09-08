@@ -9,26 +9,25 @@
 
   <!-- Step 2: Add the ngbCollapse directive to the element below. -->
   <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="mainNavbar">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav me-auto">
       <li class="nav-item" routerLinkActive="active">
         <a
           class="nav-link"
           style="cursor:pointer;"
-          *ngIf="isAuthenticated && isAdministrator"
+          *ngIf="authenticated() && isAdministrator"
           (click)="isMenuCollapsed = true; onOpenGamesNavbar()">Base de données de jeux</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a
-          class="nav-link"
-          style="cursor:pointer;"
-          *ngIf="isAuthenticated && isAdministrator"
+          class="nav-link" style="cursor:pointer;"
+          *ngIf="authenticated() && isAdministrator"
           (click)="isMenuCollapsed = true; onOpenLoansNavbar()">Prêts</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a
           class="nav-link"
           style="cursor:pointer;"
-          *ngIf="isAuthenticated && isAdministrator"
+          *ngIf="authenticated() && isAdministrator"
           (click)="isMenuCollapsed = true; onOpenMembersNavbar()">Adhérents</a>
       </li>
     </ul>
@@ -38,14 +37,14 @@
         <a
           class="nav-link"
           style="cursor:pointer;"
-          *ngIf="!isAuthenticated"
-          (click)="onLogin()">Authentification</a>
+          *ngIf="!authenticated()"
+          (click)="onLogin()">Se connecter</a>
       </li>
       <li class="nav-item">
         <a
           class="nav-link"
           style="cursor:pointer;"
-          *ngIf="isAuthenticated"
+          *ngIf="authenticated()"
           (click)="onLogout()">Déconnexion</a>
       </li>
     </ul>

@@ -7,6 +7,8 @@ import {tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {GameOverview} from '../../model/game-overview.model';
 import {Game} from '../../model/game.model';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../../auth/authentication.service';
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -18,6 +20,8 @@ export class GameService {
   detailedGame$: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
 
   constructor(private http: HttpClient,
+              private router: Router,
+              private authService: AuthenticationService,
               private config: ConfigurationService) {
     this.apiUri = environment.apiUri;
   }
@@ -36,11 +40,15 @@ export class GameService {
     const size = this.config.getNumberOfElements();
     const params = '?page=' + page + '&size=' + size + '&sort=id' + keywordParam;
     return this.http
-      .get<Page<GameOverview>>(this.apiUri + '/admin/games/page/overview' + params, {responseType: 'json'})
+      .get<Page<GameOverview>>(this.apiUri + '/api/admin/games/page/overview' + params, {responseType: 'json'})
       .pipe(
         tap(
           pagedGameOverviews => {
             this.page = pagedGameOverviews;
+          }, error => {
+            console.log(error);
+            this.authService.resetProfile();
+            this.router.navigate(['/error']);
           }
         )
       );
@@ -49,7 +57,7 @@ export class GameService {
   /** Get a game by id */
   fetchGameById(id: number): Observable<Game> {
     return this.http
-      .get<Game>(this.apiUri + '/admin/games/' + id, {responseType: 'json'})
+      .get<Game>(this.apiUri + '/api/admin/games/' + id, {responseType: 'json'})
       .pipe(tap(game => {
         console.log('updating games');
         this.detailedGame$.next(game);
@@ -63,67 +71,67 @@ export class GameService {
   /** */
   fetchTitles(): Observable<string[]> {
     return this.http
-      .get<string[]>(this.apiUri + '/admin/games/titles', {responseType: 'json'});
+      .get<string[]>(this.apiUri + '/api/admin/games/titles', {responseType: 'json'});
   }
 
   /** Save a new game POST */
   saveGame(game: Game): Observable<Game> {
     return this.http
-      .post<Game>(this.apiUri + '/admin/games/', game, {responseType: 'json'});
+      .post<Game>(this.apiUri + '/api/admin/games/', game, {responseType: 'json'});
   }
 
   /** Edit the game via PUT request */
   editGame(id: number, game: Game): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + id, game, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + id, game, {responseType: 'json'});
   }
 
   /** Attach the category to the game */
   addCategory(gameId: number, categoryId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/add-category/' + categoryId, null, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/add-category/' + categoryId, null, {responseType: 'json'});
   }
 
   /** Remove the category to the game */
   unlinkCategory(gameId: number, categoryId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/unlink-category/' + categoryId, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/unlink-category/' + categoryId, {responseType: 'json'});
   }
 
   /** Attach the mechanism to the game */
   addMechanism(gameId: number, mechanismId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/add-mechanism/' + mechanismId, null, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/add-mechanism/' + mechanismId, null, {responseType: 'json'});
   }
 
   /** Remove the mechanism to the game */
   unlinkMechanism(gameId: number, mechanismId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/unlink-mechanism/' + mechanismId, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/unlink-mechanism/' + mechanismId, {responseType: 'json'});
   }
 
   /** Attach the creator to the game */
   addCreator(gameId: number, creatorId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/add-creator/' + creatorId, null, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/add-creator/' + creatorId, null, {responseType: 'json'});
   }
 
   /** Remove the creator to the game */
   unlinkCreator(gameId: number, creatorId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/unlink-creator/' + creatorId, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/unlink-creator/' + creatorId, {responseType: 'json'});
   }
 
   addProductLine(gameId: number, lineId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/add-product-line/' + lineId, null, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/add-product-line/' + lineId, null, {responseType: 'json'});
 
   }
 
   /** Remove the product line to the game */
   unlinkProductLine(gameId: number, lineId: number): Observable<Game> {
     return this.http
-      .put<Game>(this.apiUri + '/admin/games/' + gameId + '/unlink-product-line/' + lineId, {responseType: 'json'});
+      .put<Game>(this.apiUri + '/api/admin/games/' + gameId + '/unlink-product-line/' + lineId, {responseType: 'json'});
   }
 
   /* ================================================ OTHER METHODS ==================================================================== */

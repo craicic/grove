@@ -26,18 +26,18 @@ export class AccountService {
     if (account.contact) {
       contactParam = '?has-contact=true';
     }
-    return this.http.post<Account>(this.apiUri + '/admin/accounts' + contactParam, account);
+    return this.http.post<Account>(this.apiUri + '/api/admin/accounts' + contactParam, account);
   }
 
   fetchAll(): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUri + '/admin/accounts');
+    return this.http.get<Account[]>(this.apiUri + '/api/admin/accounts');
   }
 
   fetchById(id: number): Observable<Account> {
-    return this.http.get<Account>(this.apiUri + '/admin/accounts/' + id);
+    return this.http.get<Account>(this.apiUri + '/api/admin/accounts/' + id);
   }
 
   fetchActives(): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUri + '/admin/accounts/no-current-loan');
+    return this.http.get<Account[]>(this.apiUri + '/api/admin/accounts/no-current-loan');
   }
 }

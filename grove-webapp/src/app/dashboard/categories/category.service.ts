@@ -25,7 +25,7 @@ export class CategoryService {
   /** Gets all categories */
   fetchAll(): Observable<Category[]> {
     return this.http
-      .get<Category[]>(this.apiUri + '/admin/categories', {responseType: 'json'});
+      .get<Category[]>(this.apiUri + '/api/admin/categories', {responseType: 'json'});
   }
 
   /** Gets all categories then store them to an array field */
@@ -42,12 +42,12 @@ export class CategoryService {
 
   /** Removes a category by id */
   remove(id: number): any {
-    return this.http.delete<Category>(this.apiUri + '/admin/categories/' + id);
+    return this.http.delete<Category>(this.apiUri + '/api/admin/categories/' + id);
   }
 
   /** Edits an existing category */
   edit(id: number, category: Category): any {
-    return this.http.put<Category>(this.apiUri + '/admin/categories/' + id, category, {responseType: 'json'})
+    return this.http.put<Category>(this.apiUri + '/api/admin/categories/' + id, category, {responseType: 'json'})
       .subscribe(returnedCategory => {
         const index = this.categories.indexOf(this.getCategoryById(category.id));
         this.categories.splice(index, 1);
@@ -58,7 +58,7 @@ export class CategoryService {
 
   /** Saves a new category */
   add(category: Category): any {
-    return this.http.post<Category>(this.apiUri + '/admin/categories', category, {responseType: 'json'})
+    return this.http.post<Category>(this.apiUri + '/api/admin/categories', category, {responseType: 'json'})
       .subscribe(returnedCategory => {
         this.categories.push(returnedCategory);
         this.updatePage();

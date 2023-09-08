@@ -6,10 +6,7 @@ import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.io.IOException;
@@ -19,6 +16,7 @@ import java.time.LocalDateTime;
  * Handles most of the errors and formats the output
  */
 @ControllerAdvice
+@RequestMapping("api")
 public class ErrorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);

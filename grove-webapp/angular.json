@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/grove-webapp",
+            "outputPath": "src/main/resources/dist/grove-webapp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -59,7 +59,7 @@
             },
             "development": {}
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -128,5 +128,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
