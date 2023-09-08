@@ -19,7 +19,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/admin/game-copies/")
 @SecurityRequirement(name="jwtAuth")
 public class GameCopyController {
 
@@ -38,7 +38,7 @@ public class GameCopyController {
      * Get the total number of copies.
      * @return Return the number of copies in collection.
      */
-    @GetMapping("/admin/game-copies/count")
+    @GetMapping("/count")
     Long count() {
         logger.trace("count called");
         return service.count();
@@ -49,7 +49,7 @@ public class GameCopyController {
      * @param id The game copy ID that need to be fetched
      * @return The copy matching the ID
      */
-    @GetMapping("/admin/game-copies/{id}")
+    @GetMapping("/{id}")
     GameCopyDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return service.findById(id);
@@ -60,7 +60,7 @@ public class GameCopyController {
      * @param objectCode The objectCode that is link to a copy, object code is a unique identifier.
      * @return The copy matching the objectCode
      */
-    @GetMapping("/admin/game-copies/object-code/{objectCode}")
+    @GetMapping("/object-code/{objectCode}")
     GameCopyDto findByObjectCode(@PathVariable @Pattern(regexp = "^[0-9]{1,5}$") String objectCode) {
         logger.trace("findByObjectCode(objectCode) called");
         return service.findByObjectCode(objectCode);
@@ -71,7 +71,7 @@ public class GameCopyController {
      * @param copyDto The copy to save
      * @return The saved copy
      */
-    @PostMapping("/admin/game-copies")
+    @PostMapping("/")
     GameCopyDto save(@RequestBody @Valid GameCopyDto copyDto) {
         logger.trace("save(gameCopy) called");
         return service.save(copyDto);
@@ -83,7 +83,7 @@ public class GameCopyController {
      * @param id The ID of the copy to edit
      * @return The edited copy
      */
-    @PutMapping("/admin/game-copies/{id}")
+    @PutMapping("/{id}")
     GameCopyDto edit(@RequestBody @Valid GameCopyDto copyDto,
                      @PathVariable Long id) {
         logger.trace("edit(gameCopy) called");
@@ -95,7 +95,7 @@ public class GameCopyController {
      * @param loanReady An optional filter, when true, only fetch copies that can be loan
      * @return A list of game copies
      */
-    @GetMapping("/admin/game-copies")
+    @GetMapping("/")
     List<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady) {
         logger.trace("findAll() called");
         if (!loanReady)
@@ -110,7 +110,7 @@ public class GameCopyController {
      * @param pageable An object to configure the page (item per page, current page, etc...)
      * @return A page of game copies
      */
-    @GetMapping("/admin/game-copies/page")
+    @GetMapping("/page")
     Page<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady,
                               Pageable pageable) {
         logger.trace("findAll() called");
@@ -126,7 +126,7 @@ public class GameCopyController {
      * @param publisherId The ID of the publisher you want to attach to the copy
      * @return The updated copy of the given ID.
      */
-    @PostMapping("/admin/game-copies/{copyId}/add-publisher/{publisherId}")
+    @PostMapping("/{copyId}/add-publisher/{publisherId}")
     GameCopyDto addPublisher(@PathVariable Long copyId,
                              @PathVariable Long publisherId) {
         logger.trace("addPublisher() called");
@@ -139,7 +139,7 @@ public class GameCopyController {
      * @param publisherId The ID of the publisher you want to detach from the copy
      * @return The updated copy of the given ID.
      */
-    @DeleteMapping("/admin/game-copies/{copyId}/unlink-publisher/{publisherId}")
+    @DeleteMapping("/{copyId}/unlink-publisher/{publisherId}")
     GameCopyDto unlinkPublisher(@PathVariable Long copyId,
                                 @PathVariable Long publisherId) {
         logger.trace("unlinkPublisher() called");

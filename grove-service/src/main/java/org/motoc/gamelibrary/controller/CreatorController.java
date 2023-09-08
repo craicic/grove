@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
@@ -20,6 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/creators")
+@SecurityRequirement(name="jwtAuth")
 public class CreatorController {
 
     private static final Logger logger = LoggerFactory.getLogger(CreatorController.class);

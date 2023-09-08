@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.PublisherDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
@@ -19,6 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/publishers")
+@SecurityRequirement(name="jwtAuth")
 public class PublisherController {
 
     private static final Logger logger = LoggerFactory.getLogger(PublisherController.class);

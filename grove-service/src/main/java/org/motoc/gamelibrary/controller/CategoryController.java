@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.CategoryDto;
 import org.motoc.gamelibrary.service.CategoryService;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/categories")
+@SecurityRequirement(name="jwtAuth")
 public class CategoryController {
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import static org.motoc.gamelibrary.technical.ApiConstants.*;
 @RestController
 @CrossOrigin
 @RequestMapping("api")
+@SecurityRequirement(name="jwtAuth")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);

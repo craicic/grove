@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.motoc.gamelibrary.domain.dto.MechanismDto;
 import org.motoc.gamelibrary.domain.dto.MechanismNameDto;
 import org.motoc.gamelibrary.service.MechanismService;
@@ -19,6 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/mechanisms")
+@SecurityRequirement(name="jwtAuth")
 public class MechanismController {
 
     private static final Logger logger = LoggerFactory.getLogger(MechanismController.class);
