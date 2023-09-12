@@ -212,16 +212,16 @@
                             <version>${mapstruct.version}</version>
                         </path>
                         <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                        <path>
                             <groupId>org.hibernate.orm</groupId>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${jpamodelgen.version}</version>
                         </path>
-                        <!-- Workaround because we have lombok and mapstruct processors -->
-                        <path>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>3.1.2</version>
-                        </path>
+
                     </annotationProcessorPaths>
 
                 </configuration>
