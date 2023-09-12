@@ -25,7 +25,7 @@ export class CategoryService {
   /** Gets all categories */
   fetchAll(): Observable<Category[]> {
     return this.http
-      .get<Category[]>(this.apiUri + '/api/admin/categories', {responseType: 'json'});
+      .get<Category[]>(this.apiUri + '/api/admin/categories/', {responseType: 'json'});
   }
 
   /** Gets all categories then store them to an array field */
