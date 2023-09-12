@@ -43,6 +43,7 @@ VALUES (1, 'Bruno', 'Cathala', 'bruno', 'cathala', 0, 'Marseille', 'France', nul
         null, null, null, null, null);
 SELECT setval('creator_sequence', 7, true);
 
+
 INSERT INTO public.publisher (id, lower_case_name, name, city, country, mail_address, phone_number, post_code, street,
                               house_number, website)
 VALUES (1, 'kosmos', 'Kosmos', 'Rennes', 'France', null, '+0334', '75000', 'foo street',
