@@ -58,7 +58,7 @@ export class CategoryService {
 
   /** Saves a new category */
   add(category: Category): any {
-    return this.http.post<Category>(this.apiUri + '/api/admin/categories', category, {responseType: 'json'})
+    return this.http.post<Category>(this.apiUri + '/api/admin/categories/', category, {responseType: 'json'})
       .subscribe(returnedCategory => {
         this.categories.push(returnedCategory);
         this.updatePage();

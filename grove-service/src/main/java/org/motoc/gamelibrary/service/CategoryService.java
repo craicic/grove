@@ -35,8 +35,13 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public CategoryDto save(@Valid CategoryDto gc) {
-        return mapper.categoryToDto(repository.save(mapper.dtoToCategory(gc)));
+    public CategoryDto save(@Valid CategoryDto category) {
+        if (category.getId() == null) {
+            logger.debug("Trying to save new category={}", category.getTitle());
+        } else {
+            logger.debug("Trying to save new category={} of id={}", category.getTitle(), category.getId());
+        }
+        return mapper.categoryToDto(repository.save(mapper.dtoToCategory(category)));
     }
 
 

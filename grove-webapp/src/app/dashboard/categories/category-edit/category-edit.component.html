@@ -9,13 +9,15 @@
         <input
           id="title"
           type="text"
-          formControlTitle="title"
+          formControlName="title"
           class="form-control">
       </div>
     </div>
   </div>
   <span class="form-text"
-        *ngIf="!categoryForm.pristine && categoryForm.hasError('titleAlreadyExists')">
+        *ngIf="!categoryForm.pristine
+         && categoryForm.hasError('titleAlreadyExists')"
+  >
   <span>Cette catégorie existe déjà en base de données</span>
   </span>
   <div class="row ">
