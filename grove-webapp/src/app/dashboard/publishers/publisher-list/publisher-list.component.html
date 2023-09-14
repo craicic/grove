@@ -5,12 +5,15 @@
   (clickDelete)="onDelete()"
   class="mb-3"></app-simple-filter-form>
 
-<a *ngFor="let publisher of publishers"
-   style="cursor: pointer;"
-   routerLinkActive="active"
-   class="list-group-item list-group-item-action"
-   [routerLink]="['/admin/editor/publishers', publisher.id]">
-  {{ publisher.name }} (id:{{publisher.id}})</a>
+<ul class="list-group">
+  <li *ngFor="let publisher of publishers"
+      style="cursor: pointer;"
+      routerLinkActive="active"
+      class="list-group-item list-group-item-action"
+      [routerLink]="['/admin/editor/publishers', publisher.id]">
+    {{ publisher.name }} (id:{{publisher.id}})
+  </li>
+</ul>
 
 <div class="mb-3"></div>
 <ngb-pagination

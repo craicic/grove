@@ -7,15 +7,16 @@
       (clickDelete)="onDelete()"></app-simple-filter-form>
 
     <div class="y-spacer"></div>
-    <a *ngFor="let game of games"
-       style="cursor: pointer;"
-       routerLinkActive="active"
-       class="list-group-item list-group-item-action"
-       [routerLink]="['/admin/editor/games/list', game.id]">
-      {{game.title}} (id:{{game.id}})</a>
-
-    <div class="y-spacer">
-    </div>
+    <ul class="list-group">
+      <li *ngFor="let game of games"
+          style="cursor: pointer;"
+          routerLinkActive="active"
+          class="list-group-item list-group-item-action"
+          [routerLink]="['/admin/editor/games/list', game.id]">
+        {{game.title}} (id:{{game.id}})
+      </li>
+    </ul>
+    <div class="y-spacer"></div>
 
     <ngb-pagination
       [collectionSize]="totalElements"
