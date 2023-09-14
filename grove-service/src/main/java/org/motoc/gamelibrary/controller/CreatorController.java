@@ -99,7 +99,7 @@ public class CreatorController {
      * @param creator The creator to save.
      * @return The saved creator.
      */
-    @GetMapping("/")
+    @PostMapping("/")
     CreatorDto save(@RequestBody @Valid CreatorDto creator) {
         logger.trace("save(creator) called");
         return service.save(creator);

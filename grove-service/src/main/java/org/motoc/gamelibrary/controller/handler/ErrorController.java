@@ -55,7 +55,7 @@ public class ErrorController {
                 LocalDateTime.now(),
                 ex.getMessage(),
                 request.getDescription(false),
-                HttpStatus.BAD_REQUEST);
+                HttpStatus.NOT_FOUND);
         logger.info("In notFoundHandler, new error treated : " + error);
         return error;
     }
