@@ -95,6 +95,17 @@ public class CreatorController {
     }
 
     /**
+     * Save a new creator.
+     * @param creator The creator to save.
+     * @return The saved creator.
+     */
+    @GetMapping("/")
+    CreatorDto save(@RequestBody @Valid CreatorDto creator) {
+        logger.trace("save(creator) called");
+        return service.save(creator);
+    }
+
+    /**
      * Update an existing creator.
      * @param creator The edited creator.
      * @param id The ID of the creator to edit.
