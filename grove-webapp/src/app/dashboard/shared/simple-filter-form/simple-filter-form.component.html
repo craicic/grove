@@ -7,42 +7,38 @@
       class="form-control"
       id="input"
       formControlName="keyword">
-    <div class="input-group-append">
-      <button
-        class="btn btn-success"
-        type="submit"
-        [disabled]="filterForm.invalid">Filtrer
-      </button>
-    </div>
-    <div
-      class="input-group-append"
-      *ngIf="keywordGroup.offsetWidth >= 300">
-      <button
-        class="btn btn-secondary"
-        type="button"
-        ngbTooltip="Cliquez pour rafraîchir la liste"
-        (click)="onRefreshList()">
-        <img
-          class=""
-          src="assets/icons/arrow-cw.svg"
-          alt="R"/>
-      </button>
 
-    </div>
-    <div
-      class="input-group-append"
-      *ngIf="keywordGroup.offsetWidth >= 300">
-      <button
-        class="btn btn-secondary"
-        type="button"
-        ngbTooltip="Cliquez pour effacer la recherche"
-        (click)="onDelete()"
-        [disabled]="filterForm.invalid">
-        <img
-          src="assets/icons/x-square.svg"
-          alt="X-square"
-        />
-      </button>
-    </div>
+    <button
+      class="btn btn-success"
+      type="button"
+      [disabled]="filterForm.invalid">Filtrer
+    </button>
+
+
+    <button
+      *ngIf="keywordGroup.offsetWidth >= 300"
+      class="btn btn-secondary"
+      type="button"
+      ngbTooltip="Cliquez pour rafraîchir la liste"
+      (click)="onRefreshList()">
+      <img
+        class=""
+        src="assets/icons/arrow-cw.svg"
+        alt="R"/>
+    </button>
+
+    <button
+      *ngIf="keywordGroup.offsetWidth >= 300"
+      class="btn btn-secondary"
+      type="button"
+      ngbTooltip="Cliquez pour effacer la recherche"
+      (click)="onDelete()"
+      [disabled]="filterForm.invalid">
+      <img
+        src="assets/icons/x-square.svg"
+        alt="X-square"
+      />
+    </button>
+
   </div>
 </form>
