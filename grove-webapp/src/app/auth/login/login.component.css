@@ -1,0 +1,37 @@
+h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.login-container {
+  padding: 5rem;
+}
+
+
+.form-btn {
+  float: right;
+  margin: 1.5rem 0 5rem 0;
+}
+
+.btn {
+  margin: 0 0 0 0.5rem;
+}
+
+.custom-form {
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 900px) {
+  .custom-form {
+    width: 50%;
+
+  }
+}
+
+@media (max-width: 720px) {
+  .custom-form {
+    width: 70%;
+  }
+}
