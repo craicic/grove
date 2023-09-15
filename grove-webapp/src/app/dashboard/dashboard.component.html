@@ -3,48 +3,53 @@
     class="col-md-2 bg-secondary"
     *ngIf="!isSideCollapsed">
     <!--innerWidth >= '768' && !isSideCollapsed -->
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
         class="text-light"
         style="cursor:pointer;"
         routerLink="/admin/editor/games/list"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
       >Jeux</a>
     </div>
-    <div class="row">
+    <div class="row"
+          routerLinkActive="bg-light">
       <a
         class="text-light ms-3"
         style="cursor:pointer;"
         routerLink="/admin/editor/mechanisms"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
       >Mécanismes</a>
     </div>
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
         class="text-light ms-3"
         style="cursor:pointer;"
         routerLink="/admin/editor/categories"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
       >Catégories</a>
     </div>
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
         class="text-light  ms-3"
         style="cursor:pointer;"
         routerLink="/admin/editor/creators"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
       >Auteurs</a>
     </div>
     <hr
       *ngIf="innerWidth >= '768'"
       class="side-splitter">
 
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
         class="text-light ms-3"
         style="cursor:pointer;"
         routerLink="/admin/editor/publishers"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
       >Éditeurs</a>
     </div>
 
@@ -52,12 +57,13 @@
       *ngIf="innerWidth >= '768'"
       class="side-splitter">
 
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
         class="text-light"
         style="cursor:pointer;"
         routerLink="/admin/editor/configuration"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
       >Configuration</a>
     </div>
 

@@ -3,29 +3,21 @@
     class="col-md-2 bg-secondary"
     *ngIf="innerWidth >= '768' || !isSideCollapsed">
 
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
-        class="nav-link text-light col-12"
+        class="text-light"
         style="cursor:pointer;"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
         routerLink="/admin/loans/select-member">Nouveau</a>
     </div>
-    <div class="row">
+    <div class="row"
+         routerLinkActive="bg-light">
       <a
-        class="nav-link text-light col-12"
+        class="text-light"
         style="cursor:pointer;"
-        routerLinkActive="text-dark bg-light"
+        routerLinkActive="text-dark"
         routerLink="/admin/loans/list">Liste</a>
-    </div>
-    <hr
-      *ngIf="innerWidth >= '768'"
-      class="side-splitter">
-    <div class="row">
-      <a
-        class="nav-link text-light col-12"
-        style="cursor:pointer;"
-        routerLinkActive="text-dark bg-light"
-        (click)="onCollapseNavbar()">Configuration</a>
     </div>
     <div class="text-light">w: {{ innerWidth }}</div>
   </div>
