@@ -1,5 +1,5 @@
-<div class="row mb-3">
-  <div class="card" style="width: auto;">
+<div class="mb-3">
+  <div class="card mb-2" style="width: auto;">
     <div class="card-body">
       <h5 class="card-title">{{ publisher.name }}</h5>
       <div *ngIf="publisher.contact">
@@ -19,21 +19,19 @@
     </div>
   </div>
 </div>
-<div class="row mb-3">
-  <button
-    class="btn btn-secondary mr-2 mb-2"
-    type="button"
-    (click)="onEdit()">Éditer
-  </button>
-  <button
-    class="btn btn-danger mr-2 mb-2"
-    type="button"
-    (click)="onOpenConfirm(true)">Supprimer l'éditeur
-  </button>
-  <button
-    class="btn btn-outline-danger  mb-2"
-    type="button"
-    *ngIf="publisher.contact"
-    (click)="onOpenConfirm(false)">Supprimer uniquement les coordonnées
-  </button>
-</div>
+<button
+  class="btn btn-secondary me-1 mb-2"
+  type="button"
+  (click)="onEdit()">Éditer
+</button>
+<button
+  class="btn btn-danger me-1 mb-2"
+  type="button"
+  (click)="onOpenConfirm(true)">Supprimer l'éditeur
+</button>
+<button
+  class="btn btn-outline-danger me-1 mb-2"
+  type="button"
+  *ngIf="publisher.contact"
+  (click)="onOpenConfirm(false)">Supprimer uniquement les coordonnées
+</button>

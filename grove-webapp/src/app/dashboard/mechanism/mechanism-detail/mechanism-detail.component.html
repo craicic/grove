@@ -1,15 +1,11 @@
-<div class="row">
-  <h4>{{ mechanism.title }}</h4>
-</div>
-<div class="row">
-  <button
-    class="btn btn-secondary mr-2"
-    type="button"
-    (click)="onEdit()">Éditer ce mécanisme
-  </button>
-  <button
-    class="btn btn-danger"
-    type="button"
-    (click)="onOpenConfirm()">Supprimer ce mécanisme
-  </button>
-</div>
+<h4>{{ mechanism.title }}</h4>
+<button
+  class="btn btn-secondary me-1 mb-2"
+  type="button"
+  (click)="onEdit()">Éditer ce mécanisme
+</button>
+<button
+  class="btn btn-danger  me-1 mb-2"
+  type="button"
+  (click)="onOpenConfirm()">Supprimer ce mécanisme
+</button>

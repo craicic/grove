@@ -40,9 +40,9 @@ export class MechanismEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const name = 'name';
+    const title = 'title';
     const newMechanism = new Mechanism(
-      this.mechanismForm.value[name]
+      this.mechanismForm.value[title]
     );
 
     if (this.editMode) {
@@ -67,19 +67,19 @@ export class MechanismEditComponent implements OnInit {
 
 
   private initFrom(): void {
-    let mechanismName = '';
+    let mechanismTitle = '';
 
 
     if (this.editMode) {
       const mechanism: Mechanism = this.mechanismsService.getMechanismById(this.id);
-      mechanismName = mechanism.title;
-      this.label = 'Édition du mécanisme \"' + mechanismName + '\"';
+      mechanismTitle = mechanism.title;
+      this.label = 'Édition du mécanisme \"' + mechanismTitle + '\"';
     } else {
       this.label = 'Création d\'un mécanisme';
     }
 
     this.mechanismForm = new UntypedFormGroup({
-      'name': new UntypedFormControl(mechanismName, [
+      'title': new UntypedFormControl(mechanismTitle, [
         Validators.required,
         Validators.maxLength(50),
         this.nameAlreadyExists.bind(this)])

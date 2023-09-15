@@ -1,16 +1,12 @@
-<div class="row">
-  <h4>{{ category.title }}</h4>
-</div>
-<div class="row">
-  <button
-    class="btn btn-secondary mr-2"
-    type="button"
-    (click)="onEdit()">Éditer cette catégorie
-  </button>
-  <button
-    class="btn btn-danger"
-    type="button"
-    (click)="onOpenConfirm()"
-  >Supprimer cette catégorie
-  </button>
-</div>
+<h4>{{ category.title }}</h4>
+<button
+  type="button"
+  class="btn btn-secondary me-1 mb-2"
+  (click)="onEdit()">Éditer cette catégorie
+</button>
+<button
+  type="button"
+  class="btn btn-danger me-1 mb-2"
+  (click)="onOpenConfirm()"
+>Supprimer cette catégorie
+</button>

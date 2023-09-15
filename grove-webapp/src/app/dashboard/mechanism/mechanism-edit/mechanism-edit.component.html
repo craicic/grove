@@ -5,29 +5,29 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="form-group">
-        <label for="name">{{ label }}</label>
+        <label for="title">{{ label }}</label>
         <input
-          id="name"
+          id="title"
           type="text"
-          formControlName="name"
+          formControlName="title"
           class="form-control">
       </div>
     </div>
   </div>
   <span class="form-text"
-        *ngIf="!mechanismForm.pristine && mechanismForm.hasError('nameAlreadyExists', 'name')">
+        *ngIf="!mechanismForm.pristine && mechanismForm.hasError('nameAlreadyExists', 'title')">
   <span>Ce mécanisme existe déjà en base de données</span>
   </span>
-  <div class="row ">
+  <div class="row mt-2">
     <div class="col-xl-12">
       <button
         type="submit"
-        class="btn btn-success mr-2"
+        class="btn btn-success me-1 mb-2"
         [disabled]="!mechanismForm.valid">Sauvegarder
       </button>
       <button
         type="button"
-        class="btn btn-warning"
+        class="btn btn-warning me-1 mb-2"
         (click)="onCancel()">Annuler
       </button>
     </div>
