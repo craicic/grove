@@ -8,12 +8,12 @@
 }
 
 .edit-panel {
-  padding: 1em;
+  padding: 2rem;
   overflow-y: auto;
 }
 
 .detail-panel {
-  padding: 1em;
+  padding: 2rem;
   overflow-y: scroll;
 }
 
@@ -48,13 +48,12 @@ ngb-carousel {
   cursor: pointer;
   background-color: lightgray;
   border-radius: 15px;
-  border: 2px #28a745 solid;
+  border: 2px #198754 solid;
 }
 
 .highlightable:hover .info {
   display: inline;
   float: right;
 }
-
 
 
