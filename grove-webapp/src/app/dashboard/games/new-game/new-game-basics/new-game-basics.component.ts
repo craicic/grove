@@ -110,7 +110,7 @@ export class NewGameBasicsComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['/admin/editor/games/list']);
+    this.router.navigate(['/admin/editor/games']);
   }
 
   onRemoveMaxP(): void {

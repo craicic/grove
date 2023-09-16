@@ -4,11 +4,11 @@
     <div class="text-primary">{{ game.copies ? game.copies.length : 0 }} exemplaire(s)</div>
     <h4 class="mt-5">Catégories</h4>
     <span *ngFor="let category of game.categories">
-     <span class="badge-secondary badge mr-2">{{ category.title }}</span>
+     <span class="bg-secondary badge me-1 mb-1">{{ category.title }}</span>
     </span>
     <h4 class="mt-5">Mécanismes</h4>
     <span *ngFor="let mechanism of game.mechanisms">
-     <span class="badge-secondary badge mr-2">{{ mechanism.title }}</span>
+     <span class="bg-secondary badge me-1 mb-1">{{ mechanism.title }}</span>
     </span>
     <div class="mt-5" *ngIf="game.description">
       <h4>Description</h4>
@@ -17,19 +17,19 @@
   </div>
   <div class="col-md-4">
     <div class="float-right mb-5">
-      <button class="btn btn-warning m-2"
+      <button class="btn btn-warning me-1 mb-1"
               type="button"
               (click)="onBack()">
         <img
           src="../../../../assets/icons/arrow-left.svg"
           alt="X-square"/>
       </button>
-      <button class="btn btn-success m-2"
+      <button class="btn btn-success mb-1"
               type="button"
               (click)="onEdit()">Mode édition
       </button>
     </div>
-    <div class="card" style="width: 18rem;">
+    <div class="card float-right" style="width: 18rem;">
       <div class="card-body">
         <h5> {{ game.nature | enumToString }}</h5>
         <h5>{{ numberOfPlayers }}</h5>
@@ -37,7 +37,7 @@
         <h5 *ngIf="limitAge.length > 0">{{ limitAge }}</h5>
       </div>
     </div>
-    <div class="mt-5">
+    <div class="mt-5 float-right">
       <ng-container *ngIf="game.creators">
         <h4 class="mt-5">Créateurs</h4>
         <div *ngFor="let creator of game.creators">
@@ -53,7 +53,8 @@
     <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0">
       <ng-template ngbSlide *ngFor="let image of images; let i = index">
         <div class="text-center">
-          <img src="{{ image.content }}" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ i }}]">
+          <img src="{{ image.content }}" class="img-fluid carousel-img m-4"
+               alt="{{ game.title }} - dataUriArray[{{ i }}]">
         </div>
       </ng-template>
     </ngb-carousel>
@@ -70,19 +71,21 @@
 </div>
 <div class="row">
   <div class="col-lg-6"></div>
-  <div class="col-lg-6">
-    <button class="btn btn-warning mt-5"
-            type="button"
-            (click)="onBack()">Retour aux jeux
-    </button>
-    <button class="btn btn-success mt-5 ml-3"
-            type="button"
-            (click)="onEdit()">Mode édition
-    </button>
-    <button class="btn btn-danger mt-5 ml-3"
-            type="button"
-            (click)="onBack()">Supprimer le jeu
-    </button>
+  <div class="col-lg-6 mt-5 ">
+    <div class="float-right">
+      <button class="btn btn-warning me-1 mb-1"
+              type="button"
+              (click)="onBack()">Retour aux jeux
+      </button>
+      <button class="btn btn-success me-1 mb-1"
+              type="button"
+              (click)="onEdit()">Mode édition
+      </button>
+      <button class="btn btn-danger mb-1"
+              type="button"
+              (click)="onDelete()">Supprimer le jeu
+      </button>
+    </div>
   </div>
 </div>
 <div class="row mt-5 mb-5">

@@ -27,25 +27,25 @@
     <div class="col-xl-12">
       <button
         type="submit"
-        class="btn btn-success me-1 mb-2"
+        class="btn btn-success me-1 mb-1"
         [disabled]="!publisherForm.valid">Sauvegarder
       </button>
       <span class="x-spacer"></span>
       <button
         type="button"
-        class="btn btn-warning me-1 mb-2"
+        class="btn btn-warning me-1 mb-1"
         (click)="onCancel()">Annuler
       </button>
       <span class="x-spacer"></span>
       <button
         type="button"
-        class="btn btn-secondary me-1 mb-2"
+        class="btn btn-secondary me-1 mb-1"
         *ngIf="!hasContact"
         (click)="onAddContactForm()">Ajouter les coordonnées
       </button>
       <button
         type="button"
-        class="btn btn-outline-danger me-1 mb-2"
+        class="btn btn-outline-danger me-1 mb-1"
         *ngIf="hasContact"
         (click)="onRemoveContactForm()">Retirer les coordonnées
       </button>

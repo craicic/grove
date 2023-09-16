@@ -40,12 +40,12 @@ export class GameDetailComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['/admin/editor/games/list/', this.game.id]);
+    this.router.navigate(['/admin/editor/games/', this.game.id]);
   }
 
   onDelete(): void {
     this.service.deleteThenFetchAll(this.game.id);
-    this.router.navigate(['/admin/editor/games/list']);
+    this.router.navigate(['/admin/editor/games']);
   }
 
   onOpenConfirm(): void {

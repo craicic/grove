@@ -4,7 +4,7 @@
     <div class="text-primary">{{ game.gameCopyCount }} exemplaire(s)</div>
     <h4 class="mt-5">Catégories</h4>
     <span *ngFor="let category of game.categories">
-     <span class="badge-secondary badge mr-2">{{ category.title }}</span>
+     <span class="bg-secondary badge me-1 mb-1">{{ category.title }}</span>
     </span>
     <h4 *ngIf="game.creators" class="mt-5">Créateurs</h4>
     <div *ngFor="let creator of game.creators">
