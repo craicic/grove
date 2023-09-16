@@ -27,7 +27,6 @@ import {DashboardUserComponent} from './dashboard-user/dashboard-user.component'
 import {GamesComponent} from './dashboard/games/games.component';
 import {GameOverviewResolver} from './dashboard/games/game-overview-resolver.service';
 import {GameSummaryComponent} from './dashboard/games/game-list/game-summary/game-summary.component';
-import {GameListComponent} from './dashboard/games/game-list/game-list.component';
 import {GameDetailComponent} from './dashboard/games/game-detail/game-detail.component';
 import {GameResolver} from './dashboard/games/game-resolver.service';
 import {GameEditComponent} from './dashboard/games/game-edit/game-edit.component';
