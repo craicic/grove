@@ -42,16 +42,21 @@ li {
   display: inline;
 }
 
-.add-nav {
-  padding: 1.5em 1.5em;
-}
 
-.nav-link {
+.field-control {
+  color: #007BFF;
+  cursor: pointer;
+  margin-left: 1.5em;
   width: fit-content;
 }
 
-.nav-link:hover {
-  cursor: pointer;
+.field-control:hover {
+  color: #212529;
+}
+
+
+.add-nav {
+  padding: 1.5em 1.5em;
 }
 
 .picker-component {

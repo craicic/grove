@@ -18,7 +18,7 @@
       <div class="loan-info"><b>Localisation :</b> {{ loan.gameCopy.location }}</div>
 
       <ng-container *ngIf="loan.closed; else onClose">
-        <div class="loan-info badge badge-secondary">Prêt cloturé</div>
+        <div class="loan-info badge bg-secondary">Prêt cloturé</div>
       </ng-container>
       <ng-template #onClose>
         <button

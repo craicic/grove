@@ -3,14 +3,14 @@
   <div class="creator-handler-body">
     <ul>
       <li class="creator-line" *ngFor="let creator of gameCreators$ | async">
-        <span class="name">{{ creator.firstName }} {{ creator.lastName}}</span>
-        <span class="role ml-3 badge-info badge">{{ actualEnumType[creator.role]}}</span>
-        <span class="creator-control ml-3 lead" (click)="onRemove(creator.id)">Retirer</span>
+        <span class="name me-3">{{ creator.firstName }} {{ creator.lastName}}</span>
+        <span class="role me-1 bg-info badge">{{ actualEnumType[creator.role]}}</span>
+        <span class="creator-control me-1 lead" (click)="onRemove(creator.id)">Retirer</span>
       </li>
     </ul>
     <div class="add-nav" *ngIf="!addModeOn">
-      <a class="nav-link lead inline" (click)="onAddMode()">Associer un créateur</a>
-      <a class="nav-link lead inline" (click)="onBack()">Retour</a>
+      <a class="field-control lead inline" (click)="onAddMode()">Associer un créateur</a>
+      <a class="field-control lead inline" (click)="onBack()">Retour</a>
     </div>
     <div class="picker-component" *ngIf="addModeOn">
       <ng-container *ngIf="{
