@@ -17,7 +17,7 @@
         <label for="nature" class="inline font-lg">Type</label>
         <select
           id="nature"
-          class="form-control w-auto inline"
+          class="form-select w-auto inline"
           formControlName="gameNature">
           <option
             *ngFor="let nature of natureList"
@@ -78,7 +78,7 @@
         <label for="duration" class="font-lg">Durée
 
         </label>
-        <span class="ml-2" *ngIf="!this.form.get('duration').valid"><i>20 caractères maximum !</i></span>
+        <span class="ms-1" *ngIf="!this.form.get('duration').valid"><i>20 caractères maximum !</i></span>
         <input
           id="duration"
           type="text"
@@ -151,18 +151,18 @@
           <div class="col-md-12">
             <button
               type="submit"
-              class="btn btn-success mr-2"
+              class="btn btn-success me-1 mb-1"
               [disabled]="!form.valid">Sauvegarder
             </button>
             <button
               type="button"
-              class="btn btn-secondary mr-2"
+              class="btn btn-secondary me-1 mb-1"
               (click)="onCancel()"
             >Restaurer
             </button>
             <button
               type="button"
-              class="btn btn-warning mr-2"
+              class="btn btn-warning me-1 mb-1"
               (click)="onBack()"
             >Retour
             </button>
