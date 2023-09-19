@@ -1,3 +1,3 @@
 <span class="lead me-1">{{ copies.length }} exemplaire{{ copies.length >= 1 ? 's' : ''}}</span>
-<span *ngFor="let copy of copies" class="badge bg-dark">#{{copy.objectCode}}</span>
-<button class="btn btn-outline-dark"><i class="bi bi-plus-circle" style="width: 1rem; height: 1rem;"></i> Ajouter</button>
+<span *ngFor="let copy of copies" class="badge bg-dark me-1">#{{copy.objectCode}}</span>
+<button class="btn btn-outline-dark me-1"><i class="bi bi-plus-circle" style="width: 1rem; height: 1rem;"></i> Nouvel exemplaire</button>
