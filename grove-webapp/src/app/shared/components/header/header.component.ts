@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit {
   }
 
   authenticated(): boolean {
-    console.log(this.auth.authenticated);
     return this.auth.authenticated;
   }
 
@@ -40,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout(): void {
-    this.auth.invalidate(() => this.router.navigate(['/'])
+    this.auth.invalidate(() => this.router.navigate([''])
     );
   }
 
