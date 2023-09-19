@@ -89,6 +89,7 @@ import {LoanDetailComponent} from './dashboard-loan/loans/loan-detail/loan-detai
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {AuthInterceptor} from './auth.interceptor';
+import { CopiesControlComponent } from './dashboard/game-copies/copies-control/copies-control.component';
 
 
 @NgModule({
@@ -162,7 +163,8 @@ import {AuthInterceptor} from './auth.interceptor';
     LoanListComponent,
     LoanDetailComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CopiesControlComponent
   ],
   imports: [
     BrowserModule,

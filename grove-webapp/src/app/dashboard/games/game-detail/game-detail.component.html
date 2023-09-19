@@ -1,7 +1,11 @@
 <div class="row">
   <div class="col-md-8">
-    <h2>{{ game.title }}</h2>
-    <div class="text-primary">{{ game.copies ? game.copies.length : 0 }} exemplaire(s)</div>
+    <div class="text-bg-light p-3">
+      <h2>{{ game.title }}</h2>
+      <app-copies-control
+        [copies]="game.copies">
+      </app-copies-control>
+    </div>
     <h4 class="mt-5">Catégories</h4>
     <span *ngFor="let category of game.categories">
      <span class="bg-secondary badge me-1 mb-1">{{ category.title }}</span>

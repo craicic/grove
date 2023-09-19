@@ -24,7 +24,7 @@
     "@popperjs/core": "^2.11.6",
     "@types/ws": "^8.5.4",
     "bootstrap": "^5.2.3",
-    "bootstrap-icons": "^1.11.0",
+    "bootstrap-icons": "^1.11.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.13.1"
