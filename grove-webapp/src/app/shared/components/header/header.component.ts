@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
   }
 
   authenticated(): boolean {
+    console.log(this.auth.authenticated);
     return this.auth.authenticated;
   }
 

@@ -69,8 +69,8 @@ import {ErrorPageComponent} from './error/error-page/error-page.component';
 
 const routes: Routes = [
   {
-    path: ''
-    // component:
+    path: '',
+    component: HomeComponent
   },
   {
     path: 'login',
@@ -169,11 +169,6 @@ const routes: Routes = [
     path: 'admin',
     resolve: [NavResolverService],
     children: [
-      {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [PermissionService],
-      },
       {
         path: 'editor',
         component: DashboardComponent,
