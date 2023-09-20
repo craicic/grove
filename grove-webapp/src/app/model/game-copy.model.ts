@@ -1,5 +1,5 @@
 import {GeneralStateEnum} from './enum/general-state.enum';
-import {Seller} from './seller.model';
+import {Publisher} from './publisher.model';
 
 export class GameCopy {
 
@@ -12,7 +12,8 @@ export class GameCopy {
   wearCondition?: string;
   generalState?: GeneralStateEnum;
   availableForLoan?: boolean;
-  seller?: Seller;
   gameName?: string;
+  editionNumber?: string;
+  publisher?: Publisher;
   gameId?: number;
 }
