@@ -91,6 +91,7 @@ import {LoginComponent} from './auth/login/login.component';
 import {AuthInterceptor} from './auth.interceptor';
 import {CopiesControlComponent} from './dashboard/game-copies/copies-control/copies-control.component';
 import {CopiesDetailComponent} from './dashboard/game-copies/copies-control/copies-detail/copies-detail.component';
+import { CopyHandlerComponent } from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 
 
 @NgModule({
@@ -166,7 +167,8 @@ import {CopiesDetailComponent} from './dashboard/game-copies/copies-control/copi
     HomeComponent,
     LoginComponent,
     CopiesControlComponent,
-    CopiesDetailComponent
+    CopiesDetailComponent,
+    CopyHandlerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MechanismsComponent} from './dashboard/mechanism/mechanisms.component';
-import {AuthGuard, PermissionService} from './permission.service';
+import {AuthGuard} from './permission.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {MechanismEditComponent} from './dashboard/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismDetailComponent} from './dashboard/mechanism/mechanism-detail/mechanism-detail.component';
@@ -66,6 +66,7 @@ import {HomeComponent} from './home/home.component';
 import {MechanismHandlerComponent} from './dashboard/games/game-edit/mechanism-handler/mechanism-handler.component';
 import {LoginComponent} from './auth/login/login.component';
 import {ErrorPageComponent} from './error/error-page/error-page.component';
+import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 
 const routes: Routes = [
   {
@@ -124,6 +125,14 @@ const routes: Routes = [
           {
             path: 'name',
             component: TitleHandlerComponent
+          },
+          {
+            path: 'copies/:id',
+            component: CopyHandlerComponent
+          },
+          {
+            path: 'copies/new',
+            component: CopyHandlerComponent
           },
           {
             path: 'categories',

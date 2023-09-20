@@ -9,6 +9,49 @@
       </h2>
     </div>
 
+
+    <div class="highlightable">
+      <h4>Exemplaires</h4>
+    </div>
+
+    <div class="row">
+      <div *ngFor="let copy of game.copies" class="col highlightable-in-column me-1"
+           routerLinkActive="active"
+           [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'copies', copy.id]">
+        <h4>Code objet : #{{copy.objectCode}}
+          <span class="info text-primary lead">Éditer</span>
+        </h4>
+        <div>Date d'enregistrement : {{copy.dateOfRegistration| date}}</div>
+        <div>Status d'activité : {{copy.generalState | enumToValue: GeneralStateEnum}}</div>
+        <div>État d'usure : {{copy.wearCondition}}</div>
+        <div>Emplacement :  {{copy.location}}</div>
+        <ng-container *ngIf="copy.publisher">
+          <div>Fabricant : {{copy.publisher.name}}</div>
+        </ng-container>
+        <ng-container *ngIf="!copy.availableForLoan else loanable">
+          <span class="badge bg-warning">Indisponible à l'emprunt</span>
+        </ng-container>
+        <ng-template #loanable>
+          <span class="badge bg-info">Ouvert à l'emprunt</span>
+        </ng-template>
+        <div>Date d'achat : {{copy.dateOfPurchase | date}}</div>
+        <div>Prix à l'achat : {{copy.price}} €</div>
+        <div>Numéro d'édition : {{copy.editionNumber}}</div>
+      </div>
+
+      <div class="col highlightable-in-column"
+           routerLinkActive="active"
+           [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'copies', 'new']">
+        <div class="my-auto mx-auto">
+          <i class="bi bi-plus-circle" style="font-size: 5rem; color: black;"></i>
+        </div>
+        <h4>Exemplaires
+          <span class="info text-primary lead">Nouveau</span>
+        </h4>
+      </div>
+    </div>
+
+
     <div class="highlightable"
          routerLinkActive="active"
          [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'categories']">
@@ -91,7 +134,8 @@
       <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0" class="mb-2">
         <ng-template ngbSlide *ngFor="let image of images; let i = index">
           <div class="text-center">
-            <img src="{{ image.content }}" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ 2 }}]">
+            <img src="{{ image.content }}" class="img-fluid carousel-img m-4"
+                 alt="{{ game.title }} - dataUriArray[{{ 2 }}]">
           </div>
         </ng-template>
       </ngb-carousel>
@@ -101,5 +145,4 @@
   <div class="edit-panel bg-light">
     <router-outlet></router-outlet>
   </div>
-
 </div>

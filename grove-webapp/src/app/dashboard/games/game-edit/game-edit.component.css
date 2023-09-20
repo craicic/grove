@@ -34,11 +34,19 @@ ngb-carousel {
   margin: 0.5em;
 }
 
+
+.highlightable-in-column {
+  padding: 1em;
+}
+.row {
+  margin: 0.5em;
+}
+
 .info {
   display: none;
 }
 
-.highlightable:hover {
+.highlightable:hover, .highlightable-in-column:hover {
   cursor: pointer;
   background-color: lightgray;
   border-radius: 15px;

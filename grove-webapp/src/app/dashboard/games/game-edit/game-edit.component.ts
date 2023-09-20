@@ -5,6 +5,7 @@ import {ImageService} from '../../../shared/services/image.service';
 import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {Image} from '../../../model/image.model';
+import {GeneralStateEnum} from '../../../model/enum/general-state.enum';
 
 @Component({
   selector: 'app-game-edit',
@@ -12,12 +13,13 @@ import {Image} from '../../../model/image.model';
   styleUrls: ['./game-edit.component.css']
 })
 export class GameEditComponent implements OnInit, OnDestroy {
-
   image: Image;
   game: Game;
   numberOfPlayers: string;
   limitAge: string;
   subscription: Subscription;
+  protected readonly GeneralStateEnum = GeneralStateEnum;
+  copyRows = 3;
   images: Image[];
 
   constructor(private service: GameService,
@@ -28,8 +30,11 @@ export class GameEditComponent implements OnInit, OnDestroy {
     this.subscription = this.service.detailedGame$
       .pipe(map(game => {
         this.game = game;
+        this.copyRows = this.game.copies.length + 1;
+        console.log(game);
       }))
       .subscribe(() => {
+
         this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
         this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
       });
