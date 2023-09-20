@@ -8,10 +8,10 @@ export class GameCopy {
   price?: number;
   location?: string;
   dateOfPurchase?: Date;
-  registerDate?: Date;
+  dateOfRegistration?: Date;
   wearCondition?: string;
   generalState?: GeneralStateEnum;
-  isLoanable?: boolean;
+  availableForLoan?: boolean;
   seller?: Seller;
   gameName?: string;
   gameId?: number;

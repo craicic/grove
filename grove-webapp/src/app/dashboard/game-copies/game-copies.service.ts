@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Account} from '../../model/account.model';
 import {GameCopy} from '../../model/game-copy.model';
 import {Observable} from 'rxjs';
 
@@ -11,6 +10,7 @@ import {Observable} from 'rxjs';
 })
 export class GameCopiesService {
   apiUri: string;
+  copy: GameCopy | null = null;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
