@@ -1,0 +1,12 @@
+<div>{{copy.id}}</div>
+<div>{{copy.objectCode}}</div>
+<div *ngIf="copy$ | async as copy">
+  <div>{{copy.dateOfPurchase}}</div>
+  <div>{{copy.generalState}}</div>
+  <div>{{copy.isLoanable}}</div>
+  <div>{{copy.location}}</div>
+  <div>{{copy.price}}</div>
+  <div>{{copy.registerDate}}</div>
+  <div>{{copy.wearCondition}}</div>
+  <div>{{copy.seller}}</div>
+</div>
