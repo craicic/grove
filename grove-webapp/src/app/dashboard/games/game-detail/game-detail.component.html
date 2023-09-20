@@ -1,39 +1,50 @@
 <div class="row">
-  <div class="col-md-8">
-    <div class="text-bg-light p-3">
+  <div class="col-md-12">
+    <div class="text-bg-light p-3 border rounded mb-5">
       <h2>{{ game.title }}</h2>
+      <div class="float-right">
+        <button class="btn btn-success mb-1"
+                type="button"
+                (click)="onEdit()">Mode édition
+        </button>
+      </div>
       <app-copies-control
         [copies]="game.copies">
       </app-copies-control>
     </div>
-    <h4 class="mt-5">Catégories</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-4">
+    <h4>Catégories</h4>
     <span *ngFor="let category of game.categories">
      <span class="bg-secondary badge me-1 mb-1">{{ category.title }}</span>
     </span>
-    <h4 class="mt-5">Mécanismes</h4>
+  </div>
+  <div class="col-md-4">
+    <h4>Mécanismes</h4>
     <span *ngFor="let mechanism of game.mechanisms">
      <span class="bg-secondary badge me-1 mb-1">{{ mechanism.title }}</span>
     </span>
-    <div class="mt-5" *ngIf="game.description">
+  </div>
+  <div class="col-md-4">
+    <ng-container *ngIf="game.creators">
+      <h4>Créateurs</h4>
+      <div *ngFor="let creator of game.creators">
+        <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-8">
+    <div *ngIf="game.description">
       <h4>Description</h4>
       <div>{{ game.description }}</div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="float-right mb-5">
-      <button class="btn btn-warning me-1 mb-1"
-              type="button"
-              (click)="onBack()">
-        <img
-          src="../../../../assets/icons/arrow-left.svg"
-          alt="X-square"/>
-      </button>
-      <button class="btn btn-success mb-1"
-              type="button"
-              (click)="onEdit()">Mode édition
-      </button>
-    </div>
-    <div class="card float-right" style="width: 18rem;">
+    <div class="card mb-3" style="width: 18rem;">
       <div class="card-body">
         <h5> {{ game.nature | enumToString }}</h5>
         <h5>{{ numberOfPlayers }}</h5>
@@ -41,19 +52,11 @@
         <h5 *ngIf="limitAge.length > 0">{{ limitAge }}</h5>
       </div>
     </div>
-    <div class="mt-5 float-right">
-      <ng-container *ngIf="game.creators">
-        <h4 class="mt-5">Créateurs</h4>
-        <div *ngFor="let creator of game.creators">
-          <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
-        </div>
-      </ng-container>
-    </div>
   </div>
 </div>
-<div class="row mt-5">
+<div class="row mb-5">
   <div class="col-md-12">
-    <h4 class="mb-2">Galerie</h4>
+    <h4>Galerie</h4>
     <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0">
       <ng-template ngbSlide *ngFor="let image of images; let i = index">
         <div class="text-center">
@@ -79,7 +82,10 @@
     <div class="float-right">
       <button class="btn btn-warning me-1 mb-1"
               type="button"
-              (click)="onBack()">Retour aux jeux
+              (click)="onBack()">
+        <img
+          src="../../../../assets/icons/arrow-left.svg"
+          alt="X-square"/>
       </button>
       <button class="btn btn-success me-1 mb-1"
               type="button"

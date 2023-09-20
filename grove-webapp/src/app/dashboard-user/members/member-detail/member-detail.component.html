@@ -5,7 +5,7 @@
     <div class="member-info"><b>Pseudo :</b> {{ account.username }}</div>
     <div class="member-info"><b>Prénom :</b> {{ account.firstName }}</div>
     <div class="member-info"><b>Nom :</b> {{ account.lastName }}</div>
-    <div class="member-info"><b>Numéro d'ahdérent(e) :</b> {{ account.membershipNumber }}</div>
+    <div class="member-info"><b>Numéro d'adhérent(e) :</b> {{ account.membershipNumber }}</div>
     <div class="member-info"><b>Date d'adhésion :</b> {{ account.renewalDate | date }}</div>
 
     <ng-container *ngIf="account.contact && account.contact.mailAddress">
