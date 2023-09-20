@@ -9,16 +9,11 @@
       </h2>
     </div>
 
-
-    <div class="highlightable">
-      <h4>Exemplaires</h4>
-    </div>
-
     <div class="row">
-      <div *ngFor="let copy of game.copies" class="col highlightable-in-column me-1"
+      <div *ngFor="let copy of game.copies" class="col highlightable me-2"
            routerLinkActive="active"
            [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'copies', copy.id]">
-        <h4>Code objet : #{{copy.objectCode}}
+        <h4>Exemplaire : #{{copy.objectCode}}
           <span class="info text-primary lead">Éditer</span>
         </h4>
         <div>Date d'enregistrement : {{copy.dateOfRegistration| date}}</div>
@@ -39,13 +34,11 @@
         <div>Numéro d'édition : {{copy.editionNumber}}</div>
       </div>
 
-      <div class="col highlightable-in-column"
+      <div class="col highlightable"
            routerLinkActive="active"
            [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'copies', 'new']">
-        <div class="my-auto mx-auto">
-          <i class="bi bi-plus-circle" style="font-size: 5rem; color: black;"></i>
-        </div>
-        <h4>Exemplaires
+
+        <h4><i class="bi bi-plus-circle"></i> Ajouter un exemplaire
           <span class="info text-primary lead">Nouveau</span>
         </h4>
       </div>
