@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {Image} from '../../../model/image.model';
 import {GeneralStateEnum} from '../../../model/enum/general-state.enum';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-game-edit',
@@ -23,7 +24,8 @@ export class GameEditComponent implements OnInit, OnDestroy {
   images: Image[];
 
   constructor(private service: GameService,
-              private imageService: ImageService) {
+              private imageService: ImageService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -66,5 +68,13 @@ export class GameEditComponent implements OnInit, OnDestroy {
           this.images.push(image);
         });
     });
+  }
+
+  onEditCopy(): void {
+    // this.router.navigate()
+  }
+
+  onNewCopy(): void {
+    // this.router.navigate()
   }
 }

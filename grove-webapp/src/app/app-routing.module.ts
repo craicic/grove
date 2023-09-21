@@ -130,8 +130,8 @@ const routes: Routes = [
             component: CopyHandlerComponent
           },
           {
-            path: 'copies/new',
-            component: CopyHandlerComponent
+            path: 'new-copy',
+            component: CopyHandlerComponent,
           },
           {
             path: 'categories',
