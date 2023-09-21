@@ -1,1 +1,63 @@
-<p>copy-handler works!</p>
+<form [formGroup]="form">
+  <div>
+    <label for="objectCode" class="form-label">Code objet :</label>
+    <input id="objectCode" class="form-control" type="text" formControlName="objectCode">
+  </div>
+  <div class="form-group">
+    <label for="state">Status d'activité :</label>
+    <select
+      id="state"
+      class="form-select w-auto"
+      formControlName="generalState">
+      <option
+        *ngFor="let state of stateList"
+        [value]="state">{{ actualEnumType[state] }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="wear-condition" class="form-label">État d'usure :</label>
+    <input id="wear-condition" class="form-control" type="text" formControlName="wearCondition">
+  </div>
+  <div>
+    <label for="location" class="form-label">Emplacement :</label>
+    <input id="location" class="form-control" type="text" formControlName="location">
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+    <label class="form-check-label" for="flexCheckChecked">
+      Empruntable
+    </label>
+  </div>
+
+
+  <div class="form-group">
+    <label for="publisher" class="form-label"></label>
+    <div formGroupName="publisher"
+         id="publisher">
+      <label for="name" class="form-label">Nom du fabricant :</label>
+      <input id="name" class="form-control" type="text" formControlName="name">
+    </div>
+  </div>
+
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <button
+        type="submit"
+        class="btn btn-success me-1 mb-1"
+        [disabled]="!form.valid">Sauvegarder
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary me-1 mb-1"
+      >Restaurer
+      </button>
+      <button
+        type="button"
+        class="btn btn-warning me-1 mb-1"
+      >Retour
+      </button>
+    </div>
+  </div>
+</form>

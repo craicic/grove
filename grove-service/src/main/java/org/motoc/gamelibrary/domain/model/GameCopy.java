@@ -5,6 +5,7 @@ import org.motoc.gamelibrary.domain.enumeration.GeneralState;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -98,5 +99,10 @@ public class GameCopy {
         this.setPublisher(null);
     }
 
+    @PrePersist
+    public void setDate() {
+        if (dateOfRegistration == null)
+            this.dateOfRegistration = LocalDate.now();
+    }
     // addGame/removeGame methods are not needed because adding game is mandatory at the creation of this object
 }
