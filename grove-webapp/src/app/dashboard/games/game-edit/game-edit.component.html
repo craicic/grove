@@ -16,22 +16,7 @@
         <h4>Exemplaire : #{{copy.objectCode}}
           <span class="info text-primary lead">Éditer</span>
         </h4>
-        <div>Date d'enregistrement : {{copy.dateOfRegistration| date}}</div>
-        <div>Status d'activité : {{copy.generalState | enumToValue: GeneralStateEnum}}</div>
-        <div>État d'usure : {{copy.wearCondition}}</div>
-        <div>Emplacement :  {{copy.location}}</div>
-        <ng-container *ngIf="copy.publisher">
-          <div>Fabricant : {{copy.publisher.name}}</div>
-        </ng-container>
-        <ng-container *ngIf="!copy.availableForLoan else loanable">
-          <span class="badge bg-warning">Indisponible à l'emprunt</span>
-        </ng-container>
-        <ng-template #loanable>
-          <span class="badge bg-info">Ouvert à l'emprunt</span>
-        </ng-template>
-        <div>Date d'achat : {{copy.dateOfPurchase | date}}</div>
-        <div>Prix à l'achat : {{copy.price}} €</div>
-        <div>Numéro d'édition : {{copy.editionNumber}}</div>
+        <div>Date d'enregistrement : {{copy.dateOfRegistration | date}}</div>
       </div>
 
       <div class="col highlightable"
