@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthenticationService} from './auth/authentication.service';
 
 @Injectable({providedIn: 'root'})
@@ -15,6 +15,16 @@ export class PermissionService {
     return this.authService.authenticated && this.authService.getRoles().includes('ROLE_ADMIN');
   }
 }
-export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-  return inject(PermissionService).canActivate(next, state);
+
+export const AuthGuard = (): any => {
+  const authService = inject(AuthenticationService);
+  const router = inject(Router);
+
+  console.log('Route for admin role');
+  console.table('Role = ' + authService.getRoles());
+  if (authService.authenticated && authService.getRoles() && authService.getRoles().includes('ROLE_ADMIN')) {
+    return true;
+  }
+
+  return router.parseUrl('/login');
 };

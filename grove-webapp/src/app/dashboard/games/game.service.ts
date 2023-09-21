@@ -8,7 +8,6 @@ import {environment} from '../../../environments/environment';
 import {GameOverview} from '../../model/game-overview.model';
 import {Game} from '../../model/game.model';
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../../auth/authentication.service';
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -21,7 +20,6 @@ export class GameService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private authService: AuthenticationService,
               private config: ConfigurationService) {
     this.apiUri = environment.apiUri;
   }
@@ -47,7 +45,6 @@ export class GameService {
             this.page = pagedGameOverviews;
           }, error => {
             console.log(error);
-            this.authService.resetProfile();
             this.router.navigate(['/error']);
           }
         )

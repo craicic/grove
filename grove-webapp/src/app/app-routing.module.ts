@@ -81,7 +81,6 @@ const routes: Routes = [
     path: 'admin/locked-mode',
     canActivate: [AuthGuard],
     resolve: [WrapperNewResolver],
-    data: {roles: ['ADMIN']},
     children: [
       {
         path: 'games/new',
@@ -177,12 +176,11 @@ const routes: Routes = [
   {
     path: 'admin',
     resolve: [NavResolverService],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'editor',
         component: DashboardComponent,
-        canActivate: [AuthGuard],
-        data: {roles: ['ADMIN']},
         children: [
           {
             path: 'games',
@@ -257,8 +255,6 @@ const routes: Routes = [
       {
         path: 'loans',
         component: DashboardLoanComponent,
-        canActivate: [AuthGuard],
-        data: {roles: ['ADMIN']},
         children: [
           {
             path: 'select-member',
@@ -286,8 +282,6 @@ const routes: Routes = [
       {
         path: 'members',
         component: DashboardUserComponent,
-        canActivate: [AuthGuard],
-        data: {roles: ['ADMIN']},
         children: [
           {
             path: 'new',

@@ -19,7 +19,7 @@ export class AuthenticationService {
   private timer: Subscription;
   private token: AccessToken;
   private refresh: RefreshToken;
-
+  public requestedUrl: string;
 
   constructor(private http: HttpClient,
               private jwtService: JwtService) {
@@ -78,6 +78,7 @@ export class AuthenticationService {
   }
 
   resetProfile(): any {
+    console.log('Reset profile');
     this.expiresIn = null;
     this.username = null;
     this.roles = null;
@@ -97,8 +98,8 @@ export class AuthenticationService {
       () => this.refreshToken());
   }
 
-  getRoles(): string[] {
-    return this.roles.slice();
+  getRoles(): string[] | null {
+    return this.roles ? this.roles.slice() : null;
   }
 }
 
