@@ -86,9 +86,8 @@ public class GameCopyService {
                     return copyRepository.save(copy);
                 })
                 .orElseGet(() -> {
-                    newCopy.setId(id);
                     logger.debug("No game copy of id={} found. Set game copy : {}", id, newCopy);
-                    return copyRepository.save(newCopy);
+                    throw new NotFoundException("No game copy of id = " + id + "found.");
                 }));
     }
 

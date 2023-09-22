@@ -109,9 +109,8 @@ public class GameService {
                     return gameRepository.save(game);
                 })
                 .orElseGet(() -> {
-                    newGame.setId(id);
                     logger.debug("No game of id={} found. Set game : {}", id, newGame);
-                    return gameRepository.save(newGame);
+                    throw new NotFoundException("No game of id = " + id + "found.");
                 }));
     }
 

@@ -71,9 +71,8 @@ public class PublisherService {
                     return repository.save(publisherFromPersistence);
                 })
                 .orElseGet(() -> {
-                    publisher.setId(id);
                     logger.debug("No publisher of id={} found. Set mechanism : {}", id, publisher);
-                    return repository.save(publisher);
+                    throw new NotFoundException("No publisher of id = " + id + "found.");
                 }));
     }
 

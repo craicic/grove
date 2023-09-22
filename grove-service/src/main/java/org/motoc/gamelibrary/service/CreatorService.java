@@ -75,9 +75,8 @@ public class CreatorService {
                     return repository.save(creatorFromPersistence);
                 })
                 .orElseGet(() -> {
-                    creator.setId(id);
                     logger.debug("No creator of id={} found. Set creator : {}", id, creator);
-                    return repository.save(creator);
+                    throw new NotFoundException("No creator of id = " + id + "found.");
                 }));
     }
 

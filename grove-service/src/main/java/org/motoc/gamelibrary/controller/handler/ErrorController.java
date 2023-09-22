@@ -5,6 +5,7 @@ import org.motoc.gamelibrary.technical.exception.ChildAndParentException;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -83,6 +84,19 @@ public class ErrorController {
                 request.getDescription(false),
                 HttpStatus.BAD_REQUEST);
         logger.warn("In illegalStateHandler, new error treated : " + error);
+        return error;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(PropertyReferenceException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    ErrorDetails propertyReferenceHandler(PropertyReferenceException ex, WebRequest request) {
+        ErrorDetails error = new ErrorDetails(
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false),
+                HttpStatus.UNPROCESSABLE_ENTITY);
+        logger.warn("In propertyReferenceHandler, new error treated : " + error);
         return error;
     }
 }

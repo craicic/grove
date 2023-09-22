@@ -74,9 +74,8 @@ public class CategoryService {
                     return repository.save(categoryFromPersistence);
                 })
                 .orElseGet(() -> {
-                    category.setId(id);
                     logger.debug("No category of id={} found. Set category : {}", id, category);
-                    return repository.save(mapper.dtoToCategory(category));
+                    throw new NotFoundException("No category of id = " + id + "found.");
                 }));
     }
 

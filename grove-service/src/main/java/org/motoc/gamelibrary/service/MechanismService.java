@@ -81,9 +81,8 @@ public class MechanismService {
                     return repository.saveMechanism(mechanismFromPersistence);
                 })
                 .orElseGet(() -> {
-                    mechanism.setId(id);
-                    logger.debug("No mechanism of id={} found. Set mechanism : {}", id, mechanism);
-                    return repository.saveMechanism(mapper.dtoToMechanism(mechanism));
+                    logger.debug("No mechanism of id=" + id +" found.");
+                   throw new NotFoundException("No mechanism of id=" + id + "found.");
                 }));
     }
 
