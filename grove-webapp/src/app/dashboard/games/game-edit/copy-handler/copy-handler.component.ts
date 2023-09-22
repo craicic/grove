@@ -6,6 +6,7 @@ import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-copy-handler',
@@ -15,15 +16,14 @@ import {Subscription} from 'rxjs';
 export class CopyHandlerComponent implements OnInit, OnDestroy {
 
   gc: GameCopy = new GameCopy();
-  pb: Publisher;
-  actualEnumType: typeof GeneralStateEnum = GeneralStateEnum;
+  stateEnum: typeof GeneralStateEnum = GeneralStateEnum;
   stateList: Array<string> = Object.keys(GeneralStateEnum);
   private id: any;
   private paramSubscription: Subscription;
 
   form = this.fb.group({
     objectCode: ['', Validators.required],
-    generalState: [this.stateList[0], Validators.required],
+    generalState: ['IN_ACTIVITY' as GeneralStateEnum, Validators.required],
     wearCondition: ['Neuf', Validators.required],
     location: [''],
     availableForLoan: [true],
@@ -49,6 +49,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   private initForm(): void {
     if (this.service.isEdit) {
       this.service.fetchById(this.id).subscribe(gc => {
+        console.log(gc);
         this.gc = gc;
         this.form.setValue({
           objectCode: this.gc.objectCode,
@@ -65,7 +66,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
       this.form.setValue({
         objectCode: '',
         availableForLoan: true,
-        generalState: this.stateList[0],
+        generalState: 'IN_ACTIVITY' as GeneralStateEnum,
         location: '',
         wearCondition: 'Neuf',
         publisher: {
@@ -82,5 +83,18 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
 
   onLog(): void {
     console.log(this.gc);
+  }
+
+  onSubmit(): void {
+    this.gc.objectCode = this.form.value.objectCode;
+    this.gc.wearCondition = this.form.value.wearCondition;
+    this.gc.location = this.form.value. location;
+    this.gc.generalState = this.form.value.generalState;
+    this.gc.availableForLoan = this.form.value.availableForLoan;
+    this.gc.publisher = new Publisher(this.form.value.publisher.name);
+    if (this.service.isEdit) {
+      this.service.editCopy(this.gc.id, this.gc)
+        .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
+    }
   }
 }

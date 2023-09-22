@@ -23,4 +23,8 @@ export class GameCopiesService {
   fetchById(id: number): Observable<GameCopy> {
     return this.http.get<GameCopy>(this.apiUri + '/api/admin/game-copies/' + id);
   }
+
+  editCopy(id: number, gc: GameCopy): Observable<GameCopy> {
+    return this.http.put<GameCopy>(this.apiUri + '/api/admin/game-copies/' + id, gc);
+  }
 }

@@ -12,7 +12,7 @@
       formControlName="generalState">
       <option
         *ngFor="let state of stateList"
-        [value]="state">{{ actualEnumType[state] }}
+        [value]="state">{{ this.stateEnum[state] }}
       </option>
     </select>
   </div>
@@ -47,7 +47,8 @@
       <button
         type="submit"
         class="btn btn-success me-1 mb-1"
-        [disabled]="!form.valid">Sauvegarder
+        [disabled]="!form.valid"
+        (click)="onSubmit()">Sauvegarder
       </button>
       <button
         type="button"

@@ -14,10 +14,9 @@
            routerLinkActive="active"
            [routerLink]="['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + copy.id]"
            (click)="onEditCopy()">
-        <h4>Exemplaire : #{{copy.objectCode}}
+        <h4>Exemplaire #{{copy.objectCode}}
           <span class="info text-primary lead">Éditer</span>
         </h4>
-        <div>Date d'enregistrement : {{copy.dateOfRegistration | date}}</div>
       </div>
 
       <div class="col highlightable"
