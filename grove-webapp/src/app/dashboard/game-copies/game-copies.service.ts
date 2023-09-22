@@ -9,10 +9,9 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class GameCopiesService {
-  apiUri: string;
+  readonly apiUri: string;
   copy: GameCopy | null = null;
   isEdit: boolean;
-  selected: number;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -23,9 +22,5 @@ export class GameCopiesService {
 
   fetchById(id: number): Observable<GameCopy> {
     return this.http.get<GameCopy>(this.apiUri + '/api/admin/game-copies/' + id);
-  }
-
-  wasReloaded(): void {
-    this.isEdit = false;
   }
 }

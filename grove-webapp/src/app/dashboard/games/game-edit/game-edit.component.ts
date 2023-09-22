@@ -23,7 +23,7 @@ export class GameEditComponent implements OnInit, OnDestroy {
 
   constructor(private service: GameService,
               private imageService: ImageService,
-              public copyService: GameCopiesService,
+              private copyService: GameCopiesService,
               private router: Router) {
   }
 
@@ -67,14 +67,12 @@ export class GameEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditCopy(id: number): void {
-    this.copyService.selected = id;
+  onEditCopy(): void {
     this.copyService.isEdit = true;
-    this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + id]);
+    // this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + id]);
   }
 
   onNewCopy(): void {
-    this.copyService.selected = -1;
     this.copyService.isEdit = false;
     this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/new']);
   }

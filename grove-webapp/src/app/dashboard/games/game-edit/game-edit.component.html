@@ -11,8 +11,9 @@
 
     <div class="row">
       <div *ngFor="let copy of game.copies" class="col highlightable me-2"
-           [ngClass]="{'active': copy.id === this.copyService.selected}"
-           (click)="onEditCopy(copy.id)">
+           routerLinkActive="active"
+           [routerLink]="['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + copy.id]"
+           (click)="onEditCopy()">
         <h4>Exemplaire : #{{copy.objectCode}}
           <span class="info text-primary lead">Éditer</span>
         </h4>
@@ -20,7 +21,8 @@
       </div>
 
       <div class="col highlightable"
-           [ngClass]="{'active': this.copyService.selected === -1}"
+           routerLinkActive="active"
+           [routerLink]="['/admin/locked-mode/games/' + this.game.id + '/edit/copy/new']"
            (click)="onNewCopy()">
 
         <h4><i class="bi bi-plus-circle"></i> Ajouter un exemplaire
