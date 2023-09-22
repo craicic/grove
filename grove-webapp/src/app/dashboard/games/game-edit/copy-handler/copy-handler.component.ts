@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {GameCopy} from '../../../../model/game-copy.model';
 import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GameService} from '../../game.service';
