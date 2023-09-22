@@ -95,6 +95,9 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
     if (this.service.isEdit) {
       this.service.editCopy(this.gc.id, this.gc)
         .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
+    } else {
+      this.service.saveCopy(this.gc)
+        .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
     }
   }
 }

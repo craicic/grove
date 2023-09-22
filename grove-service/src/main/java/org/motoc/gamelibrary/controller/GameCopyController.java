@@ -19,7 +19,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("api/admin/game-copies/")
+@RequestMapping("api/admin/game-copies")
 @SecurityRequirement(name="jwtAuth")
 public class GameCopyController {
 
@@ -71,7 +71,7 @@ public class GameCopyController {
      * @param copyDto The copy to save
      * @return The saved copy
      */
-    @PostMapping("/")
+    @PostMapping()
     GameCopyDto save(@RequestBody @Valid GameCopyDto copyDto) {
         logger.trace("save(gameCopy) called");
         return service.save(copyDto);

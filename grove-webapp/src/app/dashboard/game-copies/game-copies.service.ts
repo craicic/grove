@@ -27,4 +27,8 @@ export class GameCopiesService {
   editCopy(id: number, gc: GameCopy): Observable<GameCopy> {
     return this.http.put<GameCopy>(this.apiUri + '/api/admin/game-copies/' + id, gc);
   }
+
+  saveCopy(gc: GameCopy): Observable<GameCopy> {
+    return this.http.post<GameCopy>(this.apiUri + '/api/admin/game-copies', gc);
+  }
 }
