@@ -4,9 +4,10 @@ import {GameCopy} from '../../../../model/game-copy.model';
 import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GameService} from '../../game.service';
+import {Game} from '../../../../model/game.model';
 
 @Component({
   selector: 'app-copy-handler',
@@ -19,8 +20,8 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   stateEnum: typeof GeneralStateEnum = GeneralStateEnum;
   stateList: Array<string> = Object.keys(GeneralStateEnum);
   private id: any;
+  private game: Game;
   private paramSubscription: Subscription;
-
   form = this.fb.group({
     objectCode: ['', Validators.required],
     generalState: ['IN_ACTIVITY' as GeneralStateEnum, Validators.required],
@@ -80,16 +81,25 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.gc.objectCode = this.form.value.objectCode;
     this.gc.wearCondition = this.form.value.wearCondition;
-    this.gc.location = this.form.value. location;
+    this.gc.location = this.form.value.location;
     this.gc.generalState = this.form.value.generalState;
     this.gc.availableForLoan = this.form.value.availableForLoan;
-    this.gc.gameId = this.gameService.game.id;
+    this.game = this.gameService.getDetailedGame();
+    this.gc.gameId = this.game.id;
     if (this.service.isEdit) {
-      this.service.editCopy(this.gc.id, this.gc)
-        .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
+      this.service.editCopy(this.gc.id, this.gc).pipe(map((copy: GameCopy) => this.service.copy = copy))
+        .subscribe((copy: GameCopy) => {
+          const idx = this.game.copies.findIndex(c => c.id === copy.id );
+          this.game.copies[idx] = copy;
+          this.gameService.updateDetailedGame(this.game);
+        });
     } else {
       this.service.saveCopy(this.gc)
-        .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
+        .pipe(map((copy: GameCopy) => this.service.copy = copy))
+        .subscribe(copyFromDatabase => {
+          this.game.copies.push(copyFromDatabase);
+          this.gameService.updateDetailedGame(this.game);
+        });
     }
   }
 }

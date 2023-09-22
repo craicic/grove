@@ -12,7 +12,7 @@
     <div class="row">
       <div *ngFor="let copy of game.copies" class="col highlightable me-2"
            routerLinkActive="active"
-           [routerLink]="['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + copy.id]"
+           [routerLink]="['/admin/locked-mode/games/' + game.id + '/edit/copy/' + copy.id]"
            (click)="onEditCopy()">
         <h4>Exemplaire #{{copy.objectCode}}
           <span class="info text-primary lead">Éditer</span>
