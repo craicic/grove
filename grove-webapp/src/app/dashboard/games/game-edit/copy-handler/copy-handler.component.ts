@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {GameCopy} from '../../../../model/game-copy.model';
-import {Publisher} from '../../../../model/publisher.model';
 import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -27,17 +26,13 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
     generalState: ['IN_ACTIVITY' as GeneralStateEnum, Validators.required],
     wearCondition: ['Neuf', Validators.required],
     location: [''],
-    availableForLoan: [true],
-    publisher: this.fb.group({
-      name: ['']
-    })
+    availableForLoan: [true]
   });
 
   constructor(private fb: FormBuilder,
               public service: GameCopiesService,
               private gameService: GameService,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -60,9 +55,6 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
           generalState: this.gc.generalState,
           location: this.gc.location,
           wearCondition: this.gc.wearCondition,
-          publisher: {
-            name: this.gc.publisher ? this.gc.publisher.name : null,
-          }
         });
       });
     } else {
@@ -72,9 +64,6 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
         generalState: 'IN_ACTIVITY' as GeneralStateEnum,
         location: '',
         wearCondition: 'Neuf',
-        publisher: {
-          name: ''
-        }
       });
     }
   }
@@ -96,16 +85,9 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
     this.gc.availableForLoan = this.form.value.availableForLoan;
     this.gc.gameId = this.gameService.game.id;
     if (this.service.isEdit) {
-      if (this.service.copy.publisher.id) {
-        this.gc.publisher = new Publisher(this.form.value.publisher.name, this.service.copy.publisher.id);
-      } else {
-        this.gc.publisher = null;
-      }
       this.service.editCopy(this.gc.id, this.gc)
         .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
     } else {
-      this.gc.publisher = null;
-      // mode new
       this.service.saveCopy(this.gc)
         .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
     }
