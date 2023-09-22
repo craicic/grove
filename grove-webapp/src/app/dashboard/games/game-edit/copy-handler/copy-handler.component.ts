@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
 })
 export class CopyHandlerComponent implements OnInit, OnDestroy {
 
-  gc: GameCopy;
+  gc: GameCopy = new GameCopy();
   pb: Publisher;
   actualEnumType: typeof GeneralStateEnum = GeneralStateEnum;
   stateList: Array<string> = Object.keys(GeneralStateEnum);
@@ -47,7 +47,6 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    console.log('init form while editMode=' + this.service.isEdit);
     if (this.service.isEdit) {
       this.service.fetchById(this.id).subscribe(gc => {
         this.gc = gc;
@@ -63,7 +62,16 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
         });
       });
     } else {
-      this.form.reset();
+      this.form.setValue({
+        objectCode: '',
+        availableForLoan: true,
+        generalState: this.stateList[0],
+        location: '',
+        wearCondition: 'Neuf',
+        publisher: {
+          name: ''
+        }
+      });
     }
   }
 
