@@ -18,6 +18,7 @@ export class GameService {
   pageChanged: Subject<Page<GameOverview>> = new Subject<Page<GameOverview>>();
   detailedGame$: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
 
+
   constructor(private http: HttpClient,
               private router: Router,
               private config: ConfigurationService) {

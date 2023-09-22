@@ -12,6 +12,7 @@ export class GameCopiesService {
   apiUri: string;
   copy: GameCopy | null = null;
   isEdit: boolean;
+  selected: number;
 
   constructor(private route: ActivatedRoute,
               private router: Router,

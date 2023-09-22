@@ -4,7 +4,7 @@ import {GameCopy} from '../../../../model/game-copy.model';
 import {Publisher} from '../../../../model/publisher.model';
 import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
-import {ActivatedRoute, Data, Params, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -33,7 +33,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   });
 
   constructor(private fb: FormBuilder,
-              private service: GameCopiesService,
+              public service: GameCopiesService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -49,6 +49,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   private initForm(): void {
     console.log('init form while editMode=' + this.service.isEdit);
     if (this.service.isEdit) {
+      this.service.selected = this.id;
       this.service.fetchById(this.id).subscribe(gc => {
         this.gc = gc;
         this.form.setValue({
@@ -63,11 +64,13 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
         });
       });
     } else {
+      this.service.selected = -1;
       this.form.reset();
     }
   }
 
   ngOnDestroy(): void {
+    this.service.selected = null;
     this.paramSubscription.unsubscribe();
   }
 
