@@ -125,14 +125,23 @@ const routes: Routes = [
             path: 'name',
             component: TitleHandlerComponent
           },
+
           {
-            path: 'copies/:id',
-            component: CopyHandlerComponent
+            path: 'copy',
+            children: [
+              {
+                path: 'new',
+                component: CopyHandlerComponent,
+                data: {editMode: false}
+              },
+              {
+                path: ':copyId',
+                component: CopyHandlerComponent,
+                data: {editMode: true}
+              }
+            ]
           },
-          {
-            path: 'new-copy',
-            component: CopyHandlerComponent,
-          },
+
           {
             path: 'categories',
             component: CategoryHandlerComponent

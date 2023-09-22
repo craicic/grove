@@ -5,7 +5,7 @@ import {ImageService} from '../../../shared/services/image.service';
 import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {Image} from '../../../model/image.model';
-import {GeneralStateEnum} from '../../../model/enum/general-state.enum';
+import {GameCopiesService} from '../../game-copies/game-copies.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -19,12 +19,11 @@ export class GameEditComponent implements OnInit, OnDestroy {
   numberOfPlayers: string;
   limitAge: string;
   subscription: Subscription;
-  protected readonly GeneralStateEnum = GeneralStateEnum;
-  copyRows = 3;
   images: Image[];
 
   constructor(private service: GameService,
               private imageService: ImageService,
+              private copyService: GameCopiesService,
               private router: Router) {
   }
 
@@ -32,11 +31,9 @@ export class GameEditComponent implements OnInit, OnDestroy {
     this.subscription = this.service.detailedGame$
       .pipe(map(game => {
         this.game = game;
-        this.copyRows = this.game.copies.length + 1;
         console.log(game);
       }))
       .subscribe(() => {
-
         this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
         this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
       });
@@ -70,11 +67,13 @@ export class GameEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditCopy(): void {
-    // this.router.navigate()
+  onEditCopy(id: number): void {
+    this.copyService.isEdit = true;
+    this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + id]);
   }
 
   onNewCopy(): void {
-    // this.router.navigate()
+    this.copyService.isEdit = false;
+    this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/new']);
   }
 }

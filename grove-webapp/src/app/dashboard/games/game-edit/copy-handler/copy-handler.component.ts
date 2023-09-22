@@ -4,7 +4,7 @@ import {GameCopy} from '../../../../model/game-copy.model';
 import {Publisher} from '../../../../model/publisher.model';
 import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Data, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -18,8 +18,8 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   pb: Publisher;
   actualEnumType: typeof GeneralStateEnum = GeneralStateEnum;
   stateList: Array<string> = Object.keys(GeneralStateEnum);
-  private param: any;
-  private subscription: Subscription;
+  private id: any;
+  private paramSubscription: Subscription;
 
   form = this.fb.group({
     objectCode: ['', Validators.required],
@@ -39,19 +39,38 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (!this.router.url.endsWith('new')) {
-      this.subscription = this.route.params.subscribe(params => {
-        console.log(this.param = params['id']);
+    const copyId = 'copyId';
+    this.paramSubscription = this.route.params.subscribe(params => {
+      console.log(this.id = +params[copyId]);
+      this.initForm();
+    });
+  }
+
+  private initForm(): void {
+    console.log('init form while editMode=' + this.service.isEdit);
+    if (this.service.isEdit) {
+      this.service.fetchById(this.id).subscribe(gc => {
+        this.gc = gc;
+        this.form.setValue({
+          objectCode: this.gc.objectCode,
+          availableForLoan: this.gc.availableForLoan,
+          generalState: this.gc.generalState,
+          location: this.gc.location,
+          wearCondition: this.gc.wearCondition,
+          publisher: {
+            name: this.gc.publisher.name
+          }
+        });
       });
-
-
-      this.service.fetchById(+this.param).subscribe(gc => this.gc = gc);
+    } else {
+      this.form.reset();
     }
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.paramSubscription.unsubscribe();
   }
+
 
   onLog(): void {
     console.log(this.gc);
