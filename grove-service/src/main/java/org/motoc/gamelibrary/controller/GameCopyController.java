@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/game-copies")
-@SecurityRequirement(name="jwtAuth")
+@SecurityRequirement(name = "jwtAuth")
 public class GameCopyController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameCopyController.class);
@@ -36,6 +37,7 @@ public class GameCopyController {
 
     /**
      * Get the total number of copies.
+     *
      * @return Return the number of copies in collection.
      */
     @GetMapping("/count")
@@ -46,6 +48,7 @@ public class GameCopyController {
 
     /**
      * Get copy of a game by ID
+     *
      * @param id The game copy ID that need to be fetched
      * @return The copy matching the ID
      */
@@ -57,6 +60,7 @@ public class GameCopyController {
 
     /**
      * Get a game copy by object code.
+     *
      * @param objectCode The objectCode that is link to a copy, object code is a unique identifier.
      * @return The copy matching the objectCode
      */
@@ -68,6 +72,7 @@ public class GameCopyController {
 
     /**
      * Save a new game copy
+     *
      * @param copyDto The copy to save
      * @return The saved copy
      */
@@ -79,8 +84,9 @@ public class GameCopyController {
 
     /**
      * Update an existing game copy.
+     *
      * @param copyDto The edited copy
-     * @param id The ID of the copy to edit
+     * @param id      The ID of the copy to edit
      * @return The edited copy
      */
     @PutMapping("/{id}")
@@ -92,6 +98,7 @@ public class GameCopyController {
 
     /**
      * Find a list of all copies, can be filtered by ready-for-loan boolean
+     *
      * @param loanReady An optional filter, when true, only fetch copies that can be loan
      * @return A list of game copies
      */
@@ -106,8 +113,9 @@ public class GameCopyController {
 
     /**
      * Find a page of copies, can be filtered by ready-for-loan boolean
+     *
      * @param loanReady An optional filter, when true, only fetch copies that can be loan
-     * @param pageable An object to configure the page (item per page, current page, etc...)
+     * @param pageable  An object to configure the page (item per page, current page, etc...)
      * @return A page of game copies
      */
     @GetMapping("/page")
@@ -122,7 +130,8 @@ public class GameCopyController {
 
     /**
      * Attach a publisher to a copy. Base on their IDs
-     * @param copyId The ID of the copy you want to link the given publisher
+     *
+     * @param copyId      The ID of the copy you want to link the given publisher
      * @param publisherId The ID of the publisher you want to attach to the copy
      * @return The updated copy of the given ID.
      */
@@ -135,7 +144,8 @@ public class GameCopyController {
 
     /**
      * Detach a publisher from a copy. Base on their IDs
-     * @param copyId The ID of the copy you want to unlink the given publisher
+     *
+     * @param copyId      The ID of the copy you want to unlink the given publisher
      * @param publisherId The ID of the publisher you want to detach from the copy
      * @return The updated copy of the given ID.
      */

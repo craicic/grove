@@ -23,6 +23,7 @@ public interface GameCopyMapper {
     @Mapping(target = "game", ignore = true)
     @Mapping(target = "preReservations", ignore = true)
     @Mapping(target = "gameCopyReservations", ignore = true)
+    @Mapping(target = "game.id",source = "gameId")
     GameCopy dtoToCopy(GameCopyDto dto);
 
     @Mapping(source = "game.id", target = "gameId")

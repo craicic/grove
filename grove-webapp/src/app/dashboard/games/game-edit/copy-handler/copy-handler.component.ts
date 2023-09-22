@@ -7,6 +7,7 @@ import {GameCopiesService} from '../../../game-copies/game-copies.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {GameService} from '../../game.service';
 
 @Component({
   selector: 'app-copy-handler',
@@ -34,6 +35,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               public service: GameCopiesService,
+              private gameService: GameService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -51,6 +53,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
       this.service.fetchById(this.id).subscribe(gc => {
         console.log(gc);
         this.gc = gc;
+        this.service.copy = gc;
         this.form.setValue({
           objectCode: this.gc.objectCode,
           availableForLoan: this.gc.availableForLoan,
@@ -58,7 +61,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
           location: this.gc.location,
           wearCondition: this.gc.wearCondition,
           publisher: {
-            name: this.gc.publisher.name
+            name: this.gc.publisher ? this.gc.publisher.name : null,
           }
         });
       });
@@ -91,11 +94,18 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
     this.gc.location = this.form.value. location;
     this.gc.generalState = this.form.value.generalState;
     this.gc.availableForLoan = this.form.value.availableForLoan;
-    this.gc.publisher = new Publisher(this.form.value.publisher.name);
+    this.gc.gameId = this.gameService.game.id;
     if (this.service.isEdit) {
+      if (this.service.copy.publisher.id) {
+        this.gc.publisher = new Publisher(this.form.value.publisher.name, this.service.copy.publisher.id);
+      } else {
+        this.gc.publisher = null;
+      }
       this.service.editCopy(this.gc.id, this.gc)
         .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
     } else {
+      this.gc.publisher = null;
+      // mode new
       this.service.saveCopy(this.gc)
         .pipe(map((copy: GameCopy) => this.service.copy = copy)).subscribe();
     }

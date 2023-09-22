@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+
 import java.util.List;
 
 @Service
@@ -38,7 +39,10 @@ public class GameCopyService {
     }
 
     public GameCopyDto save(@Valid GameCopyDto gc) {
-        return mapper.copyToDto(copyRepository.save(mapper.dtoToCopy(gc)));
+        GameCopy save = copyRepository.save(mapper.dtoToCopy(gc));
+        logger.trace(save.toString());
+        return mapper.copyToDto(save);
+
     }
 
 
@@ -128,7 +132,7 @@ public class GameCopyService {
                 .ifPresentOrElse(gameCopy -> {
                     if (gameCopy.getPublisher() == null || gameCopy.getPublisher() != publisher)
                         throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
-                                " is not linked to publisher of id=" + publisher.getId());
+                                                        " is not linked to publisher of id=" + publisher.getId());
 
                     this.gameCopyToReturn = copyRepository.removePublisher(gameCopy, publisher);
                 }, () -> {
