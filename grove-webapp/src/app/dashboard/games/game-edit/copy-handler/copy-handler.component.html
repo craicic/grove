@@ -1,5 +1,6 @@
 <h2>{{this.service.isEdit ? 'Exemplaire #' + this.copy.objectCode : 'Nouvel exemplaire' }}</h2>
-<form [formGroup]="form">
+<form [formGroup]="form"
+      (ngSubmit)="onSubmit()">
   <div>
     <label for="objectCode" class="form-label">Code objet :</label>
     <input id="objectCode" class="form-control" type="text" formControlName="objectCode">
@@ -38,18 +39,26 @@
       <button
         type="submit"
         class="btn btn-success me-1 mb-1"
-        [disabled]="!form.valid"
-        (click)="onSubmit()">Sauvegarder
+        [disabled]="!form.valid">Sauvegarder
       </button>
       <button
+        *ngIf="service.isEdit"
         type="button"
         class="btn btn-secondary me-1 mb-1"
+        (click)="onCancel()"
       >Restaurer
+      </button>
+      <button
+        *ngIf="service.isEdit"
+        type="button"
+        class="btn btn-danger me-1 mb-1"
+        (click)="onDelete()"
+      >Supprimer
       </button>
       <button
         type="button"
         class="btn btn-warning me-1 mb-1"
-        (click)="onLog()"
+        (click)="onBack()"
       >Retour
       </button>
     </div>
