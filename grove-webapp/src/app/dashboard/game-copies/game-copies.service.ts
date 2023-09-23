@@ -14,9 +14,7 @@ export class GameCopiesService {
   copy: GameCopy | null = null;
   isEdit: boolean;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.apiUri = environment.apiUri;
     this.isEdit = false;
   }
