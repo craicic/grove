@@ -25,10 +25,14 @@ export class GameCopiesService {
   }
 
   editCopy(id: number, gc: GameCopy): Observable<GameCopy> {
-    return this.http.put<GameCopy>(this.apiUri + '/api/admin/game-copies/' + id, gc);
+    return this.http
+      .put<GameCopy>(this.apiUri + '/api/admin/game-copies/' + id, gc)
+      .pipe(map((copy: GameCopy) => this.copy = copy));
   }
 
   saveCopy(gc: GameCopy): Observable<GameCopy> {
-    return this.http.post<GameCopy>(this.apiUri + '/api/admin/game-copies', gc);
+    return this.http
+      .post<GameCopy>(this.apiUri + '/api/admin/game-copies', gc)
+      .pipe(map((copy: GameCopy) => this.copy = copy));
   }
 }
