@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {GameCopy} from '../../../../model/game-copy.model';
 import {GeneralStateEnum} from '../../../../model/enum/general-state.enum';
 import {GameCopiesService} from '../../../game-copies/game-copies.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GameService} from '../../game.service';
@@ -16,7 +16,7 @@ import {Game} from '../../../../model/game.model';
 })
 export class CopyHandlerComponent implements OnInit, OnDestroy {
 
-  gc: GameCopy = new GameCopy();
+  copy: GameCopy = new GameCopy();
   stateEnum: typeof GeneralStateEnum = GeneralStateEnum;
   stateList: Array<string> = Object.keys(GeneralStateEnum);
   private id: any;
@@ -33,7 +33,8 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               public service: GameCopiesService,
               private gameService: GameService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -48,14 +49,13 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
     if (this.service.isEdit) {
       this.service.fetchById(this.id).subscribe(gc => {
         console.log(gc);
-        this.gc = gc;
-        this.service.copy = gc;
+        this.copy = gc;
         this.form.setValue({
-          objectCode: this.gc.objectCode,
-          availableForLoan: this.gc.availableForLoan,
-          generalState: this.gc.generalState,
-          location: this.gc.location,
-          wearCondition: this.gc.wearCondition,
+          objectCode: this.copy.objectCode,
+          availableForLoan: this.copy.availableForLoan,
+          generalState: this.copy.generalState,
+          location: this.copy.location,
+          wearCondition: this.copy.wearCondition,
         });
       });
     } else {
@@ -75,30 +75,31 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
 
 
   onLog(): void {
-    console.log(this.gc);
+    console.log(this.copy);
   }
 
   onSubmit(): void {
-    this.gc.objectCode = this.form.value.objectCode;
-    this.gc.wearCondition = this.form.value.wearCondition;
-    this.gc.location = this.form.value.location;
-    this.gc.generalState = this.form.value.generalState;
-    this.gc.availableForLoan = this.form.value.availableForLoan;
+    this.copy.objectCode = this.form.value.objectCode;
+    this.copy.wearCondition = this.form.value.wearCondition;
+    this.copy.location = this.form.value.location;
+    this.copy.generalState = this.form.value.generalState;
+    this.copy.availableForLoan = this.form.value.availableForLoan;
     this.game = this.gameService.getDetailedGame();
-    this.gc.gameId = this.game.id;
+    this.copy.gameId = this.game.id;
     if (this.service.isEdit) {
-      this.service.editCopy(this.gc.id, this.gc).pipe(map((copy: GameCopy) => this.service.copy = copy))
+      this.service.editCopy(this.copy.id, this.copy)
         .subscribe((copy: GameCopy) => {
           const idx = this.game.copies.findIndex(c => c.id === copy.id );
           this.game.copies[idx] = copy;
           this.gameService.updateDetailedGame(this.game);
         });
     } else {
-      this.service.saveCopy(this.gc)
-        .pipe(map((copy: GameCopy) => this.service.copy = copy))
-        .subscribe(copyFromDatabase => {
-          this.game.copies.push(copyFromDatabase);
+      this.service.saveCopy(this.copy)
+        .subscribe((c: GameCopy) => {
+          this.game.copies.push(c);
           this.gameService.updateDetailedGame(this.game);
+          this.service.isEdit = true;
+          this.router.navigate(['..', c.id], {relativeTo: this.route});
         });
     }
   }
