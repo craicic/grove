@@ -173,4 +173,8 @@ public class GameCopyService {
     public List<GameCopyDto> findAll() {
         return mapper.copiesToDto(copyRepository.findAll());
     }
+
+    public void deleteById(Long copyId) {
+        this.copyRepository.deleteById(copyId);
+    }
 }

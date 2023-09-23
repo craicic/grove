@@ -97,6 +97,16 @@ public class GameCopyController {
     }
 
     /**
+     * Delete a copy based on the given ID
+     * @param copyId The ID of the copy to delete
+     */
+    @DeleteMapping("/{copyId}")
+    void deleteById(@PathVariable Long copyId) {
+        logger.trace("deleteById() called");
+        service.deleteById(copyId);
+    }
+
+    /**
      * Find a list of all copies, can be filtered by ready-for-loan boolean
      *
      * @param loanReady An optional filter, when true, only fetch copies that can be loan

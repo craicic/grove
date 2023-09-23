@@ -102,10 +102,13 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
+    this.game = this.gameService.getDetailedGame();
     this.service.delete(this.copy)
       .subscribe(() => {
           const idx = this.game.copies.findIndex(item => item.id === this.copy.id);
-          this.game.copies.splice(idx, idx);
+          this.game.copies.splice(idx, idx + 1);
+          console.table(this.game.copies);
+          this.gameService.updateDetailedGame(this.game);
           this.copy = null;
           this.service.copy = null;
           this.router.navigate(['admin/locked-mode/games', this.game.id, 'edit']);
@@ -114,14 +117,12 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
   }
 
   fillForm(): void {
-    if (this.service.isEdit) {
-      this.form.setValue({
-        objectCode: this.copy.objectCode,
-        availableForLoan: this.copy.availableForLoan,
-        generalState: this.copy.generalState,
-        location: this.copy.location,
-        wearCondition: this.copy.wearCondition
-      });
-    }
+    this.form.setValue({
+      objectCode: this.copy.objectCode,
+      availableForLoan: this.copy.availableForLoan,
+      generalState: this.copy.generalState,
+      location: this.copy.location,
+      wearCondition: this.copy.wearCondition
+    });
   }
 }

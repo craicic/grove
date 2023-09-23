@@ -38,6 +38,6 @@ export class GameCopiesService {
 
   delete(copy: GameCopy): Observable<any> {
     return this.http
-      .delete(this.apiUri + '/admin/game-copies' + copy.id);
+      .delete(this.apiUri + '/api/admin/game-copies/' + copy.id);
   }
 }
