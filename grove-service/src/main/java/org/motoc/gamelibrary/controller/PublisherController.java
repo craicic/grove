@@ -95,7 +95,7 @@ public class PublisherController {
      * @param dto The publisher to save.
      * @return The saved publisher.
      */
-    @PostMapping("/")
+    @PostMapping()
     PublisherDto save(@RequestBody @Valid PublisherNoIdDto dto) {
         logger.trace("save(publisher) called");
         return service.save(dto);
@@ -131,7 +131,7 @@ public class PublisherController {
      *
      * @param publisherId The publisherID of the publisher to delete.
      */
-    @DeleteMapping("/{publisherId}/contact/")
+    @DeleteMapping("/{publisherId}/contact")
     void deleteContact(@PathVariable Long publisherId) {
         logger.trace("deleteContact(publisherId, contactId) called");
         service.removeContact(publisherId);

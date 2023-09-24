@@ -64,6 +64,8 @@ export class GameService {
   }
 
   deleteThenFetchAll(id: number): void {
+    this.http
+      .delete(this.apiUri + '/api/admin/games/' + id).subscribe();
   }
 
   /** */

@@ -77,7 +77,8 @@ public class GameService {
 
 
     public void deleteById(long id) {
-        gameRepository.deleteById(id);
+        gameRepository.bulkDeleteById(id);
+
     }
 
 

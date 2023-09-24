@@ -46,7 +46,7 @@ public class MechanismController {
      * Get all mechanisms.
      * @return A list of mechanisms.
      */
-    @GetMapping("/")
+    @GetMapping()
     List<MechanismDto> findAll() {
         logger.trace("findAll called");
         return service.findAll();
@@ -86,7 +86,7 @@ public class MechanismController {
      * @param mechanismNameDto The mechanism to save.
      * @return The save mechanism.
      */
-    @PostMapping("/")
+    @PostMapping()
     MechanismDto save(@RequestBody @Valid MechanismNameDto mechanismNameDto) {
         logger.trace("save(mechanism) called");
         return service.save(mechanismNameDto);

@@ -112,7 +112,7 @@ public class GameCopyController {
      * @param loanReady An optional filter, when true, only fetch copies that can be loan
      * @return A list of game copies
      */
-    @GetMapping("/")
+    @GetMapping()
     List<GameCopyDto> findAll(@RequestParam(value = "loan-ready", required = false, defaultValue = "false") boolean loanReady) {
         logger.trace("findAll() called");
         if (!loanReady)

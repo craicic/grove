@@ -54,7 +54,7 @@ public class CategoryController {
      * Get all categories.
      * @return A list of categories.
      */
-    @GetMapping("/")
+    @GetMapping()
     List<CategoryDto> findAll() {
         logger.trace("findAll() called");
         return service.findAll();
@@ -88,7 +88,7 @@ public class CategoryController {
      * @return The saved category.
      */
 
-    @PostMapping("/")
+    @PostMapping()
     CategoryDto save(@RequestBody @Valid CategoryDto category) {
         logger.trace("save(category) called");
         return service.save(category);

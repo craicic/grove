@@ -24,6 +24,12 @@ public interface GameFragmentRepository {
     Game findGameById(Long id);
 
     /**
+     * This method delete a {@code Game} by id and every {@code GameCopy} that are associated to it.
+     * @param id the id of the Game you want to delete
+     */
+    void bulkDeleteById(long id);
+
+    /**
      * Get all Games' name in a custom DTO
      */
     List<String> findTitles();
@@ -48,6 +54,5 @@ public interface GameFragmentRepository {
     Game removeCreator(Game game, Creator creator);
 
     void attachImage(Game game, Image image);
-
 
 }

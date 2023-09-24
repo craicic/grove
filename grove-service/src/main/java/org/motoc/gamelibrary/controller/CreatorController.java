@@ -59,7 +59,7 @@ public class CreatorController {
      * @param name The fullName of creators.
      * @return The creator find with fullName
      */
-    @GetMapping("/")
+    @GetMapping()
     CreatorWithoutContactDto findByName(@RequestParam(name = "full-name") String name) {
         logger.trace("findByName(name) called");
         return service.findByFullName(name);
@@ -99,7 +99,7 @@ public class CreatorController {
      * @param creator The creator to save.
      * @return The saved creator.
      */
-    @PostMapping("/")
+    @PostMapping()
     CreatorDto save(@RequestBody @Valid CreatorDto creator) {
         logger.trace("save(creator) called");
         return service.save(creator);

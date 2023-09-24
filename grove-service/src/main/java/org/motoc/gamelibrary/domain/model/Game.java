@@ -1,6 +1,8 @@
 package org.motoc.gamelibrary.domain.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.domain.enumeration.GameNature;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
