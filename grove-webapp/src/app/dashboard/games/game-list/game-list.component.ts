@@ -1,19 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {ConfigurationService} from '../../configuration/configuration.service';
 import {Router} from '@angular/router';
 import {GameService} from '../game.service';
 import {Page} from '../../../model/page.model';
 import {GameOverview} from '../../../model/game-overview.model';
-import {ImageService} from '../../../shared/services/image.service';
 
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.css']
 })
-export class GameListComponent implements OnInit {
+export class GameListComponent implements OnInit, OnDestroy {
   filterForm: UntypedFormGroup;
   private subscription: Subscription;
 
@@ -24,8 +22,6 @@ export class GameListComponent implements OnInit {
   page: number;
 
   constructor(private service: GameService,
-              private imageService: ImageService,
-              private configurationService: ConfigurationService,
               private router: Router) {
   }
 
@@ -38,6 +34,11 @@ export class GameListComponent implements OnInit {
     });
     this.service.initPage();
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 
   onFilter(): void {
     this.service
