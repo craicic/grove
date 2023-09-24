@@ -37,7 +37,11 @@ public class SecurityConfig {
             "/main.js",
             "/polyfills.js",
             "/runtime.js",
-            "/favicon.ico"
+            "/favicon.ico",
+            // Following line are for production only
+            "/vendor.js",
+            "/bootstrap-icons.*",
+            "/assets/**"
     };
 
     @Bean
