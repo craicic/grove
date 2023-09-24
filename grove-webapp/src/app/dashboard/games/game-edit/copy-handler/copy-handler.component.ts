@@ -68,7 +68,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
 
 
   onBack(): void {
-    console.log(this.copy);
+    this.router.navigate(['/admin/locked-mode/games/' + this.gameService.game.id + '/edit']);
   }
 
   onSubmit(): void {
