@@ -1,6 +1,7 @@
 <span class="lead me-1">{{ copies.length }} exemplaire{{ copies.length >= 1 ? 's' : ''}}</span>
 <span *ngFor="let copy of copies" class="badge bg-dark me-1" (click)="onDisplay(copy)">#{{copy.objectCode}}</span>
 <button class="btn btn-outline-dark me-1" (click)="onNew()">
-  <i class="bi bi-plus-circle" style="width: 1rem; height: 1rem;"></i> Nouvel exemplaire</button>
+  <i class="bi bi-plus-circle" style="width: 1rem; height: 1rem;"
+></i> Nouvel exemplaire</button>
 
 <app-copies-detail *ngIf="showDetail" [copy]="current"></app-copies-detail>

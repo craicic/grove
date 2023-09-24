@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 })
 export class CopiesControlComponent implements OnInit {
   @Input() copies: GameCopy[] = [];
+  @Input() gameId: number;
   showDetail = false;
   current: GameCopy;
 
@@ -26,5 +27,6 @@ export class CopiesControlComponent implements OnInit {
   }
 
   onNew(): void {
+    this.router.navigate(['admin/locked-mode/games/' + this.gameId + '/edit/copy/new']);
   }
 }
