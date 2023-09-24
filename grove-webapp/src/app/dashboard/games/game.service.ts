@@ -65,7 +65,12 @@ export class GameService {
 
   deleteThenFetchAll(id: number): void {
     this.http
-      .delete(this.apiUri + '/api/admin/games/' + id).subscribe();
+      .delete(this.apiUri + '/api/admin/games/' + id)
+      .subscribe(
+        () => this.fetchGames()
+          .subscribe(
+            () => this.initPage()
+          ));
   }
 
   /** */
@@ -77,7 +82,7 @@ export class GameService {
   /** Save a new game POST */
   saveGame(game: Game): Observable<Game> {
     return this.http
-      .post<Game>(this.apiUri + '/api/admin/games/', game, {responseType: 'json'});
+      .post<Game>(this.apiUri + '/api/admin/games', game, {responseType: 'json'});
   }
 
   /** Edit the game via PUT request */
