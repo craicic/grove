@@ -106,8 +106,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
     this.service.delete(this.copy)
       .subscribe(() => {
           const idx = this.game.copies.findIndex(item => item.id === this.copy.id);
-          this.game.copies.splice(idx, idx + 1);
-          console.table(this.game.copies);
+          this.game.copies.splice(idx, 1);
           this.gameService.updateDetailedGame(this.game);
           this.copy = null;
           this.service.copy = null;
