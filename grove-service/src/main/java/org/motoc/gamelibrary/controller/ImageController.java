@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 @CrossOrigin
 @RestController
-@SecurityRequirement(name="jwtAuth")
+@SecurityRequirement(name = "jwtAuth")
 @RequestMapping("api")
 public class ImageController {
 
@@ -37,7 +37,8 @@ public class ImageController {
 
     /**
      * Store an image and attach it to the game of ID given in param
-     * @param file The image to store
+     *
+     * @param file   The image to store
      * @param gameId The game to link
      * @return The ID of the stored image
      * @throws IOException If something went wrong during IO operation
@@ -52,6 +53,7 @@ public class ImageController {
 
     /**
      * Get an item containing an image and its ID given an ID
+     *
      * @param id The ID of the image wanted to fetch
      * @return An object containing the image and its ID
      */
@@ -67,6 +69,7 @@ public class ImageController {
 
     /**
      * Get an image content given its ID
+     *
      * @param id The ID of the image wanted to fetch
      * @return An image
      */

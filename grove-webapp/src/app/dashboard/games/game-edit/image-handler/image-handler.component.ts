@@ -6,6 +6,7 @@ import {ImageService} from '../../../../shared/services/image.service';
 import {map, mergeMap} from 'rxjs/operators';
 import {logger} from 'codelyzer/util/logger';
 import {Subscription} from 'rxjs';
+import {Image} from '../../../../model/image.model';
 
 @Component({
     selector: 'app-image-handler',
@@ -29,10 +30,18 @@ export class ImageHandlerComponent implements OnInit {
     }
 
     onUpload(): void {
+
         console.log(this.file);
         this.service.uploadImage(this.file, this.game.id)
-            .subscribe(id => {
-                    this.newId = id;
+            .subscribe(imageId => {
+                    const fr: FileReader = new FileReader();
+                    let imageContent;
+                    fr.readAsDataURL(this.file);
+                    fr.onload = () => {
+                         imageContent = fr.result;
+                    };
+                    const image: Image = {id: imageId, content: imageContent};
+                    this.service.updateImagesSubject(image);
                 },
                 err => console.log(err)
             );
