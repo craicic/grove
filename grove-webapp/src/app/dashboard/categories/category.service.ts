@@ -25,7 +25,7 @@ export class CategoryService {
   /** Gets all categories */
   fetchAll(): Observable<Category[]> {
     return this.http
-      .get<Category[]>(this.apiUri + '/api/admin/categories/', {responseType: 'json'});
+      .get<Category[]>(this.apiUri + '/api/admin/categories', {responseType: 'json'});
   }
 
   /** Gets all categories then store them to an array field */
@@ -58,7 +58,7 @@ export class CategoryService {
 
   /** Saves a new category */
   add(category: Category): any {
-    return this.http.post<Category>(this.apiUri + '/api/admin/categories/', category, {responseType: 'json'})
+    return this.http.post<Category>(this.apiUri + '/api/admin/categories', category, {responseType: 'json'})
       .subscribe(returnedCategory => {
         this.categories.push(returnedCategory);
         this.updatePage();
