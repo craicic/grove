@@ -1,0 +1,5 @@
+<div class="row">
+    <div class="col" *ngFor="let image of images">
+        <img src="{{ filePrefix + image.content }}" alt="{{ image.id }}" class="img-fluid"/>
+    </div>
+</div>

@@ -21,7 +21,6 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   numberOfPlayers: string;
   limitAge: string;
   areRulesDisplayed: boolean;
-  images: Image[] = [];
   private subscription: Subscription;
 
   constructor(private service: GameService,
@@ -36,7 +35,9 @@ export class GameDetailComponent implements OnInit, OnDestroy {
       .pipe(map((game: Game) => {
         this.game = game;
         console.log(game);
-      })).subscribe(() => this.setUpDisplay());
+      })).subscribe(() => {
+        this.setUpDisplay();
+      });
   }
 
   ngOnDestroy(): void {
@@ -66,25 +67,7 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   private setUpDisplay(): void {
     this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
     this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
-    if (this.game.imageIds && this.game.imageIds.length > 0) {
-      this.loadAllImages();
-    }
     this.areRulesDisplayed = false;
-  }
-
-  private loadAllImages(): void {
-    this.game.imageIds.forEach(id => {
-      this.imageService
-        .fetchImage(id)
-        .subscribe(
-          imageData => {
-            const i: Image = new Image();
-            i.id = imageData.id;
-            i.content = 'data:image/png;base64,' + imageData.content;
-            this.images.push(i);
-          }
-        );
-    });
   }
 
   toggleRuleDisplay(): void {

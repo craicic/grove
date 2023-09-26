@@ -17,7 +17,6 @@ export class ImageHandlerComponent implements OnInit {
 
   constructor(private service: ImageService,
               private gameService: GameService,
-              private fileService: FileService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -30,17 +29,25 @@ export class ImageHandlerComponent implements OnInit {
   onUpload(): void {
     console.log(this.file);
     this.service.uploadImage(this.file, this.game.id).subscribe(
-      success => console.log(success),
+      image => {
+        console.log(image);
+        this.resetInput();
+        const images = this.service.getImages().slice();
+        images.push(image);
+        this.service.imagesSubject$.next(images);
+      },
       err => console.log(err),
     );
 
   }
 
-  onDelete(): void {
+  onRemove(): void {
+    this.resetInput();
   }
 
   onBack(): void {
-
+    this.resetInput();
+    this.router.navigate(['/admin/locked-mode/games/' + this.gameService.game.id + '/edit']);
   }
 
   onFileSelected(event: any): void {
@@ -55,7 +62,10 @@ export class ImageHandlerComponent implements OnInit {
     } else if (bytes >= 1048576) {
       return `${(bytes / 1048576).toFixed(1)} MB`;
     }
+  }
 
-
+  resetInput(): void {
+    this.file = null;
+    (document.getElementById('inputFile') as HTMLInputElement).value = '';
   }
 }

@@ -58,14 +58,8 @@
 <div class="row mb-5">
   <div class="col-md-12">
     <h4>Galerie</h4>
-    <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0">
-      <ng-template ngbSlide *ngFor="let image of images; let i = index">
-        <div class="text-center">
-          <img src="{{ image.content }}" class="img-fluid carousel-img m-4"
-               alt="{{ game.title }} - dataUriArray[{{ i }}]">
-        </div>
-      </ng-template>
-    </ngb-carousel>
+    <app-images-viewer>
+    </app-images-viewer>
   </div>
 </div>
 

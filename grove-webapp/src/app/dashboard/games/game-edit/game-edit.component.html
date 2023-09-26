@@ -107,17 +107,10 @@
     <div class="highlightable"
          routerLinkActive="active"
          [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'images']">
-      <h4>Galerie
+      <h4>Galerie -
+<!--        <span class="lead">{{ game.imageIds.length > 1 ? game.imageIds.length + ' images associées'  :  game.imageIds.length + 'image associée' }}</span>-->
         <span class="info text-primary lead">Éditer</span>
       </h4>
-      <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0" class="mb-2">
-        <ng-template ngbSlide *ngFor="let image of images; let i = index">
-          <div class="text-center">
-            <img src="{{ image.content }}" class="img-fluid carousel-img m-4"
-                 alt="{{ game.title }} - dataUriArray[{{ 2 }}]">
-          </div>
-        </ng-template>
-      </ngb-carousel>
     </div>
   </div>
 

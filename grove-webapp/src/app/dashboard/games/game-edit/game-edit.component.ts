@@ -53,19 +53,19 @@ export class GameEditComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private loadAllImages(ids: number[]): void {
-    this.images = [];
-    ids.forEach(id => {
-      this.imageService
-        .fetchImage(id)
-        .subscribe(data => {
-          const image = new Image();
-          image.id = data.id;
-          image.content = 'data:image/png;base64,' + data.content;
-          this.images.push(image);
-        });
-    });
-  }
+  // private loadAllImages(ids: number[]): void {
+  //   this.images = [];
+  //   ids.forEach(id => {
+  //     this.imageService
+  //       .fetchImage(id)
+  //       .subscribe(data => {
+  //         const image = new Image();
+  //         image.id = data.id;
+  //         image.content = 'data:image/png;base64,' + data.content;
+  //         this.images.push(image);
+  //       });
+  //   });
+  // }
 
   onEditCopy(): void {
     this.copyService.isEdit = true;

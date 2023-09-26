@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {GameService} from '../game.service';
 import {Page} from '../../../model/page.model';
 import {GameOverview} from '../../../model/game-overview.model';
+import {ImageService} from '../../../shared/services/image.service';
 
 @Component({
   selector: 'app-game-list',
@@ -14,6 +15,7 @@ import {GameOverview} from '../../../model/game-overview.model';
 export class GameListComponent implements OnInit, OnDestroy {
   filterForm: UntypedFormGroup;
   private subscription: Subscription;
+  private imageSub: Subscription;
 
   /* Pagination */
   games: GameOverview[];
@@ -22,6 +24,7 @@ export class GameListComponent implements OnInit, OnDestroy {
   page: number;
 
   constructor(private service: GameService,
+              private imageService: ImageService,
               private router: Router) {
   }
 
@@ -37,6 +40,9 @@ export class GameListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    if (this.imageSub) {
+      this.imageSub.unsubscribe();
+    }
   }
 
 
@@ -70,5 +76,9 @@ export class GameListComponent implements OnInit, OnDestroy {
     this.filterForm = new UntypedFormGroup({
       'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
+  }
+
+  onDetail(id: number): void {
+    this.imageSub = this.imageService.fetchImages(id).subscribe();
   }
 }

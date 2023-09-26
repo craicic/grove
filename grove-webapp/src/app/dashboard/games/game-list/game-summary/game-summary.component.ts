@@ -34,7 +34,6 @@ export class GameSummaryComponent implements OnInit, OnDestroy {
       const id = 'id';
       this.paramId = +params[id];
       this.game = this.service.getGameOverviewById(+this.paramId);
-      this.fetchFirstImage();
     });
     this.subscription = this.service.pageChanged
       .subscribe((page: Page<GameOverview>) => {
@@ -50,18 +49,6 @@ export class GameSummaryComponent implements OnInit, OnDestroy {
 
   onViewDetail(): void {
     this.router.navigate(['/admin/editor/games/detail/' + this.paramId]);
-  }
-
-  fetchFirstImage(): void {
-    this.image = new Image();
-    if (this.game.imageIds && this.game.imageIds.length > 0) {
-      this.imageService
-        .fetchImage(this.game.imageIds[0])
-        .subscribe(data => {
-          this.image.id = data.id;
-          this.image.content = this.filePrefix + data.content;
-        });
-    }
   }
 }
 

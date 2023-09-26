@@ -38,7 +38,7 @@ import {GamesComponent} from './dashboard/games/games.component';
 import {GameListComponent} from './dashboard/games/game-list/game-list.component';
 import {GameSummaryComponent} from './dashboard/games/game-list/game-summary/game-summary.component';
 import {GameDetailComponent} from './dashboard/games/game-detail/game-detail.component';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {GameEditWrapperComponent} from './wrapper/game-edit-wrapper/game-edit-wrapper.component';
 import {GameEditComponent} from './dashboard/games/game-edit/game-edit.component';
 import {CategoryHandlerComponent} from './dashboard/games/game-edit/category-handler/category-handler.component';
@@ -92,6 +92,7 @@ import {AuthInterceptor} from './auth.interceptor';
 import {CopiesDetailComponent} from './dashboard/game-copies/copies-control/copies-detail/copies-detail.component';
 import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 import {CopiesControlComponent} from './dashboard/game-copies/copies-control/copies-control.component';
+import { ImagesViewerComponent } from './dashboard/games/game-detail/images-viewer/images-viewer.component';
 
 
 @NgModule({
@@ -168,17 +169,19 @@ import {CopiesControlComponent} from './dashboard/game-copies/copies-control/cop
     LoginComponent,
     CopiesControlComponent,
     CopiesDetailComponent,
-    CopyHandlerComponent
+    CopyHandlerComponent,
+    ImagesViewerComponent
   ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgbModule,
+        AppRoutingModule,
+        NgOptimizedImage
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
