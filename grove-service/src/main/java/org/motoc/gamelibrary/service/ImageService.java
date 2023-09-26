@@ -42,7 +42,6 @@ public class ImageService {
         byte[] bytes = imageToByte(imageStream, true, ImageFormat.JPG, ImageFormat.JPG);
         return repository.persistImageAndAttachToGame(bytes, gameId);
     }
-
     /**
      * Given an image id, return the image bytes
      */

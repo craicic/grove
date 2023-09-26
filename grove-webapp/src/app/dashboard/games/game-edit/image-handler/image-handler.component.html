@@ -1,1 +1,40 @@
-<p>image-handler works!</p>
+<h2>Image</h2>
+
+<form>
+  <div class="mb-3">
+    <label class="form-label" for="inputFile">{{file ? 'Image prête à être sauvegardée' : 'Choisissez une image à associer'}}</label>
+    <input
+      type="file"
+      class="form-control"
+      id="inputFile"
+      accept=".jpg, .jpeg, .png"
+      (change)="onFileSelected($event)">
+  </div>
+  <div class="" *ngIf="file">
+    <div>{{ returnFileSize(file.size) }}
+    </div>
+    <div *ngIf="returnFileSize(file.size).endsWith('MB')"><i class="bi bi-info-circle"></i> Il est préférable que le fichier ne dépasse pas 10MB</div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <button
+        type="button"
+        class="btn btn-success me-1 mb-1"
+        (click)="onUpload()"
+        [disabled]="!file">sauvegarder
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger me-1 mb-1"
+        (click)="onDelete()"
+      >Supprimer
+      </button>
+      <button
+        type="button"
+        class="btn btn-warning me-1 mb-1"
+        (click)="onBack()"
+      >Retour
+      </button>
+    </div>
+  </div>
+</form>

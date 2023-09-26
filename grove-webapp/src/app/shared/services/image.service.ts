@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Image} from '../../model/image.model';
 import {Observable} from 'rxjs';
 import {ConfigurationService} from '../../dashboard/configuration/configuration.service';
@@ -21,6 +21,15 @@ export class ImageService {
       .get(this.apiUri + '/api/admin/images/' + id, {responseType: 'json'});
   }
 
-  /* ================================================ OTHER METHODS ==================================================================== */
+  uploadImage(file: File, gameId: number): Observable<any> {
+    const fd: FormData = new FormData();
+    const hd: HttpHeaders = new HttpHeaders();
 
+    hd.append('Content-Type', undefined);
+
+    fd.append('file', file);
+    return this.http.post(this.apiUri + '/api/admin/images/games/' + gameId, fd, {headers: hd});
+  }
+
+  /* ================================================ OTHER METHODS ==================================================================== */
 }

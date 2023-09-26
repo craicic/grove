@@ -46,6 +46,7 @@ public class ImageController {
     Long save(@RequestParam(name = "file") MultipartFile file,
               @PathVariable Long gameId) throws IOException {
         logger.trace("save(image) called");
+        logger.warn(file.getName());
         return service.saveThenAttachToGame(file.getInputStream(), gameId);
     }
 
