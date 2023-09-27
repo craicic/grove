@@ -73,7 +73,7 @@ export class PublisherDetailComponent implements OnInit {
 
       const observable = of(this.publisher.contact.id);
       observable.pipe(
-        concatMap(id => {
+        concatMap(() => {
           return this.publisherDataService.removeContact(this.publisher.id);
         }),
         concatMap(() => {

@@ -73,7 +73,7 @@ export class CreatorDetailComponent implements OnInit {
 
       const myObs = of(this.creator.contact.id);
       myObs.pipe(
-        concatMap(id => {
+        concatMap(() => {
           return this.creatorsDataService.removeContact(this.creator.id);
         }),
         concatMap(() => {
