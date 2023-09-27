@@ -8,7 +8,7 @@ export const environment = {
   VERSION: AppVersion.appVersion,
   production: false,
   apiUri: 'http://localhost:8080',
-  filePrefix: 'data:image/png;base64,',
+  filePrefix: 'data:image/jpg;base64,',
   api: {
     country: 'https://restcountries.eu/rest/v2/all'
   }

@@ -8,45 +8,47 @@ import {tap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class ImageService {
-    apiUri: string;
-    private cachedImages: Image[] = [];
-    imagesSubject$: BehaviorSubject<Image[]> = new BehaviorSubject<Image[]>([]);
+  apiUri: string;
+  private cachedImages: Image[] = [];
+  imagesSubject$: BehaviorSubject<Image[]> = new BehaviorSubject<Image[]>([]);
 
-    constructor(private http: HttpClient) {
-        this.apiUri = environment.apiUri;
-    }
+  constructor(private http: HttpClient) {
+    this.apiUri = environment.apiUri;
+  }
 
 
-    /* ============================================== REST API METHODS =================================================================== */
-    fetchImage(id: number): Observable<Image> {
-        return this.http
-            .get(this.apiUri + '/api/admin/images/' + id, {responseType: 'json'});
-    }
+  /* ============================================== REST API METHODS =================================================================== */
+  fetchImage(id: number): Observable<Image> {
+    return this.http
+      .get(this.apiUri + '/api/admin/images/' + id, {responseType: 'json'});
+  }
 
-    fetchImages(gameId: number): Observable<Image[]> {
-        return this.http.get<Image[]>(this.apiUri + '/api/admin/games/' + gameId + '/images', {responseType: 'json'})
-            .pipe(tap(i => this.imagesSubject$.next(i)));
+  fetchImages(gameId: number): Observable<Image[]> {
+    return this.http.get<Image[]>(this.apiUri + '/api/admin/games/' + gameId + '/images', {responseType: 'json'})
+      .pipe(tap(i => this.imagesSubject$.next(i)));
 
-    }
+  }
 
-    uploadImage(file: File, gameId: number): Observable<number> {
-        const fd: FormData = new FormData();
-        const hd: HttpHeaders = new HttpHeaders();
+  uploadImage(file: File, gameId: number): Observable<number> {
+    const fd: FormData = new FormData();
+    const hd: HttpHeaders = new HttpHeaders();
 
-        hd.append('Content-Type', undefined);
+    hd.append('Content-Type', undefined);
 
-        fd.append('file', file);
-        return this.http.post<number>(this.apiUri + '/api/admin/images/games/' + gameId, fd, {headers: hd});
-    }
+    fd.append('file', file);
+    return this.http.post<number>(this.apiUri + '/api/admin/images/games/' + gameId, fd, {headers: hd});
+  }
 
-    /* ================================================ OTHER METHODS ==================================================================== */
+  /* ================================================ OTHER METHODS ==================================================================== */
 
-    updateImagesSubject(image: Image): void {
-        this.cachedImages.push(image);
-        this.imagesSubject$.next(this.cachedImages);
-    }
+  updateImagesSubject(image: Image): void {
 
-    getImages(): Image[] {
-        return this.cachedImages;
-    }
+    this.cachedImages.push(image);
+    console.table(this.cachedImages);
+    this.imagesSubject$.next(this.cachedImages);
+  }
+
+  getImages(): Image[] {
+    return this.cachedImages;
+  }
 }

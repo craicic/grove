@@ -48,7 +48,7 @@ public class ImageController {
               @PathVariable Long gameId) throws IOException {
         logger.trace("save(image) called");
         logger.warn(file.getName());
-        return service.saveThenAttachToGame(file.getInputStream(), gameId);
+        return service.saveThenAttachToGame(file.getInputStream(), file.getContentType(), gameId);
     }
 
     /**
@@ -82,6 +82,4 @@ public class ImageController {
         header.setContentType(MediaType.IMAGE_PNG);
         return ResponseEntity.ok().headers(header).body(isr);
     }
-
-
 }
