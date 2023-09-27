@@ -13,19 +13,16 @@ import {environment} from '../../../../../environments/environment';
     styleUrls: ['./images-viewer.component.css']
 })
 export class ImagesViewerComponent implements OnInit, OnDestroy {
-    private game: Game;
     private subscription: Subscription;
     images: Observable<Image[]>;
     filePrefix: string;
 
-    constructor(private gameService: GameService,
-                public service: ImageService) {
+    constructor(public service: ImageService) {
         this.filePrefix = environment.filePrefix;
     }
 
     ngOnInit(): void {
-        this.subscription = this.service.imagesSubject$.subscribe(i => {
-            console.log('init Image Viewer');
+        this.subscription = this.service.images$.subscribe(i => {
             this.images = of(i);
         });
     }

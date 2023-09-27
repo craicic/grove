@@ -8,8 +8,7 @@ import {tap} from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class ImageService {
   apiUri: string;
-  private cachedImages: Image[] = [];
-  imagesSubject$: BehaviorSubject<Image[]> = new BehaviorSubject<Image[]>([]);
+  images$: BehaviorSubject<Image[]> = new BehaviorSubject<Image[]>([]);
 
   constructor(private http: HttpClient) {
     this.apiUri = environment.apiUri;
@@ -24,7 +23,9 @@ export class ImageService {
 
   fetchImages(gameId: number): Observable<Image[]> {
     return this.http.get<Image[]>(this.apiUri + '/api/admin/games/' + gameId + '/images', {responseType: 'json'})
-      .pipe(tap(i => this.imagesSubject$.next(i)));
+      .pipe(tap(i => {
+        this.images$.next(i);
+      }));
 
   }
 
@@ -40,14 +41,13 @@ export class ImageService {
 
   /* ================================================ OTHER METHODS ==================================================================== */
 
-  updateImagesSubject(image: Image): void {
-
-    this.cachedImages.push(image);
-    console.table(this.cachedImages);
-    this.imagesSubject$.next(this.cachedImages);
+  updateImages(image: Image): void {
+    const images = this.getImages();
+    images.push(image);
+    this.images$.next(images);
   }
 
   getImages(): Image[] {
-    return this.cachedImages;
+    return this.images$.value.slice();
   }
 }

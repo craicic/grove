@@ -108,7 +108,7 @@
          routerLinkActive="active"
          [routerLink]="['/admin/locked-mode/games', game.id, 'edit', 'images']">
       <h4>Galerie -
-<!--        <span class="lead">{{ game.imageIds.length > 1 ? game.imageIds.length + ' images associées'  :  game.imageIds.length + 'image associée' }}</span>-->
+        <span class="lead">{{ game.nbOfImages > 1 ? game.nbOfImages + ' images associées'  :  game.nbOfImages + 'image associée' }}</span>
         <span class="info text-primary lead">Éditer</span>
       </h4>
     </div>

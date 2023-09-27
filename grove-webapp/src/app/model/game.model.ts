@@ -30,7 +30,5 @@ export class Game implements ModelInterface {
   mechanisms?: Mechanism[];
   creators?: Creator[];
   copies?: GameCopy[];
-  imageIds?: number[];
-  images?: Image[];
-
+  nbOfImages?: number;
 }

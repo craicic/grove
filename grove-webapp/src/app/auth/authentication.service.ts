@@ -93,7 +93,9 @@ export class AuthenticationService {
     console.log('refresh tasks starts');
     const refreshInterval: number = Math.floor(this.expiresIn * 0.92);
     return interval(1000).pipe(take(refreshInterval)).subscribe(
-      (t) => (t % 10) === 0 ? console.log('Refreshing access in ' + (refreshInterval - t) + 's') : t,
+      (t) => t
+        // (t % 10) === 0 ? console.log('Refreshing access in ' + (refreshInterval - t) + 's') : t
+      ,
       (error) => console.log(error),
       () => this.refreshToken());
   }

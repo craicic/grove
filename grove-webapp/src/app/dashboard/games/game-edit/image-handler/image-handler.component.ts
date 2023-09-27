@@ -27,7 +27,7 @@ export class ImageHandlerComponent implements OnInit {
     this.service.uploadImage(this.file, this.game.id)
       .subscribe(image => {
           this.resetInput();
-          this.service.updateImagesSubject(image);
+          this.service.updateImages(image);
         },
         err => console.log(err)
       );

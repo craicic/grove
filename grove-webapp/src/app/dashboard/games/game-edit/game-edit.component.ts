@@ -14,12 +14,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./game-edit.component.css']
 })
 export class GameEditComponent implements OnInit, OnDestroy {
-  image: Image;
   game: Game;
   numberOfPlayers: string;
   limitAge: string;
   subscription: Subscription;
-  images: Image[];
+  imagesSubscription: Subscription;
 
   constructor(private service: GameService,
               private imageService: ImageService,
@@ -28,6 +27,7 @@ export class GameEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.subscription = this.service.detailedGame$
       .pipe(map(game => {
         this.game = game;
@@ -37,35 +37,18 @@ export class GameEditComponent implements OnInit, OnDestroy {
         this.numberOfPlayers = this.service.buildPLayers(this.game.minNumberOfPlayer, this.game.maxNumberOfPlayer);
         this.limitAge = this.service.buildAge(this.game.minAge, this.game.maxAge, this.game.minMonth);
       });
-    this.images = [];
-    // this.imageService
-    //   .fetchImage(1)
-    //   .subscribe(data => {
-    //     this.image = new Image();
-    //     this.image.id = data.id;
-    //     this.image.content = 'data:image/png;base64,' + data.content;
-    //     this.images.push(this.image);
-    //   });
 
+    this.imagesSubscription = this.imageService.images$.subscribe(i => {
+      this.game.nbOfImages = i.length;
+      this.service.updateDetailedGame(this.game);
+    });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.imagesSubscription.unsubscribe();
   }
 
-  // private loadAllImages(ids: number[]): void {
-  //   this.images = [];
-  //   ids.forEach(id => {
-  //     this.imageService
-  //       .fetchImage(id)
-  //       .subscribe(data => {
-  //         const image = new Image();
-  //         image.id = data.id;
-  //         image.content = 'data:image/png;base64,' + data.content;
-  //         this.images.push(image);
-  //       });
-  //   });
-  // }
 
   onEditCopy(): void {
     this.copyService.isEdit = true;
