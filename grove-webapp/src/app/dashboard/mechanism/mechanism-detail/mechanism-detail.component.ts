@@ -59,7 +59,7 @@ export class MechanismDetailComponent implements OnInit, OnDestroy {
   }
 
   onOpenConfirm(): void {
-    this.deletionHandlerService.callModal(ModelEnum.THEME, this.mechanism, false)
+    this.deletionHandlerService.callModal(ModelEnum.MECHANISM, this.mechanism, false)
       .then(value => {
         if (value === 'Ok click') {
           this.onDelete();

@@ -47,7 +47,6 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   onBack(): void {
     this.router.navigate(['/admin/editor/games']);
   }
-
   onDelete(): void {
     this.service.deleteThenFetchAll(this.game.id);
     this.router.navigate(['/admin/editor/games']);
