@@ -39,12 +39,24 @@ export class ImageService {
     return this.http.post<Image>(this.apiUri + '/api/admin/images/games/' + gameId, fd, {headers: hd});
   }
 
+  delete(id: number): Observable<any> {
+    return this.http.delete(this.apiUri + '/api/admin/images/' + id);
+  }
+
   /* ================================================ OTHER METHODS ==================================================================== */
 
   updateImages(image: Image): void {
     const images = this.getImages();
     images.push(image);
     this.images$.next(images);
+  }
+
+  removeImage(id: number): void {
+    const images = this.getImages();
+    const idx = images.findIndex(item => item.id === id);
+    images.splice(idx, 1);
+    this.images$.next(images);
+
   }
 
   getImages(): Image[] {

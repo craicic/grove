@@ -1,5 +1,16 @@
 <div class="row">
-    <div class="col" *ngFor="let image of images | async">
-        <img src="{{ filePrefix + image.content }}" alt="{{ image.id }}" class="img-fluid"/>
+  <div class="col" *ngFor="let image of images | async">
+    <img src="{{ filePrefix + image.content }}" alt="{{ image.id }}" class="img-fluid p-5"/>
+    <div class="mb-1">
+      <button
+        type="button"
+        class="btn btn-secondary me-1 mb-1"
+        (click)="onRemove(image.id)"
+      >Retirer
+      </button>
     </div>
+  </div>
+
+
+
 </div>

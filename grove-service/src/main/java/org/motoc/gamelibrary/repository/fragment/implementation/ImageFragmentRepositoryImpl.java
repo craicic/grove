@@ -139,6 +139,21 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         return ids;
     }
 
+    @Override
+    public void deleteLob(Long id) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Image i = em.find(Image.class, id);
+        ImageBlob ib = em.find(ImageBlob.class, id);
+
+        em.remove(ib);
+        em.remove(i);
+
+        em.getTransaction().commit();
+        em.close();
+    }
+
     private Long persistLob(byte[] bytes, EntityManager em, Image i) {
         em.persist(i);
 

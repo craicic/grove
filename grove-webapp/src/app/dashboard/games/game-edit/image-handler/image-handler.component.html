@@ -1,6 +1,6 @@
 <h2>Image</h2>
 
-<form>
+<form *ngIf="game.nbOfImages == 0;">
   <div class="mb-3">
     <label class="form-label" for="inputFile">{{file ? 'Image prête à être sauvegardée' : 'Choisissez une image à associer'}}</label>
     <input

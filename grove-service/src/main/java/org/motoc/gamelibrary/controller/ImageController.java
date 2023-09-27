@@ -47,7 +47,6 @@ public class ImageController {
     ImageDto saveAndRespond(@RequestParam(name = "file") MultipartFile file,
               @PathVariable Long gameId) throws IOException {
         logger.trace("save(image) called");
-        logger.warn(file.getName());
         return service.save(file.getInputStream(), file.getContentType(), gameId);
     }
 
@@ -66,6 +65,12 @@ public class ImageController {
 //        logger.warn(file.getName());
 //        return service.saveThenAttachToGame(file.getInputStream(), file.getContentType(), gameId);
 //    }
+
+    @DeleteMapping("/admin/images/{id}")
+    void deleteById(@PathVariable Long id) {
+        logger.trace("deleteById(id) called");
+        service.deleteById(id);
+    }
 
     /**
      * Get an item containing an image and its ID given an ID

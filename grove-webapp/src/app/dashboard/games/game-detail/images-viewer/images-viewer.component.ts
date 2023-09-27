@@ -5,29 +5,32 @@ import {ImageService} from '../../../../shared/services/image.service';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
-    selector: 'app-images-viewer',
-    templateUrl: './images-viewer.component.html',
-    styleUrls: ['./images-viewer.component.css']
+  selector: 'app-images-viewer',
+  templateUrl: './images-viewer.component.html',
+  styleUrls: ['./images-viewer.component.css']
 })
 export class ImagesViewerComponent implements OnInit, OnDestroy {
-    private subscription: Subscription;
-    images: Observable<Image[]>;
-    filePrefix: string;
+  private subscription: Subscription;
+  images: Observable<Image[]>;
+  filePrefix: string;
 
-    constructor(public service: ImageService) {
-        this.filePrefix = environment.filePrefix;
-    }
+  constructor(public service: ImageService) {
+    this.filePrefix = environment.filePrefix;
+  }
 
-    ngOnInit(): void {
-        this.subscription = this.service.images$.subscribe(i => {
-            this.images = of(i);
-        });
-    }
+  ngOnInit(): void {
+    this.subscription = this.service.images$.subscribe(i => {
+      this.images = of(i);
+    });
+  }
 
-    ngOnDestroy(): void {
-        console.log('destroyed Image Viewer');
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    console.log('destroyed Image Viewer');
+    this.subscription.unsubscribe();
+  }
 
 
+  onRemove(id: number): void {
+    this.service.delete(id).subscribe(() => this.service.removeImage(id));
+  }
 }

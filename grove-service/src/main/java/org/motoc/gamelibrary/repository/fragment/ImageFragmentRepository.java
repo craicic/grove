@@ -59,4 +59,6 @@ public interface ImageFragmentRepository {
      * @return A list of IDs of the persisted Images.
      */
     List<Long> persistAll(List<byte[]> bytesList);
+
+    void deleteLob(Long id);
 }

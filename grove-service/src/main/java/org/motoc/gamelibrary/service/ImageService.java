@@ -113,4 +113,8 @@ public class ImageService {
                 || e.equalsIgnoreCase("jpg")
                 || e.equalsIgnoreCase("jpeg"));
     }
+
+    public void deleteById(Long id) {
+        repository.deleteLob(id);
+    }
 }
