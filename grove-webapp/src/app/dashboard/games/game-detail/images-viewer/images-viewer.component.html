@@ -10,7 +10,7 @@
       </button>
     </div>
   </div>
-
-
-
+  <div *ngIf="service.getImages().length === 0">
+      Aucune image associée.
+  </div>
 </div>

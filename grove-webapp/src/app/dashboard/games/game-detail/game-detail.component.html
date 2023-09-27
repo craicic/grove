@@ -16,37 +16,42 @@
   </div>
 </div>
 <div class="row mb-5">
-  <div class="col-md-4">
+  <div class="col">
     <h4>Catégories</h4>
     <span *ngFor="let category of game.categories">
      <span class="bg-secondary badge me-1 mb-1">{{ category.title }}</span>
     </span>
+    <div *ngIf="game.categories.length === 0">
+      Pas de catégorie associée.
+    </div>
   </div>
-  <div class="col-md-4">
+  <div class="col">
     <h4>Mécanismes</h4>
     <span *ngFor="let mechanism of game.mechanisms">
      <span class="bg-secondary badge me-1 mb-1">{{ mechanism.title }}</span>
     </span>
+    <div *ngIf="game.mechanisms.length === 0">
+      Pas de mécanique associée.
+    </div>
   </div>
-  <div class="col-md-4">
-    <ng-container *ngIf="game.creators">
+
+  <ng-container *ngIf="game.creators.length > 0">
+    <div class="col">
       <h4>Créateurs</h4>
       <div *ngFor="let creator of game.creators">
         <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
       </div>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
 </div>
 <div class="row mb-5">
-  <div class="col-md-8">
-    <div *ngIf="game.description">
+  <div *ngIf="game.description"  class="col-md-8">
       <h4>Description</h4>
       <div>{{ game.description }}</div>
-    </div>
   </div>
-  <div class="col-md-4">
-    <div class="card mb-3" style="width: 18rem;">
-      <div class="card-body">
+  <div class="col">
+    <div class="card mb-3">
+      <div class="card-body" style="width: auto">
         <h5> {{ game.nature | enumToString }}</h5>
         <h5>{{ numberOfPlayers }}</h5>
         <h5 *ngIf="game.playTime">{{ game.playTime }}</h5>
@@ -65,9 +70,9 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h4 class="mt-5">Taille / encombrement</h4>
+    <h4 *ngIf="game.size" class="mb-5">Taille / encombrement</h4>
     <div>{{ game.size }}</div>
-    <h4 class="mt-5">Materiel</h4>
+    <h4 *ngIf="game.material" class="mb-5">Materiel</h4>
     <div>{{ game.material }}</div>
   </div>
 </div>

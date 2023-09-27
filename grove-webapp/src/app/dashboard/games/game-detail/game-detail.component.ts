@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 import {DeletionHandlerService} from '../../../shared/services/deletion-handler.service';
 import {ModelEnum} from '../../../model/enum/model.enum';
 import {EDITION, WrapperService} from '../../../shared/services/wrapper.service';
-import {Image} from '../../../model/image.model';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -46,7 +45,7 @@ export class GameDetailComponent implements OnInit, OnDestroy {
 
 
   onBack(): void {
-    this.router.navigate(['/admin/editor/games/', this.game.id]);
+    this.router.navigate(['/admin/editor/games']);
   }
 
   onDelete(): void {
