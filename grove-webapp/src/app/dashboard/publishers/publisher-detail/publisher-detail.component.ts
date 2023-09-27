@@ -68,18 +68,18 @@ export class PublisherDetailComponent implements OnInit {
           return this.publisherDataService.fetchPublishers();
         })
       ).subscribe();
+      this.router.navigate(['../'], {relativeTo: this.route});
     } else {
 
       const observable = of(this.publisher.contact.id);
       observable.pipe(
         concatMap(id => {
-          return this.publisherDataService.removeContact(this.publisher.id, id);
+          return this.publisherDataService.removeContact(this.publisher.id);
         }),
         concatMap(() => {
           return this.publisherDataService.fetchPublishers();
         })
       ).subscribe();
     }
-    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

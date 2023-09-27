@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -132,7 +132,7 @@ public class CreatorController {
      * Remove creator's contact.
      * @param creatorId The creatorId of the creator to delete.
      */
-    @PutMapping("/{creatorId}")
+    @DeleteMapping("/{creatorId}/contact")
     void removeContact(@PathVariable Long creatorId) {
         logger.trace("deleteContact(creatorId, contactId) called");
         service.removeContact(creatorId);
