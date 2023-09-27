@@ -5,7 +5,6 @@ import {Mechanism} from './mechansim.model';
 import {Creator} from './creator.model';
 import {GameNatureEnum} from './enum/game-nature.enum';
 import {GameCopy} from './game-copy.model';
-import {Image} from './image.model';
 
 export class Game implements ModelInterface {
   id?: number;

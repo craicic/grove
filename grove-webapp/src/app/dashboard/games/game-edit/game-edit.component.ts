@@ -4,7 +4,6 @@ import {GameService} from '../game.service';
 import {ImageService} from '../../../shared/services/image.service';
 import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
-import {Image} from '../../../model/image.model';
 import {GameCopiesService} from '../../game-copies/game-copies.service';
 import {Router} from '@angular/router';
 

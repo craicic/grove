@@ -1,9 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
-import {Mechanism} from '../../../../model/mechansim.model';
+import {Observable, of, Subscription} from 'rxjs';
 import {Image} from '../../../../model/image.model';
-import {Game} from '../../../../model/game.model';
-import {GameService} from '../../game.service';
 import {ImageService} from '../../../../shared/services/image.service';
 import {environment} from '../../../../../environments/environment';
 
