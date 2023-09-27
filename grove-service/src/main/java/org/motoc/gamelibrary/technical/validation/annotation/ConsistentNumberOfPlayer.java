@@ -1,10 +1,10 @@
 package org.motoc.gamelibrary.technical.validation.annotation;
 
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import org.motoc.gamelibrary.technical.validation.ConsistentNumberOfPlayerDtoValidator;
 import org.motoc.gamelibrary.technical.validation.ConsistentNumberOfPlayerValidator;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 /**

@@ -1,10 +1,9 @@
 package org.motoc.gamelibrary.domain.dto;
 
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.motoc.gamelibrary.domain.enumeration.GeneralState;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

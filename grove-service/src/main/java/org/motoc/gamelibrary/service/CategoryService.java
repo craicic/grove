@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.CategoryDto;
 import org.motoc.gamelibrary.mapper.CategoryMapper;
 import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
@@ -12,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**

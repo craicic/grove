@@ -1,11 +1,11 @@
 package org.motoc.gamelibrary.domain.model;
 
 
-import lombok.*;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
+import jakarta.persistence.EntityManager;
 import org.motoc.gamelibrary.domain.model.Game;
 import org.motoc.gamelibrary.domain.model.Mechanism;
 import org.motoc.gamelibrary.repository.fragment.MechanismFragmentRepository;
@@ -8,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import jakarta.persistence.EntityManager;
 
 /**
  * It's the mechanism custom repository implementation, made to create / use javax persistence objects, criteria, queryDSL (if needed)

@@ -1,6 +1,8 @@
 package org.motoc.gamelibrary.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.service.GameCopyService;
 import org.slf4j.Logger;
@@ -9,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 

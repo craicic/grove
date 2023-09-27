@@ -1,15 +1,18 @@
 package org.motoc.gamelibrary.domain.dto;
 
-import lombok.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.domain.enumeration.GameNature;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentNumberOfPlayer;
 import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;

@@ -1,13 +1,13 @@
 package org.motoc.gamelibrary.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.motoc.gamelibrary.domain.enumeration.LoanStatus;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.PastOrPresent;
+import lombok.Getter;
+import lombok.Setter;
+import org.motoc.gamelibrary.domain.enumeration.LoanStatus;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

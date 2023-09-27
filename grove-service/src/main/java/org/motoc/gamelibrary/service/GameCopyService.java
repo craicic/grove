@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.domain.model.GameCopy;
 import org.motoc.gamelibrary.domain.model.Publisher;
@@ -12,9 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 import java.util.List;
 
