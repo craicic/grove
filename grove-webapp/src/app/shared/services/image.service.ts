@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Image} from '../../model/image.model';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ConfigurationService} from '../../dashboard/configuration/configuration.service';
 import {environment} from '../../../environments/environment';
 import {tap} from 'rxjs/operators';
 
