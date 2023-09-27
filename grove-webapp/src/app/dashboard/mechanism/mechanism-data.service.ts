@@ -22,7 +22,7 @@ export class MechanismDataService {
 
   fetchNames(): Observable<Mechanism[]> {
     return this.http
-      .get<Mechanism[]>(this.apiUri + '/api/admin/mechanisms/', {responseType: 'json'})
+      .get<Mechanism[]>(this.apiUri + '/api/admin/mechanisms', {responseType: 'json'})
       .pipe(
         tap(mechanisms => {
           this.mechanismsService.setNames(mechanisms);
@@ -57,7 +57,7 @@ export class MechanismDataService {
 
   addMechanism(newMechanism: Mechanism): any {
     return this.http
-      .post<Mechanism>(this.apiUri + '/api/admin/mechanisms/', newMechanism, {responseType: 'json'});
+      .post<Mechanism>(this.apiUri + '/api/admin/mechanisms', newMechanism, {responseType: 'json'});
   }
 
   removeMechanism(id: number): any {

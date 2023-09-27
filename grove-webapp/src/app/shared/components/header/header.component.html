@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
 
-<a class="navbar-brand" routerLink="/">Index</a>
+  <a class="navbar-brand" routerLink="/">Index</a>
 
   <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
   <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
@@ -17,13 +17,13 @@
           *ngIf="authenticated() && isAdministrator"
           (click)="isMenuCollapsed = true; onOpenGamesNavbar()">Base de données de jeux</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item visually-hidden" routerLinkActive="active">
         <a
           class="nav-link" style="cursor:pointer;"
           *ngIf="authenticated() && isAdministrator"
           (click)="isMenuCollapsed = true; onOpenLoansNavbar()">Prêts</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item visually-hidden" routerLinkActive="active">
         <a
           class="nav-link"
           style="cursor:pointer;"
