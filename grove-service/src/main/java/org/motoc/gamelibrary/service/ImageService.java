@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.service;
 
 import jakarta.transaction.Transactional;
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.domain.enumeration.ImageFormat;
 import org.motoc.gamelibrary.repository.jpa.ImageRepository;
 import org.slf4j.Logger;
@@ -41,6 +42,11 @@ public class ImageService {
     public Long saveThenAttachToGame(InputStream imageStream, String contentType, Long gameId) throws IOException {
         byte[] bytes = imageToByte(imageStream);
         return repository.persistImageAndAttachToGame(bytes, gameId);
+    }
+
+    public ImageDto save(InputStream imageStream, String contentType, Long gameId) throws IOException {
+        byte[] bytes = imageToByte(imageStream);
+        return repository.persistByteToImage(bytes, gameId);
     }
 
     /**

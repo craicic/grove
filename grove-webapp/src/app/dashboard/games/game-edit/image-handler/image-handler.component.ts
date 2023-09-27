@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GameService} from '../../game.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Game} from '../../../../model/game.model';
 import {ImageService} from '../../../../shared/services/image.service';
-import {Image} from '../../../../model/image.model';
 
 @Component({
   selector: 'app-image-handler',
@@ -14,11 +13,9 @@ export class ImageHandlerComponent implements OnInit {
 
   game: Game;
   file: File;
-  private newId: number;
 
   constructor(private service: ImageService,
               private gameService: GameService,
-              private route: ActivatedRoute,
               private router: Router) {
   }
 
@@ -26,24 +23,15 @@ export class ImageHandlerComponent implements OnInit {
     this.game = this.gameService.getDetailedGame();
   }
 
-    onUpload(): void {
-
-        console.log(this.file);
-        this.service.uploadImage(this.file, this.game.id)
-            .subscribe(imageId => {
-                    const fr: FileReader = new FileReader();
-                    let imageContent;
-                    fr.readAsDataURL(this.file);
-                    fr.onload = () => {
-                         imageContent = fr.result;
-                         console.log(imageContent);
-                    };
-                    const image: Image = {id: imageId, content: imageContent};
-                    this.service.updateImagesSubject(image);
-                },
-                err => console.log(err)
-            );
-    }
+  onUpload(): void {
+    this.service.uploadImage(this.file, this.game.id)
+      .subscribe(image => {
+          this.resetInput();
+          this.service.updateImagesSubject(image);
+        },
+        err => console.log(err)
+      );
+  }
 
   onRemove(): void {
     this.resetInput();

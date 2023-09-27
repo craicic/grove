@@ -1,5 +1,8 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.domain.model.Game;
 import org.motoc.gamelibrary.domain.model.Image;
 import org.motoc.gamelibrary.domain.model.ImageBlob;
@@ -10,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,34 @@ public class ImageFragmentRepositoryImpl implements ImageFragmentRepository {
         Image i = new Image();
         i.setGame(game);
         return persistLob(bytes, em, i);
+    }
+
+    @Override
+    public ImageDto persistByteToImage(byte[] bytes, Long gameId) {
+
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Game game = new Game();
+        game.setId(gameId);
+
+        Image i = new Image();
+
+        i.setGame(game);
+        em.persist(i);
+
+        ImageBlob ib = new ImageBlob();
+
+        ib.setImage(i);
+        ib.setContent(bytes);
+        em.persist(ib);
+
+        ImageDto dto = new ImageDto(i.getId(), ib.getContent());
+
+        em.getTransaction().commit();
+        em.close();
+
+        return dto;
     }
 
     @Override

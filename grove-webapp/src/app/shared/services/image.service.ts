@@ -29,14 +29,14 @@ export class ImageService {
 
   }
 
-  uploadImage(file: File, gameId: number): Observable<number> {
+  uploadImage(file: File, gameId: number): Observable<Image> {
     const fd: FormData = new FormData();
     const hd: HttpHeaders = new HttpHeaders();
 
     hd.append('Content-Type', undefined);
 
     fd.append('file', file);
-    return this.http.post<number>(this.apiUri + '/api/admin/images/games/' + gameId, fd, {headers: hd});
+    return this.http.post<Image>(this.apiUri + '/api/admin/images/games/' + gameId, fd, {headers: hd});
   }
 
   /* ================================================ OTHER METHODS ==================================================================== */
