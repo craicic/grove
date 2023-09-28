@@ -93,6 +93,7 @@ import {CopiesDetailComponent} from './dashboard/game-copies/copies-control/copi
 import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 import {CopiesControlComponent} from './dashboard/game-copies/copies-control/copies-control.component';
 import { ImagesViewerComponent } from './dashboard/games/game-detail/images-viewer/images-viewer.component';
+import { RulesHandlerComponent } from './dashboard/games/game-edit/rules-handler/rules-handler.component';
 
 
 @NgModule({
@@ -170,7 +171,8 @@ import { ImagesViewerComponent } from './dashboard/games/game-detail/images-view
     CopiesControlComponent,
     CopiesDetailComponent,
     CopyHandlerComponent,
-    ImagesViewerComponent
+    ImagesViewerComponent,
+    RulesHandlerComponent
   ],
     imports: [
         BrowserModule,

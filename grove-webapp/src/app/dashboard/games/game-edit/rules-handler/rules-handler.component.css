@@ -1,0 +1,16 @@
+.block-container {
+  padding: 3em 1.5em;
+  border: 3px solid #198754;
+}
+
+h4 {
+  text-align: center;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.custom-form {
+  margin: 1.5em;
+}

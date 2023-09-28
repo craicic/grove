@@ -67,6 +67,7 @@ import {MechanismHandlerComponent} from './dashboard/games/game-edit/mechanism-h
 import {LoginComponent} from './auth/login/login.component';
 import {ErrorPageComponent} from './error/error-page/error-page.component';
 import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
+import {RulesHandlerComponent} from './dashboard/games/game-edit/rules-handler/rules-handler.component';
 
 const routes: Routes = [
   {
@@ -132,16 +133,17 @@ const routes: Routes = [
               {
                 path: 'new',
                 component: CopyHandlerComponent,
-                data: {editMode: false}
               },
               {
                 path: ':copyId',
                 component: CopyHandlerComponent,
-                data: {editMode: true}
               }
             ]
           },
-
+          {
+            path: 'rules',
+            component: RulesHandlerComponent,
+          },
           {
             path: 'categories',
             component: CategoryHandlerComponent
