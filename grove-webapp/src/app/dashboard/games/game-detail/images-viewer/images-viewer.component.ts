@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, of, Subscription} from 'rxjs';
 import {Image} from '../../../../model/image.model';
 import {ImageService} from '../../../../shared/services/image.service';
@@ -13,6 +13,7 @@ export class ImagesViewerComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   images: Observable<Image[]>;
   filePrefix: string;
+  @Input() editModeOn: boolean;
 
   constructor(public service: ImageService) {
     this.filePrefix = environment.filePrefix;
