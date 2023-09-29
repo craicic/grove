@@ -40,6 +40,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Verify with Maven
-        run: mvn -B verify --file pom.xml
+        run: mvn -B verify --file pom.xml -Dspring.profiles.active=dev
 #      - run: echo "Maven will now run VERIFY."
 #        run: mvn -B package --file pom.xml -DskipTests -Dspring-boot.run.arguments="--spring.datasource.username=${{ secrets.DATASOURCE_USR }} --spring.datasource.username=${{ secrets.DATASOURCE_PWD }}"
