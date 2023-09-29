@@ -2,7 +2,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AuthenticationService} from './auth/authentication.service';
-import {Environment} from '@angular/cli/lib/config/workspace-schema';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.authService.authenticated && req.url.endsWith('/api/token')) {
       console.log('Sending refresh token to backend!');
       token = localStorage.getItem('refresh_token').toString();
-    } else if (this.authService.authenticated && req.url.startsWith('http://localhost:8080/api')) {
+    } else if (this.authService.authenticated && req.url.startsWith(environment.apiUri + '/api')) {
       token = localStorage.getItem('access_token').toString();
     }
     req = req.clone(

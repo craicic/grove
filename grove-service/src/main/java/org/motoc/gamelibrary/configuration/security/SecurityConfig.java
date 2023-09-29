@@ -37,6 +37,10 @@ public class SecurityConfig {
             "/main.js",
             "/polyfills.js",
             "/runtime.js",
+            "/styles.*.css",
+            "/main.*.js",
+            "/polyfills.*.js",
+            "/runtime.*.js",
             "/favicon.ico",
             // Following line are for production only
             "/vendor.js",
