@@ -68,6 +68,7 @@ import {LoginComponent} from './auth/login/login.component';
 import {ErrorPageComponent} from './error/error-page/error-page.component';
 import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 import {RulesHandlerComponent} from './dashboard/games/game-edit/rules-handler/rules-handler.component';
+import {SearchHomeComponent} from './search/search-home/search-home.component';
 
 const routes: Routes = [
   {
@@ -309,6 +310,10 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'search',
+    component: SearchHomeComponent
   },
   {
     path: 'not-found',
