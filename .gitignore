@@ -57,5 +57,4 @@ secrets-preprod.properties
 Thumbs.db
 
 # Configuration
-/grove-webapp/src/environments/environment.prod.ts
 /docker/pgadmin/servers.json
