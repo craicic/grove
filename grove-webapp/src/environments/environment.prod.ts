@@ -6,6 +6,6 @@ export const environment = {
   apiUri: 'https://grove.craicic.dev',
   filePrefix: 'data:image/jpg;base64,',
   api: {
-    country: 'https://restcountries.eu/rest/v2/all'
+    country: 'https://restcountries.com/v3.1/all'
   }
 };
