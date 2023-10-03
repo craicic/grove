@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MechanismsComponent} from './dashboard/mechanism/mechanisms.component';
-import {AuthGuard} from './permission.service';
+import {permissionGuard} from './permissionGuard';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {MechanismEditComponent} from './dashboard/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismDetailComponent} from './dashboard/mechanism/mechanism-detail/mechanism-detail.component';
@@ -81,7 +81,7 @@ const routes: Routes = [
   },
   {
     path: 'admin/locked-mode',
-    canActivate: [AuthGuard],
+    canActivate: [permissionGuard],
     resolve: [WrapperNewResolver],
     children: [
       {
@@ -187,8 +187,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    resolve: [NavResolverService],
-    canActivate: [AuthGuard],
+    canActivate: [permissionGuard],
     children: [
       {
         path: 'editor',

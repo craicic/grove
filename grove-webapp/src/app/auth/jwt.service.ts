@@ -12,7 +12,6 @@ export class JwtService {
   decode(token: string): AccessToken {
     const payload = token.split('.')[1];
     const decoded = atob(payload);
-    console.log(decoded);
     return JSON.parse(decoded);
   }
 }

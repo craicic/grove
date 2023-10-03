@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -92,9 +92,11 @@ import {AuthInterceptor} from './auth.interceptor';
 import {CopiesDetailComponent} from './dashboard/game-copies/copies-control/copies-detail/copies-detail.component';
 import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 import {CopiesControlComponent} from './dashboard/game-copies/copies-control/copies-control.component';
-import { ImagesViewerComponent } from './dashboard/games/game-detail/images-viewer/images-viewer.component';
-import { RulesHandlerComponent } from './dashboard/games/game-edit/rules-handler/rules-handler.component';
-import { SearchHomeComponent } from './search/search-home/search-home.component';
+import {ImagesViewerComponent} from './dashboard/games/game-detail/images-viewer/images-viewer.component';
+import {RulesHandlerComponent} from './dashboard/games/game-edit/rules-handler/rules-handler.component';
+import {SearchHomeComponent} from './search/search-home/search-home.component';
+import {sessionInitializer} from './session-initializer';
+import {AuthenticationService} from './auth/authentication.service';
 
 
 @NgModule({
@@ -176,17 +178,23 @@ import { SearchHomeComponent } from './search/search-home/search-home.component'
     RulesHandlerComponent,
     SearchHomeComponent
   ],
-    imports: [
-        BrowserModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        NgbModule,
-        AppRoutingModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    AppRoutingModule,
+    NgOptimizedImage
+  ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: sessionInitializer,
+      deps: [AuthenticationService],
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

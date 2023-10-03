@@ -17,6 +17,4 @@ export class AppComponent {
   isNavigation(): boolean {
     return this.wrapperService.mode === NAV;
   }
-
-
 }

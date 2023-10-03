@@ -78,9 +78,13 @@
             </goals>
             <configuration>
               <executable>npm</executable>
-              <arguments>
+            <arguments>
                 <argument>run</argument>
+                <argument>ng</argument>
                 <argument>build</argument>
+                <argument>--</argument>
+                <argument>--configuration</argument>
+                <argument>development</argument>
               </arguments>
             </configuration>
           </execution>
