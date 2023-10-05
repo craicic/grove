@@ -1,10 +1,10 @@
 grove-service/HELP.md
 target/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 grove-webapp/.angular
-
 ### STS ###
 .apt_generated
 .classpath
@@ -44,7 +44,7 @@ secrets-staging.properties
 !/src/main/resources/static/*
 
 # compiled output
-/grove-webapp/src/main/resources/dist/
+/grove-delivery/dist
 /grove-webapp/dist
 /grove-webapp/tmp
 /grove-webapp/out-tsc

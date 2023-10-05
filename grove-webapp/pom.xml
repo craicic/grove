@@ -11,7 +11,7 @@
 
   <artifactId>grove-webapp</artifactId>
   <name>Grove SPA</name>
-<!--  <packaging>pom</packaging>-->
+  <packaging>pom</packaging>
   <description>A tool for game libraries - This is the angular Single page application</description>
   <version>1.1.2</version>
 
@@ -23,7 +23,7 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>${project.basedir}/src/main/resources/dist</directory>
+              <directory>${project.basedir}/dist</directory>
             </fileset>
           </filesets>
         </configuration>
@@ -40,10 +40,10 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/grove-delivery/target/classes/static</outputDirectory>
+              <outputDirectory>${project.parent.basedir}/grove-delivery/dist/${project.artifactId}</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.basedir}/src/main/resources/dist/${project.artifactId}</directory>
+                  <directory>${project.basedir}/dist/${project.artifactId}</directory>
                   <filtering>false</filtering>
                 </resource>
               </resources>
@@ -84,7 +84,7 @@
                 <argument>build</argument>
                 <argument>--</argument>
                 <argument>--configuration</argument>
-                <argument>development</argument>
+                <argument>production</argument>
               </arguments>
             </configuration>
           </execution>
