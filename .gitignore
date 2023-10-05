@@ -34,7 +34,7 @@ build/
 
 ### SECRETS ####
 secrets.properties
-secrets-preprod.properties
+secrets-staging.properties
 
 #### DOCKER ###
 

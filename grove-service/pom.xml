@@ -233,7 +233,7 @@
                 <version>3.3.1</version>
                 <executions>
                     <execution>
-                        <id>copy-preprod</id>
+                        <id>copy-staging</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
