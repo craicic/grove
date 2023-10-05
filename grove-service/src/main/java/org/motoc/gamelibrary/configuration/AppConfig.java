@@ -13,6 +13,7 @@ public class AppConfig
         implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        // todo useful ?
         WebMvcConfigurer.super.addViewControllers(registry);
         registry.addViewController("/").setViewName("forward:/index.html");
     }
