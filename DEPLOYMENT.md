@@ -24,7 +24,7 @@ Close all WSL windows!
 
 Open PowerShell.
 
-List your WSL distributions:
+List your WSL distributions :
 
 `wsl --list`
 
@@ -69,6 +69,8 @@ Create the user `CREATE USER postgres WITH PASSWORD 'your-password';`
 
 Create the database `CREATE DATABASE db WITH ONWER postgres;`
 
+You can now connect PSQL with : `sudo psql -U postgres`
+
 ### configure DynDNS
 
 Check your router public IPv4.
@@ -99,8 +101,10 @@ Go in /opt and create a dir : `sudo mkdir ./grove`
 
 Give permissions on folder : `sudo chmod a+rwx ./grove`
 
-Ssh copy. Form the ssh client, copy the Jar and put it in the grove folder `sudo scp /mnt/c/users/public/Grove-1.1.2.jar user@<IP>:/opt/grove`
-    
+Ssh copy. Form the ssh client, copy the Jar and put it in the grove folder `sudo scp /mnt/e/code/multi/grove/grove-delivery/target/grove-service-1.1.2.jar  craicic@192.168.1.140:/opt/grove`
+
+Ssh copy again, now the ng dist folder `sudo scp -r /mnt/e/code/multi/grove/grove-delivery/dist  craicic@192.168.1.140:/usr/share/nginx/html`
+
 Test if app starts normally. `java -Dspring.profiles.active=staging -jar Grove-1.1.2.jar`
 
 Detach app from the console : add `nohup` before the command line.
@@ -109,6 +113,8 @@ You can check the app running using `ps aux | grep java`
 
 And if you want to kill the process : `kill -9 <PID>`
 
+
+sudo mv /opt/grove/dist /srv/grove/dist
 ### install certibot
 
 Install on raspi : `sudo apt install certbot`

@@ -84,7 +84,7 @@
                 <argument>build</argument>
                 <argument>--</argument>
                 <argument>--configuration</argument>
-                <argument>production</argument>
+                <argument>staging</argument>
               </arguments>
             </configuration>
           </execution>
