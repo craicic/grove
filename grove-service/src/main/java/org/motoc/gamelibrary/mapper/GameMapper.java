@@ -41,7 +41,8 @@ public interface GameMapper {
         return page.map(this::gameToOverviewDto);
     }
 
-    @Mapping(target = "imageIds", source = "images", qualifiedByName = "imageSetToIds")
+    @Mapping(target = "imageIds", ignore = true)
+//            source = "images", qualifiedByName = "imageSetToIds")
     @Mapping(target = "gameCopyCount", ignore = true)
     GameOverviewDto gameToOverviewDto(Game game);
 

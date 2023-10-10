@@ -1,11 +1,9 @@
 package org.motoc.gamelibrary.domain.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
-
-import jakarta.persistence.*;
 
 import java.sql.Types;
 

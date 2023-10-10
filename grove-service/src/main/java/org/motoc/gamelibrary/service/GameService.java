@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.GameDto;
 import org.motoc.gamelibrary.domain.dto.GameOverviewDto;
 import org.motoc.gamelibrary.domain.dto.ImageDto;
@@ -14,12 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Perform service logic on the entity Game
@@ -77,7 +76,8 @@ public class GameService {
 
 
     public void deleteById(long id) {
-        gameRepository.deleteById(id);
+        gameRepository.bulkDeleteById(id);
+
     }
 
 
@@ -109,9 +109,8 @@ public class GameService {
                     return gameRepository.save(game);
                 })
                 .orElseGet(() -> {
-                    newGame.setId(id);
                     logger.debug("No game of id={} found. Set game : {}", id, newGame);
-                    return gameRepository.save(newGame);
+                    throw new NotFoundException("No game of id = " + id + "found.");
                 }));
     }
 

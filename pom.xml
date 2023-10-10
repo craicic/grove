@@ -12,7 +12,7 @@
 
     <groupId>org.motoc</groupId>
     <artifactId>Grove</artifactId>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
 
     <modules>

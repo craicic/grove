@@ -8,7 +8,6 @@ import {environment} from '../../../environments/environment';
 import {GameOverview} from '../../model/game-overview.model';
 import {Game} from '../../model/game.model';
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../../auth/authentication.service';
 
 @Injectable({providedIn: 'root'})
 export class GameService {
@@ -19,9 +18,9 @@ export class GameService {
   pageChanged: Subject<Page<GameOverview>> = new Subject<Page<GameOverview>>();
   detailedGame$: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
 
+
   constructor(private http: HttpClient,
               private router: Router,
-              private authService: AuthenticationService,
               private config: ConfigurationService) {
     this.apiUri = environment.apiUri;
   }
@@ -47,7 +46,6 @@ export class GameService {
             this.page = pagedGameOverviews;
           }, error => {
             console.log(error);
-            this.authService.resetProfile();
             this.router.navigate(['/error']);
           }
         )
@@ -66,6 +64,13 @@ export class GameService {
   }
 
   deleteThenFetchAll(id: number): void {
+    this.http
+      .delete(this.apiUri + '/api/admin/games/' + id)
+      .subscribe(
+        () => this.fetchGames()
+          .subscribe(
+            () => this.initPage()
+          ));
   }
 
   /** */
@@ -77,7 +82,7 @@ export class GameService {
   /** Save a new game POST */
   saveGame(game: Game): Observable<Game> {
     return this.http
-      .post<Game>(this.apiUri + '/api/admin/games/', game, {responseType: 'json'});
+      .post<Game>(this.apiUri + '/api/admin/games', game, {responseType: 'json'});
   }
 
   /** Edit the game via PUT request */

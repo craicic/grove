@@ -37,7 +37,15 @@ public class SecurityConfig {
             "/main.js",
             "/polyfills.js",
             "/runtime.js",
-            "/favicon.ico"
+            "/styles.*.css",
+            "/main.*.js",
+            "/polyfills.*.js",
+            "/runtime.*.js",
+            "/favicon.ico",
+            // Following line are for production only
+            "/vendor.js",
+            "/bootstrap-icons.*",
+            "/assets/**"
     };
 
     @Bean
@@ -90,7 +98,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "https://grove.craicic.dev"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(List.of("Authorization","content-type"));

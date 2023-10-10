@@ -68,18 +68,18 @@ export class CreatorDetailComponent implements OnInit {
           return this.creatorsDataService.fetchCreators();
         })
       ).subscribe();
+      this.router.navigate(['../'], {relativeTo: this.route});
     } else {
 
       const myObs = of(this.creator.contact.id);
       myObs.pipe(
-        concatMap(id => {
-          return this.creatorsDataService.removeContact(this.creator.id, id);
+        concatMap(() => {
+          return this.creatorsDataService.removeContact(this.creator.id);
         }),
         concatMap(() => {
           return this.creatorsDataService.fetchCreators();
         })
       ).subscribe();
     }
-    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

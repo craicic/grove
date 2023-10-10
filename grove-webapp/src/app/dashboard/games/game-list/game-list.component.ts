@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {ConfigurationService} from '../../configuration/configuration.service';
 import {Router} from '@angular/router';
 import {GameService} from '../game.service';
 import {Page} from '../../../model/page.model';
@@ -13,9 +12,10 @@ import {ImageService} from '../../../shared/services/image.service';
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.css']
 })
-export class GameListComponent implements OnInit {
+export class GameListComponent implements OnInit, OnDestroy {
   filterForm: UntypedFormGroup;
   private subscription: Subscription;
+  private imageSub: Subscription;
 
   /* Pagination */
   games: GameOverview[];
@@ -25,7 +25,6 @@ export class GameListComponent implements OnInit {
 
   constructor(private service: GameService,
               private imageService: ImageService,
-              private configurationService: ConfigurationService,
               private router: Router) {
   }
 
@@ -39,19 +38,27 @@ export class GameListComponent implements OnInit {
     this.service.initPage();
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    if (this.imageSub) {
+      this.imageSub.unsubscribe();
+    }
+  }
+
+
   onFilter(): void {
     this.service
       .fetchGames(0, this.filterForm.value.keyword)
       .subscribe(() => this.service.updatePage());
     this.initForm();
-    this.router.navigate(['/admin/editor/games/list']);
+    this.router.navigate(['/admin/editor/games']);
   }
 
   onRefreshList(): void {
     this.service
       .fetchGames()
       .subscribe(() => this.service.updatePage());
-    this.router.navigate(['/admin/editor/games/list']);
+    this.router.navigate(['/admin/editor/games']);
   }
 
   onDelete(): void {
@@ -61,7 +68,7 @@ export class GameListComponent implements OnInit {
   onPageChange(pageNumber): void {
     if (!Number.isNaN(pageNumber)) {
       this.service.fetchGames(this.page);
-      this.router.navigate(['/admin/editor/games/list']);
+      this.router.navigate(['/admin/editor/games']);
     }
   }
 
@@ -69,5 +76,9 @@ export class GameListComponent implements OnInit {
     this.filterForm = new UntypedFormGroup({
       'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
+  }
+
+  onDetail(id: number): void {
+    this.imageSub = this.imageService.fetchImages(id).subscribe();
   }
 }

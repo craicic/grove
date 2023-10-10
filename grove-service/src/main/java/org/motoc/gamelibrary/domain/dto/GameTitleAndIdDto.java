@@ -1,11 +1,10 @@
 package org.motoc.gamelibrary.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import jakarta.validation.constraints.NotBlank;
 
 /**
  * Game name and Id DTO

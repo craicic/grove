@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/games")
-@SecurityRequirement(name="jwtAuth")
+@SecurityRequirement(name = "jwtAuth")
 public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -35,16 +35,18 @@ public class GameController {
 
     /**
      * Get the total game count.
+     *
      * @return Return the number of games in collection.
      */
     @GetMapping("/count")
-     Long count() {
+    Long count() {
         logger.trace("count called");
         return service.count();
     }
 
     /**
      * Get game by ID
+     *
      * @param id The game ID that need to be fetched
      * @return The game matching the ID
      */
@@ -56,6 +58,7 @@ public class GameController {
 
     /**
      * Fetch a paginated list of games, based on the pageable parameter.
+     *
      * @param pageable The pageable item to fetch a page of games.
      * @return The paginated list of games.
      */
@@ -67,8 +70,9 @@ public class GameController {
 
     /**
      * Update an existing game.
+     *
      * @param gameDto The edited game
-     * @param id The ID of the game to edit
+     * @param id      The ID of the game to edit
      * @return The edited game
      */
     @PutMapping("/{id}")
@@ -80,8 +84,9 @@ public class GameController {
 
     /**
      * Search for a set of Game, paginated. Based on an optional keyword
+     *
      * @param pageable The pageable item to fetch a page of games
-     * @param keyword The optional keyword to filter games
+     * @param keyword  The optional keyword to filter games
      * @return The paginated and filtered list of games.
      */
     @GetMapping("/page/overview")
@@ -95,10 +100,11 @@ public class GameController {
 
     /**
      * Save a new game
+     *
      * @param gameDto The game to save
      * @return The saved game
      */
-    @PostMapping("/")
+    @PostMapping()
     GameDto save(@RequestBody @Valid GameDto gameDto) {
         logger.trace("save(game) called");
         return service.save(gameDto);
@@ -106,6 +112,7 @@ public class GameController {
 
     /**
      * Get the list of all games' title
+     *
      * @return A list of title
      */
     @GetMapping("/titles")
@@ -116,6 +123,7 @@ public class GameController {
 
     /**
      * Get all PNG or JPEG images linked to the game that match the given ID
+     *
      * @param id The ID of the game the images are needed
      * @return A list of images in PNG or JPEG format
      */
@@ -127,7 +135,8 @@ public class GameController {
 
     /**
      * Attach a category to a game. Base on IDs
-     * @param gameId The ID of the game you want to link the given category
+     *
+     * @param gameId     The ID of the game you want to link the given category
      * @param categoryId The ID of the category you want to attach to the game
      * @return The updated game of the given ID.
      */
@@ -140,7 +149,8 @@ public class GameController {
 
     /**
      * Detach a category from a game. Base on IDs
-     * @param gameId The ID of the game you want to unlink the given category
+     *
+     * @param gameId     The ID of the game you want to unlink the given category
      * @param categoryId The ID of the category you want to detach from the game
      * @return The updated game of the given ID.
      */
@@ -154,7 +164,8 @@ public class GameController {
 
     /**
      * Attach a mechanism to a game. Base on IDs
-     * @param gameId The ID of the game you want to link the given mechanism
+     *
+     * @param gameId      The ID of the game you want to link the given mechanism
      * @param mechanismId The ID of the mechanism you want to attach to the game
      * @return The updated game of the given ID.
      */
@@ -167,7 +178,8 @@ public class GameController {
 
     /**
      * Detach a mechanism from a game. Base on IDs
-     * @param gameId The ID of the game you want to unlink the given mechanism
+     *
+     * @param gameId      The ID of the game you want to unlink the given mechanism
      * @param mechanismId The ID of the mechanism you want to detach from the game
      * @return The updated game of the given ID.
      */
@@ -180,6 +192,7 @@ public class GameController {
 
     /**
      * Delete a game based on the given ID
+     *
      * @param gameId The ID of the game to delete
      */
     @DeleteMapping("/{gameId}")
@@ -190,7 +203,8 @@ public class GameController {
 
     /**
      * Attach a game copy to a game. Base on IDs
-     * @param gameId The ID of the game you want to link the given game copy
+     *
+     * @param gameId     The ID of the game you want to link the given game copy
      * @param gameCopyId The ID of the game copy you want to attach to the game
      * @return The updated game of the given ID.
      */
@@ -203,7 +217,8 @@ public class GameController {
 
     /**
      * Detach a game copy from a game. Base on IDs
-     * @param gameId The ID of the game you want to unlink the given game copy
+     *
+     * @param gameId     The ID of the game you want to unlink the given game copy
      * @param gameCopyId The ID of the game copy you want to detach from the game
      */
     @PutMapping("/{gameId}/unlink-game-copy/{gameCopyId}")
@@ -215,7 +230,8 @@ public class GameController {
 
     /**
      * Attach a creator to a game. Base on IDs
-     * @param gameId The ID of the game you want to link the given creator
+     *
+     * @param gameId    The ID of the game you want to link the given creator
      * @param creatorId The ID of the creator you want to attach to the game
      * @return The updated game of the given ID.
      */
@@ -228,7 +244,8 @@ public class GameController {
 
     /**
      * Detach a creator from a game. Base on IDs
-     * @param gameId The ID of the game you want to unlink the given creator
+     *
+     * @param gameId    The ID of the game you want to unlink the given creator
      * @param creatorId The ID of the creator you want to detach from the game
      * @return The updated game of the given ID.
      */
@@ -241,7 +258,8 @@ public class GameController {
 
     /**
      * Attach an image to a game. Base on IDs
-     * @param gameId The ID of the game you want to link the given image
+     *
+     * @param gameId  The ID of the game you want to link the given image
      * @param imageId The ID of the image you want to attach to the game
      */
     @PutMapping("/{gameId}/add-image/{imageId}")

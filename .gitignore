@@ -1,10 +1,10 @@
 grove-service/HELP.md
 target/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 grove-webapp/.angular
-
 ### STS ###
 .apt_generated
 .classpath
@@ -34,6 +34,7 @@ build/
 
 ### SECRETS ####
 secrets.properties
+secrets-staging.properties
 
 #### DOCKER ###
 
@@ -43,7 +44,7 @@ secrets.properties
 !/src/main/resources/static/*
 
 # compiled output
-/grove-webapp/src/main/resources/dist/
+/grove-delivery/dist
 /grove-webapp/dist
 /grove-webapp/tmp
 /grove-webapp/out-tsc
@@ -56,5 +57,4 @@ secrets.properties
 Thumbs.db
 
 # Configuration
-/grove-webapp/src/environments/environment.prod.ts
 /docker/pgadmin/servers.json

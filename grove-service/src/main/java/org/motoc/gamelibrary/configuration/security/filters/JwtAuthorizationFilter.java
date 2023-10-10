@@ -30,7 +30,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         logger.info("Request analyzed :" + request.getServletPath());
-        return request.getServletPath().equals("/api/login") || request.getServletPath().equals("/styles.css") || request.getServletPath().contains("/swagger-ui") || request.getServletPath().contains("/v3/api-docs");
+        return request.getServletPath().equals("/api/login")
+               || request.getServletPath().equals("/styles.css")
+               || request.getServletPath().contains("/swagger-ui")
+               || request.getServletPath().contains("/v3/api-docs");
     }
 
     @Override
@@ -58,6 +61,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
+                    logger.warn(e.getMessage());
                     response.setHeader("error-message", e.getMessage());
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }

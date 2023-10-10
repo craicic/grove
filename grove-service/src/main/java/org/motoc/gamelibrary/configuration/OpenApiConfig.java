@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.info.License;
 import org.motoc.gamelibrary.technical.properties.OpenApiProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @OpenAPIDefinition
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
         scheme = "bearer",
         bearerFormat = "jwt",
         name = "jwtAuth")
+@Profile("dev")
 public class OpenApiConfig {
 
     @Bean

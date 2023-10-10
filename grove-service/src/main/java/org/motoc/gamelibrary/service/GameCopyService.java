@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.GameCopyDto;
 import org.motoc.gamelibrary.domain.model.GameCopy;
 import org.motoc.gamelibrary.domain.model.Publisher;
@@ -13,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 
 @Service
@@ -38,7 +38,10 @@ public class GameCopyService {
     }
 
     public GameCopyDto save(@Valid GameCopyDto gc) {
-        return mapper.copyToDto(copyRepository.save(mapper.dtoToCopy(gc)));
+        GameCopy save = copyRepository.save(mapper.dtoToCopy(gc));
+        logger.trace(save.toString());
+        return mapper.copyToDto(save);
+
     }
 
 
@@ -86,9 +89,8 @@ public class GameCopyService {
                     return copyRepository.save(copy);
                 })
                 .orElseGet(() -> {
-                    newCopy.setId(id);
                     logger.debug("No game copy of id={} found. Set game copy : {}", id, newCopy);
-                    return copyRepository.save(newCopy);
+                    throw new NotFoundException("No game copy of id = " + id + "found.");
                 }));
     }
 
@@ -129,7 +131,7 @@ public class GameCopyService {
                 .ifPresentOrElse(gameCopy -> {
                     if (gameCopy.getPublisher() == null || gameCopy.getPublisher() != publisher)
                         throw new IllegalStateException("Game copy of id=" + gameCopy.getId() +
-                                " is not linked to publisher of id=" + publisher.getId());
+                                                        " is not linked to publisher of id=" + publisher.getId());
 
                     this.gameCopyToReturn = copyRepository.removePublisher(gameCopy, publisher);
                 }, () -> {
@@ -169,5 +171,9 @@ public class GameCopyService {
 
     public List<GameCopyDto> findAll() {
         return mapper.copiesToDto(copyRepository.findAll());
+    }
+
+    public void deleteById(Long copyId) {
+        this.copyRepository.deleteById(copyId);
     }
 }

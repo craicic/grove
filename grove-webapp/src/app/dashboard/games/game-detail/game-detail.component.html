@@ -1,88 +1,101 @@
 <div class="row">
-  <div class="col-md-8">
-    <h2>{{ game.title }}</h2>
-    <div class="text-primary">{{ game.copies ? game.copies.length : 0 }} exemplaire(s)</div>
-    <h4 class="mt-5">Catégories</h4>
-    <span *ngFor="let category of game.categories">
-     <span class="badge-secondary badge mr-2">{{ category.title }}</span>
-    </span>
-    <h4 class="mt-5">Mécanismes</h4>
-    <span *ngFor="let mechanism of game.mechanisms">
-     <span class="badge-secondary badge mr-2">{{ mechanism.title }}</span>
-    </span>
-    <div class="mt-5" *ngIf="game.description">
-      <h4>Description</h4>
-      <div>{{ game.description }}</div>
+  <div class="col-md-12">
+    <div class="text-bg-light p-3 border rounded mb-5">
+      <h2>{{ game.title }}</h2>
+      <div class="float-right">
+        <button class="btn btn-success mb-1"
+                type="button"
+                (click)="onEdit()">Mode édition
+        </button>
+      </div>
+      <app-copies-control
+        [copies]="game.copies"
+        [gameId]="game.id">
+      </app-copies-control>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="float-right mb-5">
-      <button class="btn btn-warning m-2"
-              type="button"
-              (click)="onBack()">
-        <img
-          src="../../../../assets/icons/arrow-left.svg"
-          alt="X-square"/>
-      </button>
-      <button class="btn btn-success m-2"
-              type="button"
-              (click)="onEdit()">Mode édition
-      </button>
+</div>
+<div class="row mb-5">
+  <div class="col">
+    <h4>Catégories</h4>
+    <span *ngFor="let category of game.categories">
+     <span class="bg-secondary badge me-1 mb-1">{{ category.title }}</span>
+    </span>
+    <div *ngIf="game.categories.length === 0">
+      Pas de catégorie associée.
     </div>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
+  </div>
+  <div class="col">
+    <h4>Mécanismes</h4>
+    <span *ngFor="let mechanism of game.mechanisms">
+     <span class="bg-secondary badge me-1 mb-1">{{ mechanism.title }}</span>
+    </span>
+    <div *ngIf="game.mechanisms.length === 0">
+      Pas de mécanique associée.
+    </div>
+  </div>
+
+  <ng-container *ngIf="game.creators.length > 0">
+    <div class="col">
+      <h4>Créateurs</h4>
+      <div *ngFor="let creator of game.creators">
+        <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div class="row mb-5">
+  <div *ngIf="game.description"  class="col-md-8">
+      <h4>Description</h4>
+      <div>{{ game.description }}</div>
+  </div>
+  <div class="col">
+    <div class="card mb-3">
+      <div class="card-body" style="width: auto">
         <h5> {{ game.nature | enumToString }}</h5>
         <h5>{{ numberOfPlayers }}</h5>
         <h5 *ngIf="game.playTime">{{ game.playTime }}</h5>
         <h5 *ngIf="limitAge.length > 0">{{ limitAge }}</h5>
       </div>
     </div>
-    <div class="mt-5">
-      <ng-container *ngIf="game.creators">
-        <h4 class="mt-5">Créateurs</h4>
-        <div *ngFor="let creator of game.creators">
-          <span>{{ creator.role | enumToString }} : {{ creator.firstName }} {{ creator.lastName}}</span>
-        </div>
-      </ng-container>
-    </div>
   </div>
 </div>
-<div class="row mt-5">
+<div class="row mb-5">
   <div class="col-md-12">
-    <h4 class="mb-2">Galerie</h4>
-    <ngb-carousel *ngIf="game.imageIds && game.imageIds.length > 0">
-      <ng-template ngbSlide *ngFor="let image of images; let i = index">
-        <div class="text-center">
-          <img src="{{ image.content }}" class="img-fluid carousel-img m-4" alt="{{ game.title }} - dataUriArray[{{ i }}]">
-        </div>
-      </ng-template>
-    </ngb-carousel>
+    <h4>Galerie</h4>
+    <app-images-viewer [editModeOn]="false">
+    </app-images-viewer>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <h4 class="mt-5">Taille / encombrement</h4>
+    <h4 *ngIf="game.size" class="mb-5">Taille / encombrement</h4>
     <div>{{ game.size }}</div>
-    <h4 class="mt-5">Materiel</h4>
+    <h4 *ngIf="game.material" class="mb-5">Materiel</h4>
     <div>{{ game.material }}</div>
   </div>
 </div>
 <div class="row">
   <div class="col-lg-6"></div>
-  <div class="col-lg-6">
-    <button class="btn btn-warning mt-5"
-            type="button"
-            (click)="onBack()">Retour aux jeux
-    </button>
-    <button class="btn btn-success mt-5 ml-3"
-            type="button"
-            (click)="onEdit()">Mode édition
-    </button>
-    <button class="btn btn-danger mt-5 ml-3"
-            type="button"
-            (click)="onBack()">Supprimer le jeu
-    </button>
+  <div class="col-lg-6 mt-5 ">
+    <div class="float-right">
+      <button class="btn btn-outline-secondary me-1 mb-1"
+              type="button"
+              (click)="onBack()">
+        <img
+          src="../../../../assets/icons/arrow-left.svg"
+          alt="X-square"/>
+      </button>
+      <button class="btn btn-success me-1 mb-1"
+              type="button"
+              (click)="onEdit()">Mode édition
+      </button>
+      <button class="btn btn-danger mb-1"
+              type="button"
+              (click)="onOpenConfirm()">Supprimer le jeu
+      </button>
+    </div>
   </div>
 </div>
 <div class="row mt-5 mb-5">

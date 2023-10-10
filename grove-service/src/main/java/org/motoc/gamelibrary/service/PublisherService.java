@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.PublisherDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
@@ -14,8 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -71,9 +71,8 @@ public class PublisherService {
                     return repository.save(publisherFromPersistence);
                 })
                 .orElseGet(() -> {
-                    publisher.setId(id);
                     logger.debug("No publisher of id={} found. Set mechanism : {}", id, publisher);
-                    return repository.save(publisher);
+                    throw new NotFoundException("No publisher of id = " + id + "found.");
                 }));
     }
 

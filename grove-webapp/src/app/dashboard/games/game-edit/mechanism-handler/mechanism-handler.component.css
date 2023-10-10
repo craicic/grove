@@ -1,6 +1,6 @@
 .block-container {
   padding: 3em 1.5em;
-  border: 3px solid #28a745;
+  border: 3px solid #198754;
 }
 
 
@@ -30,12 +30,15 @@ li {
   display: inline;
 }
 
-.nav-link {
+.field-control {
+  color: #007BFF;
+  cursor: pointer;
+  margin-left: 1.5em;
   width: fit-content;
 }
 
-.nav-link:hover {
-  cursor: pointer;
+.field-control:hover {
+  color: #212529;
 }
 
 .inline {

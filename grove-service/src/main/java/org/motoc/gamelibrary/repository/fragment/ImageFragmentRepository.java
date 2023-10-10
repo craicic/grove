@@ -1,5 +1,6 @@
 package org.motoc.gamelibrary.repository.fragment;
 
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.technical.exception.NotFoundException;
 
 import java.util.List;
@@ -19,6 +20,17 @@ public interface ImageFragmentRepository {
      * @throws NotFoundException if a game of the given ID is not found.
      */
     Long persistImageAndAttachToGame(byte[] bytes, Long gameId);
+
+    /**
+     * This method persists an image to the database and attaches it to a Game.
+     * It creates a new Image entity, sets the image's game to the game with the given ID, and persists the image to the database.
+     *
+     * @param bytes  The byte array representing the image content.
+     * @param gameId The ID of the game to which the image will be attached.
+     * @return The ID of the persisted Image.
+     * @throws NotFoundException if a game of the given ID is not found.
+     */
+    ImageDto persistByteToImage(byte[] bytes, Long gameId);
 
 
     /**
@@ -47,4 +59,6 @@ public interface ImageFragmentRepository {
      * @return A list of IDs of the persisted Images.
      */
     List<Long> persistAll(List<byte[]> bytesList);
+
+    void deleteLob(Long id);
 }

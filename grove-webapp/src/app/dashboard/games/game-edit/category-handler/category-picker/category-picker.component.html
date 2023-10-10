@@ -7,7 +7,7 @@
       <input
         id="typeahead-focus"
         type="text"
-        class="form-control"
+        class="form-control me-1 mb-1"
         [ngbTypeahead]="search"
         (focus)="focus$.next($any($event).target.value)"
         (click)="click$.next($any($event).target.value)"
@@ -15,12 +15,12 @@
         formControlName="categoryField"
       />
       <button type="submit"
-              class="btn btn-success ml-2 rounded"
+              class="btn btn-success me-1 mb-1 rounded"
               [disabled]="!form.valid"
       >Associer
       </button>
       <button type="button"
-              class="btn btn-warning ml-2 rounded"
+              class="btn btn-outline-secondary me-1 mb-1 rounded"
               (click)="onBack()">Retour
       </button>
     </div>

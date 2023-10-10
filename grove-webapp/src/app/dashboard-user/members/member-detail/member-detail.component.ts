@@ -30,7 +30,7 @@ export class MemberDetailComponent implements OnInit {
         tap(a => console.log(a.contact)),
         catchError((error) => {
           // it's important that we log an error here.
-          // Otherwise you won't see an error in the console.
+          // Otherwise, you won't see an error in the console.
           console.error('error loading account of id:' + this.paramId, error);
           this.loadingError$.next(true);
           return of<Account>();

@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.service;
 
 import jakarta.transaction.Transactional;
+import org.motoc.gamelibrary.domain.dto.ImageDto;
 import org.motoc.gamelibrary.domain.enumeration.ImageFormat;
 import org.motoc.gamelibrary.repository.jpa.ImageRepository;
 import org.slf4j.Logger;
@@ -38,9 +39,14 @@ public class ImageService {
     /**
      * Save the image and attach it to a game
      */
-    public Long saveThenAttachToGame(InputStream imageStream, Long gameId) throws IOException {
-        byte[] bytes = imageToByte(imageStream, true, ImageFormat.JPG, ImageFormat.JPG);
+    public Long saveThenAttachToGame(InputStream imageStream, String contentType, Long gameId) throws IOException {
+        byte[] bytes = imageToByte(imageStream);
         return repository.persistImageAndAttachToGame(bytes, gameId);
+    }
+
+    public ImageDto save(InputStream imageStream, String contentType, Long gameId) throws IOException {
+        byte[] bytes = imageToByte(imageStream);
+        return repository.persistByteToImage(bytes, gameId);
     }
 
     /**
@@ -51,18 +57,15 @@ public class ImageService {
     }
 
 
-    private byte[] imageToByte(InputStream imageStream, boolean convert, ImageFormat inputFormat, ImageFormat outputFormat) throws IOException {
+    private byte[] imageToByte(InputStream imageStream) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         BufferedImage bufferedImage;
         try {
             bufferedImage = ImageIO.read(imageStream);
-            if (convert) {
-                ImageIO.write(bufferedImage, outputFormat.name(), outputStream);
-            } else {
-                ImageIO.write(bufferedImage, inputFormat.name(), outputStream);
-            }
-        } catch (IOException ex) {
+            ImageIO.write(bufferedImage, "jpg", outputStream);
+        } catch (
+                IOException ex) {
             logger.warn("An error occurred with message : " + ex.getMessage());
             throw new IOException(ex.getMessage());
         }
@@ -90,7 +93,7 @@ public class ImageService {
 
         for (Map.Entry<Path, ImageFormat> image : imageDescMap.entrySet()) {
             is = Files.newInputStream(image.getKey());
-            bytes = imageToByte(is, convert, image.getValue(), outputFormat);
+            bytes = imageToByte(is);
             bytesList.add(bytes);
             is.close();
         }
@@ -109,5 +112,9 @@ public class ImageService {
         return (e.equalsIgnoreCase("png")
                 || e.equalsIgnoreCase("jpg")
                 || e.equalsIgnoreCase("jpeg"));
+    }
+
+    public void deleteById(Long id) {
+        repository.deleteLob(id);
     }
 }

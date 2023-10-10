@@ -8,9 +8,9 @@
         <span *ngIf="loan.gameCopy"> {{ loan.gameCopy.gameName }}</span>
         <span
           *ngIf="!loan.closed; else closed"
-          class="badge badge-primary details-link">En cours</span>
+          class="badge bg-primary details-link">En cours</span>
         <ng-template #closed>
-          <span class="badge badge-secondary details-link ">Fermé</span>
+          <span class="badge bg-secondary details-link ">Fermé</span>
         </ng-template>
 
         <span class="right-side-group">

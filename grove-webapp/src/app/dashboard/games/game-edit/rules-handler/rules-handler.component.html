@@ -1,0 +1,40 @@
+<div class="block-container">
+  <h4>Matériel</h4>
+  <form
+    class="custom-form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="material"></label>
+      <textarea
+        id="material"
+        rows="20"
+        formControlName="rules"
+        class="form-control">
+      </textarea>
+      <div>{{ this.form.value.rules ? this.form.value.rules.length : 0}} / 50 000</div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <button
+          type="submit"
+          class="btn btn-success me-1 mb-1"
+          [disabled]="!form.valid">Sauvegarder
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary me-1 mb-1"
+          (click)="onCancel()"
+        >Restaurer
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary me-1 mb-1"
+          (click)="onBack()"
+        >Retour
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

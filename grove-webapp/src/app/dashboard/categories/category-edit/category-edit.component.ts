@@ -70,13 +70,15 @@ export class CategoryEditComponent implements OnInit {
     this.categoryForm = new UntypedFormGroup({
         'title': new UntypedFormControl(categoryTitle, [Validators.required, Validators.maxLength(50)]),
       },
-      (!this.editMode) ? {validators: this.titlesExistValidator.bind(this)} : {validators: this.titlesExistEditModeValidator.bind(this)});
+      (!this.editMode) ?
+        {validators: this.titlesExistValidator.bind(this)} :
+        {validators: this.titlesExistEditModeValidator.bind(this)});
   }
+
 
   titlesExistValidator(control: UntypedFormControl): ValidationErrors | null {
     const currentTitle = control.get('title').value.toLowerCase().trim();
     const titles = this.service.getLowerCasedAndTrimmedCategoryTitles();
-
     if (titles.indexOf(currentTitle) !== -1) {
       return {titleAlreadyExists: true};
     }
@@ -86,7 +88,6 @@ export class CategoryEditComponent implements OnInit {
   titlesExistEditModeValidator(control: UntypedFormControl): ValidationErrors | null {
     const currentTitle = control.get('title').value.toLowerCase().trim();
     const titles = this.service.getLowerCasedAndTrimmedCategoryTitles();
-
     if (titles.indexOf(currentTitle) !== -1 && currentTitle !== this.service.getCategoryById(this.id).title.toLowerCase().trim()) {
       return {titleAlreadyExists: true};
     }

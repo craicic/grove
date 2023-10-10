@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -59,7 +59,7 @@ public class CreatorController {
      * @param name The fullName of creators.
      * @return The creator find with fullName
      */
-    @GetMapping("/")
+    @GetMapping()
     CreatorWithoutContactDto findByName(@RequestParam(name = "full-name") String name) {
         logger.trace("findByName(name) called");
         return service.findByFullName(name);
@@ -95,6 +95,17 @@ public class CreatorController {
     }
 
     /**
+     * Save a new creator.
+     * @param creator The creator to save.
+     * @return The saved creator.
+     */
+    @PostMapping()
+    CreatorDto save(@RequestBody @Valid CreatorDto creator) {
+        logger.trace("save(creator) called");
+        return service.save(creator);
+    }
+
+    /**
      * Update an existing creator.
      * @param creator The edited creator.
      * @param id The ID of the creator to edit.
@@ -121,7 +132,7 @@ public class CreatorController {
      * Remove creator's contact.
      * @param creatorId The creatorId of the creator to delete.
      */
-    @PutMapping("/{creatorId}")
+    @DeleteMapping("/{creatorId}/contact")
     void removeContact(@PathVariable Long creatorId) {
         logger.trace("deleteContact(creatorId, contactId) called");
         service.removeContact(creatorId);

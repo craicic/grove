@@ -1,9 +1,8 @@
 package org.motoc.gamelibrary.domain.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import jakarta.persistence.*;
 
 @Getter
 @Setter

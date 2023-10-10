@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.CategoryDto;
 import org.motoc.gamelibrary.service.CategoryService;
 import org.slf4j.Logger;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -54,7 +54,7 @@ public class CategoryController {
      * Get all categories.
      * @return A list of categories.
      */
-    @GetMapping("/")
+    @GetMapping()
     List<CategoryDto> findAll() {
         logger.trace("findAll() called");
         return service.findAll();
@@ -88,7 +88,7 @@ public class CategoryController {
      * @return The saved category.
      */
 
-    @PostMapping("/")
+    @PostMapping()
     CategoryDto save(@RequestBody @Valid CategoryDto category) {
         logger.trace("save(category) called");
         return service.save(category);

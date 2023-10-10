@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.domain.dto.CreatorNameDto;
 import org.motoc.gamelibrary.domain.dto.CreatorWithoutContactDto;
@@ -14,8 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -75,9 +75,8 @@ public class CreatorService {
                     return repository.save(creatorFromPersistence);
                 })
                 .orElseGet(() -> {
-                    creator.setId(id);
                     logger.debug("No creator of id={} found. Set creator : {}", id, creator);
-                    return repository.save(creator);
+                    throw new NotFoundException("No creator of id = " + id + "found.");
                 }));
     }
 

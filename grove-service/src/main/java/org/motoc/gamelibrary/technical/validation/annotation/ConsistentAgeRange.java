@@ -1,10 +1,10 @@
 package org.motoc.gamelibrary.technical.validation.annotation;
 
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import org.motoc.gamelibrary.technical.validation.ConsistentAgeRangeDtoValidator;
 import org.motoc.gamelibrary.technical.validation.ConsistentAgeRangeValidator;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 /**

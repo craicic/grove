@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.CategoryDto;
 import org.motoc.gamelibrary.mapper.CategoryMapper;
 import org.motoc.gamelibrary.repository.jpa.CategoryRepository;
@@ -12,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -35,8 +35,13 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public CategoryDto save(@Valid CategoryDto gc) {
-        return mapper.categoryToDto(repository.save(mapper.dtoToCategory(gc)));
+    public CategoryDto save(@Valid CategoryDto category) {
+        if (category.getId() == null) {
+            logger.debug("Trying to save new category={}", category.getTitle());
+        } else {
+            logger.debug("Trying to save new category={} of id={}", category.getTitle(), category.getId());
+        }
+        return mapper.categoryToDto(repository.save(mapper.dtoToCategory(category)));
     }
 
 
@@ -69,9 +74,8 @@ public class CategoryService {
                     return repository.save(categoryFromPersistence);
                 })
                 .orElseGet(() -> {
-                    category.setId(id);
                     logger.debug("No category of id={} found. Set category : {}", id, category);
-                    return repository.save(mapper.dtoToCategory(category));
+                    throw new NotFoundException("No category of id = " + id + "found.");
                 }));
     }
 

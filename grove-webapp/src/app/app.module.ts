@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -38,7 +38,7 @@ import {GamesComponent} from './dashboard/games/games.component';
 import {GameListComponent} from './dashboard/games/game-list/game-list.component';
 import {GameSummaryComponent} from './dashboard/games/game-list/game-summary/game-summary.component';
 import {GameDetailComponent} from './dashboard/games/game-detail/game-detail.component';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {GameEditWrapperComponent} from './wrapper/game-edit-wrapper/game-edit-wrapper.component';
 import {GameEditComponent} from './dashboard/games/game-edit/game-edit.component';
 import {CategoryHandlerComponent} from './dashboard/games/game-edit/category-handler/category-handler.component';
@@ -89,6 +89,14 @@ import {LoanDetailComponent} from './dashboard-loan/loans/loan-detail/loan-detai
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {AuthInterceptor} from './auth.interceptor';
+import {CopiesDetailComponent} from './dashboard/game-copies/copies-control/copies-detail/copies-detail.component';
+import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
+import {CopiesControlComponent} from './dashboard/game-copies/copies-control/copies-control.component';
+import {ImagesViewerComponent} from './dashboard/games/game-detail/images-viewer/images-viewer.component';
+import {RulesHandlerComponent} from './dashboard/games/game-edit/rules-handler/rules-handler.component';
+import {SearchHomeComponent} from './search/search-home/search-home.component';
+import {sessionInitializer} from './session-initializer';
+import {AuthenticationService} from './auth/authentication.service';
 
 
 @NgModule({
@@ -162,7 +170,13 @@ import {AuthInterceptor} from './auth.interceptor';
     LoanListComponent,
     LoanDetailComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CopiesControlComponent,
+    CopiesDetailComponent,
+    CopyHandlerComponent,
+    ImagesViewerComponent,
+    RulesHandlerComponent,
+    SearchHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -171,9 +185,16 @@ import {AuthInterceptor} from './auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgOptimizedImage
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: sessionInitializer,
+      deps: [AuthenticationService],
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

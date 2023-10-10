@@ -1,10 +1,9 @@
 package org.motoc.gamelibrary.domain.dto;
 
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.motoc.gamelibrary.domain.enumeration.GeneralState;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -32,8 +31,6 @@ public class GameCopyDto {
     @PastOrPresent(message = "Date of purchase must be in the past or present")
     private LocalDate dateOfPurchase;
 
-    @PastOrPresent(message = "Date of purchase must be in the past or present")
-    @NotNull(message = "Date of purchase cannot be null")
     private LocalDate dateOfRegistration;
 
     @NotBlank(message = "Wear condition cannot be null or blank")
@@ -48,7 +45,6 @@ public class GameCopyDto {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @Valid
     private PublisherDto publisher;
 
     private Long gameId;

@@ -54,9 +54,9 @@ export class PublisherDataService {
       .delete(this.apiUri + '/api/admin/publishers/' + id);
   }
 
-  removeContact(publisherId: number, contactId): any {
+  removeContact(publisherId: number): any {
     return this.http
-      .delete(this.apiUri + '/api/admin/publishers/' + publisherId + '/contact/' + contactId);
+      .delete(this.apiUri + '/api/admin/publishers/' + publisherId + '/contact');
   }
 
   editPublisher(id: number, editedPublisher: Publisher): void {

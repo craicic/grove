@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.PublisherDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNameDto;
 import org.motoc.gamelibrary.domain.dto.PublisherNoIdDto;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("api/admin/publishers")
-@SecurityRequirement(name="jwtAuth")
+@SecurityRequirement(name = "jwtAuth")
 public class PublisherController {
 
     private static final Logger logger = LoggerFactory.getLogger(PublisherController.class);
@@ -33,6 +33,7 @@ public class PublisherController {
 
     /**
      * Get the total publisher count.
+     *
      * @return The number of publisher in collection.
      */
     @GetMapping("/count")
@@ -43,6 +44,7 @@ public class PublisherController {
 
     /**
      * Get all names of publishers.
+     *
      * @return A list of publishers.
      */
     @GetMapping("/names")
@@ -53,6 +55,7 @@ public class PublisherController {
 
     /**
      * Get publisher based on the given ID.
+     *
      * @param id The ID of the publisher to find.
      * @return The publisher matching the ID.
      */
@@ -64,13 +67,17 @@ public class PublisherController {
 
     /**
      * Fetch the paginated list of publishers, based on the pageable parameters.
+     *
      * @param pageable The pageable item to fetch a page of publishers.
-     * @param keyword The keyword to fetch a page of publishers.
+     * @param keyword  The keyword to fetch a page of publishers.
      * @return The paginated list of publishers.
      */
     @GetMapping("/page")
     Page<PublisherDto> findPage(Pageable pageable,
                                 @RequestParam(name = "search", required = false) String keyword) {
+
+        logger.debug("Publisher controller entry");
+
         logger.trace("findPage(pageable) called");
         if (keyword == null) {
             return service.findPage(pageable);
@@ -80,12 +87,14 @@ public class PublisherController {
         }
     }
 
+
     /**
      * Save a new publisher.
+     *
      * @param dto The publisher to save.
      * @return The saved publisher.
      */
-    @PostMapping("/")
+    @PostMapping()
     PublisherDto save(@RequestBody @Valid PublisherNoIdDto dto) {
         logger.trace("save(publisher) called");
         return service.save(dto);
@@ -93,8 +102,9 @@ public class PublisherController {
 
     /**
      * Update an existing publisher.
+     *
      * @param publisherDto The edited publisher.
-     * @param id The ID of the publisher to edit.
+     * @param id           The ID of the publisher to edit.
      * @return The edited publisher.
      */
     @PutMapping("/{id}")
@@ -106,6 +116,7 @@ public class PublisherController {
 
     /**
      * Delete a publisher based on the given ID.
+     *
      * @param id The ID of the publisher to delete.
      */
     @DeleteMapping("/{id}")
@@ -116,11 +127,12 @@ public class PublisherController {
 
     /**
      * Remove publisher contact.
+     *
      * @param publisherId The publisherID of the publisher to delete.
      */
-    @DeleteMapping("/{publisherId}/contact/")
+    @DeleteMapping("/{publisherId}/contact")
     void deleteContact(@PathVariable Long publisherId) {
-        logger.trace("deleteContact(publisherId, contactId) called");
+        logger.trace("deleteContact(publisherId) called");
         service.removeContact(publisherId);
     }
 }

@@ -5,12 +5,16 @@
   (clickDelete)="onDelete()"
   class="mb-3"></app-simple-filter-form>
 
-<a *ngFor="let mechanism of mechanisms"
-   style="cursor: pointer;"
-   routerLinkActive="active"
-   class="list-group-item list-group-item-action"
-   [routerLink]="['/admin/editor/mechanisms', mechanism.id]">
-  {{mechanism.title}} (id:{{mechanism.id}})</a>
+<ul class="list-group">
+  <li *ngFor="let mechanism of mechanisms"
+      style="cursor: pointer;"
+      routerLinkActive="active"
+      class="list-group-item list-group-item-action"
+      [routerLink]="['/admin/editor/mechanisms', mechanism.id]">
+    {{mechanism.title}} (id:{{mechanism.id}})
+  </li>
+</ul>
+
 <div class="mb-3"></div>
 <ngb-pagination
   [collectionSize]="totalElements"
@@ -21,12 +25,12 @@
 <hr/>
 
 <button
-  class="btn btn-secondary mr-2 mb-2"
+  class="btn btn-secondary me-1 mb-3"
   type="button"
   routerLink="/admin/editor/mechanisms/new">Nouveau mécanisme
 </button>
 <button
-  class="btn btn-secondary mr-2 mb-2"
+  class="btn btn-secondary me-1 mb-3"
   type="button"
   (click)="onRefreshList()">Rafraichir la liste
 </button>

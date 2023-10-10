@@ -3,8 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {JwtService} from './jwt.service';
 import {AccessToken} from './access-token';
-import {interval, Subscription} from 'rxjs';
-import {take} from 'rxjs/operators';
+import {interval, Observable, Subscription} from 'rxjs';
+import {take, tap} from 'rxjs/operators';
 import {RefreshToken} from './refresh-token';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AuthenticationService {
   private timer: Subscription;
   private token: AccessToken;
   private refresh: RefreshToken;
-
+  public requestedUrl: string;
 
   constructor(private http: HttpClient,
               private jwtService: JwtService) {
@@ -33,7 +33,7 @@ export class AuthenticationService {
       .subscribe((response: Jwt) => {
         if (response.access_token && response.refresh_token) {
           this.loadProfile(response);
-          this.timer = this.refreshTask();
+          this.initTimer();
         } else {
           this.authenticated = false;
         }
@@ -53,19 +53,28 @@ export class AuthenticationService {
     this.authenticated = true;
   }
 
-  refreshToken(): void {
+  refreshExpired(): boolean {
+    return this.refresh.exp * 1000 < (Date.now() - 1000);
+  }
+
+  accessExpired(): boolean {
+    return this.token.exp * 1000 < (Date.now() - 1000);
+  }
+
+  initTimer(): void {
+    this.timer = this.refreshTask();
+  }
+
+  refreshToken(): Observable<Jwt> {
     console.log('Refreshing access token !');
-    this.http
+    return this.http
       .get<Jwt>(environment.apiUri + '/api/token')
-      .subscribe((response: Jwt) => {
-          this.loadProfile(response);
-        },
-        (error) => console.log(error),
-        () => {
-          this.timer.unsubscribe();
-          this.timer = this.refreshTask();
-        }
-      );
+      .pipe(tap((response: Jwt) => {
+        this.loadProfile(response);
+        console.log('profile up to date');
+        this.timer?.unsubscribe();
+        this.initTimer();
+      }));
   }
 
   invalidate(callback: () => any): any {
@@ -78,6 +87,7 @@ export class AuthenticationService {
   }
 
   resetProfile(): any {
+    console.log('Reset profile');
     this.expiresIn = null;
     this.username = null;
     this.roles = null;
@@ -92,13 +102,15 @@ export class AuthenticationService {
     console.log('refresh tasks starts');
     const refreshInterval: number = Math.floor(this.expiresIn * 0.92);
     return interval(1000).pipe(take(refreshInterval)).subscribe(
-      (t) => (t % 10) === 0 ? console.log('Refreshing access in ' + (refreshInterval - t) + 's') : t,
+      (t) => t
+      // (t % 10) === 0 ? console.log('Refreshing access in ' + (refreshInterval - t) + 's') : t
+      ,
       (error) => console.log(error),
-      () => this.refreshToken());
+      () => this.refreshToken().subscribe());
   }
 
-  getRoles(): string[] {
-    return this.roles.slice();
+  getRoles(): string[] | null {
+    return this.roles ? this.roles.slice() : null;
   }
 }
 

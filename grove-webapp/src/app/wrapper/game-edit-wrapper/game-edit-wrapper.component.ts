@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {GameService} from '../../dashboard/games/game.service';
 import {NAV, WrapperService} from '../../shared/services/wrapper.service';
 
@@ -11,7 +11,6 @@ import {NAV, WrapperService} from '../../shared/services/wrapper.service';
 export class GameEditWrapperComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
               private service: GameService,
               private wrapperService: WrapperService) {
   }
@@ -25,7 +24,7 @@ export class GameEditWrapperComponent implements OnInit, OnDestroy {
 
   onBack(): void {
     this.wrapperService.mode = NAV;
-    this.service.game ? this.router.navigate(['/admin/editor/games/list', this.service.game.id])
-      : this.router.navigate(['/admin/editor/games/list']);
+    this.service.game ? this.router.navigate(['/admin/editor/games/detail', this.service.game.id])
+      : this.router.navigate(['/admin/editor/games']);
   }
 }

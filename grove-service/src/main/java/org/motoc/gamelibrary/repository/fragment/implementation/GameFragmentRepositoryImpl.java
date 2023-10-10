@@ -1,5 +1,9 @@
 package org.motoc.gamelibrary.repository.fragment.implementation;
 
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import org.motoc.gamelibrary.domain.model.*;
 import org.motoc.gamelibrary.repository.fragment.GameFragmentRepository;
 import org.slf4j.Logger;
@@ -10,9 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityGraph;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -35,6 +36,22 @@ public class GameFragmentRepositoryImpl implements GameFragmentRepository {
         Game g = entityManager.find(Game.class, id);
         g.setImages(g.getImages());
         return g;
+    }
+
+    @Override
+    public void bulkDeleteById(long id) {
+        TypedQuery<Long> q = entityManager.createQuery("SELECT c.id FROM GameCopy c JOIN c.game g WHERE g.id = :id", Long.class);
+        q.setParameter("id", id);
+        List<Long> ids = q.getResultList();
+        ids.forEach(i -> logger.debug("Will delete copy of id=" + i));
+
+        Query dQ = entityManager.createQuery("DELETE FROM GameCopy c WHERE c.id IN (:ids)");
+        dQ.setParameter("ids", ids);
+        dQ.executeUpdate();
+
+        dQ = entityManager.createQuery("DELETE FROM Game g WHERE g.id = :id");
+        dQ.setParameter("id", id);
+        dQ.executeUpdate();
     }
 
     @Override

@@ -1,10 +1,9 @@
 package org.motoc.gamelibrary.technical.validation;
 
-import org.motoc.gamelibrary.domain.dto.GameDto;
-import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.motoc.gamelibrary.domain.dto.GameDto;
+import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 
 public class SelectYearOrMonthDtoValidator implements ConstraintValidator<SelectYearOrMonth, GameDto> {
 

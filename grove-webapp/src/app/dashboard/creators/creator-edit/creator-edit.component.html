@@ -2,7 +2,7 @@
   [formGroup]="creatorForm"
   (ngSubmit)="onSubmit()">
   <h5>{{ label }}</h5>
-  <div class="form-row">
+  <div class="row mb-3">
 
     <div class="form-group col-md-6">
       <label for="firstname">Prénom</label>
@@ -27,13 +27,13 @@
   <span>Cet auteur existe déjà en base de données</span>
   </span>
 
-  <div class="form-row">
+  <div class="row mb-3">
 
     <div class="form-group col-md-12">
       <label for="role">Rôle</label>
       <select
         id="role"
-        class="form-control w-auto"
+        class="form-select w-auto"
         formControlName="role">
         <option
           *ngFor="let role of rolesList"
@@ -49,29 +49,29 @@
     [contactForm]="contactForm">
   </app-contact-form>
 
-  <div class="form-row">
+  <div class="row mb-3 mt-2">
     <div class="col-xl-12">
       <button
         type="submit"
-        class="btn btn-success mr-2 mb-2"
+        class="btn btn-success me-1 mb-1"
         [disabled]="!creatorForm.valid">Sauvegarder
       </button>
       <span class="x-spacer"></span>
       <button
         type="button"
-        class="btn btn-warning mr-2 mb-2"
+        class="btn btn-outline-secondary me-1 mb-1"
         (click)="onCancel()">Annuler
       </button>
       <span class="x-spacer"></span>
       <button
         type="button"
-        class="btn btn-secondary mr-2 mb-2"
+        class="btn btn-secondary me-1 mb-1"
         *ngIf="!hasContact"
         (click)="onAddContactForm()">Ajouter les coordonnées
       </button>
       <button
         type="button"
-        class="btn btn-outline-danger mr-2 mb-2"
+        class="btn btn-outline-danger me-1 mb-1"
         *ngIf="hasContact"
         (click)="onRemoveContactForm()">Retirer les coordonnées
       </button>

@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.MechanismDto;
 import org.motoc.gamelibrary.domain.dto.MechanismNameDto;
 import org.motoc.gamelibrary.service.MechanismService;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -46,7 +46,7 @@ public class MechanismController {
      * Get all mechanisms.
      * @return A list of mechanisms.
      */
-    @GetMapping("/")
+    @GetMapping()
     List<MechanismDto> findAll() {
         logger.trace("findAll called");
         return service.findAll();
@@ -86,7 +86,7 @@ public class MechanismController {
      * @param mechanismNameDto The mechanism to save.
      * @return The save mechanism.
      */
-    @PostMapping("/")
+    @PostMapping()
     MechanismDto save(@RequestBody @Valid MechanismNameDto mechanismNameDto) {
         logger.trace("save(mechanism) called");
         return service.save(mechanismNameDto);

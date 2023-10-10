@@ -2,14 +2,14 @@
   <h4>Mécanismes</h4>
   <ul>
     <li class="mechanism-line" *ngFor="let mechanism of gameMechanisms$ | async">
-      <div class="btn btn-lg btn-secondary">{{ mechanism.title }}</div>
-      <div class="btn btn-outline-secondary hover-control ml-3" (click)="onRemove(mechanism.id)">Retirer</div>
+      <div class="btn btn-lg btn-secondary me-1 mb-1">{{ mechanism.title }}</div>
+      <div class="btn btn-outline-secondary hover-control" (click)="onRemove(mechanism.id)">Retirer</div>
     </li>
   </ul>
 
   <div class="add-nav" *ngIf="!addModeOn">
-    <a class="nav-link lead inline" (click)="onAddMode()">Associer un mécanisme</a>
-    <a class="nav-link lead inline" (click)="onBack()">Retour</a>
+    <a class="field-control lead inline" (click)="onAddMode()">Associer un mécanisme</a>
+    <a class="field-control lead inline" (click)="onBack()">Retour</a>
   </div>
   <ng-container *ngIf="addModeOn">
     <ng-container *ngIf="{

@@ -1,9 +1,8 @@
 package org.motoc.gamelibrary.domain.model;
 
 
-import lombok.*;
-
 import jakarta.persistence.*;
+import lombok.*;
 
 /**
  * Article's image : store a file path

@@ -7,13 +7,14 @@
     <parent>
         <groupId>org.motoc</groupId>
         <artifactId>Grove</artifactId>
-        <version>1.1.2</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>grove-delivery</artifactId>
     <name>Grove Delivery</name>
+    <packaging>pom</packaging>
     <properties>
-        <revision>1.1.2</revision>
+        <revision>1.2.0</revision>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,33 +24,21 @@
         <dependency>
             <groupId>org.motoc</groupId>
             <artifactId>grove-service</artifactId>
-            <version>1.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.motoc</groupId>
-            <artifactId>grove-webapp</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>Grove-${project.version}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.1.2</version>
-                <executions>
-                    <execution>
-                        <id>repackage</id>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.1</version>
                 <configuration>
-                    <mainClass>org.motoc.gamelibrary.GameLibraryApplication</mainClass>
-                    <layout>JAR</layout>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/dist</directory>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
         </plugins>

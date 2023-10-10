@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 @CrossOrigin
 @RestController
-@SecurityRequirement(name="jwtAuth")
+@SecurityRequirement(name = "jwtAuth")
 @RequestMapping("api")
 public class ImageController {
 
@@ -37,20 +37,44 @@ public class ImageController {
 
     /**
      * Store an image and attach it to the game of ID given in param
-     * @param file The image to store
+     *
+     * @param file   The image to store
      * @param gameId The game to link
      * @return The ID of the stored image
      * @throws IOException If something went wrong during IO operation
      */
     @PostMapping("/admin/images/games/{gameId}")
-    Long save(@RequestParam(name = "file") MultipartFile file,
+    ImageDto saveAndRespond(@RequestParam(name = "file") MultipartFile file,
               @PathVariable Long gameId) throws IOException {
         logger.trace("save(image) called");
-        return service.saveThenAttachToGame(file.getInputStream(), gameId);
+        return service.save(file.getInputStream(), file.getContentType(), gameId);
+    }
+
+//    /**
+//     * Store an image and attach it to the game of ID given in param
+//     *
+//     * @param file   The image to store
+//     * @param gameId The game to link
+//     * @return The ID of the stored image
+//     * @throws IOException If something went wrong during IO operation
+//     */
+//    @PostMapping("/admin/images/games/{gameId}")
+//    Long save(@RequestParam(name = "file") MultipartFile file,
+//              @PathVariable Long gameId) throws IOException {
+//        logger.trace("save(image) called");
+//        logger.warn(file.getName());
+//        return service.saveThenAttachToGame(file.getInputStream(), file.getContentType(), gameId);
+//    }
+
+    @DeleteMapping("/admin/images/{id}")
+    void deleteById(@PathVariable Long id) {
+        logger.trace("deleteById(id) called");
+        service.deleteById(id);
     }
 
     /**
      * Get an item containing an image and its ID given an ID
+     *
      * @param id The ID of the image wanted to fetch
      * @return An object containing the image and its ID
      */
@@ -66,6 +90,7 @@ public class ImageController {
 
     /**
      * Get an image content given its ID
+     *
      * @param id The ID of the image wanted to fetch
      * @return An image
      */
@@ -78,6 +103,4 @@ public class ImageController {
         header.setContentType(MediaType.IMAGE_PNG);
         return ResponseEntity.ok().headers(header).body(isr);
     }
-
-
 }

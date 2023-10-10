@@ -1,12 +1,12 @@
 package org.motoc.gamelibrary.domain.model;
 
-import lombok.*;
-import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
+import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
+
 import java.util.HashSet;
 import java.util.Set;
 

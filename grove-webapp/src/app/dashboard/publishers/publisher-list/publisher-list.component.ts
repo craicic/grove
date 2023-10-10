@@ -42,19 +42,19 @@ export class PublisherListComponent implements OnInit, OnDestroy {
 
   onRefreshList(): void {
     this.fetchPublishers();
-    this.router.navigate(['/admin/publishers']);
+    this.router.navigate(['/admin/editor/publishers']);
   }
 
   onPageChange(): void {
     this.fetchPublishers(this.page);
-    this.router.navigate(['/admin/publishers']);
+    this.router.navigate(['/admin/editor/publishers']);
   }
 
 
   onFilter(): void {
     this.fetchPublishers(0, this.filterForm.value.keyword);
     this.initForm();
-    this.router.navigate(['/admin/publishers']);
+    this.router.navigate(['/admin/editor/publishers']);
   }
 
   onDelete(): void {

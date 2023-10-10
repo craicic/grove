@@ -1,0 +1,7 @@
+.badge {
+  cursor: pointer;
+  user-select: none;
+}
+button {
+  float: right;
+}

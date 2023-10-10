@@ -6,13 +6,13 @@
     <parent>
         <groupId>org.motoc</groupId>
         <artifactId>Grove</artifactId>
-        <version>1.1.2</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>grove-service</artifactId>
     <name>Grove API</name>
     <description>A tool for game libraries - This is the REST service</description>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
 
     <properties>
         <java.version>19</java.version>
@@ -212,16 +212,16 @@
                             <version>${mapstruct.version}</version>
                         </path>
                         <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                        <path>
                             <groupId>org.hibernate.orm</groupId>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${jpamodelgen.version}</version>
                         </path>
-                        <!-- Workaround because we have lombok and mapstruct processors -->
-                        <path>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>3.1.2</version>
-                        </path>
+
                     </annotationProcessorPaths>
 
                 </configuration>
@@ -233,30 +233,25 @@
                 <version>3.3.1</version>
                 <executions>
                     <execution>
-                        <id>copy</id>
+                        <id>copy-staging</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
-
                         <configuration>
-                            <outputDirectory>${project.parent.basedir}/grove-delivery/target/</outputDirectory>
+                            <outputDirectory>${project.parent.basedir}/grove-delivery/target</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/target/</directory>
-                                    <excludes>
-                                        <exclude>*.jar</exclude>
-                                        <exclude>*.original</exclude>
-                                    </excludes>
+                                    <directory>${project.basedir}/target</directory>
+                                    <includes>
+                                        <include>*jar</include>
+                                    </includes>
                                 </resource>
                             </resources>
-
                         </configuration>
-
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

@@ -8,3 +8,6 @@ ngb-carousel {
   height: 42vh;
   border-radius: 5px;
 }
+.float-right {
+  float: right;
+}

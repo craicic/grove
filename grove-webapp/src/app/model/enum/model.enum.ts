@@ -1,6 +1,6 @@
 export enum ModelEnum {
   CREATOR,
-  THEME,
+  MECHANISM,
   CONTACT,
   PUBLISHER,
   PRODUCT_LINE,

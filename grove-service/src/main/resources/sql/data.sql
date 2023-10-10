@@ -7,7 +7,7 @@ VALUES (1, 'négociation', 'Négociation'),
        (6, 'hazard', 'Hazard'),
        (7, 'cartes', 'Cartes'),
        (8, 'dominos', 'Dominos');
-SELECT setval('category_sequence', 8, true);
+SELECT setval('mechanism_sequence', 8, true);
 
 
 INSERT INTO public.category(id, lower_case_title, title)
@@ -23,7 +23,7 @@ VALUES (1, 'stratégie', 'Stratégie'),
        (10, 'histoire', 'Histoire'),
        (11, 'enquête', 'Enquête'),
        (12, 'far west', 'Far West');
-SELECT setval('mechanism_sequence', 12, true);
+SELECT setval('category_sequence', 12, true);
 
 INSERT INTO public.creator (id, first_name, last_name, lower_case_first_name, lower_case_last_name, role, city, country,
                             mail_address, phone_number, post_code, street, house_number, website)
@@ -42,6 +42,7 @@ VALUES (1, 'Bruno', 'Cathala', 'bruno', 'cathala', 0, 'Marseille', 'France', nul
        (7, 'Martin', 'Hoffmann', 'martin', 'hoffmann', 2, null, 'États-Unis', null,
         null, null, null, null, null);
 SELECT setval('creator_sequence', 7, true);
+
 
 INSERT INTO public.publisher (id, lower_case_name, name, city, country, mail_address, phone_number, post_code, street,
                               house_number, website)

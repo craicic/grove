@@ -74,4 +74,5 @@ export class MechanismListComponent implements OnInit, OnDestroy {
       'keyword': new UntypedFormControl('', [Validators.required, Validators.maxLength(50)])
     });
   }
+
 }

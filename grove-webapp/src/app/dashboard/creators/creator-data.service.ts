@@ -57,9 +57,9 @@ export class CreatorDataService {
       .delete(this.apiUri + '/api/admin/creators/' + id);
   }
 
-  removeContact(creatorId: number, contactId): any {
+  removeContact(creatorId: number): any {
     return this.http
-      .delete(this.apiUri + '/api/admin/allCreatorsName/' + creatorId + '/contact/' + contactId);
+      .delete(this.apiUri + '/api/admin/creators/' + creatorId + '/contact');
   }
 
   editCreator(id: number, editedCreator: Creator): void {

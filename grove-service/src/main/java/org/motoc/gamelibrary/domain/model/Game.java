@@ -1,5 +1,8 @@
 package org.motoc.gamelibrary.domain.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.domain.enumeration.GameNature;
@@ -7,9 +10,6 @@ import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
 import org.motoc.gamelibrary.technical.validation.annotation.ConsistentNumberOfPlayer;
 import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;

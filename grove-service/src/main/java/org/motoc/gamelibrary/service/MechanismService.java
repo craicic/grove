@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.motoc.gamelibrary.domain.dto.MechanismDto;
 import org.motoc.gamelibrary.domain.dto.MechanismNameDto;
 import org.motoc.gamelibrary.mapper.MechanismMapper;
@@ -13,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -81,9 +81,8 @@ public class MechanismService {
                     return repository.saveMechanism(mechanismFromPersistence);
                 })
                 .orElseGet(() -> {
-                    mechanism.setId(id);
-                    logger.debug("No mechanism of id={} found. Set mechanism : {}", id, mechanism);
-                    return repository.saveMechanism(mapper.dtoToMechanism(mechanism));
+                    logger.debug("No mechanism of id=" + id +" found.");
+                   throw new NotFoundException("No mechanism of id=" + id + "found.");
                 }));
     }
 

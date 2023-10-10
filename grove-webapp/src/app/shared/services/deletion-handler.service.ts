@@ -3,7 +3,6 @@ import {ConfirmModalComponent} from '../components/confirm-modal/confirm-modal.c
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Creator} from '../../model/creator.model';
 import {ModelEnum} from '../../model/enum/model.enum';
-import {ModelInterface} from '../../model/interface/model.interface';
 import {Person} from '../../model/interface/person.interface';
 import {ImpersonalInterface} from '../../model/interface/impersonal.interface';
 
@@ -13,7 +12,7 @@ export class DeletionHandlerService {
   constructor(private modalService: NgbModal) {
   }
 
-  callModal(modelAsEnum: ModelEnum, associatedModel: ModelInterface, isAPerson?: boolean): Promise<any> {
+  callModal(modelAsEnum: ModelEnum, associatedModel: any, isAPerson?: boolean): Promise<any> {
     let objectType = '';
     let objectName = '';
 
@@ -33,9 +32,9 @@ export class DeletionHandlerService {
         objectName = (associatedModel as Person).firstName + ' ' + (associatedModel as Creator).lastName;
         break;
       }
-      case ModelEnum.THEME: {
+      case ModelEnum.MECHANISM: {
         objectType = 'le mécanisme';
-        objectName = (associatedModel as ImpersonalInterface).name;
+        objectName = (associatedModel as { title: string }).title;
         break;
       }
       case ModelEnum.PUBLISHER: {
@@ -50,12 +49,12 @@ export class DeletionHandlerService {
       }
       case ModelEnum.CATEGORY: {
         objectType = 'la catégorie';
-        objectName = (associatedModel as ImpersonalInterface).name;
+        objectName = (associatedModel as { title: string }).title;
         break;
       }
       case ModelEnum.GAME: {
         objectType = 'Le jeu';
-        objectName = (associatedModel as ImpersonalInterface).name;
+        objectName = (associatedModel as { title: string }).title;
         break;
       }
     }
