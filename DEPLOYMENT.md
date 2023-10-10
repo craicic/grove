@@ -143,9 +143,9 @@ Give permissions on folder : `sudo chmod a+rwx ./grove`
 ### Deploy Grove API
 
 Ssh copy. Form the ssh client **not from the ssh host**, copy the Jar and put it in the grove
-folder `sudo scp /mnt/e/code/multi/grove/grove-delivery/target/grove-service-1.1.2.jar  user@<ip>:/opt/grove`
+folder `sudo scp /mnt/e/code/multi/grove/grove-delivery/target/grove-service-1.2.0.jar  user@<ip>:/opt/grove`
 
-Test if app starts normally. `java -Dspring.profiles.active=staging -jar Grove-1.1.2.jar`
+Test if app starts normally. `java -Dspring.profiles.active=staging -jar Grove-1.2.0.jar`
 
 Detach app from the console : add `nohup` before the command line.
 

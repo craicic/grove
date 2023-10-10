@@ -2,17 +2,15 @@
 
 ## Current version
 
-#### 1.1.2
+#### 1.2.0
 
-Migration Spring Boot 2 to Spring Boot 3 & Angular 11 to Angular 16
+Reworks documentation and code.
 
+Fix a large number of issues.
 
 
 ## Upcoming version
 
-#### 1.2.0
-
-Reworks documentation and code.
 
 ## Changelog
 
@@ -57,3 +55,7 @@ Tests now uses TestContainers.
 #### 1.1.1
 
 Reworked the project structure.
+
+#### 1.1.2
+
+Migration Spring Boot 2 to Spring Boot 3 & Angular 11 to Angular 16
