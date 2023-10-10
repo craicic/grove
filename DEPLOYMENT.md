@@ -115,7 +115,7 @@ Certificate are in folder `/etc/letsencrypt/live/example.com/`
 >server.ssl.certificate-private-key=/etc/letsencrypt/live/example.com/privkey.pem
 >```
 >
->Of course the app must read those folders so make sure it has the permission. `chmod 777`
+>Of course the app must read those folders so make sure it has the permission.
 
 ### Set up the firewall
 
