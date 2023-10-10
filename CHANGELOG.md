@@ -11,6 +11,10 @@ Fix a large number of issues.
 
 ## Upcoming version
 
+#### 1.3.0
+
+Includes a public endpoint that show a selection a games.
+Includes a search engine.
 
 ## Changelog
 
