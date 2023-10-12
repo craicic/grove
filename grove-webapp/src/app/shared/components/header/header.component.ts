@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onOpenGamesNavbar(): void {
-    this.router.navigate(['/admin/editor']);
+    this.router.navigate(['/admin/lib']);
     this.sidebarService.expand();
   }
 

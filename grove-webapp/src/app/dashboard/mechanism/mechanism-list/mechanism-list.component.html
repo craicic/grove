@@ -10,7 +10,7 @@
       style="cursor: pointer;"
       routerLinkActive="active"
       class="list-group-item list-group-item-action"
-      [routerLink]="['/admin/editor/mechanisms', mechanism.id]">
+      [routerLink]="['/admin/lib/mechanisms', mechanism.id]">
     {{mechanism.title}} (id:{{mechanism.id}})
   </li>
 </ul>
@@ -27,7 +27,7 @@
 <button
   class="btn btn-secondary me-1 mb-3"
   type="button"
-  routerLink="/admin/editor/mechanisms/new">Nouveau mécanisme
+  routerLink="/admin/lib/mechanisms/new">Nouveau mécanisme
 </button>
 <button
   class="btn btn-secondary me-1 mb-3"

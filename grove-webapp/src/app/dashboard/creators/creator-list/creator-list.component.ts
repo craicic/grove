@@ -42,19 +42,19 @@ export class CreatorListComponent implements OnInit, OnDestroy {
 
   onRefreshList(): void {
     this.fetchCreators();
-    this.router.navigate(['/admin/editor/creators']);
+    this.router.navigate(['/admin/lib/creators']);
   }
 
   onPageChange(): void {
     this.fetchCreators(this.page);
-    this.router.navigate(['/admin/editor/creators']);
+    this.router.navigate(['/admin/lib/creators']);
   }
 
 
   onFilter(): void {
     this.fetchCreators(0, this.filterForm.value.keyword);
     this.initForm();
-    this.router.navigate(['/admin/editor/creators']);
+    this.router.navigate(['/admin/lib/creators']);
   }
 
   onDelete(): void {

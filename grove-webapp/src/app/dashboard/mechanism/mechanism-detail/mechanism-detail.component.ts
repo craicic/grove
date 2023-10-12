@@ -42,7 +42,7 @@ export class MechanismDetailComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
-    this.router.navigate(['/admin/editor/mechanisms/', this.mechanism.id, 'edit']);
+    this.router.navigate(['/admin/lib/mechanisms/', this.mechanism.id, 'edit']);
   }
 
   onDelete(): void {

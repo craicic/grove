@@ -45,11 +45,11 @@ export class GameDetailComponent implements OnInit, OnDestroy {
 
 
   onBack(): void {
-    this.router.navigate(['/admin/editor/games']);
+    this.router.navigate(['/admin/lib/games']);
   }
   onDelete(): void {
     this.service.deleteThenFetchAll(this.game.id);
-    this.router.navigate(['/admin/editor/games']);
+    this.router.navigate(['/admin/lib/games']);
   }
 
   onOpenConfirm(): void {
@@ -75,6 +75,6 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   onEdit(): void {
     this.wrapperService.entity = 'Jeux';
     this.wrapperService.mode = EDITION;
-    this.router.navigate(['admin/locked-mode/games/' + this.game.id + '/edit']);
+    this.router.navigate(['/admin/lib/lock/games/' + this.game.id + '/edit']);
   }
 }

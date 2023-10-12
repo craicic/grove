@@ -40,7 +40,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
-    this.router.navigate(['/admin/editor/categories/', this.category.id, 'edit']);
+    this.router.navigate(['/admin/lib/categories/', this.category.id, 'edit']);
   }
 
   onDelete(): void {

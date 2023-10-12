@@ -38,7 +38,7 @@ export class PublisherDetailComponent implements OnInit {
   }
 
   onEdit(): void {
-    this.router.navigate(['/admin/editor/publishers/', this.publisher.id, 'edit']);
+    this.router.navigate(['/admin/lib/publishers/', this.publisher.id, 'edit']);
   }
 
   onOpenConfirm(isPublisherDeletion: boolean): void {

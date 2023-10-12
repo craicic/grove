@@ -43,18 +43,18 @@ export class MechanismListComponent implements OnInit, OnDestroy {
 
   onRefreshList(): void {
     this.fetchMechanisms();
-    this.router.navigate(['/admin/editor/mechanisms']);
+    this.router.navigate(['/admin/lib/mechanisms']);
   }
 
   onPageChange(): void {
     this.fetchMechanisms(this.page);
-    this.router.navigate(['/admin/editor/mechanisms']);
+    this.router.navigate(['/admin/lib/mechanisms']);
   }
 
   onFilter(): void {
     this.fetchMechanisms(0, this.filterForm.value.keyword);
     this.initForm();
-    this.router.navigate(['/admin/editor/mechanisms']);
+    this.router.navigate(['/admin/lib/mechanisms']);
   }
 
   onDelete(): void {

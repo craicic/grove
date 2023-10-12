@@ -100,7 +100,7 @@ export class NewGameBasicsComponent implements OnInit {
       .pipe(map(game => this.game = game))
       .subscribe(() => {
           this.service.updateDetailedGame(this.game);
-          this.router.navigate(['./admin/locked-mode/games/' + this.game.id + '/edit']);
+          this.router.navigate(['./admin/lib/lock/games' + this.game.id + '/edit']);
         }
       );
   }
@@ -110,7 +110,7 @@ export class NewGameBasicsComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['/admin/editor/games']);
+    this.router.navigate(['/admin/lib/games']);
   }
 
   onRemoveMaxP(): void {

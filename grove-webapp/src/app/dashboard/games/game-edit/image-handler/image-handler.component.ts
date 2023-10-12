@@ -39,7 +39,7 @@ export class ImageHandlerComponent implements OnInit {
 
   onBack(): void {
     this.resetInput();
-    this.router.navigate(['/admin/locked-mode/games/' + this.gameService.game.id + '/edit']);
+    this.router.navigate(['/admin/lib/lock/games' + this.gameService.game.id + '/edit']);
   }
 
   onFileSelected(event: any): void {

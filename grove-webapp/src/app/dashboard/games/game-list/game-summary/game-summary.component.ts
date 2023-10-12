@@ -48,7 +48,7 @@ export class GameSummaryComponent implements OnInit, OnDestroy {
   }
 
   onViewDetail(): void {
-    this.router.navigate(['/admin/editor/games/detail/' + this.paramId]);
+    this.router.navigate(['/admin/lib/games/detail/' + this.paramId]);
   }
 }
 

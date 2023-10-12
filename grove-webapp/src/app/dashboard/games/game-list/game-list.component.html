@@ -10,7 +10,7 @@
         style="cursor: pointer;"
         routerLinkActive="active"
         class="list-group-item list-group-item-action"
-        [routerLink]="['/admin/editor/games/detail', game.id]"
+        [routerLink]="['/admin/lib/games/detail', game.id]"
         (click)="onDetail(game.id)">
         {{game.title}} (id:{{game.id}})
     </li>
@@ -28,7 +28,7 @@
 <button
         class="btn btn-secondary me-1 mb-3"
         type="button"
-        routerLink="/admin/locked-mode/games/new/basics">Nouveau jeu
+        routerLink="//admin/lib/lock/games/new/basics">Nouveau jeu
 </button>
 <button
         class="btn btn-secondary me-1 mb-3"

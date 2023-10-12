@@ -10,7 +10,7 @@
       style="cursor: pointer;"
       routerLinkActive="active"
       class="list-group-item list-group-item-action"
-      [routerLink]="['/admin/editor/publishers', publisher.id]">
+      [routerLink]="['/admin/lib/publishers', publisher.id]">
     {{ publisher.name }} (id:{{publisher.id}})
   </li>
 </ul>
@@ -27,7 +27,7 @@
 <button
   class="btn btn-secondary me-1 mb-3"
   type="button"
-  routerLink="/admin/editor/publishers/new">Ajouter un éditeur
+  routerLink="/admin/lib/publishers/new">Ajouter un éditeur
 </button>
 
 <button

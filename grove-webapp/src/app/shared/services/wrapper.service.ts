@@ -27,7 +27,7 @@ export class WrapperService implements OnDestroy {
     // this.subscription = this.router.events
     //   .pipe(filter(event => event instanceof NavigationStart))
     //   .subscribe(() => {
-    //     if (!this.router.url.startsWith('/admin/locked-mode/')) {
+    //     if (!this.router.url.startsWith('/admin//')) {
     //       this.mode = NAV;
     //     }
     //   });

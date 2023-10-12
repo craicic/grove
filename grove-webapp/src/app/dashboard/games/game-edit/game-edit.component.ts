@@ -51,11 +51,11 @@ export class GameEditComponent implements OnInit, OnDestroy {
 
   onEditCopy(): void {
     this.copyService.isEdit = true;
-    // this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/' + id]);
+    // this.router.navigate(['/admin/lib/lock/games' + this.game.id + '/edit/copy/' + id]);
   }
 
   onNewCopy(): void {
     this.copyService.isEdit = false;
-    this.router.navigate(['/admin/locked-mode/games/' + this.game.id + '/edit/copy/new']);
+    this.router.navigate(['/admin/lib/lock/games' + this.game.id + '/edit/copy/new']);
   }
 }

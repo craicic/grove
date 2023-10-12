@@ -51,14 +51,14 @@ export class GameListComponent implements OnInit, OnDestroy {
       .fetchGames(0, this.filterForm.value.keyword)
       .subscribe(() => this.service.updatePage());
     this.initForm();
-    this.router.navigate(['/admin/editor/games']);
+    this.router.navigate(['/admin/lib/games']);
   }
 
   onRefreshList(): void {
     this.service
       .fetchGames()
       .subscribe(() => this.service.updatePage());
-    this.router.navigate(['/admin/editor/games']);
+    this.router.navigate(['/admin/lib/games']);
   }
 
   onDelete(): void {
@@ -68,7 +68,7 @@ export class GameListComponent implements OnInit, OnDestroy {
   onPageChange(pageNumber): void {
     if (!Number.isNaN(pageNumber)) {
       this.service.fetchGames(this.page);
-      this.router.navigate(['/admin/editor/games']);
+      this.router.navigate(['/admin/lib/games']);
     }
   }
 

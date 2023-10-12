@@ -27,6 +27,6 @@ export class CopiesControlComponent implements OnInit {
   }
 
   onNew(): void {
-    this.router.navigate(['admin/locked-mode/games/' + this.gameId + '/edit/copy/new']);
+    this.router.navigate(['/admin/lib/lock/games/' + this.gameId + '/edit/copy/new']);
   }
 }

@@ -24,7 +24,7 @@ export class GameEditWrapperComponent implements OnInit, OnDestroy {
 
   onBack(): void {
     this.wrapperService.mode = NAV;
-    this.service.game ? this.router.navigate(['/admin/editor/games/detail', this.service.game.id])
-      : this.router.navigate(['/admin/editor/games']);
+    this.service.game ? this.router.navigate(['/admin/lib/games/detail', this.service.game.id])
+      : this.router.navigate(['/admin/lib/games']);
   }
 }

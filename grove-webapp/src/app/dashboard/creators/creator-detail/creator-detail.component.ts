@@ -38,7 +38,7 @@ export class CreatorDetailComponent implements OnInit {
   }
 
   onEdit(): void {
-    this.router.navigate(['/admin/editor/creators/', this.creator.id, 'edit']);
+    this.router.navigate(['/admin/lib/creators/', this.creator.id, 'edit']);
   }
 
   onOpenConfirm(isCreatorDeletion: boolean): void {
