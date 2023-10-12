@@ -1,5 +1,4 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 export const CREATION = 'creation';
@@ -17,8 +16,7 @@ export class WrapperService implements OnDestroy {
   entity: string;
   subscription: Subscription;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute) {
+  constructor() {
     this.MODE_NAMES[CREATION] = 'Création';
     this.MODE_NAMES[EDITION] = 'Édition';
     this.MODE_NAMES[NAV] = 'Navigation';
