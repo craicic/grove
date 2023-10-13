@@ -1,1 +1,70 @@
-<p>lib-home works!</p>
+<div class="container">
+  <div class="jumbotron">
+    <div class="container">
+      <h2 class="display-4">Base de données de jeux</h2>
+      <p class="lead">Ici vous pouvez choisir une rubrique dans le menu de navigation à gauche.</p>
+      <hr class="my-4">
+      <p class="lead">Sinon, essayez les liens ci-dessous !</p>
+      <div class="row g-3">
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img ngSrc="https://icons.getbootstrap.com/assets/icons/dice-6.svg" style="height: auto" class="card-img-top"
+                 alt="un dé sur la face 6" width="180" height="180"/>
+            <div class="card-body">
+              <h5 class="card-title">Jeux</h5>
+              <p class="card-text">Découvrez le catalogue, ajoutez, éditez et supprimez vos jeux. Associez leur des
+              exemplaires avec leur état d'usure !</p>
+              <a class="btn btn-primary" routerLink="/admin/lib/games">Ouvrir le catalogue de jeux</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img ngSrc="https://icons.getbootstrap.com/assets/icons/gear-wide-connected.svg" style="height: auto" class="card-img-top"
+                 alt="un petit rouage" width="180" height="180">
+            <div class="card-body">
+              <h5 class="card-title">Mécanismes</h5>
+              <p class="card-text">Gérez les différents mécanismes qui régissent vos jeux.</p>
+              <a routerLink="/admin/lib/mechanisms" class="btn btn-primary">Vers les mécanismes</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img ngSrc="https://icons.getbootstrap.com/assets/icons/tags.svg" style="height: auto" class="card-img-top"
+                 alt="deux étiquettes" width="180" height="180">
+            <div class="card-body">
+              <h5 class="card-title">Catégories</h5>
+              <p class="card-text">Définissez les catégories qui définissent les jeux du catalogues.</p>
+              <a routerLink="/admin/lib/categories" class="btn btn-primary">Vers les catégories</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img ngSrc="https://icons.getbootstrap.com/assets/icons/pencil.svg" style="height: auto" class="card-img-top"
+                 alt="un crayon à papier" width="180" height="180">
+            <div class="card-body">
+              <h5 class="card-title">Auteurs</h5>
+              <p class="card-text">Ajoutez les auteurs et les illustrateurs qui ont conçus vos jeux.</p>
+              <a routerLink="/admin/lib/creators"  class="btn btn-primary">Voir les auteurs</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img ngSrc="https://icons.getbootstrap.com/assets/icons/building-gear.svg" style="height: auto" class="card-img-top"
+                 alt="une bâtiment avec un rouage devant" width="180" height="180">
+            <div class="card-body">
+              <h5 class="card-title">Éditeurs</h5>
+              <p class="card-text">Les éditeurs et les fabriquants de vos exemplaires de jeux peuvent être consulter et
+              éditer ici</p>
+              <a routerLink="/admin/lib/publishers"  class="btn btn-primary">Vers les éditeurs</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

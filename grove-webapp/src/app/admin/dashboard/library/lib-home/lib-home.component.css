@@ -1,0 +1,20 @@
+.jumbotron {
+  margin: 7rem 0;
+}
+
+.form {
+  margin: 7rem 5rem;
+}
+
+
+.btn {
+  margin: 1rem 1rem 0 0;
+}
+
+.card-img-top {
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #868e96;
+}

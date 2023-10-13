@@ -3,7 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {MechanismsComponent} from './admin/dashboard/library/mechanism/mechanisms.component';
 import {permissionGuard} from './permissionGuard';
 import {MechanismEditComponent} from './admin/dashboard/library/mechanism/mechanism-edit/mechanism-edit.component';
-import {MechanismDetailComponent} from './admin/dashboard/library/mechanism/mechanism-detail/mechanism-detail.component';
+import {
+  MechanismDetailComponent
+} from './admin/dashboard/library/mechanism/mechanism-detail/mechanism-detail.component';
 import {MechanismResolver} from './admin/dashboard/library/mechanism/mechanism-resolver.service';
 import {ConfigurationComponent} from './admin/dashboard/library/configuration/configuration.component';
 import {CreatorsComponent} from './admin/dashboard/library/creators/creators.component';
@@ -12,7 +14,9 @@ import {CreatorDetailComponent} from './admin/dashboard/library/creators/creator
 import {CreatorResolver} from './admin/dashboard/library/creators/creator-resolver.service';
 import {PublishersComponent} from './admin/dashboard/library/publishers/publishers.component';
 import {PublisherEditComponent} from './admin/dashboard/library/publishers/publisher-edit/publisher-edit.component';
-import {PublisherDetailComponent} from './admin/dashboard/library/publishers/publisher-detail/publisher-detail.component';
+import {
+  PublisherDetailComponent
+} from './admin/dashboard/library/publishers/publisher-detail/publisher-detail.component';
 import {ExistingMechanismsResolver} from './admin/dashboard/library/mechanism/existing-mecanisms-resolver.service';
 import {PublishersNamesResolver} from './admin/dashboard/library/publishers/publishers-names-resolver.service';
 import {PublishersResolver} from './admin/dashboard/library/publishers/publishers-resolver.service';
@@ -21,44 +25,46 @@ import {CategoriesComponent} from './admin/dashboard/library/categories/categori
 import {CategoryEditComponent} from './admin/dashboard/library/categories/category-edit/category-edit.component';
 import {CategoryDetailComponent} from './admin/dashboard/library/categories/category-detail/category-detail.component';
 import {CategoryResolver} from './admin/dashboard/library/categories/category-resolver.service';
-import {DashboardLoanComponent} from './admin/dashboard/loans/dashboard-loan.component';
-import {DashboardUserComponent} from './admin/dashboard/users/dashboard-user.component';
 import {GamesComponent} from './admin/dashboard/library/games/games.component';
 import {GameOverviewResolver} from './admin/dashboard/library/games/game-overview-resolver.service';
 import {GameSummaryComponent} from './admin/dashboard/library/games/game-list/game-summary/game-summary.component';
 import {GameDetailComponent} from './admin/dashboard/library/games/game-detail/game-detail.component';
 import {GameResolver} from './admin/dashboard/library/games/game-resolver.service';
 import {GameEditComponent} from './admin/dashboard/library/games/game-edit/game-edit.component';
-import {CategoryHandlerComponent} from './admin/dashboard/library/games/game-edit/category-handler/category-handler.component';
+import {
+  CategoryHandlerComponent
+} from './admin/dashboard/library/games/game-edit/category-handler/category-handler.component';
 import {TitleHandlerComponent} from './admin/dashboard/library/games/game-edit/title-handler/title-handler.component';
 import {InfoHandlerComponent} from './admin/dashboard/library/games/game-edit/info-handler/info-handler.component';
-import {CreatorHandlerComponent} from './admin/dashboard/library/games/game-edit/creator-handler/creator-handler.component';
-import {PublisherHandlerComponent} from './admin/dashboard/library/games/game-edit/publisher-handler/publisher-handler.component';
+import {
+  CreatorHandlerComponent
+} from './admin/dashboard/library/games/game-edit/creator-handler/creator-handler.component';
+import {
+  PublisherHandlerComponent
+} from './admin/dashboard/library/games/game-edit/publisher-handler/publisher-handler.component';
 import {SizeHandlerComponent} from './admin/dashboard/library/games/game-edit/size-handler/size-handler.component';
-import {MaterialHandlerComponent} from './admin/dashboard/library/games/game-edit/material-handler/material-handler.component';
+import {
+  MaterialHandlerComponent
+} from './admin/dashboard/library/games/game-edit/material-handler/material-handler.component';
 import {ImageHandlerComponent} from './admin/dashboard/library/games/game-edit/image-handler/image-handler.component';
-import {GameEditHelperComponent} from './admin/dashboard/library/games/game-edit/game-edit-helper/game-edit-helper.component';
+import {
+  GameEditHelperComponent
+} from './admin/dashboard/library/games/game-edit/game-edit-helper/game-edit-helper.component';
 import {
   DescriptionHandlerComponent
 } from './admin/dashboard/library/games/game-edit/description-handler/description-handler.component';
-import {NewGameBasicsComponent} from './admin/dashboard/library/games/new-game/new-game-basics/new-game-basics.component';
+import {
+  NewGameBasicsComponent
+} from './admin/dashboard/library/games/new-game/new-game-basics/new-game-basics.component';
 import {NewGameComponent} from './admin/dashboard/library/games/new-game/new-game.component';
-import {MemberNewComponent} from './admin/dashboard/users/members/member-new/member-new.component';
-import {MemberListComponent} from './admin/dashboard/users/members/member-list/member-list.component';
-import {MemberDetailComponent} from './admin/dashboard/users/members/member-detail/member-detail.component';
-import {SelectMemberComponent} from './admin/dashboard/loans/loans/select-member/select-member.component';
-import {SelectGameComponent} from './admin/dashboard/loans/loans/select-game/select-game.component';
-import {ConfirmLoanComponent} from './admin/dashboard/loans/loans/confirm-loan/confirm-loan.component';
-import {LoanListComponent} from './admin/dashboard/loans/loans/loan-list/loan-list.component';
-import {LoanDetailComponent} from './admin/dashboard/loans/loans/loan-detail/loan-detail.component';
-import {LoanResolver} from './admin/dashboard/loans/loans/loan-resolver.service';
 import {HomeComponent} from './home/home.component';
-import {MechanismHandlerComponent} from './admin/dashboard/library/games/game-edit/mechanism-handler/mechanism-handler.component';
+import {
+  MechanismHandlerComponent
+} from './admin/dashboard/library/games/game-edit/mechanism-handler/mechanism-handler.component';
 import {LoginComponent} from './auth/login/login.component';
 import {ErrorPageComponent} from './error/error-page/error-page.component';
 import {CopyHandlerComponent} from './admin/dashboard/library/games/game-edit/copy-handler/copy-handler.component';
 import {RulesHandlerComponent} from './admin/dashboard/library/games/game-edit/rules-handler/rules-handler.component';
-import {SearchHomeComponent} from './search/search-home/search-home.component';
 import {DashboardComponent} from './admin/dashboard/library/dashboard.component';
 import {DashboardHomeComponent} from './admin/dashboard/dashobard-home/dashboard-home.component';
 import {AdminWrapperComponent} from './admin/admin-wrapper/admin-wrapper.component';
