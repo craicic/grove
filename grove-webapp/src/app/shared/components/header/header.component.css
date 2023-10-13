@@ -1,0 +1,17 @@
+@media (min-width: 1200px) {
+  .search {
+    width: 280px;
+    margin-left: -140px;
+  }
+}
+
+@media (min-width: 992px) {
+  .search {
+    position: absolute;
+    left: 50%;
+  }
+}
+
+.search {
+  display: flex;
+}

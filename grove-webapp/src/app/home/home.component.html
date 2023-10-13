@@ -2,13 +2,29 @@
   <div class="jumbotron">
     <div class="container">
       <h1 class="display-4">Grove</h1>
-      <p class="lead">Bienvenue ! Pour commencer, sélectionnez une rubrique ci-dessus.</p>
+      <p class="lead">Bienvenue ! Pour commencer, Vous pouvez effectuer une recherche de jeu.</p>
       <hr class="my-4">
-      <p class="lead">Vous pouvez également choisir un lien de raccourci.</p>
-      <a class="btn btn-primary btn-lg"
-         routerLink="/search">Rechercher un jeux</a>
-      <a class="btn btn-primary btn-lg"
-         routerLink="/search">Voir les disponibilités</a>
+      <p class="lead">Vous pouvez également choisir un lien ci dessous.</p>
+      <div class="row row-cols-md-auto g-3 align-items-center">
+        <form>
+          <input class="form-control me-2 form-control-lg" type="search" placeholder="Recherche" aria-label="Search">
+        </form>
+        <button class="btn btn-outline-success btn-lg" type="submit">Rechercher un jeux</button>
+        <button type="button"
+                class="btn btn-outline-primary btn-lg"
+                popoverTitle="Actuellement indisponible"
+                placement="bottom"
+                ngbPopover="La consultation des périodes de disponibilité des jeux sera disponible dans une prochaine version du logiciel"
+        >Voir les disponibilités
+        </button>
+        <button
+          *ngIf="authenticated()"
+          type="button"
+          class="btn btn-primary btn-lg"
+          routerLink="/admin"
+        >Panneau d'administration
+        </button>
+      </div>
     </div>
   </div>
 </div>

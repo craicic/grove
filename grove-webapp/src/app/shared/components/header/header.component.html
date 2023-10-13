@@ -1,5 +1,4 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-
   <a class="navbar-brand" routerLink="/">Index</a>
 
   <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
@@ -29,8 +28,13 @@
           (click)="isMenuCollapsed = true; onOpenMembersNavbar()">Adhérents</a>
       </li>
     </ul>
-
-    <ul class="navbar-nav mr-10">
+    <div class="search">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Rechercher</button>
+      </form>
+    </div>
+    <ul class="navbar-nav">
       <li class="nav-item">
         <a
           class="nav-link"

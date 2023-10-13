@@ -26,7 +26,7 @@ export class LoginComponent {
     this.auth.authenticate(
       {username: this.form.value.username, password: this.form.value.password},
       () => {
-        this.router.navigate(['/admin/lib/games']);
+        this.router.navigate(['/admin/']);
       }
     );
   }
