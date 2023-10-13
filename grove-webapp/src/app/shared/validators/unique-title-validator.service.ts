@@ -1,7 +1,7 @@
 import {AbstractControl, AsyncValidator, ValidationErrors} from '@angular/forms';
 import {Injectable} from '@angular/core';
-import {GameService} from '../../dashboard/games/game.service';
 import {Observable, of} from 'rxjs';
+import {GameService} from '../../admin/dashboard/library/games/game.service';
 
 @Injectable({providedIn: 'root'})
 export class UniqueTitleValidator implements AsyncValidator {
