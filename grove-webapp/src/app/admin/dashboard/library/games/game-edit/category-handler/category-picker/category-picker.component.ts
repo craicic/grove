@@ -30,9 +30,6 @@ export class CategoryPickerComponent implements OnInit {
 
   form: UntypedFormGroup;
 
-  constructor(private service: GameService) {
-  }
-
   ngOnInit(): void {
     this.gameCategories.forEach(c => this.gameIds.push(c.id));
     this.availableCategories = this.categories.filter(c => !this.gameIds.includes(c.id));

@@ -32,9 +32,6 @@ export class MechanismPickerComponent implements OnInit {
 
   form: UntypedFormGroup;
 
-  constructor(private service: GameService) {
-  }
-
   ngOnInit(): void {
     this.gameMechanisms.forEach(t => this.gameIds.push(t.id));
     this.availableMechanisms = this.mechanisms.filter(t => !this.gameIds.includes(t.id));

@@ -15,8 +15,7 @@ export class SelectGameComponent implements OnInit {
   copies$: Observable<GameCopy[]>;
 
   constructor(private service: LoanService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -35,6 +34,7 @@ export class SelectGameComponent implements OnInit {
 
   }
 
+  // todo check
   onNavigateToDetail(id: number): void {
   }
 }
