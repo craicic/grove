@@ -60,7 +60,9 @@ import {CopyHandlerComponent} from './admin/dashboard/library/games/game-edit/co
 import {RulesHandlerComponent} from './admin/dashboard/library/games/game-edit/rules-handler/rules-handler.component';
 import {SearchHomeComponent} from './search/search-home/search-home.component';
 import {DashboardComponent} from './admin/dashboard/library/dashboard.component';
-import {NavWrapperComponent} from './wrapper/nav-wrapper/nav-wrapper.component';
+import {DashboardHomeComponent} from './admin/dashboard/dashobard-home/dashboard-home.component';
+import {AdminWrapperComponent} from './admin/admin-wrapper/admin-wrapper.component';
+import {LibHomeComponent} from './admin/dashboard/library/lib-home/lib-home.component';
 
 const routes: Routes = [
   {
@@ -73,12 +75,12 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: NavWrapperComponent,
+    component: AdminWrapperComponent,
     canActivate: [permissionGuard],
     children: [
       {
         path: '',
-        component: HomeComponent,
+        component: DashboardHomeComponent,
       },
       {
         path: 'lib',
@@ -86,7 +88,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: HomeComponent
+            component: LibHomeComponent
           },
           {
             path: 'games',

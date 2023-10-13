@@ -30,7 +30,6 @@ import {CategoriesComponent} from './admin/dashboard/library/categories/categori
 import {CategoryDetailComponent} from './admin/dashboard/library/categories/category-detail/category-detail.component';
 import {CategoryEditComponent} from './admin/dashboard/library/categories/category-edit/category-edit.component';
 import {CategoryListComponent} from './admin/dashboard/library/categories/category-list/category-list.component';
-import {NavWrapperComponent} from './wrapper/nav-wrapper/nav-wrapper.component';
 import {ErrorPageComponent} from './error/error-page/error-page.component';
 import {DashboardLoanComponent} from './admin/dashboard/loans/dashboard-loan.component';
 import {DashboardUserComponent} from './admin/dashboard/users/dashboard-user.component';
@@ -84,6 +83,9 @@ import {RulesHandlerComponent} from './admin/dashboard/library/games/game-edit/r
 import {SearchHomeComponent} from './search/search-home/search-home.component';
 import {sessionInitializer} from './session-initializer';
 import {AuthenticationService} from './auth/authentication.service';
+import {DashboardHomeComponent} from './admin/dashboard/dashobard-home/dashboard-home.component';
+import {AdminWrapperComponent} from './admin/admin-wrapper/admin-wrapper.component';
+import { LibHomeComponent } from './admin/dashboard/library/lib-home/lib-home.component';
 
 
 @NgModule({
@@ -115,7 +117,7 @@ import {AuthenticationService} from './auth/authentication.service';
     CategoryDetailComponent,
     CategoryEditComponent,
     CategoryListComponent,
-    NavWrapperComponent,
+    AdminWrapperComponent,
     ErrorPageComponent,
     DashboardLoanComponent,
     DashboardUserComponent,
@@ -154,7 +156,9 @@ import {AuthenticationService} from './auth/authentication.service';
     CopyHandlerComponent,
     ImagesViewerComponent,
     RulesHandlerComponent,
-    SearchHomeComponent
+    SearchHomeComponent,
+    DashboardHomeComponent,
+    LibHomeComponent
   ],
   imports: [
     BrowserModule,
