@@ -63,6 +63,7 @@ import {DashboardComponent} from './admin/dashboard/library/dashboard.component'
 import {DashboardHomeComponent} from './admin/dashboard/dashobard-home/dashboard-home.component';
 import {AdminWrapperComponent} from './admin/admin-wrapper/admin-wrapper.component';
 import {LibHomeComponent} from './admin/dashboard/library/lib-home/lib-home.component';
+import {WipComponent} from './shared/components/wip/wip.component';
 
 const routes: Routes = [
   {
@@ -241,56 +242,49 @@ const routes: Routes = [
       },
       {
         path: 'loans',
-        component: DashboardLoanComponent,
+        component: WipComponent,
         children: [
           {
             path: 'select-member',
-            component: SelectMemberComponent
+            component: WipComponent
           },
           {
             path: ':accountId/select-game',
-            component: SelectGameComponent
+            component: WipComponent
           },
           {
             path: 'confirm',
-            component: ConfirmLoanComponent
+            component: WipComponent
           },
           {
             path: 'list',
-            component: LoanListComponent
+            component: WipComponent
           },
           {
             path: ':id',
-            component: LoanDetailComponent,
-            resolve: [LoanResolver]
+            component: WipComponent
           }
         ]
       },
       {
         path: 'members',
-        component: DashboardUserComponent,
+        component: WipComponent,
         children: [
           {
-            path: 'new',
-            component: MemberNewComponent
-          },
-          {
             path: 'list',
-            component: MemberListComponent
+            component: WipComponent
           },
           {
             path: ':id',
-            component: MemberDetailComponent
+            component: WipComponent
           }
         ]
       },
     ]
   },
-
-
   {
     path: 'search',
-    component: SearchHomeComponent
+    component: WipComponent
   },
   {
     path: 'not-found',

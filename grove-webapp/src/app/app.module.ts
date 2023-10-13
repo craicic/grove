@@ -86,6 +86,7 @@ import {AuthenticationService} from './auth/authentication.service';
 import {DashboardHomeComponent} from './admin/dashboard/dashobard-home/dashboard-home.component';
 import {AdminWrapperComponent} from './admin/admin-wrapper/admin-wrapper.component';
 import { LibHomeComponent } from './admin/dashboard/library/lib-home/lib-home.component';
+import { WipComponent } from './shared/components/wip/wip.component';
 
 
 @NgModule({
@@ -158,7 +159,8 @@ import { LibHomeComponent } from './admin/dashboard/library/lib-home/lib-home.co
     RulesHandlerComponent,
     SearchHomeComponent,
     DashboardHomeComponent,
-    LibHomeComponent
+    LibHomeComponent,
+    WipComponent
   ],
   imports: [
     BrowserModule,

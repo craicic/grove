@@ -15,6 +15,7 @@ export function sessionInitializer(service: AuthenticationService): () => Observ
 
   if (!service.accessExpired()) {
     console.log('access STILL VALID');
+    // todo Sometime timer expire before timer is over.
     service.initTimer();
     return () => of(true);
   }

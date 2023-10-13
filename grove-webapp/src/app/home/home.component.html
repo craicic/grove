@@ -9,12 +9,11 @@
         <form>
           <input class="form-control me-2 form-control-lg" type="search" placeholder="Recherche" aria-label="Search">
         </form>
-        <button class="btn btn-outline-success btn-lg" type="submit">Rechercher un jeux</button>
+        <button class="btn btn-outline-success btn-lg" type="submit"
+                routerLink="/search">Rechercher un jeux</button>
         <button type="button"
                 class="btn btn-outline-primary btn-lg"
-                popoverTitle="Actuellement indisponible"
-                placement="bottom"
-                ngbPopover="La consultation des périodes de disponibilité des jeux sera disponible dans une prochaine version du logiciel"
+                routerLink="/search"
         >Voir les disponibilités
         </button>
         <button
