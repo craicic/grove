@@ -1,7 +1,7 @@
 <div [ngClass]="{'row sidebar': true , 'h-100': innerWidth >= '768' , 'h-auto': innerWidth < '768' }">
   <div
-    class="col-md-2 bg-secondary"
-    *ngIf="!isSideCollapsed">
+    class="col-md-2 bg-secondary">
+<!--    *ngIf="isExpanded"-->
     <!--innerWidth >= '768' && !isSideCollapsed -->
     <div class="row"
          routerLinkActive="bg-light">

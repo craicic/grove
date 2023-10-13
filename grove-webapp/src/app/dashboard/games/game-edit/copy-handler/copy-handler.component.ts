@@ -68,7 +68,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
 
 
   onBack(): void {
-    this.router.navigate(['/admin/lib/lock/games' + this.gameService.game.id + '/edit']);
+    this.router.navigate(['/admin/lib/games' + this.gameService.game.id + '/edit']);
   }
 
   onSubmit(): void {
@@ -110,7 +110,7 @@ export class CopyHandlerComponent implements OnInit, OnDestroy {
           this.gameService.updateDetailedGame(this.game);
           this.copy = null;
           this.service.copy = null;
-          this.router.navigate(['/admin/lib/lock/games', this.game.id, 'edit']);
+          this.router.navigate(['/admin/lib/games', this.game.id, 'edit']);
         }
       );
   }

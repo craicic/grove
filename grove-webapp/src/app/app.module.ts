@@ -39,7 +39,6 @@ import {GameListComponent} from './dashboard/games/game-list/game-list.component
 import {GameSummaryComponent} from './dashboard/games/game-list/game-summary/game-summary.component';
 import {GameDetailComponent} from './dashboard/games/game-detail/game-detail.component';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {GameEditWrapperComponent} from './wrapper/game-edit-wrapper/game-edit-wrapper.component';
 import {GameEditComponent} from './dashboard/games/game-edit/game-edit.component';
 import {CategoryHandlerComponent} from './dashboard/games/game-edit/category-handler/category-handler.component';
 import {TitleHandlerComponent} from './dashboard/games/game-edit/title-handler/title-handler.component';
@@ -64,9 +63,6 @@ import {
 import {
   DescriptionHandlerComponent
 } from './dashboard/games/game-edit/description-handler/description-handler.component';
-import {BannerComponent} from './shared/components/banner/banner.component';
-import {LockedHeaderComponent} from './shared/components/locked-header/locked-header.component';
-import {BackButtonComponent} from './shared/components/back-button/back-button.component';
 import {NewGameBasicsComponent} from './dashboard/games/new-game/new-game-basics/new-game-basics.component';
 import {NewGameComponent} from './dashboard/games/new-game/new-game.component';
 import {
@@ -136,7 +132,6 @@ import {AuthenticationService} from './auth/authentication.service';
     GameListComponent,
     GameSummaryComponent,
     GameDetailComponent,
-    GameEditWrapperComponent,
     GameEditComponent,
     CategoryHandlerComponent,
     TitleHandlerComponent,
@@ -151,9 +146,6 @@ import {AuthenticationService} from './auth/authentication.service';
     MechanismPickerComponent,
     CreatorPickerComponent,
     DescriptionHandlerComponent,
-    BannerComponent,
-    LockedHeaderComponent,
-    BackButtonComponent,
     NewGameBasicsComponent,
     NewGameComponent,
     NewGameParentChoiceComponent,

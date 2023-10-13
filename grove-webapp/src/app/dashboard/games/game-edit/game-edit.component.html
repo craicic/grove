@@ -3,7 +3,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'name']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'name']">
       <h2>{{ game.title }}
         <span class="info text-primary lead">Éditer</span>
       </h2>
@@ -12,7 +12,7 @@
     <div class="row">
       <div *ngFor="let copy of game.copies" class="col highlightable me-2"
            routerLinkActive="active"
-           [routerLink]="['//admin/lib/lock/games/' + game.id + '/edit/copy/' + copy.id]"
+           [routerLink]="['/admin/lib/games/' + game.id + '/edit/copy/' + copy.id]"
            (click)="onEditCopy()">
         <h4>Exemplaire #{{copy.objectCode}}
           <span class="info text-primary lead">Éditer</span>
@@ -21,7 +21,7 @@
 
       <div class="col highlightable"
            routerLinkActive="active"
-           [routerLink]="['//admin/lib/lock/games/' + this.game.id + '/edit/copy/new']"
+           [routerLink]="['/admin/lib/games/' + game.id + '/edit/copy/new']"
            (click)="onNewCopy()">
 
         <h4><i class="bi bi-plus-circle"></i> Ajouter un exemplaire
@@ -33,7 +33,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'categories']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'categories']">
       <h4>Catégories
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -44,7 +44,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'mechanisms']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'mechanisms']">
       <h4>Mécanismes
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -56,7 +56,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'infos']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'infos']">
       <h4>Informations
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -68,7 +68,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'creators']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'creators']">
       <h4 *ngIf="game.creators">Créateurs
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -79,7 +79,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'description']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'description']">
       <h4>Description
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -88,7 +88,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'rules']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'rules']">
       <h4>Règles
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -97,7 +97,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'size']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'size']">
       <h4>Taille / encombrement
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -106,7 +106,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'material']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'material']">
       <h4>Materiel
         <span class="info text-primary lead">Éditer</span>
       </h4>
@@ -115,7 +115,7 @@
 
     <div class="highlightable"
          routerLinkActive="active"
-         [routerLink]="['//admin/lib/lock/games', game.id, 'edit', 'images']">
+         [routerLink]="['/admin/lib/games', game.id, 'edit', 'images']">
       <h4>Galerie -
         <span
           class="lead">{{ game.nbOfImages > 1 ? game.nbOfImages + ' images associées' : game.nbOfImages + ' image associée' }}</span>

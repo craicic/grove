@@ -1,5 +1,2 @@
-<app-nav-wrapper *ngIf="isNavigation(); else notNavBlock"></app-nav-wrapper>
-
-<ng-template #notNavBlock>
-  <app-game-edit-wrapper></app-game-edit-wrapper>
-</ng-template>
+<app-header></app-header>
+<router-outlet></router-outlet>

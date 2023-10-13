@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NAV, WrapperService} from './shared/services/wrapper.service';
+import {NAV, LayoutService} from './shared/services/layout.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +9,12 @@ import {NAV, WrapperService} from './shared/services/wrapper.service';
 export class AppComponent {
   title = 'grove-webapp';
 
-  constructor(private wrapperService: WrapperService) {
-    this.wrapperService.mode = NAV;
-    this.wrapperService.entity = null;
+  constructor(private layoutService: LayoutService) {
+    this.layoutService.mode = NAV;
+    this.layoutService.entity = null;
   }
 
   isNavigation(): boolean {
-    return this.wrapperService.mode === NAV;
+    return this.layoutService.mode === NAV;
   }
 }

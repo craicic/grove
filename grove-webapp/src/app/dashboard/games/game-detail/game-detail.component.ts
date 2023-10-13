@@ -5,9 +5,10 @@ import {ImageService} from '../../../shared/services/image.service';
 import {Router} from '@angular/router';
 import {DeletionHandlerService} from '../../../shared/services/deletion-handler.service';
 import {ModelEnum} from '../../../model/enum/model.enum';
-import {EDITION, WrapperService} from '../../../shared/services/wrapper.service';
+import {EDITION, LayoutService} from '../../../shared/services/layout.service';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {NavModeEnum} from '../../../model/enum/nav-mode.enum';
 
 @Component({
   selector: 'app-game-detail',
@@ -26,7 +27,7 @@ export class GameDetailComponent implements OnInit, OnDestroy {
               private imageService: ImageService,
               private router: Router,
               private deletionHandlerService: DeletionHandlerService,
-              private wrapperService: WrapperService) {
+              private layoutService: LayoutService) {
   }
 
   ngOnInit(): void {
@@ -73,8 +74,9 @@ export class GameDetailComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
-    this.wrapperService.entity = 'Jeux';
-    this.wrapperService.mode = EDITION;
-    this.router.navigate(['/admin/lib/lock/games/' + this.game.id + '/edit']);
+    this.layoutService.entity = 'Jeux';
+    this.layoutService.mode = EDITION;
+    this.layoutService.switchMode(NavModeEnum.EDITION);
+    this.router.navigate(['/admin/lib/games/' + this.game.id + '/edit']);
   }
 }

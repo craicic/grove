@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MechanismsComponent} from './dashboard/mechanism/mechanisms.component';
 import {permissionGuard} from './permissionGuard';
-import {DashboardComponent} from './dashboard/dashboard.component';
 import {MechanismEditComponent} from './dashboard/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismDetailComponent} from './dashboard/mechanism/mechanism-detail/mechanism-detail.component';
 import {MechanismResolver} from './dashboard/mechanism/mechanism-resolver.service';
@@ -42,8 +41,6 @@ import {GameEditHelperComponent} from './dashboard/games/game-edit/game-edit-hel
 import {
   DescriptionHandlerComponent
 } from './dashboard/games/game-edit/description-handler/description-handler.component';
-import {WrapperEditResolver} from './shared/resolvers/wrapper-edit-resolver.service';
-import {NavResolverService} from './shared/resolvers/nav-resolver.service';
 import {NewGameBasicsComponent} from './dashboard/games/new-game/new-game-basics/new-game-basics.component';
 import {NewGameComponent} from './dashboard/games/new-game/new-game.component';
 import {MemberNewComponent} from './dashboard-user/members/member-new/member-new.component';
@@ -62,6 +59,8 @@ import {ErrorPageComponent} from './error/error-page/error-page.component';
 import {CopyHandlerComponent} from './dashboard/games/game-edit/copy-handler/copy-handler.component';
 import {RulesHandlerComponent} from './dashboard/games/game-edit/rules-handler/rules-handler.component';
 import {SearchHomeComponent} from './search/search-home/search-home.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {NavWrapperComponent} from './wrapper/nav-wrapper/nav-wrapper.component';
 
 const routes: Routes = [
   {
@@ -74,171 +73,169 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    component: NavWrapperComponent,
     canActivate: [permissionGuard],
     children: [
       {
+        path: '',
+        component: HomeComponent,
+      },
+      {
         path: 'lib',
+        component: DashboardComponent,
         children: [
           {
-            path: 'lock',
+            path: '',
+            component: HomeComponent
+          },
+          {
+            path: 'games',
+            component: GamesComponent,
+            resolve: [GameOverviewResolver],
             children: [
               {
-                path: 'games/new',
-                component: NewGameComponent,
-                children: [
-                  {
-                    path: 'basics',
-                    component: NewGameBasicsComponent
-                  }
-                ]
+                path: ':id',
+                component: GameSummaryComponent
               },
               {
-                path: 'games/:id/edit',
-                component: GameEditComponent,
-                resolve: [GameResolver, WrapperEditResolver],
-                children: [
-                  {
-                    path: '',
-                    component: GameEditHelperComponent,
-                  },
-                  {
-                    path: 'name',
-                    component: TitleHandlerComponent
-                  },
-
-                  {
-                    path: 'copy',
-                    children: [
-                      {
-                        path: 'new',
-                        component: CopyHandlerComponent,
-                      },
-                      {
-                        path: ':copyId',
-                        component: CopyHandlerComponent,
-                      }
-                    ]
-                  },
-                  {
-                    path: 'rules',
-                    component: RulesHandlerComponent,
-                  },
-                  {
-                    path: 'categories',
-                    component: CategoryHandlerComponent
-                  },
-                  {
-                    path: 'mechanisms',
-                    component: MechanismHandlerComponent
-                  },
-                  {
-                    path: 'infos',
-                    component: InfoHandlerComponent
-                  },
-                  {
-                    path: 'creators',
-                    component: CreatorHandlerComponent
-                  },
-                  {
-                    path: 'publisher',
-                    component: PublisherHandlerComponent
-                  },
-                  {
-                    path: 'description',
-                    component: DescriptionHandlerComponent
-                  },
-                  {
-                    path: 'size',
-                    component: SizeHandlerComponent
-                  },
-                  {
-                    path: 'material',
-                    component: MaterialHandlerComponent
-                  },
-                  {
-                    path: 'images',
-                    component: ImageHandlerComponent
-                  },
-                ]
+                path: 'detail/:id',
+                component: GameDetailComponent,
+                resolve: [GameResolver]
               }
             ]
           },
-
           {
-            path: '',
-            component: DashboardComponent,
+            path: 'games/new',
+            component: NewGameComponent,
             children: [
               {
-                path: 'games',
-                component: GamesComponent,
-                resolve: [GameOverviewResolver],
+                path: 'basics',
+                component: NewGameBasicsComponent
+              }
+            ]
+          },
+          {
+            path: 'games/:id/edit',
+            component: GameEditComponent,
+            resolve: [GameResolver],
+            children: [
+              {
+                path: '',
+                component: GameEditHelperComponent,
+              },
+              {
+                path: 'name',
+                component: TitleHandlerComponent
+              },
+
+              {
+                path: 'copy',
                 children: [
                   {
-                    path: ':id',
-                    component: GameSummaryComponent
+                    path: 'new',
+                    component: CopyHandlerComponent,
                   },
                   {
-                    path: 'detail/:id',
-                    component: GameDetailComponent,
-                    resolve: [GameResolver]
+                    path: ':copyId',
+                    component: CopyHandlerComponent,
                   }
                 ]
               },
               {
-                path: 'mechanisms',
-                component: MechanismsComponent,
-                children: [
-                  {path: 'new', component: MechanismEditComponent, resolve: [ExistingMechanismsResolver]},
-                  {
-                    path: ':id/edit',
-                    component: MechanismEditComponent,
-                    resolve: [MechanismResolver, ExistingMechanismsResolver]
-                  },
-                  {path: ':id', component: MechanismDetailComponent, resolve: [MechanismResolver]}
-                ]
-              },
-              {
-                path: 'creators',
-                component: CreatorsComponent,
-                children: [
-                  {path: 'new', component: CreatorEditComponent, resolve: [CreatorNameResolver]},
-                  {
-                    path: ':id/edit',
-                    component: CreatorEditComponent,
-                    resolve: [CreatorResolver, CreatorNameResolver]
-                  },
-                  {path: ':id', component: CreatorDetailComponent, resolve: [CreatorResolver]}
-                ]
-              },
-              {
-                path: 'publishers',
-                component: PublishersComponent,
-                children: [
-                  {path: 'new', component: PublisherEditComponent, resolve: [PublishersNamesResolver]},
-                  {
-                    path: ':id/edit',
-                    component: PublisherEditComponent,
-                    resolve: [PublishersResolver, PublishersNamesResolver]
-                  },
-                  {path: ':id', component: PublisherDetailComponent, resolve: [PublishersResolver]}
-                ]
+                path: 'rules',
+                component: RulesHandlerComponent,
               },
               {
                 path: 'categories',
-                component: CategoriesComponent,
-                resolve: [CategoryResolver],
-                children: [
-                  {path: 'new', component: CategoryEditComponent},
-                  {path: ':id/edit', component: CategoryEditComponent, resolve: [CategoryResolver]},
-                  {path: ':id', component: CategoryDetailComponent, resolve: [CategoryResolver]}
-                ]
+                component: CategoryHandlerComponent
               },
               {
-                path: 'configuration',
-                component: ConfigurationComponent
-              }]
+                path: 'mechanisms',
+                component: MechanismHandlerComponent
+              },
+              {
+                path: 'infos',
+                component: InfoHandlerComponent
+              },
+              {
+                path: 'creators',
+                component: CreatorHandlerComponent
+              },
+              {
+                path: 'publisher',
+                component: PublisherHandlerComponent
+              },
+              {
+                path: 'description',
+                component: DescriptionHandlerComponent
+              },
+              {
+                path: 'size',
+                component: SizeHandlerComponent
+              },
+              {
+                path: 'material',
+                component: MaterialHandlerComponent
+              },
+              {
+                path: 'images',
+                component: ImageHandlerComponent
+              },
+            ]
           },
-        ]
+          {
+            path: 'mechanisms',
+            component: MechanismsComponent,
+            children: [
+              {path: 'new', component: MechanismEditComponent, resolve: [ExistingMechanismsResolver]},
+              {
+                path: ':id/edit',
+                component: MechanismEditComponent,
+                resolve: [MechanismResolver, ExistingMechanismsResolver]
+              },
+              {path: ':id', component: MechanismDetailComponent, resolve: [MechanismResolver]}
+            ]
+          },
+          {
+            path: 'creators',
+            component: CreatorsComponent,
+            children: [
+              {path: 'new', component: CreatorEditComponent, resolve: [CreatorNameResolver]},
+              {
+                path: ':id/edit',
+                component: CreatorEditComponent,
+                resolve: [CreatorResolver, CreatorNameResolver]
+              },
+              {path: ':id', component: CreatorDetailComponent, resolve: [CreatorResolver]}
+            ]
+          },
+          {
+            path: 'publishers',
+            component: PublishersComponent,
+            children: [
+              {path: 'new', component: PublisherEditComponent, resolve: [PublishersNamesResolver]},
+              {
+                path: ':id/edit',
+                component: PublisherEditComponent,
+                resolve: [PublishersResolver, PublishersNamesResolver]
+              },
+              {path: ':id', component: PublisherDetailComponent, resolve: [PublishersResolver]}
+            ]
+          },
+          {
+            path: 'categories',
+            component: CategoriesComponent,
+            resolve: [CategoryResolver],
+            children: [
+              {path: 'new', component: CategoryEditComponent},
+              {path: ':id/edit', component: CategoryEditComponent, resolve: [CategoryResolver]},
+              {path: ':id', component: CategoryDetailComponent, resolve: [CategoryResolver]}
+            ]
+          },
+          {
+            path: 'configuration',
+            component: ConfigurationComponent
+          }]
       },
       {
         path: 'loans',
@@ -284,9 +281,10 @@ const routes: Routes = [
             component: MemberDetailComponent
           }
         ]
-      }
+      },
     ]
   },
+
 
   {
     path: 'search',
@@ -294,7 +292,6 @@ const routes: Routes = [
   },
   {
     path: 'not-found',
-    resolve: [NavResolverService],
     component: ErrorPageComponent,
     data: {message: 'page not found!'}
   },
@@ -306,8 +303,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes
-// , {enableTracing: true}
-    , {})],
+    , {enableTracing: false})
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

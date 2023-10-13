@@ -52,12 +52,12 @@ public class SecurityConfig {
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User
                 .withUsername("user")
-                .password(encoder().encode("123"))
+                .password(encoder().encode("UserPass123"))
                 .roles("USER")
                 .build();
         UserDetails admin = User
                 .withUsername("admin")
-                .password(encoder().encode("123"))
+                .password(encoder().encode("AdminPass123"))
                 .roles("USER", "ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(List.of(user, admin));
