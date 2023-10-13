@@ -1,5 +1,4 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {LayoutService} from '../shared/services/layout.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,10 +8,6 @@ import {LayoutService} from '../shared/services/layout.service';
 export class DashboardComponent implements OnInit {
 
   public innerWidth: any;
-
-
-  constructor(private layoutService: LayoutService) {
-  }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
