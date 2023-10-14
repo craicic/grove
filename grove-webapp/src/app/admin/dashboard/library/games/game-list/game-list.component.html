@@ -1,3 +1,17 @@
+<button
+  class="btn btn-primary me-1 mb-1"
+  type="button"
+  routerLink="/admin/lib/games/new/basics"><i class="bi bi-file-earmark-plus"></i> Nouveau jeu
+</button>
+<button
+  class="btn btn-secondary me-1 mb-1"
+  type="button"
+  (click)="onRefreshList()"><i class="bi bi-arrow-clockwise"></i>
+</button>
+
+
+<hr/>
+
 <app-simple-filter-form
         [filterForm]="filterForm"
         (clickFilter)="onFilter()"
@@ -23,15 +37,3 @@
         [(page)]="page"
         (pageChange)="onPageChange($event)"></ngb-pagination>
 
-<hr/>
-
-<button
-        class="btn btn-secondary me-1 mb-3"
-        type="button"
-        routerLink="/admin/lib/games/new/basics">Nouveau jeu
-</button>
-<button
-        class="btn btn-secondary me-1 mb-3"
-        type="button"
-        (click)="onRefreshList()">Rafraichir la liste
-</button>

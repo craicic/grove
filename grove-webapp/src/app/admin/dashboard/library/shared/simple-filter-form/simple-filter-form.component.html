@@ -11,33 +11,17 @@
     <button
       class="btn btn-success"
       type="button"
-      [disabled]="filterForm.invalid">Filtrer
+      [disabled]="filterForm.invalid"
+    (click)="onFilter()"><i class="bi bi-funnel"></i> Filtrer
     </button>
-
 
     <button
       *ngIf="keywordGroup.offsetWidth >= 300"
       class="btn btn-secondary"
       type="button"
-      ngbTooltip="Cliquez pour rafraîchir la liste"
+      ngbTooltip="Cliquez pour retirer le filtre"
       (click)="onRefreshList()">
-      <img
-        class=""
-        src="assets/icons/arrow-cw.svg"
-        alt="R"/>
-    </button>
-
-    <button
-      *ngIf="keywordGroup.offsetWidth >= 300"
-      class="btn btn-secondary"
-      type="button"
-      ngbTooltip="Cliquez pour effacer la recherche"
-      (click)="onDelete()"
-      [disabled]="filterForm.invalid">
-      <img
-        src="assets/icons/x-square.svg"
-        alt="X-square"
-      />
+      <i class="bi bi-arrow-clockwise"></i>
     </button>
 
   </div>
