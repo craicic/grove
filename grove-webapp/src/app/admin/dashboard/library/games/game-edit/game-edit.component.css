@@ -29,6 +29,10 @@ ngb-carousel {
   border-radius: 5px;
 }
 
+.always-hl {
+
+}
+
 .highlightable {
   padding: 1em;
   margin: 0.5em;
@@ -64,4 +68,17 @@ ngb-carousel {
   float: right;
 }
 
+.btn-style {
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 15px;
+  border: 2px #198754 solid;
+  color: #198754;
 
+}
+
+.btn-style:hover {
+  background-color: #198754;
+  color: white;
+  cursor: pointer;
+}

@@ -1,14 +1,23 @@
 <div class="grid-container">
+
   <div class="detail-panel">
 
-    <div class="highlightable"
-         routerLinkActive="active"
-         [routerLink]="['/admin/lib/games', game.id, 'edit', 'name']">
-      <h2>{{ game.title }}
-        <span class="info text-primary lead">Éditer</span>
-      </h2>
+    <div class="row">
+      <div class="highlightable col-md-8"
+           routerLinkActive="active"
+           [routerLink]="['/admin/lib/games', game.id, 'edit', 'name']">
+        <h2>{{ game.title }}
+          <span class="info text-primary lead">Éditer</span>
+        </h2>
+      </div>
+      <div class="btn-style col"
+           routerLinkActive="active"
+           [routerLink]="['/admin/lib/games/detail', game.id]">
+        <h2 class="text-center">
+          <i class="bi bi-arrow-left"></i>
+        </h2>
+      </div>
     </div>
-
     <div class="row">
       <div *ngFor="let copy of game.copies" class="col highlightable me-2"
            routerLinkActive="active"

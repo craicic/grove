@@ -100,7 +100,7 @@ export class NewGameBasicsComponent implements OnInit {
       .pipe(map(game => this.game = game))
       .subscribe(() => {
           this.service.updateDetailedGame(this.game);
-          this.router.navigate(['./admin/lib/games' + this.game.id + '/edit']);
+          this.router.navigate(['./admin/lib/games/' + this.game.id + '/edit']);
         }
       );
   }
