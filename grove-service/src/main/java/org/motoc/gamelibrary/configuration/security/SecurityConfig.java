@@ -84,6 +84,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/login").permitAll()
                                 .requestMatchers("/api/token").permitAll()
                                 .requestMatchers("/api/error").permitAll()
+                                .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/api/user/**")
                                 .hasAnyRole("USER")
                                 .requestMatchers("/api/admin/**")

@@ -20,7 +20,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("api/admin/games")
+@RequestMapping("api")
 @SecurityRequirement(name = "jwtAuth")
 public class GameController {
 
@@ -38,7 +38,7 @@ public class GameController {
      *
      * @return Return the number of games in collection.
      */
-    @GetMapping("/count")
+    @GetMapping("/admin/games/count")
     Long count() {
         logger.trace("count called");
         return service.count();
@@ -50,7 +50,7 @@ public class GameController {
      * @param id The game ID that need to be fetched
      * @return The game matching the ID
      */
-    @GetMapping("/{id}")
+    @GetMapping("/admin/games/{id}")
     GameDto findById(@PathVariable Long id) {
         logger.trace("findById(id) called");
         return service.findGameById(id);
@@ -62,7 +62,7 @@ public class GameController {
      * @param pageable The pageable item to fetch a page of games.
      * @return The paginated list of games.
      */
-    @GetMapping("/page")
+    @GetMapping("/admin/games/page")
     Page<GameDto> findPage(Pageable pageable) {
         logger.trace("findPage(pageable) called");
         return service.findPage(pageable);
@@ -75,7 +75,7 @@ public class GameController {
      * @param id      The ID of the game to edit
      * @return The edited game
      */
-    @PutMapping("/{id}")
+    @PutMapping("/admin/games/{id}")
     GameDto edit(@RequestBody @Valid GameDto gameDto,
                  @PathVariable Long id) {
         logger.trace("edit(game) called");
@@ -89,13 +89,12 @@ public class GameController {
      * @param keyword  The optional keyword to filter games
      * @return The paginated and filtered list of games.
      */
-    @GetMapping("/page/overview")
+    @GetMapping("/public/games/page/overview")
     Page<GameOverviewDto> findPagedOverview(Pageable pageable,
                                             @RequestParam(name = "search", required = false, defaultValue = "")
                                             String keyword) {
         logger.trace("findPagedOverview(pageable) called");
         return service.findPagedOverview(pageable, keyword);
-
     }
 
     /**
@@ -104,7 +103,7 @@ public class GameController {
      * @param gameDto The game to save
      * @return The saved game
      */
-    @PostMapping()
+    @PostMapping("/admin/games")
     GameDto save(@RequestBody @Valid GameDto gameDto) {
         logger.trace("save(game) called");
         return service.save(gameDto);
@@ -115,7 +114,7 @@ public class GameController {
      *
      * @return A list of title
      */
-    @GetMapping("/titles")
+    @GetMapping("/admin/games/titles")
     List<String> findTitles() {
         logger.trace("findTitles() called");
         return service.findTitles();
@@ -127,7 +126,7 @@ public class GameController {
      * @param id The ID of the game the images are needed
      * @return A list of images in PNG or JPEG format
      */
-    @GetMapping("/{id}/images")
+    @GetMapping("/admin/games/{id}/images")
     List<ImageDto> findImagesById(@PathVariable Long id) {
         logger.trace("findImagesById() called");
         return service.findImagesById(id);
@@ -140,7 +139,7 @@ public class GameController {
      * @param categoryId The ID of the category you want to attach to the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/add-category/{categoryId}")
+    @PutMapping("/admin/games/{gameId}/add-category/{categoryId}")
     GameDto addCategory(@PathVariable Long gameId,
                         @PathVariable Long categoryId) {
         logger.trace("addCategory() called");
@@ -154,7 +153,7 @@ public class GameController {
      * @param categoryId The ID of the category you want to detach from the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/unlink-category/{categoryId}")
+    @PutMapping("/admin/games/{gameId}/unlink-category/{categoryId}")
     GameDto unlinkCategory(@PathVariable Long gameId,
                            @PathVariable Long categoryId) {
         logger.trace("unlinkCategory() called");
@@ -169,7 +168,7 @@ public class GameController {
      * @param mechanismId The ID of the mechanism you want to attach to the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/add-mechanism/{mechanismId}")
+    @PutMapping("/admin/games/{gameId}/add-mechanism/{mechanismId}")
     GameDto addMechanism(@PathVariable Long gameId,
                          @PathVariable Long mechanismId) {
         logger.trace("addMechanism() called");
@@ -183,7 +182,7 @@ public class GameController {
      * @param mechanismId The ID of the mechanism you want to detach from the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/unlink-mechanism/{mechanismId}")
+    @PutMapping("/admin/games/{gameId}/unlink-mechanism/{mechanismId}")
     GameDto unlinkMechanism(@PathVariable Long gameId,
                             @PathVariable Long mechanismId) {
         logger.trace("unlinkMechanism() called");
@@ -195,7 +194,7 @@ public class GameController {
      *
      * @param gameId The ID of the game to delete
      */
-    @DeleteMapping("/{gameId}")
+    @DeleteMapping("/admin/games/{gameId}")
     void deleteById(@PathVariable Long gameId) {
         logger.trace("deleteById() called");
         service.deleteById(gameId);
@@ -208,7 +207,7 @@ public class GameController {
      * @param gameCopyId The ID of the game copy you want to attach to the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/add-game-copy/{gameCopyId}")
+    @PutMapping("/admin/games/{gameId}/add-game-copy/{gameCopyId}")
     GameDto addGameCopy(@PathVariable Long gameId,
                         @PathVariable Long gameCopyId) {
         logger.trace("addGameCopy() called");
@@ -221,7 +220,7 @@ public class GameController {
      * @param gameId     The ID of the game you want to unlink the given game copy
      * @param gameCopyId The ID of the game copy you want to detach from the game
      */
-    @PutMapping("/{gameId}/unlink-game-copy/{gameCopyId}")
+    @PutMapping("/admin/games/{gameId}/unlink-game-copy/{gameCopyId}")
     void unlinkGameCopy(@PathVariable Long gameId,
                         @PathVariable Long gameCopyId) {
         logger.trace("unlinkGameCopy() called");
@@ -235,7 +234,7 @@ public class GameController {
      * @param creatorId The ID of the creator you want to attach to the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/add-creator/{creatorId}")
+    @PutMapping("/admin/games/{gameId}/add-creator/{creatorId}")
     GameDto addCreator(@PathVariable Long gameId,
                        @PathVariable Long creatorId) {
         logger.trace("addCreator() called");
@@ -249,7 +248,7 @@ public class GameController {
      * @param creatorId The ID of the creator you want to detach from the game
      * @return The updated game of the given ID.
      */
-    @PutMapping("/{gameId}/unlink-creator/{creatorId}")
+    @PutMapping("/admin/games/{gameId}/unlink-creator/{creatorId}")
     GameDto unlinkCreator(@PathVariable Long gameId,
                           @PathVariable Long creatorId) {
         logger.trace("unlinkCreator() called");
@@ -262,7 +261,7 @@ public class GameController {
      * @param gameId  The ID of the game you want to link the given image
      * @param imageId The ID of the image you want to attach to the game
      */
-    @PutMapping("/{gameId}/add-image/{imageId}")
+    @PutMapping("/admin/games/{gameId}/add-image/{imageId}")
     void addImage(@PathVariable Long gameId,
                   @PathVariable Long imageId) {
         logger.trace("addImage() called");

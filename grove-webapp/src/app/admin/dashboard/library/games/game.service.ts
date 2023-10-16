@@ -39,7 +39,7 @@ export class GameService {
     const size = this.config.getNumberOfElements();
     const params = '?page=' + page + '&size=' + size + '&sort=id' + keywordParam;
     return this.http
-      .get<Page<GameOverview>>(this.apiUri + '/api/admin/games/page/overview' + params, {responseType: 'json'})
+      .get<Page<GameOverview>>(this.apiUri + '/api/public/games/page/overview' + params, {responseType: 'json'})
       .pipe(
         tap(
           pagedGameOverviews => {

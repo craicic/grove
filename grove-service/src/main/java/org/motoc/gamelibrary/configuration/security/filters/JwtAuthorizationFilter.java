@@ -31,6 +31,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         logger.info("Request analyzed :" + request.getServletPath());
         return request.getServletPath().equals("/api/login")
+               || request.getServletPath().startsWith("/api/public")
                || request.getServletPath().equals("/styles.css")
                || request.getServletPath().contains("/swagger-ui")
                || request.getServletPath().contains("/v3/api-docs");
