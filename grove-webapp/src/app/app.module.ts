@@ -10,7 +10,9 @@ import {DashboardComponent} from './admin/dashboard/library/dashboard.component'
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MechanismEditComponent} from './admin/dashboard/library/mechanism/mechanism-edit/mechanism-edit.component';
 import {MechanismListComponent} from './admin/dashboard/library/mechanism/mechanism-list/mechanism-list.component';
-import {MechanismDetailComponent} from './admin/dashboard/library/mechanism/mechanism-detail/mechanism-detail.component';
+import {
+  MechanismDetailComponent
+} from './admin/dashboard/library/mechanism/mechanism-detail/mechanism-detail.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ConfigurationComponent} from './admin/dashboard/library/configuration/configuration.component';
 import {CreatorsComponent} from './admin/dashboard/library/creators/creators.component';
@@ -21,10 +23,14 @@ import {StringEnumPipe} from './shared/pipes/string-enum.pipe';
 import {ConfirmModalComponent} from './shared/components/confirm-modal/confirm-modal.component';
 import {EnumToValuePipe} from './shared/pipes/enum-to-value.pipe';
 import {ContactFormComponent} from './shared/components/contact-form/contact-form.component';
-import {SimpleFilterFormComponent} from './admin/dashboard/library/shared/simple-filter-form/simple-filter-form.component';
+import {
+  SimpleFilterFormComponent
+} from './admin/dashboard/library/shared/simple-filter-form/simple-filter-form.component';
 import {PublishersComponent} from './admin/dashboard/library/publishers/publishers.component';
 import {PublisherListComponent} from './admin/dashboard/library/publishers/publisher-list/publisher-list.component';
-import {PublisherDetailComponent} from './admin/dashboard/library/publishers/publisher-detail/publisher-detail.component';
+import {
+  PublisherDetailComponent
+} from './admin/dashboard/library/publishers/publisher-detail/publisher-detail.component';
 import {PublisherEditComponent} from './admin/dashboard/library/publishers/publisher-edit/publisher-edit.component';
 import {CategoriesComponent} from './admin/dashboard/library/categories/categories.component';
 import {CategoryDetailComponent} from './admin/dashboard/library/categories/category-detail/category-detail.component';
@@ -39,16 +45,28 @@ import {GameSummaryComponent} from './admin/dashboard/library/games/game-list/ga
 import {GameDetailComponent} from './admin/dashboard/library/games/game-detail/game-detail.component';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {GameEditComponent} from './admin/dashboard/library/games/game-edit/game-edit.component';
-import {CategoryHandlerComponent} from './admin/dashboard/library/games/game-edit/category-handler/category-handler.component';
+import {
+  CategoryHandlerComponent
+} from './admin/dashboard/library/games/game-edit/category-handler/category-handler.component';
 import {TitleHandlerComponent} from './admin/dashboard/library/games/game-edit/title-handler/title-handler.component';
-import {MechanismHandlerComponent} from './admin/dashboard/library/games/game-edit/mechanism-handler/mechanism-handler.component';
-import {CreatorHandlerComponent} from './admin/dashboard/library/games/game-edit/creator-handler/creator-handler.component';
-import {PublisherHandlerComponent} from './admin/dashboard/library/games/game-edit/publisher-handler/publisher-handler.component';
+import {
+  MechanismHandlerComponent
+} from './admin/dashboard/library/games/game-edit/mechanism-handler/mechanism-handler.component';
+import {
+  CreatorHandlerComponent
+} from './admin/dashboard/library/games/game-edit/creator-handler/creator-handler.component';
+import {
+  PublisherHandlerComponent
+} from './admin/dashboard/library/games/game-edit/publisher-handler/publisher-handler.component';
 import {InfoHandlerComponent} from './admin/dashboard/library/games/game-edit/info-handler/info-handler.component';
 import {SizeHandlerComponent} from './admin/dashboard/library/games/game-edit/size-handler/size-handler.component';
-import {MaterialHandlerComponent} from './admin/dashboard/library/games/game-edit/material-handler/material-handler.component';
+import {
+  MaterialHandlerComponent
+} from './admin/dashboard/library/games/game-edit/material-handler/material-handler.component';
 import {ImageHandlerComponent} from './admin/dashboard/library/games/game-edit/image-handler/image-handler.component';
-import {GameEditHelperComponent} from './admin/dashboard/library/games/game-edit/game-edit-helper/game-edit-helper.component';
+import {
+  GameEditHelperComponent
+} from './admin/dashboard/library/games/game-edit/game-edit-helper/game-edit-helper.component';
 import {
   CategoryPickerComponent
 } from './admin/dashboard/library/games/game-edit/category-handler/category-picker/category-picker.component';
@@ -62,7 +80,9 @@ import {
 import {
   DescriptionHandlerComponent
 } from './admin/dashboard/library/games/game-edit/description-handler/description-handler.component';
-import {NewGameBasicsComponent} from './admin/dashboard/library/games/new-game/new-game-basics/new-game-basics.component';
+import {
+  NewGameBasicsComponent
+} from './admin/dashboard/library/games/new-game/new-game-basics/new-game-basics.component';
 import {NewGameComponent} from './admin/dashboard/library/games/new-game/new-game.component';
 import {MemberListComponent} from './admin/dashboard/users/members/member-list/member-list.component';
 import {MemberNewComponent} from './admin/dashboard/users/members/member-new/member-new.component';
@@ -75,7 +95,9 @@ import {LoanDetailComponent} from './admin/dashboard/loans/loans/loan-detail/loa
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {AuthInterceptor} from './auth.interceptor';
-import {CopiesDetailComponent} from './admin/dashboard/library/game-copies/copies-control/copies-detail/copies-detail.component';
+import {
+  CopiesDetailComponent
+} from './admin/dashboard/library/game-copies/copies-control/copies-detail/copies-detail.component';
 import {CopyHandlerComponent} from './admin/dashboard/library/games/game-edit/copy-handler/copy-handler.component';
 import {CopiesControlComponent} from './admin/dashboard/library/game-copies/copies-control/copies-control.component';
 import {ImagesViewerComponent} from './admin/dashboard/library/games/game-detail/images-viewer/images-viewer.component';
@@ -85,8 +107,9 @@ import {sessionInitializer} from './session-initializer';
 import {AuthenticationService} from './auth/authentication.service';
 import {DashboardHomeComponent} from './admin/dashboard/dashobard-home/dashboard-home.component';
 import {AdminWrapperComponent} from './admin/admin-wrapper/admin-wrapper.component';
-import { LibHomeComponent } from './admin/dashboard/library/lib-home/lib-home.component';
-import { WipComponent } from './shared/components/wip/wip.component';
+import {LibHomeComponent} from './admin/dashboard/library/lib-home/lib-home.component';
+import {WipComponent} from './shared/components/wip/wip.component';
+import {FeaturedComponent} from './home/featured/featured.component';
 
 
 @NgModule({
@@ -160,7 +183,8 @@ import { WipComponent } from './shared/components/wip/wip.component';
     SearchHomeComponent,
     DashboardHomeComponent,
     LibHomeComponent,
-    WipComponent
+    WipComponent,
+    FeaturedComponent
   ],
   imports: [
     BrowserModule,

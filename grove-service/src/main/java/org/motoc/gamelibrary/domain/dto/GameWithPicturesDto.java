@@ -3,15 +3,8 @@ package org.motoc.gamelibrary.domain.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.motoc.gamelibrary.domain.enumeration.GameNature;
-import org.motoc.gamelibrary.technical.validation.annotation.ConsistentAgeRange;
-import org.motoc.gamelibrary.technical.validation.annotation.ConsistentNumberOfPlayer;
-import org.motoc.gamelibrary.technical.validation.annotation.SelectYearOrMonth;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -19,16 +12,9 @@ import java.util.Set;
 
 /**
  * Game's DTO
- * The primary and more commonly used DTO without pictures.
+ * A specific DTO when you need to include pictures in the response.
  */
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ConsistentAgeRange
-@ConsistentNumberOfPlayer
-@SelectYearOrMonth
-public class GameDto {
+public class GameWithPicturesDto {
     private Long id;
 
     @NotBlank(message = "Title cannot be null or blank")
@@ -81,23 +67,4 @@ public class GameDto {
 
     private Set<Long> imageIds = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return "GameDto{" +
-               "id=" + id +
-               ", title='" + title + '\'' +
-               ", description='" + description + '\'' +
-               ", playTime='" + playTime + '\'' +
-               ", minNumberOfPlayer=" + minNumberOfPlayer +
-               ", maxNumberOfPlayer=" + maxNumberOfPlayer +
-               ", minAge=" + minAge +
-               ", maxAge=" + maxAge +
-               ", minMonth=" + minMonth +
-               ", material='" + material + '\'' +
-               ", rules='" + rules + '\'' +
-               ", variant='" + variant + '\'' +
-               ", nature=" + nature +
-               ", yearOfRelease=" + yearOfRelease +
-               '}';
-    }
 }
