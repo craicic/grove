@@ -80,7 +80,7 @@ public class CommandLineStartupRunner
     private Options createOption() {
         Options options = new Options();
         options.addOption("i", true, "Insert image into the database, by default images in source folder 'src/main/resources/static' are inserted, but path can be edited by passing a String as argument of 'i'");
-        options.addOption("c", "csv-import", false, "Import a Kawa CSV file");
+        options.addOption("c", "csv-import", true, "Import a Kawa CSV file");
 
         return options;
     }
