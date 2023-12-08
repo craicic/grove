@@ -73,7 +73,7 @@ public class ImageService {
         return outputStream.toByteArray();
     }
 
-    public void processImages(Path sourcePath, boolean convert, ImageFormat outputFormat) throws IOException {
+    public void processImages(Path sourcePath) throws IOException {
         Map<Path, ImageFormat> imageDescMap = new HashMap<>();
         List<byte[]> bytesList = new ArrayList<>();
 

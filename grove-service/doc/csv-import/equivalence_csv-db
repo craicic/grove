@@ -1,0 +1,23 @@
+Code objet      -> game_copy.code               varchar
+Nom objet       -> game.title                   varchar
+Option6         -> ignored
+Nature          -> ignored
+Localisation    -> game_copy.location           varchar
+Code Stat       -> game.nature                  smallint
+Etat            -> game_copy.wear_condition     varchar
+Actif-inactif   -> game_copy.general_state      varchar
+Date Achat      -> game_copy.date_of_purchase   date
+prix TTC        -> game_copy.price              numeric
+Editeur         -> publisher.name               varchar
+vendeur         -> ignored
+Option1         -> game.min_month               smallint
+                   game.max_age                 smallint
+                   game.min_age                 smallint
+Option2         -> game.max_number_of_player
+                   game.min_number_of_player
+Option3 COAUTHOR-> creator.firstname            varchar                 OR -> game.play_time !!!!
+                   creator.lastname             varchar
+Option4 AUTHOR  -> creator.firstname            varchar
+                   creator.lastname             varchar
+Option5 ILLUS   -> creator.firstname            varchar
+                   creator.lastname             varchar

@@ -18,7 +18,7 @@
         <java.version>19</java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <jpamodelgen.version>6.2.7.Final</jpamodelgen.version>
-        <lombok.version>1.18.28</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <springdoc.version>2.2.0</springdoc.version>
         <webjars.version>5.2.0</webjars.version>
