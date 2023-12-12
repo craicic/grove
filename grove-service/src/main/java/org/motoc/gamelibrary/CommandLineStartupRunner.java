@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * It's methods run is executed on startup. It fill the database with demo data.sql.
+ * It's methods run is executed on startup. It fills the database with demo data.sql.
  */
 @Component
 public class CommandLineStartupRunner
@@ -35,13 +35,10 @@ public class CommandLineStartupRunner
 
     /**
      * return int code
-     * -1 : no action
-     * 0 : insert with no conversion
-     * 1 : insert with conversion
      */
-    private int parseArguments(Options o, String... args) throws ParseException, IOException {
+    private int parseArguments(Options o, String... args) throws Exception {
         Path imageSourcePath = Path.of("grove-service/src/main/resources/static");
-        Path csvSourcePath = Path.of("grove-service/src/main/resources/static");
+        Path csvSourcePath = imageSourcePath;
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(o, args);
         int code = 0;

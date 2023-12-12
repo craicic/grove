@@ -1,15 +1,17 @@
 package org.motoc.gamelibrary.service;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.motoc.gamelibrary.technical.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.*;
 
 @Service
 public class CSVImportService {
@@ -24,50 +26,51 @@ public class CSVImportService {
 
 
     public void importCSV(Path csvFilePath) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+        List<Row> rows = extractRowsFromCSV(csvFilePath);
+        persistCreators(rows);
+    }
 
-        int batchSize = 20;
+    private void persistCreators(List<Row> rows) {
 
-        try {
+    }
 
-            BufferedReader lineReader = new BufferedReader(new FileReader(csvFilePath.toFile(), StandardCharsets.UTF_8));
-            String lineText = null;
 
-            int count = 0;
-
+    public List<Row> extractRowsFromCSV(Path csvFilePath) {
+        List<Row> rows = new ArrayList<>();
+        Map<Integer, Integer> lineLengthFrequency = new HashMap<>();
+        try (BufferedReader lineReader = Files.newBufferedReader(csvFilePath, StandardCharsets.UTF_8)) {
             lineReader.readLine(); // skip header line
+            String lineText = null;
             while ((lineText = lineReader.readLine()) != null) {
-                String[] data = lineText.split(";");
-                String column1 = data[0].trim();
-                String column2 = data[1];
-
-                if (count % batchSize == 0) {
-                    log.debug("-----------");
-                    log.debug("Code objet : " + column1);
-                    log.debug("Titre du jeu : " + column2);
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("[ ");
-                    for (int i = 2; i < data.length; i++) {
-                        log.debug(data[i]);
-                        sb.append(data[i]);
-                        if (i != data.length - 1) {
-                            sb.append(" | ");
-                        }
-                    }
-                    sb.append(" ]");
-                    log.debug(sb.toString());
-                }
-                count++;
+                rows.add(processLine(lineText, lineLengthFrequency));
             }
-
-            lineReader.close();
-        } catch (Exception e) {
-            for (StackTraceElement ste : e.getStackTrace()) {
-                log.warn(ste.toString());
-            }
+        } catch (IOException e) {
+            log.warn(e.getMessage());
         }
-        em.getTransaction().commit();
-        em.close();
+        validateLineLengthVariation(lineLengthFrequency);
+        return rows;
+    }
+
+    private Row processLine(String lineText, Map<Integer, Integer> lineLengthFrequency) {
+        String[] line = lineText.split(";");
+        Row row = new Row();
+        lineLengthFrequency.put(line.length, lineLengthFrequency.getOrDefault(line.length, 0) + 1);
+        for (String value : line) {
+            String valueStripped = value.strip();
+            row.addValue(valueStripped.isBlank() ? null : valueStripped);
+        }
+        log.info(row.toString());
+        return row;
+    }
+
+    private void validateLineLengthVariation(Map<Integer, Integer> lineLengthFrequency) {
+        if (lineLengthFrequency.size() > 1) {
+            // if lineLengthFrequency have multiple entry, we log and throw an IllegalStateException
+            Set<Map.Entry<Integer, Integer>> entries = lineLengthFrequency.entrySet();
+            for (Map.Entry<Integer, Integer> entry : entries) {
+                log.info("Length : " + entry.getKey() + " -> " + entry.getValue() + " occurrences.");
+            }
+            throw new IllegalStateException("At least one row has a different number of values");
+        }
     }
 }
