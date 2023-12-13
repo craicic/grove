@@ -32,6 +32,10 @@ build/
 ### VS Code ###
 .vscode/
 
+### CSV file ###
+csv/
+*.csv
+
 ### SECRETS ####
 secrets.properties
 secrets-staging.properties
@@ -48,6 +52,7 @@ secrets-staging.properties
 /grove-webapp/dist
 /grove-webapp/tmp
 /grove-webapp/out-tsc
+dist/
 
 # dependencies
 /grove-webapp/node_modules
