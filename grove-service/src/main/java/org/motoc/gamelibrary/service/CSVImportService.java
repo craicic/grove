@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.service;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.motoc.gamelibrary.domain.dto.CreatorDto;
 import org.motoc.gamelibrary.technical.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,47 @@ public class CSVImportService {
 
     public void importCSV(Path csvFilePath) {
         List<Row> rows = extractRowsFromCSV(csvFilePath);
-        persistCreators(rows);
+        List<Row> oversizeGameRows = filterOversizeGame(rows);
+        extractCreators(oversizeGameRows);
+    }
+
+    private List<CreatorDto> extractCreators(List<Row> oversizeGameRows) {
+        List<CreatorDto> creators = new ArrayList<>();
+        for (Row row : oversizeGameRows) {
+            CreatorDto creator;
+            for (int i = 15; i < 18; i++) {
+                String value = row.getValues().get(i);
+                if (value != null) {
+                    if (value.matches(".*(&|(?i) ET ).*")) {
+                        log.warn("Name : " + value + " has been rejected because it contains a '&' or a 'ET'");
+                    } else {
+                        String[] parts = row.getValues().get(i).split(" ");
+                        creator = new CreatorDto();
+                        if (parts.length <= 2) {
+                            creator.setFirstName(parts[0]);
+                        }
+                        if (parts.length == 2) {
+                            creator.setLastName(parts[1]);
+                        }
+                        if (!creators.contains(creator)) {
+                            creators.add(creator);
+                        }
+                    }
+                }
+            }
+        }
+        creators.forEach(e -> log.info(e.toString()));
+        return creators;
+    }
+
+    private List<Row> filterOversizeGame(List<Row> rows) {
+        List<Row> oversizeGameRows = new ArrayList<>();
+        for (Row row : rows) {
+            if (Objects.equals(row.getValues().get(3), "GRAND JEU")) {
+                oversizeGameRows.add(row);
+            }
+        }
+        return oversizeGameRows;
     }
 
     private void persistCreators(List<Row> rows) {
@@ -59,7 +100,6 @@ public class CSVImportService {
             String valueStripped = value.strip();
             row.addValue(valueStripped.isBlank() ? null : valueStripped);
         }
-        log.info(row.toString());
         return row;
     }
 

@@ -1,7 +1,10 @@
 package org.motoc.gamelibrary;
 
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
 import org.motoc.gamelibrary.service.CSVImportService;
 import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
@@ -10,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 /**
