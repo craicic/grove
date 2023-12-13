@@ -8,8 +8,8 @@ public enum CreatorRole {
     AUTHOR("Auteur"),
     DESIGNER("Designer"),
     ILLUSTRATOR("Illustrateur"),
-    AUTHOR_ILLUSTRATOR("Auteur illustrateur");
-
+    AUTHOR_ILLUSTRATOR("Auteur illustrateur"),
+    UNDEFINED("Non renseigné");
 
     CreatorRole(String frenchTranslation) {
     }

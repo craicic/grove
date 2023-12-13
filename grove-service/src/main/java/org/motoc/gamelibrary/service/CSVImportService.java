@@ -2,7 +2,9 @@ package org.motoc.gamelibrary.service;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.motoc.gamelibrary.domain.dto.CreatorDto;
-import org.motoc.gamelibrary.technical.Row;
+import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
+import org.motoc.gamelibrary.technical.csv.CreatorValues;
+import org.motoc.gamelibrary.technical.csv.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,33 +34,47 @@ public class CSVImportService {
         extractCreators(oversizeGameRows);
     }
 
-    private List<CreatorDto> extractCreators(List<Row> oversizeGameRows) {
-        List<CreatorDto> creators = new ArrayList<>();
+    private List<CreatorValues> extractCreators(List<Row> oversizeGameRows) {
+        List<CreatorValues> exhaustiveList = new ArrayList<>();
+        List<CreatorValues> localList = new ArrayList<>();
         for (Row row : oversizeGameRows) {
-            CreatorDto creator;
+
+            CreatorValues creator;
+            localList.clear();
             for (int i = 15; i < 18; i++) {
+
                 String value = row.getValues().get(i);
                 if (value != null) {
                     if (value.matches(".*(&|(?i) ET ).*")) {
                         log.warn("Name : " + value + " has been rejected because it contains a '&' or a 'ET'");
                     } else {
                         String[] parts = row.getValues().get(i).split(" ");
-                        creator = new CreatorDto();
-                        if (parts.length <= 2) {
-                            creator.setFirstName(parts[0]);
+                        creator = new CreatorValues();
+                        if (parts.length == 1) {
+                            creator.setLastName(parts[0]);
                         }
                         if (parts.length == 2) {
+                            creator.setFirstName(parts[0]);
                             creator.setLastName(parts[1]);
                         }
-                        if (!creators.contains(creator)) {
-                            creators.add(creator);
+                        switch (i) {
+                            case 15:
+                                creator.setRole(CreatorRole.ILLUSTRATOR);
+                            case 16:
+                                creator.setRole(CreatorRole.AUTHOR);
+                            case 17:
+                                creator.setRole(CreatorRole.AUTHOR);
+                        }
+                        if (!exhaustiveList.contains(creator)) {
+                            exhaustiveList.add(creator);
+                            localList.add(creator);
                         }
                     }
                 }
             }
         }
-        creators.forEach(e -> log.info(e.toString()));
-        return creators;
+        exhaustiveList.forEach(e -> log.info(e.toString()));
+        return exhaustiveList;
     }
 
     private List<Row> filterOversizeGame(List<Row> rows) {
