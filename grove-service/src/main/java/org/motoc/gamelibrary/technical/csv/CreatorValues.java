@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public class CreatorValues {
@@ -21,6 +23,26 @@ public class CreatorValues {
 
     @NotNull(message = "Role cannot be null")
     private CreatorRole role;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CreatorValues that = (CreatorValues) o;
+
+        if (!Objects.equals(firstName, that.firstName)) return false;
+        if (!Objects.equals(lastName, that.lastName)) return false;
+        return role == that.role;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString() {
