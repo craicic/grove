@@ -24,6 +24,7 @@ public class CreatorValues {
     @NotNull(message = "Role cannot be null")
     private CreatorRole role;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,15 +33,13 @@ public class CreatorValues {
         CreatorValues that = (CreatorValues) o;
 
         if (!Objects.equals(firstName, that.firstName)) return false;
-        if (!Objects.equals(lastName, that.lastName)) return false;
-        return role == that.role;
+        return lastName.equals(that.lastName);
     }
 
     @Override
     public int hashCode() {
         int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + lastName.hashCode();
         return result;
     }
 
