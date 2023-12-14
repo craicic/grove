@@ -1,8 +1,6 @@
 package org.motoc.gamelibrary.service;
 
 import jakarta.persistence.*;
-import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
 import org.motoc.gamelibrary.domain.model.Creator;
 import org.motoc.gamelibrary.technical.csv.CreatorValues;
@@ -59,7 +57,7 @@ public class CSVImportService {
 
         if (value != null) {
             if (value.matches(".*(&|/|(?i) ET ).*")) {
-                value = logAndNullifyValue(row, i, value);
+                logAndNullifyValue(row, i, value);
                 numberOfIgnoredEntries++;
             } else {
                 CreatorValues creator = createCreator(row, i, value);
@@ -192,7 +190,7 @@ public class CSVImportService {
         Map<Integer, Integer> lineLengthFrequency = new HashMap<>();
         try (BufferedReader lineReader = Files.newBufferedReader(csvFilePath, StandardCharsets.UTF_8)) {
             lineReader.readLine(); // skip header line
-            String lineText = null;
+            String lineText;
             while ((lineText = lineReader.readLine()) != null) {
                 rows.add(processLine(lineText, lineLengthFrequency));
             }
