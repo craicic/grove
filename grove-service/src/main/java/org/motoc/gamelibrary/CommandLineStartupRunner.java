@@ -5,7 +5,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
-import org.motoc.gamelibrary.service.CSVImportService;
+import org.motoc.gamelibrary.technical.csv.CSVImportService;
 import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

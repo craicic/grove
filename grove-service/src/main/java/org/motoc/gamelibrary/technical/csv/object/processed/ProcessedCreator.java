@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.technical.csv;
+package org.motoc.gamelibrary.technical.csv.object.processed;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class CreatorValues {
+public class ProcessedCreator {
     private Long id;
 
     @Size(max = 50, message = "First name should not exceed 50 characters")
@@ -30,7 +30,7 @@ public class CreatorValues {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CreatorValues that = (CreatorValues) o;
+        ProcessedCreator that = (ProcessedCreator) o;
 
         if (!Objects.equals(firstName, that.firstName)) return false;
         return lastName.equals(that.lastName);

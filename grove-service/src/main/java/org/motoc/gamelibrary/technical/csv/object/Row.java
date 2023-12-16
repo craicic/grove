@@ -1,4 +1,4 @@
-package org.motoc.gamelibrary.technical.csv;
+package org.motoc.gamelibrary.technical.csv.object;
 
 import lombok.Getter;
 
