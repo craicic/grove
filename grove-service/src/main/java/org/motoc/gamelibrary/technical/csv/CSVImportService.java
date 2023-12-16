@@ -23,11 +23,11 @@ public class CSVImportService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getCanonicalName());
 
-    private List<AuthorValues> authorValuesList = new ArrayList<>();
-    private List<IllustratorValues> illustratorValuesList = new ArrayList<>();
-    private List<GameValues> gameValuesList = new ArrayList<>();
-    private List<GameCopyValues> gameCopyValuesList = new ArrayList<>();
-    private List<PublisherValues> publisherValuesList = new ArrayList<>();
+    private final List<AuthorValues> authorValuesList = new ArrayList<>();
+    private final List<IllustratorValues> illustratorValuesList = new ArrayList<>();
+    private final List<GameValues> gameValuesList = new ArrayList<>();
+    private final List<GameCopyValues> gameCopyValuesList = new ArrayList<>();
+    private final List<PublisherValues> publisherValuesList = new ArrayList<>();
 
     @PersistenceUnit
     private final EntityManagerFactory emf;
