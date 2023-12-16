@@ -17,8 +17,8 @@ public class RowProcessor {
 
 
     public void mapToValues(List<Row> rows,
-                            List<AuthorValues> av,
-                            List<IllustratorValues> iv,
+                            List<ArtistValue> av,
+                            List<ArtistValue> iv,
                             List<GameValues> gv,
                             List<GameCopyValues> gcv,
                             List<PublisherValues> pv) {
@@ -33,19 +33,23 @@ public class RowProcessor {
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
         long nbOfObject = av.size() + iv.size() + gv.size() + gcv.size() + pv.size();
+        log.info("Number of authors: " + av.size());
         log.info("Mapped " + rows.size() + " rows into " + nbOfObject + " objects. Processing time: " + duration.toMillis() + " milliseconds");
     }
 
-    private void extractAuthorData(Row row, List<AuthorValues> av) {
-        AuthorValues c = new AuthorValues();
-        c.setName(row.getValues().get(15));
-        c.setName(row.getValues().get(16));
-        c.setName(row.getValues().get(12));
-        av.add(c);
+    private void extractAuthorData(Row row, List<ArtistValue> av) {
+        ArtistValue c1 = new ArtistValue();
+        ArtistValue c2 = new ArtistValue();
+        ArtistValue c3 = new ArtistValue();
+
+        c1.setName(row.getValues().get(15));
+        c2.setName(row.getValues().get(16));
+        c3.setName(row.getValues().get(12));
+        av.addAll(List.of(c1, c2, c3));
     }
 
-    private void extractIllustratorData(Row row, List<IllustratorValues> iv) {
-        IllustratorValues ill = new IllustratorValues();
+    private void extractIllustratorData(Row row, List<ArtistValue> iv) {
+        ArtistValue ill = new ArtistValue();
         ill.setName(row.getValues().get(17));
         iv.add(ill);
     }

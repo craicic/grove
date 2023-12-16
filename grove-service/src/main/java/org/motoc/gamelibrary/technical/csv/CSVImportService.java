@@ -23,8 +23,8 @@ public class CSVImportService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getCanonicalName());
 
-    private final List<AuthorValues> authorValuesList = new ArrayList<>();
-    private final List<IllustratorValues> illustratorValuesList = new ArrayList<>();
+    private final List<ArtistValue> authorValueList = new ArrayList<>();
+    private final List<ArtistValue> illustratorValueList = new ArrayList<>();
     private final List<GameValues> gameValuesList = new ArrayList<>();
     private final List<GameCopyValues> gameCopyValuesList = new ArrayList<>();
     private final List<PublisherValues> publisherValuesList = new ArrayList<>();
@@ -32,10 +32,12 @@ public class CSVImportService {
     @PersistenceUnit
     private final EntityManagerFactory emf;
     private final RowProcessor rp;
+    private final ValuesProcessor vp;
 
-    public CSVImportService(EntityManagerFactory emf, RowProcessor rp) {
+    public CSVImportService(EntityManagerFactory emf, RowProcessor rp, ValuesProcessor vp) {
         this.emf = emf;
         this.rp = rp;
+        this.vp = vp;
     }
 
 
@@ -43,8 +45,14 @@ public class CSVImportService {
         List<Row> rows = extractRowsFromCSV(csvFilePath);
         List<Row> oversizeGameRows = filterOversizeGame(rows);
         log.warn("Number of rows :" + oversizeGameRows.size());
-        rp.mapToValues(rows, authorValuesList, illustratorValuesList, gameValuesList, gameCopyValuesList, publisherValuesList);
-
+        rp.mapToValues(rows, authorValueList, illustratorValueList, gameValuesList, gameCopyValuesList, publisherValuesList);
+        int nbOfRemovedAuthor = vp.removeDuplicateArtists(authorValueList);
+        int nbOfRemovedIllustrator = vp.removeDuplicateArtists(illustratorValueList);
+        log.info("Duplication : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
+        // We remove entries where name is too complex to extract
+        nbOfRemovedAuthor = vp.cleanArtist(authorValueList);
+        nbOfRemovedIllustrator = vp.cleanArtist(illustratorValueList);
+        log.info("Complex name pattern : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
         List<ProcessedCreator> creators = new ArrayList<>();
         persistCreators(creators);
     }
