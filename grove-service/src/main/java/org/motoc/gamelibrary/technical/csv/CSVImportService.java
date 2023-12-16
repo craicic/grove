@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.motoc.gamelibrary.domain.model.Creator;
 import org.motoc.gamelibrary.technical.csv.object.processed.ProcessedCreator;
 import org.motoc.gamelibrary.technical.csv.object.Row;
+import org.motoc.gamelibrary.technical.csv.object.value.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,20 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 @Service
 public class CSVImportService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+
+    private List<AuthorValues> authorValuesList = new ArrayList<>();
+    private List<IllustratorValues> illustratorValuesList = new ArrayList<>();
+    private List<GameValues> gameValuesList = new ArrayList<>();
+    private List<GameCopyValues> gameCopyValuesList = new ArrayList<>();
+    private List<PublisherValues> publisherValuesList = new ArrayList<>();
 
     @PersistenceUnit
     private final EntityManagerFactory emf;
@@ -34,7 +43,7 @@ public class CSVImportService {
         List<Row> rows = extractRowsFromCSV(csvFilePath);
         List<Row> oversizeGameRows = filterOversizeGame(rows);
         log.warn("Number of rows :" + oversizeGameRows.size());
-        rp.processToValues(rows);
+        rp.mapToValues(rows, authorValuesList, illustratorValuesList, gameValuesList, gameCopyValuesList, publisherValuesList);
 
         List<ProcessedCreator> creators = new ArrayList<>();
         persistCreators(creators);
@@ -92,6 +101,7 @@ public class CSVImportService {
 
 
     public List<Row> extractRowsFromCSV(Path csvFilePath) {
+        Instant start = Instant.now();
         List<Row> rows = new ArrayList<>();
         Map<Integer, Integer> lineLengthFrequency = new HashMap<>();
         try (BufferedReader lineReader = Files.newBufferedReader(csvFilePath, StandardCharsets.UTF_8)) {
@@ -104,6 +114,9 @@ public class CSVImportService {
             log.warn(e.getMessage());
         }
         validateLineLengthVariation(lineLengthFrequency);
+        Instant end = Instant.now();
+        Duration d = Duration.between(start, end);
+        log.info("Extract csv into " + rows.size() + " rows. Processing time: " + d.toMillis() + " milliseconds");
         return rows;
     }
 

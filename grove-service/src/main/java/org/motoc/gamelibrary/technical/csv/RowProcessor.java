@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -14,23 +16,28 @@ public class RowProcessor {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getCanonicalName());
 
-    private List<AuthorValues> av = new ArrayList<>();
-    private List<IllustratorValues> iv = new ArrayList<>();
-    private List<GameValues> gv = new ArrayList<>();
-    private List<GameCopyValues> gcv = new ArrayList<>();
-    private List<PublisherValues> pv = new ArrayList<>();
 
-    public void processToValues(List<Row> rows) {
+    public void mapToValues(List<Row> rows,
+                            List<AuthorValues> av,
+                            List<IllustratorValues> iv,
+                            List<GameValues> gv,
+                            List<GameCopyValues> gcv,
+                            List<PublisherValues> pv) {
+        Instant start = Instant.now();
         for (Row row : rows) {
-            extractAuthorData(row);
-            extractIllustratorData(row);
-            extractGameData(row);
-            extractGameCopyData(row);
-            extractPublisherData(row);
+            extractAuthorData(row, av);
+            extractIllustratorData(row, iv);
+            extractGameData(row, gv);
+            extractGameCopyData(row, gcv);
+            extractPublisherData(row, pv);
         }
+        Instant end = Instant.now();
+        Duration duration = Duration.between(start, end);
+        long nbOfObject = av.size() + iv.size() + gv.size() + gcv.size() + pv.size();
+        log.info("Mapped " + rows.size() + " rows into " + nbOfObject + " objects. Processing time: " + duration.toMillis() + " milliseconds");
     }
 
-    private void extractAuthorData(Row row) {
+    private void extractAuthorData(Row row, List<AuthorValues> av) {
         AuthorValues c = new AuthorValues();
         c.setName(row.getValues().get(15));
         c.setName(row.getValues().get(16));
@@ -38,13 +45,13 @@ public class RowProcessor {
         av.add(c);
     }
 
-    private void extractIllustratorData(Row row) {
+    private void extractIllustratorData(Row row, List<IllustratorValues> iv) {
         IllustratorValues ill = new IllustratorValues();
         ill.setName(row.getValues().get(17));
         iv.add(ill);
     }
 
-    private void extractGameData(Row row) {
+    private void extractGameData(Row row, List<GameValues> gv) {
         GameValues g = new GameValues();
         List<String> values = row.getValues();
         g.setObjectCodes(values.get(0));
@@ -61,7 +68,7 @@ public class RowProcessor {
         gv.add(g);
     }
 
-    private void extractGameCopyData(Row row) {
+    private void extractGameCopyData(Row row, List<GameCopyValues> gcv) {
         GameCopyValues gc = new GameCopyValues();
         List<String> values = row.getValues();
         gc.setObjectCode(values.get(0));
@@ -74,7 +81,7 @@ public class RowProcessor {
         gcv.add(gc);
     }
 
-    private void extractPublisherData(Row row) {
+    private void extractPublisherData(Row row, List<PublisherValues> pv) {
         PublisherValues p = new PublisherValues();
         p.setName(row.getValues().get(10));
         pv.add(p);
