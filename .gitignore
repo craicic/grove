@@ -33,7 +33,6 @@ build/
 .vscode/
 
 ### CSV file ###
-csv/
 *.csv
 
 ### SECRETS ####
