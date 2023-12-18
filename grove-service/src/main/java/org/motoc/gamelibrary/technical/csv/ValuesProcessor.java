@@ -1,5 +1,7 @@
 package org.motoc.gamelibrary.technical.csv;
 
+import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
+import org.motoc.gamelibrary.technical.csv.object.dto.ArtistDto;
 import org.motoc.gamelibrary.technical.csv.object.value.ArtistValue;
 import org.motoc.gamelibrary.technical.csv.object.value.GameCopyValues;
 import org.motoc.gamelibrary.technical.csv.object.value.GameValues;
@@ -42,10 +44,48 @@ public class ValuesProcessor {
         normalizeCase(authorMap);
         normalizeCase(illustratorMap);
 
-        /* map the value into Dto */
-        //        List<ArtistDto> artistDTOList = mapToArtistDTO(authorValueList);
-        //        List<ArtistDto> illustratorDTOList = mapToArtistDTO(illustratorValueList);
+        // We determine artists role based on the presence of the same author in the two maps we store this information
+        // into a new mapped ArtistDto.
 
+        List<ArtistDto> artistDtoList = mapToArtistDTO(authorMap, illustratorMap);
+        artistDtoList.forEach(e -> log.info(e.toString()));
+
+    }
+
+    private List<ArtistDto> mapToArtistDTO(Map<String, String> authorMap, Map<String, String> illustratorMap) {
+        List<ArtistDto> artistDtoList = new ArrayList<>();
+        for (String key : authorMap.keySet()) {
+            ArtistDto artistDto = new ArtistDto();
+            artistDto.setLastName(key);
+            artistDto.setFirstName(authorMap.get(key));
+            artistDto.setRole(CreatorRole.AUTHOR);
+            artistDtoList.add(artistDto);
+        }
+        // Intersection of 2 maps give us all the artist that has both role.
+        Map<String,String> intersection = new HashMap<>(authorMap);
+        intersection.keySet().retainAll(illustratorMap.keySet());
+        for (String key: intersection.keySet()) {
+            ArtistDto artistDto = new ArtistDto();
+            artistDto.setLastName(key);
+            artistDto.setFirstName(intersection.get(key));
+            artistDto.setRole(CreatorRole.AUTHOR_ILLUSTRATOR);
+            artistDtoList.add(artistDto);
+        }
+        illustratorMap.keySet().removeAll(intersection.keySet());
+        for (String key : illustratorMap.keySet()) {
+            ArtistDto artistDto = new ArtistDto();
+            artistDto.setLastName(key);
+            artistDto.setFirstName(illustratorMap.get(key));
+            artistDto.setRole(CreatorRole.ILLUSTRATOR);
+            artistDtoList.add(artistDto);
+        }
+
+        for (ArtistDto artistDto : artistDtoList) {
+            if (artistDto.getFirstName() == null) {
+                artistDto.setFirstName("");
+            }
+        }
+        return artistDtoList;
     }
 
     private void normalizeCase(Map<String, String> map) {
