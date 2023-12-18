@@ -46,13 +46,12 @@ public class CSVImportService {
         List<Row> oversizeGameRows = filterOversizeGame(rows);
         log.warn("Number of rows :" + oversizeGameRows.size());
         rp.mapToValues(rows, authorValueList, illustratorValueList, gameValuesList, gameCopyValuesList, publisherValuesList);
-        int nbOfRemovedAuthor = vp.removeDuplicateArtists(authorValueList);
-        int nbOfRemovedIllustrator = vp.removeDuplicateArtists(illustratorValueList);
-        log.info("Duplication : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
-        // We remove entries where name is too complex to extract
-        nbOfRemovedAuthor = vp.cleanArtist(authorValueList);
-        nbOfRemovedIllustrator = vp.cleanArtist(illustratorValueList);
-        log.info("Complex name pattern : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
+        vp.processArtistValues(authorValueList, illustratorValueList);
+
+        vp.processGameValues(gameValuesList);
+        vp.processPublisherValue(publisherValuesList);
+        vp.processGameCopyValue(gameCopyValuesList);
+
         List<ProcessedCreator> creators = new ArrayList<>();
         persistCreators(creators);
     }
@@ -93,7 +92,7 @@ public class CSVImportService {
     private List<Creator> valueToEntity(List<ProcessedCreator> values) {
         List<Creator> entities = new ArrayList<>();
         Creator entity;
-        for(ProcessedCreator value : values) {
+        for (ProcessedCreator value : values) {
             entity = new Creator();
             entity.setFirstName(value.getFirstName());
             if (value.getFirstName() != null)
