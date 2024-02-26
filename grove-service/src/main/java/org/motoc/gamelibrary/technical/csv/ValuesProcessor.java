@@ -1,6 +1,7 @@
 package org.motoc.gamelibrary.technical.csv;
 
 import org.motoc.gamelibrary.domain.enumeration.CreatorRole;
+import org.motoc.gamelibrary.technical.csv.object.RefinedRow;
 import org.motoc.gamelibrary.technical.csv.object.dto.ArtistDto;
 import org.motoc.gamelibrary.technical.csv.object.value.ArtistValue;
 import org.motoc.gamelibrary.technical.csv.object.value.GameCopyValues;
@@ -17,10 +18,16 @@ public class ValuesProcessor {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getCanonicalName());
 
+
     public void processArtistValues(List<ArtistValue> authorValueList, List<ArtistValue> illustratorValueList) {
-        int nbOfRemovedAuthor = filterDuplicates(authorValueList);
-        int nbOfRemovedIllustrator = filterDuplicates(illustratorValueList);
-        log.info("Duplication : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
+        int nbOfRemovedAuthor = -1;
+        int nbOfRemovedIllustrator = -1;
+
+        final List<RefinedRow> rows = new ArrayList<>();
+//        int nbOfRemovedAuthor = filterDuplicates(authorValueList);
+//        int nbOfRemovedIllustrator = filterDuplicates(illustratorValueList);
+//        log.info("Duplication : removed " + nbOfRemovedAuthor + "/" + authorValueList.size() + " author entries and " + nbOfRemovedIllustrator + "/" + illustratorValueList.size() +
+//                 " illustrator entries");
 
         // We remove entries where name is too complex to extract for exemple when it contains : '/', '&' or 'ET'
         nbOfRemovedAuthor = filterByPattern(authorValueList);
@@ -32,23 +39,30 @@ public class ValuesProcessor {
         nbOfRemovedIllustrator = filterByNullName(illustratorValueList);
         log.info("Null name : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
 
-        // We remove process entries to perform operations on name
-        Map<String, String> authorMap = new HashMap<>();
-        Map<String, String> illustratorMap = new HashMap<>();
-        nbOfRemovedAuthor = processNames(authorValueList, authorMap);
-        nbOfRemovedIllustrator = processNames(illustratorValueList, illustratorMap);
+        // We remove processed entries to perform operations on name
+        nbOfRemovedAuthor = processNames(authorValueList, rows);
+        nbOfRemovedIllustrator = processNames(illustratorValueList, rows);
         log.info("Name split into more than 2 parts : removed " + nbOfRemovedAuthor + " author entries and " + nbOfRemovedIllustrator + " illustrator entries");
 
 
         // Now we have to normalize the case. Upper case the first letter, lower case the rest.
-        normalizeCase(authorMap);
-        normalizeCase(illustratorMap);
+//        normalizeCase(authorValueList);
+//        normalizeCase(illustratorValueList);
+
+//        // We remove processed entries to perform operations on name
+//        Map<String, String> authorMap = new HashMap<>();
+//        Map<String, String> illustratorMap = new HashMap<>();
+
+//
+//        // Now we have to normalize the case. Upper case the first letter, lower case the rest.
+//        normalizeCaseOnMap(authorMap);
+//        normalizeCaseOnMap(illustratorMap);
 
         // We determine artists role based on the presence of the same author in the two maps we store this information
         // into a new mapped ArtistDto.
 
-        List<ArtistDto> artistDtoList = mapToArtistDTO(authorMap, illustratorMap);
-        artistDtoList.forEach(e -> log.info(e.toString()));
+//        List<ArtistDto> artistDtoList = mapToArtistDTO(authorMap, illustratorMap);
+//        artistDtoList.forEach(e -> log.info(e.toString()));
 
     }
 
@@ -62,9 +76,9 @@ public class ValuesProcessor {
             artistDtoList.add(artistDto);
         }
         // Intersection of 2 maps give us all the artist that has both role.
-        Map<String,String> intersection = new HashMap<>(authorMap);
+        Map<String, String> intersection = new HashMap<>(authorMap);
         intersection.keySet().retainAll(illustratorMap.keySet());
-        for (String key: intersection.keySet()) {
+        for (String key : intersection.keySet()) {
             ArtistDto artistDto = new ArtistDto();
             artistDto.setLastName(key);
             artistDto.setFirstName(intersection.get(key));
@@ -88,6 +102,7 @@ public class ValuesProcessor {
         return artistDtoList;
     }
 
+
     private void normalizeCase(Map<String, String> map) {
         Set<String> lastNames = map.keySet();
         Map<String, String> temp = new HashMap<>();
@@ -103,6 +118,40 @@ public class ValuesProcessor {
         map.putAll(temp);
     }
 
+//    /**
+//     * Foreach artist
+//     * - split names into several parts using space or dot separator.
+//     * Now we have parts.
+//     * - if 1 part : store it into map as key with null value.
+//     * - if 2 parts : store second part as key, first as value.
+//     * - if more parts : ignore and log the entry. Remove the artistValue form lists
+//     */
+//    private int processNamesOnMap(List<ArtistValue> list, Map<String, String> map) {
+//        int nbOfRejectedEntries = 0;
+//        for (int i = 0; i < list.size(); i++) {
+//            ArtistValue artist = list.get(i);
+//            String name = artist.getName();
+//            if (name == null) {
+//                throw new IllegalStateException("Unexpected null name value");
+//            }
+//            name = name.replace('.', ' ');
+//            name = name.replace("  ", " ");
+//            name = name.stripTrailing();
+//            String[] parts = name.split(" ");
+//            if (parts.length == 1) {
+//                map.put(parts[0], null);
+//            } else if (parts.length == 2) {
+//                map.put(parts[1], parts[0]);
+//            } else {
+//                log.debug("Name value : " + name + " has been rejected because it contains more than 2 parts");
+//                list.remove(i);
+//                nbOfRejectedEntries++;
+//                i--;
+//            }
+//        }
+//        return nbOfRejectedEntries;
+//    }
+
     /**
      * Foreach artist
      * - split names into several parts using space or dot separator.
@@ -111,9 +160,12 @@ public class ValuesProcessor {
      * - if 2 parts : store second part as key, first as value.
      * - if more parts : ignore and log the entry. Remove the artistValue form lists
      */
-    private int processNames(List<ArtistValue> list, Map<String, String> map) {
+    private int processNames(List<ArtistValue> list, List<RefinedRow> rows) {
+
+
         int nbOfRejectedEntries = 0;
         for (int i = 0; i < list.size(); i++) {
+            ArtistDto artistDto = new ArtistDto();
             ArtistValue artist = list.get(i);
             String name = artist.getName();
             if (name == null) {
@@ -124,19 +176,30 @@ public class ValuesProcessor {
             name = name.stripTrailing();
             String[] parts = name.split(" ");
             if (parts.length == 1) {
-                map.put(parts[0], null);
+                artistDto.setLastName(parts[0]);
+                artistDto.setFirstName(null);
             } else if (parts.length == 2) {
-                map.put(parts[1], parts[0]);
+                artistDto.setLastName(parts[0]);
+                artistDto.setFirstName(parts[1]);
             } else {
                 log.debug("Name value : " + name + " has been rejected because it contains more than 2 parts");
                 list.remove(i);
                 nbOfRejectedEntries++;
                 i--;
             }
+            Optional<RefinedRow> result = rows.stream().filter(r -> r.getObjectCode().equals(artist.getObjectCode())).findFirst();
+            if(result.isPresent()) {
+                RefinedRow row = result.get();
+                row.getArtists().add(artistDto);
+            } else {
+                RefinedRow newRow = new RefinedRow();
+                newRow.setObjectCode(artist.getObjectCode());
+                rows.add(newRow);
+            }
+
         }
         return nbOfRejectedEntries;
     }
-
 
     public void processGameValues(List<GameValues> gameValuesList) {
     }
@@ -173,10 +236,10 @@ public class ValuesProcessor {
 
     public int filterDuplicates(List<ArtistValue> list) {
         int initialSize = list.size();
-        List<ArtistValue> temp = new ArrayList<>(new ArrayList<>(new HashSet<>(list)));
-        int arrivalSize = temp.size();
+        List<ArtistValue> temp = new ArrayList<>(new HashSet<>(list));
         list.clear();
         list.addAll(temp);
+        int arrivalSize = temp.size();
         return initialSize - arrivalSize;
     }
 }

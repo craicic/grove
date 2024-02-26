@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class GameCopyValues {
 
-    private String objectCode;
+    private Integer objectCode;
 
     private String price;
 

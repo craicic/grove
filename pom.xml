@@ -16,6 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>grove-import</module>
         <module>grove-service</module>
         <module>grove-webapp</module>
         <module>grove-delivery</module>

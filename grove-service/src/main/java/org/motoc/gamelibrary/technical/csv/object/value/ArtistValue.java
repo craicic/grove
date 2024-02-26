@@ -10,6 +10,7 @@ import java.util.Objects;
 public class ArtistValue {
 
     private String name;
+    private Integer objectCode;
 
     @Override
     public boolean equals(Object o) {
@@ -18,18 +19,22 @@ public class ArtistValue {
 
         ArtistValue that = (ArtistValue) o;
 
-        return Objects.equals(name, that.name);
+        if (!Objects.equals(name, that.name)) return false;
+        return objectCode.equals(that.objectCode);
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + objectCode.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
         return "ArtistValue{" +
                "name='" + name + '\'' +
+               ", objectCode=" + objectCode +
                '}';
     }
 }

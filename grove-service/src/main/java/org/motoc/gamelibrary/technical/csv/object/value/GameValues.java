@@ -10,13 +10,13 @@ import java.util.List;
 @Setter
 public class GameValues {
 
+    private Integer ObjectCode;
     private String title;
 
     private String nature;
     private String stat;
     private String unknown;
     private String ageRange;
-
     private String nbOfPlayers;
 
     private List<String> authorNames  = new ArrayList<>();

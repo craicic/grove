@@ -62,3 +62,6 @@ Thumbs.db
 
 # Configuration
 /docker/pgadmin/servers.json
+
+# PYTHON
+/venv/
