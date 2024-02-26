@@ -8,7 +8,7 @@ def config():
 
     # if more than 50 rows, display only 20 of them
     pd.set_option("display.max_rows", 50)
-    pd.set_option("display.min_rows", 20)
+    pd.set_option("display.min_rows", 40)
 
 
 # edits the header
@@ -33,4 +33,14 @@ remove_columns(dataframe)
 
 # prints information on the dataframe
 print(dataframe.info())
+
+to_remove = list()
+
+for index in range(0, len(dataframe)):
+    row = dataframe.iloc[index]
+    if row['nature'] != 'GRAND JEU':
+        to_remove.append(index)
+
+dataframe = dataframe.drop(to_remove)
+
 print(dataframe)
