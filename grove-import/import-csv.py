@@ -1,29 +1,36 @@
 import pandas as pd
 
 
-def df_editor(df):
+def config():
+    pd.set_option("display.max_columns", None)
+    pd.set_option("display.width", None)
+    pd.set_option("display.max_colwidth", 20)
+
+    # if more than 50 rows, display only 20 of them
+    pd.set_option("display.max_rows", 50)
+    pd.set_option("display.min_rows", 20)
+
+
+# edits the header
+def replace_header(df):
     header = ["code", "game_title", "unknown1", "nature", "location", "code_stat", "wear_condition",
               "general_state", "date_of_purchase", "price", "publisher", "seller", "unknown2",
               "age_range", "nb_players", "author2", "author1", "illustrator"]
-
-    pd.set_option("display.max_columns", None)
-    pd.set_option("display.max_colwidth", 20)
-    pd.set_option("display.width", None)
-    pd.set_option("display.show_dimensions", True)
-    pd.set_option("display.max_rows", 50)
-    pd.set_option("display.min_rows", 20)
     df.columns = header
+    return df
 
+
+# removes two apparently useless columns
+def remove_columns(df):
     df = df.drop(columns=['unknown1', 'unknown2'])
-
-    print(df)
-
-
-def rep_info(df):
-    print(df.info())
+    return df
 
 
 dataframe = pd.read_csv("Liste_OBJET_2.csv", sep=";")
-df_editor(dataframe)
-rep_info(dataframe)
+config()
+replace_header(dataframe)
+remove_columns(dataframe)
+
+# prints information on the dataframe
+print(dataframe.info())
 print(dataframe)
