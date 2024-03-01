@@ -61,7 +61,7 @@ df.drop(columns=['unknown1', 'unknown2'], inplace=True)
 # a = pd.concat([df, author1_df], axis=1)
 
 author2_series = df.author2.apply(exclude_complex_naming)
-
+author2_df = author2_series.str.rsplit(" ", expand=True)
 # age extraction
 # fusion_df = df.age_range.str.extract(r'((\d+) (MOIS|ANS))')
 # df.age_range = fusion_df[0]
