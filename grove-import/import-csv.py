@@ -1,3 +1,6 @@
+import math
+import re
+
 import pandas as pd
 
 
@@ -21,10 +24,24 @@ def replace_header(dataframe):
     return dataframe
 
 
-def exclude_complex_naming(x):
-    if len(x) > 2:
-        return None
-    return x
+def exclude_complex_naming(name):
+    if isinstance(name, float) and math.isnan(name):
+        return "no_value"
+
+    name = name.title().strip()
+
+    multi = re.split(r"(&)|(et)", name, flags=re.IGNORECASE)
+    if len(multi) > 1:
+        return "multiple_values"
+
+    if name == "Sans Objet":
+        return "no_value"
+
+    name = name.replace(".", " ")
+
+    name_parts = re.split(r"\s+", name)
+    name_parts = [j.strip() for j in name_parts]
+    return " ".join(str(part) for part in name_parts)
 
 
 df = pd.read_csv("Liste_OBJET_2.csv", sep=";", encoding="UTF-8")
@@ -40,10 +57,10 @@ df.drop(columns=['unknown1', 'unknown2'], inplace=True)
 # df.info()
 
 # name cleaning and filtering
-author1_df = df.author1.str.title().str.rsplit(" ", expand=True)
-a = pd.concat([df, author1_df], axis=1)
+# author1_df = df.author1.str.title().str.rsplit(" ", expand=True)
+# a = pd.concat([df, author1_df], axis=1)
 
-author2_series = df.author2.str.title().str.rsplit(" ").fillna("N/A").apply(exclude_complex_naming)
+author2_series = df.author2.apply(exclude_complex_naming)
 
 # age extraction
 # fusion_df = df.age_range.str.extract(r'((\d+) (MOIS|ANS))')
