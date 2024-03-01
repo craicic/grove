@@ -21,6 +21,12 @@ def replace_header(dataframe):
     return dataframe
 
 
+def exclude_complex_naming(x):
+    if len(x) > 2:
+        return None
+    return x
+
+
 df = pd.read_csv("Liste_OBJET_2.csv", sep=";", encoding="UTF-8")
 config()
 df = replace_header(df)
@@ -34,8 +40,10 @@ df.drop(columns=['unknown1', 'unknown2'], inplace=True)
 # df.info()
 
 # name cleaning and filtering
-test_df = df.author1.str.title().str.rsplit(" ", expand=True)
-a = pd.concat([df, test_df], axis = 1)
+author1_df = df.author1.str.title().str.rsplit(" ", expand=True)
+a = pd.concat([df, author1_df], axis=1)
+
+author2_series = df.author2.str.title().str.rsplit(" ").fillna("N/A").apply(exclude_complex_naming)
 
 # age extraction
 # fusion_df = df.age_range.str.extract(r'((\d+) (MOIS|ANS))')
@@ -59,10 +67,6 @@ only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
 df_games = df[["game_title", "nature", "code_stat", "age_range", "nb_players"]].drop_duplicates()
-
-# fill NaN value with 'unknown'
-# df.location.fillna("unknown")
-
 
 df_games.to_csv("output/games.csv", sep=";")
 df.to_csv("output/objects.csv", sep=";")
