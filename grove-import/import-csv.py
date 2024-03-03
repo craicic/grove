@@ -69,15 +69,12 @@ def rewrite_age(age_range):
     return "ignored_value"
 
 
-df = pd.read_csv("Liste_OBJET_2.csv", sep=";", encoding="UTF-8")
+df = pd.read_csv("input.csv", sep=";", encoding="UTF-8")
 config()
 df = replace_header(df)
 
 # removes two apparently useless columns
 df.drop(columns=['unknown1', 'unknown2'], inplace=True)
-
-# get information on the dataframe
-df.info()
 
 # name cleaning and filtering
 a2 = df.author2.apply(rewrite)
