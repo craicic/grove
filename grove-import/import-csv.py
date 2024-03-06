@@ -3,6 +3,7 @@ import math
 import re
 
 import pandas as pd
+from pandas import DataFrame
 
 
 def config():
@@ -18,9 +19,9 @@ def config():
 
 # edits the header
 def replace_header(dataframe):
-    header = ["code", "game_title", "unknown1", "nature", "location", "code_stat", "wear_condition",
+    header = ["code", "title", "unknown1", "nature", "location", "code_stat", "wear_condition",
               "general_state", "date_of_purchase", "price", "publisher", "seller", "unknown2",
-              "age_range", "nb_players", "author2", "author1", "illustrator"]
+              "range", "players", "author2", "author1", "illustrator"]
     dataframe.columns = header
     return dataframe
 
@@ -47,21 +48,18 @@ def rewrite(name):
     return " ".join(str(part) for part in name_parts)
 
 
-def rewrite_age(age_range):
-    if isinstance(age_range, float) and math.isnan(age_range):
+def rewrite_age(range):
+    if isinstance(range, float) and math.isnan(range):
         return "no_value"
 
-    if isinstance(age_range, str):
-        age_range = age_range.replace("À", "A")
-
-    if "MOIS" in age_range:
-        ages = re.findall(r"\d+", age_range)
+    if "MOIS" in range:
+        ages = re.findall(r"\d+", range)
         if len(ages) == 1:
             return ages[0] + "M"
         else:
             return "ignored_value"
 
-    ages = re.findall(r"\d+", age_range)
+    ages = re.findall(r"\d+", range)
 
     if len(ages) >= 1:
         return ages[0] + "A"
@@ -69,49 +67,73 @@ def rewrite_age(age_range):
     return "ignored_value"
 
 
-df = pd.read_csv("input.csv", sep=";", encoding="UTF-8")
+df1 = pd.read_csv("input.csv", sep=";", encoding="UTF-8")
 config()
-df = replace_header(df)
+df1 = replace_header(df1)
+
+# only keep nature GRAND JEU
+df1 = df1.loc[df1.nature == 'GRAND JEU']
 
 # removes two apparently useless columns
-df.drop(columns=['unknown1', 'unknown2'], inplace=True)
+df1.drop(columns=['unknown1', 'unknown2'], inplace=True)
 
-# name cleaning and filtering
-a2 = df.author2.apply(rewrite)
+# artist's name cleaning and filtering
+a2 = df1.author2.apply(rewrite)
 df_a2 = (a2
-         .str.replace(r"(no_value)|(multiple_value)|(ignored_value)", "None", regex=True)
+         .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
          .str.rsplit(" ", n=1, expand=True))
 df_a2.columns = ["aut2_firstname", "auth2_lastname"]
 
-a1 = df.author1.apply(rewrite)
+a1 = df1.author1.apply(rewrite)
 df_a1 = (a1
-         .str.replace(r"(no_value)|(multiple_value)|(ignored_value)", "None", regex=True)
+         .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
          .str.rsplit(" ", n=1, expand=True))
 df_a1.columns = ["aut1_firstname", "auth1_lastname"]
 
-ill = df.author2.apply(rewrite)
+ill = df1.illustrator.apply(rewrite)
 df_ill = (ill
-          .str.replace(r"(no_value)|(multiple_value)|(ignored_value)", "None", regex=True)
+          .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
           .str.rsplit(" ", n=1, expand=True))
 df_ill.columns = ["ill_firstname", "ill_lastname"]
 
-df_a = pd.concat([df, df_a1, df_a2, df_ill], axis=1)
-df_a.drop(columns=["author1", "author2", "illustrator"], inplace=True)
+df2 = pd.concat([df1, df_a1, df_a2, df_ill], axis=1)
+df2.drop(columns=["author1", "author2", "illustrator"], inplace=True)
 
-del [df, df_a1, df_a2, df_ill, a1, a2, ill]
+del [df1, df_a1, df_a2, df_ill, a1, a2, ill]
 gc.collect()
 
 # age operations
-age = df_a.age_range.apply(rewrite_age)
-age = age.str.replace(r"(no_value)|(multiple_value)|(ignored_value)", "None", regex=True)
-df_age = pd.DataFrame({"min_age": age})
+age = df2.range.apply(rewrite_age)
+age = age.str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
+df_age = pd.DataFrame({"age_min": age})
 df_age.info()
 
-df_b = pd.concat([df_a, df_age], axis=1)
-df_b.drop(columns="age_range", inplace=True)
+df3 = pd.concat([df2, df_age], axis=1)
+df3.drop(columns="range", inplace=True)
 
-# only keep nature GRAND JEU
-# df = df.loc[df.nature == 'GRAND JEU']
+# number of players
+df_player: DataFrame = (df3.players
+                        .str.replace(r"(À)|(A)", "-", regex=True)
+                        .str.replace(r"(ET)\s+(PLUS)", "-0", regex=True)
+                        .str.replace(r"[^0-9+-]", "", regex=True)
+                        .to_frame("player"))
+
+df_test = df_player.where(df_player.player.str.contains(r"^\d+$", regex=True, na=False))
+df_test.player.fillna('')
+
+df_player.player = df_player.player + '-' + df_test.player.fillna('')
+df_player.player = df_player.player.str.rstrip('-')
+# split each row of the series 'player' on "-" or "+" char
+df_nb_players = df_player.player.str.rsplit("-", expand=True).fillna("None")
+df_nb_players.columns = ["nb_p_min", "nb_p_max"]
+
+df4 = pd.concat([df3, df_nb_players], axis=1)
+df4.drop(columns=["players"], inplace=True)
+
+
+del [df2, df3, age, df_age, df_test, df_player, df_nb_players]
+gc.collect()
+
 
 # Both author and illustrator
 # df_author1 = df.author1.dropna()
@@ -127,7 +149,7 @@ df_b.drop(columns="age_range", inplace=True)
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
-df_games = df_a[["game_title", "nature", "code_stat", "age_range", "nb_players"]].drop_duplicates()
+df_games = df4.drop_duplicates()
 
 df_games.to_csv("output/games.csv", sep=";")
-df_a.to_csv("output/a.csv", sep=";")
+df4.to_csv("output/a.csv", sep=";")
