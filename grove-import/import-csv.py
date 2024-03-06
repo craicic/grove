@@ -72,7 +72,7 @@ config()
 df1 = replace_header(df1)
 
 # only keep nature GRAND JEU
-df1 = df1.loc[df1.nature == 'GRAND JEU']
+# df1 = df1.loc[df1.nature == 'GRAND JEU']
 
 # removes two apparently useless columns
 df1.drop(columns=['unknown1', 'unknown2'], inplace=True)
@@ -130,10 +130,15 @@ df_nb_players.columns = ["nb_p_min", "nb_p_max"]
 df4 = pd.concat([df3, df_nb_players], axis=1)
 df4.drop(columns=["players"], inplace=True)
 
-
 del [df2, df3, age, df_age, df_test, df_player, df_nb_players]
 gc.collect()
 
+df_title: DataFrame = (df4.title
+                       .str.strip()
+                       .str.replace(r"\s+", " ", regex=True)
+                       .to_frame("title"))
+
+df_test = df_title.where(df_title.title.str.contains(r",\S"))
 
 # Both author and illustrator
 # df_author1 = df.author1.dropna()
