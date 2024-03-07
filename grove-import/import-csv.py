@@ -118,11 +118,9 @@ df_player: DataFrame = (df3.players
                         .str.replace(r"[^0-9+-]", "", regex=True)
                         .to_frame("player"))
 
-df_test = df_player.where(df_player.player.str.contains(r"^\d+$", regex=True, na=False))
-df_test.player.fillna('')
+df_player.where(~df_player.player.str.contains(r"^\d+$", regex=True, na=True),
+                df_player.player + "-" + df_player.player, axis=0, inplace=True)
 
-df_player.player = df_player.player + '-' + df_test.player.fillna('')
-df_player.player = df_player.player.str.rstrip('-')
 # split each row of the series 'player' on "-" or "+" char
 df_nb_players = df_player.player.str.rsplit("-", expand=True).fillna("None")
 df_nb_players.columns = ["nb_p_min", "nb_p_max"]
@@ -130,16 +128,23 @@ df_nb_players.columns = ["nb_p_min", "nb_p_max"]
 df4 = pd.concat([df3, df_nb_players], axis=1)
 df4.drop(columns=["players"], inplace=True)
 
-del [df2, df3, age, df_age, df_test, df_player, df_nb_players]
+del [df2, df3, age, df_age, df_player, df_nb_players]
 gc.collect()
 
-df_title: DataFrame = (df4.title
+df4.rename(columns={"title": "old_title"}, inplace=True)
+# title processing
+df_title: DataFrame = (df4.old_title
                        .str.strip()
                        .str.replace(r"\s+", " ", regex=True)
+                       .str.title()
                        .to_frame("title"))
 
-df_test = df_title.where(df_title.title.str.contains(r",\S"))
+df_title.where(~df_title.title.str.contains(r",\S", regex=True, na=True),
+               df_title.title.str.replace(",", ", ").to_frame("title"), inplace=True)
 
+df5 = pd.concat([df4, df_title], axis=1)
+df5.drop(columns=["old_title"], inplace=True)
+df5.loc["nature"] = df5.nature.str.title()
 # Both author and illustrator
 # df_author1 = df.author1.dropna()
 # df_author2 = df.author2.dropna()
@@ -154,7 +159,7 @@ df_test = df_title.where(df_title.title.str.contains(r",\S"))
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
-df_games = df4.drop_duplicates()
+df_games = df5.loc["code", "title",]
 
 df_games.to_csv("output/games.csv", sep=";")
 df4.to_csv("output/a.csv", sep=";")
