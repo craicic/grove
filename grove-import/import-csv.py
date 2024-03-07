@@ -132,6 +132,7 @@ del [df2, df3, age, df_age, df_player, df_nb_players]
 gc.collect()
 
 df4.rename(columns={"title": "old_title"}, inplace=True)
+
 # title processing
 df_title: DataFrame = (df4.old_title
                        .str.strip()
@@ -144,7 +145,16 @@ df_title.where(~df_title.title.str.contains(r",\S", regex=True, na=True),
 
 df5 = pd.concat([df4, df_title], axis=1)
 df5.drop(columns=["old_title"], inplace=True)
-df5.loc["nature"] = df5.nature.str.title()
+
+df5.nature = df5.nature.str.title().str.strip().fillna("None")
+df5.location = df5.location.str.title().str.strip().fillna("None")
+df5.code_stat = df5.code_stat.str.title().str.strip().fillna("None")
+df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
+df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
+df5.date_of_purchase = df5.date_of_purchase.str.strip().fillna("None")
+df5.price = df5.price.fillna("None")
+df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
+df5.seller = df5.seller.str.title().str.strip().fillna("None")
 # Both author and illustrator
 # df_author1 = df.author1.dropna()
 # df_author2 = df.author2.dropna()
@@ -159,7 +169,7 @@ df5.loc["nature"] = df5.nature.str.title()
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
-df_games = df5.loc["code", "title",]
+df_games = df5.loc["code", "title"]
 
 df_games.to_csv("output/games.csv", sep=";")
 df4.to_csv("output/a.csv", sep=";")
