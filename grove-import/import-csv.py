@@ -152,7 +152,7 @@ df5.code_stat = df5.code_stat.str.title().str.strip().fillna("None")
 df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
 df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
 df5.date_of_purchase = df5.date_of_purchase.str.strip().fillna("None")
-df5.price = df5.price.fillna("None")
+df5.price = df5.price.str.title().fillna("None")
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 df5.seller = df5.seller.str.title().str.strip().fillna("None")
 # Both author and illustrator
