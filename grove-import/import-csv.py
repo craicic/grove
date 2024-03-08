@@ -2,8 +2,8 @@ import gc
 import math
 import re
 
-import psycopg2 as ps
 import pandas as pd
+import psycopg2 as ps
 from pandas import DataFrame
 
 
@@ -120,7 +120,7 @@ df_player.where(~df_player.player.str.contains(r"^\d+$", regex=True, na=True),
                 df_player.player + "-" + df_player.player, axis=0, inplace=True)
 
 # split each row of the series 'player' on "-" or "+" char
-df_nb_players = df_player.player.str.rsplit("-", expand=True).fillna("None")
+df_nb_players = df_player.player.str.rsplit("-", expand=True).fillna("0")
 df_nb_players.columns = ["nb_p_min", "nb_p_max"]
 
 df4 = pd.concat([df3, df_nb_players], axis=1)
@@ -184,19 +184,28 @@ for line in lines:
 
 conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
 cursor = conn.cursor()
+cursor.execute("SELECT last_value FROM game_sequence;")
+game_id = cursor.fetchone()[0]
+print(game_id)
+
+cursor = conn.cursor()
 min_month = 0
 min_year = 0
 for index, row in df_games.iterrows():
-    if row["age_min"].contains("M"):
+    game_id = int(game_id) + 1
+    if row["age_min"] == "None":
+        min_year = 0
+        min_month = 0
+    elif row["age_min"].endswith("M"):
         min_month = int(row["age_min"].replace("M", ""))
         min_year = 0
     else:
         min_month = 0
         min_year = int(row["age_min"].replace("A", ""))
     cursor.execute(
-        "INSERT INTO game (title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player,nature)"
-        "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-        (row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"]))
+        """INSERT INTO game (id, title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player,nature)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+        (game_id, row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"], 0))
 conn.commit()
 cursor.close()
 conn.close()
