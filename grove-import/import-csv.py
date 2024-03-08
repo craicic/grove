@@ -2,6 +2,7 @@ import gc
 import math
 import re
 
+import psycopg2 as ps
 import pandas as pd
 from pandas import DataFrame
 
@@ -142,9 +143,9 @@ df_title.where(~df_title.title.str.contains(r",\S", regex=True, na=True),
 
 df5 = pd.concat([df4, df_title], axis=1)
 df5.drop(columns=["old_title"], inplace=True)
-df5.nature = df5.nature.str.title().str.strip().fillna("None")
+df5.nature = df5.nature.str.lower().str.strip().fillna("None")
 df5.location = df5.location.str.title().str.strip().fillna("None")
-df5.code_stat = df5.code_stat.str.title().str.strip().fillna("None")
+df5.code_stat = df5.code_stat.str.lower().str.strip().fillna("None")
 df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
 df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
 df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
@@ -164,8 +165,38 @@ df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 
 # New dataframe with specific columns
 df_games = df5[["code", "title", "nb_p_min", "nb_p_max", "age_min"]]
-df_publisher = df5.loc[["code", "publisher"]]
+df_publisher = df5[["code", "publisher"]]
 
 df_publisher.to_csv("output/publisher.csv", sep=";")
 df_games.to_csv("output/games.csv", sep=";")
-df4.to_csv("output/a.csv", sep=";")
+df5.to_csv("output/full_frame.csv", sep=";")
+
+pg_usr = ""
+pg_pwd = ""
+
+f = open("../grove-service/src/main/resources/secrets.properties")
+lines = f.readlines()
+for line in lines:
+    if line.startswith("spring.datasource.username"):
+        pg_usr = line.split("=")[1].strip()
+    if line.startswith("spring.datasource.password"):
+        pg_pwd = line.split("=")[1].strip()
+
+conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
+cursor = conn.cursor()
+min_month = 0
+min_year = 0
+for index, row in df_games.iterrows():
+    if row["age_min"].contains("M"):
+        min_month = int(row["age_min"].replace("M", ""))
+        min_year = 0
+    else:
+        min_month = 0
+        min_year = int(row["age_min"].replace("A", ""))
+    cursor.execute(
+        "INSERT INTO game (title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player,nature)"
+        "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+        (row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"]))
+conn.commit()
+cursor.close()
+conn.close()
