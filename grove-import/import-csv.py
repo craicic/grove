@@ -75,29 +75,26 @@ df1 = replace_header(df1)
 # df1 = df1.loc[df1.nature == 'GRAND JEU']
 
 # removes two apparently useless columns
-df1.drop(columns=['unknown1', 'unknown2'], inplace=True)
+df1.drop(columns=['unknown1', 'unknown2', "price", "seller"], inplace=True)
 
 # artist's name cleaning and filtering
 a2 = df1.author2.apply(rewrite)
 df_a2 = (a2
          .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
-         .str.rsplit(" ", n=1, expand=True))
-df_a2.columns = ["aut2_firstname", "auth2_lastname"]
+         .to_frame("coauthor"))
 
 a1 = df1.author1.apply(rewrite)
 df_a1 = (a1
          .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
-         .str.rsplit(" ", n=1, expand=True))
-df_a1.columns = ["aut1_firstname", "auth1_lastname"]
+         .to_frame("author"))
 
 ill = df1.illustrator.apply(rewrite)
 df_ill = (ill
           .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
-          .str.rsplit(" ", n=1, expand=True))
-df_ill.columns = ["ill_firstname", "ill_lastname"]
+          .to_frame("illustrator"))
 
+df1.drop(columns=["author1", "author2", "illustrator"], inplace=True)
 df2 = pd.concat([df1, df_a1, df_a2, df_ill], axis=1)
-df2.drop(columns=["author1", "author2", "illustrator"], inplace=True)
 
 del [df1, df_a1, df_a2, df_ill, a1, a2, ill]
 gc.collect()
@@ -151,10 +148,8 @@ df5.location = df5.location.str.title().str.strip().fillna("None")
 df5.code_stat = df5.code_stat.str.title().str.strip().fillna("None")
 df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
 df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
-df5.date_of_purchase = df5.date_of_purchase.str.strip().fillna("None")
-df5.price = df5.price.str.title().fillna("None")
+df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
-df5.seller = df5.seller.str.title().str.strip().fillna("None")
 # Both author and illustrator
 # df_author1 = df.author1.dropna()
 # df_author2 = df.author2.dropna()
