@@ -59,7 +59,7 @@ create table public.game
     max_number_of_player int2         not null check (max_number_of_player >= 0 AND max_number_of_player <= 100),
     min_age              int2         not null check (min_age >= 0 AND min_age <= 100),
     min_month            int2         not null check (min_month >= 0 AND min_month <= 100),
-    min_number_of_player int2         not null check (min_number_of_player >= 1 AND min_number_of_player <= 100),
+    min_number_of_player int2         not null check (min_number_of_player >= 0 AND min_number_of_player <= 100),
     nature               smallint,
     play_time            varchar(255),
     rules                oid,

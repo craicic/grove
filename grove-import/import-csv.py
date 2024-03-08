@@ -164,7 +164,8 @@ df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
-df_games = df5[["code", "title", "nb_p_min", "nb_p_max", "age_min"]]
+df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min"]].drop_duplicates().drop_duplicates(subset="title", keep="first")
+
 df_publisher = df5[["code", "publisher"]]
 
 df_publisher.to_csv("output/publisher.csv", sep=";")
@@ -185,14 +186,14 @@ for line in lines:
 conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_sequence;")
-game_id = cursor.fetchone()[0]
+game_id = int(cursor.fetchone()[0])
 print(game_id)
 
 cursor = conn.cursor()
 min_month = 0
 min_year = 0
 for index, row in df_games.iterrows():
-    game_id = int(game_id) + 1
+    game_id = game_id + 1
     if row["age_min"] == "None":
         min_year = 0
         min_month = 0
@@ -202,6 +203,7 @@ for index, row in df_games.iterrows():
     else:
         min_month = 0
         min_year = int(row["age_min"].replace("A", ""))
+
     cursor.execute(
         """INSERT INTO game (id, title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player,nature)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",

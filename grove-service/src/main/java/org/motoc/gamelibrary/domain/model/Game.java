@@ -50,7 +50,7 @@ public class Game {
     @Column
     private String playTime;
 
-    @Range(min = 1, max = 100, message = "Min number of players must be between 1 and 100")
+    @Range(min = 0, max = 100, message = "Min number of players must be between 0 and 100")
     @Column(nullable = false)
     private short minNumberOfPlayer;
 
