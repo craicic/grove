@@ -7,7 +7,7 @@ Localisation    -> game_copy.location           varchar
 Etat            -> game_copy.wear_condition     varchar
 Actif-inactif   -> game_copy.general_state      varchar
 Date Achat      -> game_copy.date_of_purchase   date
-prix TTC        -> game_copy.price              numeric
+prix TTC        -> ignored
 Editeur         -> publisher.name               varchar
 vendeur         -> ignored
 Auteur1          -> creator.name

@@ -142,7 +142,6 @@ df_title.where(~df_title.title.str.contains(r",\S", regex=True, na=True),
 
 df5 = pd.concat([df4, df_title], axis=1)
 df5.drop(columns=["old_title"], inplace=True)
-
 df5.nature = df5.nature.str.title().str.strip().fillna("None")
 df5.location = df5.location.str.title().str.strip().fillna("None")
 df5.code_stat = df5.code_stat.str.title().str.strip().fillna("None")
@@ -164,7 +163,9 @@ df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
-df_games = df5.loc["code", "title"]
+df_games = df5[["code", "title", "nb_p_min", "nb_p_max", "age_min"]]
+df_publisher = df5.loc[["code", "publisher"]]
 
+df_publisher.to_csv("output/publisher.csv", sep=";")
 df_games.to_csv("output/games.csv", sep=";")
 df4.to_csv("output/a.csv", sep=";")
