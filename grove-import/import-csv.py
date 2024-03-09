@@ -164,7 +164,8 @@ df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
 # New dataframe with specific columns
-df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min"]].drop_duplicates().drop_duplicates(subset="title", keep="first")
+df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min"]].drop_duplicates().drop_duplicates(subset="title",
+                                                                                               keep="first")
 
 df_publisher = df5[["code", "publisher"]]
 
@@ -186,17 +187,42 @@ for line in lines:
 conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_sequence;")
+
 game_id = int(cursor.fetchone()[0])
-print(game_id)
+
+print(str(game_id))
+
+cursor.execute("""
+CREATE OR REPLACE FUNCTION insert_game(g_id INT, g_title TEXT, g_lower_case_title TEXT, g_min_age INT, g_min_month INT,
+    g_max_age INT, g_min_number_of_player INT, g_max_number_of_player INT, g_nature INT)
+RETURNS TEXT LANGUAGE plpgsql AS
+$$
+DECLARE 
+    v_operation TEXT := 'IGNORED';
+BEGIN
+   WITH ins AS (
+        INSERT INTO game(id, title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player, nature)
+        VALUES (g_id , g_title, g_lower_case_title, g_min_age, g_min_month, g_max_age, g_min_number_of_player, g_max_number_of_player, g_nature)
+        ON CONFLICT(lower_case_title) DO NOTHING
+        RETURNING 'INSERTED' as state
+    )
+    SELECT state INTO v_operation FROM ins;
+
+    RETURN v_operation;
+END
+$$;
+""")
+conn.commit()
+cursor.close()
 
 cursor = conn.cursor()
 min_month = 0
 min_year = 0
 for index, row in df_games.iterrows():
-    game_id = game_id + 1
+    game_id += 1
     if row["age_min"] == "None":
-        min_year = 0
         min_month = 0
+        min_year = 0
     elif row["age_min"].endswith("M"):
         min_month = int(row["age_min"].replace("M", ""))
         min_year = 0
@@ -205,9 +231,22 @@ for index, row in df_games.iterrows():
         min_year = int(row["age_min"].replace("A", ""))
 
     cursor.execute(
-        """INSERT INTO game (id, title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player,nature)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+        "SELECT insert_game(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
         (game_id, row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"], 0))
+
+    insert_result: str = ""
+    for r in cursor.fetchone():
+        if str(r).startswith("INSERTED") or str(r).startswith("IGNORED"):
+            insert_result = str(r)
+
+    if insert_result.startswith("INSERTED"):
+        print("Successfully inserted : " + row["title"] + " of id=" + str(game_id))
+
+    if insert_result == "":
+        print("Ignored entry : " + row["title"] + " of id=" + str(game_id))
+        game_id += -1
+
+cursor.execute("SELECT setval('game_sequence', " + str(game_id) + ", true);")
 conn.commit()
 cursor.close()
 conn.close()
