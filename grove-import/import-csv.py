@@ -1,3 +1,4 @@
+import datetime
 import gc
 import math
 import re
@@ -149,17 +150,9 @@ df5.code_stat = df5.code_stat.str.lower().str.strip().fillna("None")
 df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
 df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
 df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
+df5.date_of_purchase = df5.date_of_purchase.dt.date
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 
-# Both author and illustrator
-# df_author1 = df.author1.dropna()
-# df_author2 = df.author2.dropna()
-# authors = pd.concat([df_author1, df_author2])
-# authors = authors.drop_duplicates()
-#
-# illustrators = df.illustrator.dropna()
-# illustrators = illustrators.drop_duplicates()
-#
 # both_auth_ill = pd.Series(list(set(illustrators).intersection(set(authors))))
 # only_auth = pd.Series(list(set(authors).difference(set(both_auth_ill))))
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
@@ -167,11 +160,12 @@ df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 # New dataframe with specific columns
 df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min"]].drop_duplicates().drop_duplicates(subset="title",
                                                                                                keep="first")
-
+df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase"]]
 df_publisher = df5[["code", "publisher"]]
 
-df_publisher.to_csv("output/publisher.csv", sep=";")
 df_games.to_csv("output/games.csv", sep=";")
+df_copy.to_csv("output/copy.csv", sep=";")
+df_publisher.to_csv("output/publisher.csv", sep=";")
 df5.to_csv("output/full_frame.csv", sep=";")
 
 pg_usr = ""
@@ -188,13 +182,10 @@ for line in lines:
 conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_sequence;")
-
 game_id = int(cursor.fetchone()[0])
 
-print(str(game_id))
-
 cursor.execute("""
-CREATE OR REPLACE FUNCTION insert_game(g_id INT, g_title TEXT, g_lower_case_title TEXT, g_min_age INT, g_min_month INT,
+CREATE OR REPLACE FUNCTION public.insert_game(g_id INT, g_title TEXT, g_lower_case_title TEXT, g_min_age INT, g_min_month INT,
     g_max_age INT, g_min_number_of_player INT, g_max_number_of_player INT, g_nature INT)
 RETURNS TEXT LANGUAGE plpgsql AS
 $$
@@ -232,7 +223,7 @@ for index, row in df_games.iterrows():
         min_year = int(row["age_min"].replace("A", ""))
 
     cursor.execute(
-        "SELECT insert_game(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
+        "SELECT public.insert_game(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
         (game_id, row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"], 0))
 
     wasInserted: bool = False
@@ -250,6 +241,62 @@ for index, row in df_games.iterrows():
         game_id += -1
 
 cursor.execute("SELECT setval('game_sequence', " + str(game_id) + ", true);")
+conn.commit()
+cursor.close()
+
+cursor = conn.cursor()
+cursor.execute("SELECT last_value FROM game_copy_sequence;")
+copy_id = int(cursor.fetchone()[0])
+
+cursor.execute("""
+CREATE OR REPLACE FUNCTION public.insert_copy(c_id INT, c_code TEXT,c_fk_game INT, c_date_of_purchase DATE,
+                                        c_general_state INT, c_location TEXT, c_wear_condition TEXT)
+RETURNS TEXT LANGUAGE plpgsql AS
+$$
+DECLARE 
+    v_operation bool := false;
+BEGIN
+   WITH ins AS (
+        INSERT INTO game_copy(id, object_code, fk_game, date_of_purchase, date_of_registration, general_state, location, wear_condition)
+        VALUES (c_id, c_code, c_fk_game, c_date_of_purchase, CURRENT_DATE, c_general_state, c_location, c_wear_condition)
+        ON CONFLICT(object_code) DO NOTHING
+        RETURNING 'INSERTED'
+    )
+    SELECT EXISTS(SELECT * FROM ins) INTO v_operation;
+
+    RETURN v_operation;
+END
+$$;
+""")
+conn.commit()
+cursor.close()
+
+cursor = conn.cursor()
+for index, row in df_copy.iterrows():
+    copy_id += 1
+
+    cursor.execute("SELECT id FROM game WHERE title LIKE %s", (row["title"],))
+    record = cursor.fetchone()
+    fk_game = record[0]
+
+    cursor.execute("SELECT public.insert_copy(%s,%s,%s,%s,%s,%s,%s);",
+                   (copy_id, str(row["code"]), fk_game, row["date_of_purchase"], 1, '', ''))
+
+    wasInserted: bool = False
+    for r in cursor.fetchone():
+        if str(r) == "true":
+            wasInserted = True
+        else:
+            wasInserted = False
+
+    if wasInserted:
+        print("Successfully inserted : " + str(row["code"]) + " of id=" + str(copy_id))
+
+    else:
+        print("Ignored entry : " + str(row["code"]) + " of id=" + str(copy_id))
+        copy_id += -1
+
+cursor.execute("SELECT setval('game_copy_sequence', " + str(copy_id) + ", true);")
 conn.commit()
 cursor.close()
 conn.close()
