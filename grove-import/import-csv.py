@@ -150,6 +150,7 @@ df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
 df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
 df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
+
 # Both author and illustrator
 # df_author1 = df.author1.dropna()
 # df_author2 = df.author2.dropna()
@@ -198,15 +199,15 @@ CREATE OR REPLACE FUNCTION insert_game(g_id INT, g_title TEXT, g_lower_case_titl
 RETURNS TEXT LANGUAGE plpgsql AS
 $$
 DECLARE 
-    v_operation TEXT := 'IGNORED';
+    v_operation bool := false;
 BEGIN
    WITH ins AS (
         INSERT INTO game(id, title, lower_case_title, min_age, min_month, max_age, min_number_of_player, max_number_of_player, nature)
         VALUES (g_id , g_title, g_lower_case_title, g_min_age, g_min_month, g_max_age, g_min_number_of_player, g_max_number_of_player, g_nature)
         ON CONFLICT(lower_case_title) DO NOTHING
-        RETURNING 'INSERTED' as state
+        RETURNING 'INSERTED'
     )
-    SELECT state INTO v_operation FROM ins;
+    SELECT EXISTS(SELECT * FROM ins) INTO v_operation;
 
     RETURN v_operation;
 END
@@ -236,10 +237,12 @@ for index, row in df_games.iterrows():
 
     insert_result: str = ""
     for r in cursor.fetchone():
-        if str(r).startswith("INSERTED") or str(r).startswith("IGNORED"):
+        if str(r).startswith("true"):
             insert_result = str(r)
+        else:
+            print(r)
 
-    if insert_result.startswith("INSERTED"):
+    if insert_result.startswith("true"):
         print("Successfully inserted : " + row["title"] + " of id=" + str(game_id))
 
     if insert_result == "":
