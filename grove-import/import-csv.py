@@ -235,17 +235,17 @@ for index, row in df_games.iterrows():
         "SELECT insert_game(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
         (game_id, row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"], 0))
 
-    insert_result: str = ""
+    wasInserted: bool = False
     for r in cursor.fetchone():
-        if str(r).startswith("true"):
-            insert_result = str(r)
+        if str(r) == "true":
+            wasInserted = True
         else:
-            print(r)
+            wasInserted = False
 
-    if insert_result.startswith("true"):
+    if wasInserted:
         print("Successfully inserted : " + row["title"] + " of id=" + str(game_id))
 
-    if insert_result == "":
+    else:
         print("Ignored entry : " + row["title"] + " of id=" + str(game_id))
         game_id += -1
 
