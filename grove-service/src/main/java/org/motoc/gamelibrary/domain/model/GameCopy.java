@@ -51,7 +51,7 @@ public class GameCopy {
     @Column(name = "date_of_registration", nullable = false)
     private LocalDate dateOfRegistration;
 
-    @NotBlank(message = "Wear condition cannot be null or blank")
+    @NotNull(message = "Wear Condition cannot be null")
     @Column(name = "wear_condition", nullable = false)
     private WearCondition wearCondition;
 
