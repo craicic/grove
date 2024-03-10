@@ -73,7 +73,7 @@ SELECT setval('game_sequence', 2, true);
 INSERT INTO public.game_copy
 VALUES (1, '2018-05-20', '2018-05-20', '02SE', 1
            , true, 'Étagère jeu famille', '00050', 40.00,
-        1,
+        0,
         (SELECT id FROM game WHERE title = 'Les Colons de Catane'),
         (SELECT id FROM publisher WHERE name = 'Kosmos'));
 SELECT setval('game_copy_sequence', 1, true);

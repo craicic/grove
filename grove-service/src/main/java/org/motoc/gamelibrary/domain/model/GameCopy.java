@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.motoc.gamelibrary.domain.enumeration.GeneralState;
+import org.motoc.gamelibrary.domain.enumeration.WearCondition;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -52,7 +53,7 @@ public class GameCopy {
 
     @NotBlank(message = "Wear condition cannot be null or blank")
     @Column(name = "wear_condition", nullable = false)
-    private String wearCondition;
+    private WearCondition wearCondition;
 
     @NotNull(message = "General State cannot be null")
     @Column(name = "general_state", nullable = false)

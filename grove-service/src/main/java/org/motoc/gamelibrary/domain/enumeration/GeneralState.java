@@ -7,16 +7,21 @@ package org.motoc.gamelibrary.domain.enumeration;
 public enum GeneralState {
 
 
-    IN_ACTIVITY("En activité"),
+    ACTIVE("Actif"),
     OUT_OF_ORDER("Hors service"),
     MISSING_PARTS("Pièces manquantes"),
     IN_REPAIR("En réparation"),
     READY_TO_PLAY("Prêt à jouer"),
-    TO_BE_PROTECTED("À protéger"),
+    TO_BE_PROTECTED("À plastifier"),
     LOST("Perdu"),
     UNRETURNED("Non restitué"),
     RESTOCKING("Réassort"),
-    DONATION("Don à une association");
+    DONATION("Don à une association"),
+    RESERVED("Réservé Air De Jeux"),
+    BROKEN("Cassé"),
+    NOT_APPLICABLE("Sans objet");
+
+
 
     GeneralState(String frenchTranslation) {
     }

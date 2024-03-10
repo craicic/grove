@@ -50,23 +50,61 @@ def rewrite(name):
     return " ".join(str(part) for part in name_parts)
 
 
-def rewrite_age(range):
-    if isinstance(range, float) and math.isnan(range):
+def rewrite_age(age_range):
+    if isinstance(age_range, float) and math.isnan(age_range):
         return "no_value"
 
-    if "MOIS" in range:
-        ages = re.findall(r"\d+", range)
+    if "MOIS" in age_range:
+        ages = re.findall(r"\d+", age_range)
         if len(ages) == 1:
             return ages[0] + "M"
         else:
             return "ignored_value"
 
-    ages = re.findall(r"\d+", range)
+    ages = re.findall(r"\d+", age_range)
 
     if len(ages) >= 1:
         return ages[0] + "A"
 
     return "ignored_value"
+
+
+def wear_str_to_int(wear_condition):
+    if wear_condition == "BON":
+        return 0
+    elif wear_condition == "USAGÉ":
+        return 1
+    else:
+        return 2
+
+
+def state_str_to_int(state):
+    if state == "ACTIF":
+        return 0
+    elif state == "HORS SERVICE":
+        return 1
+    elif state == "PIÈCE MANQUANTE":
+        return 2
+    elif state == "EN RÉPARATION":
+        return 3
+    elif state == "PRET A JOUER":
+        return 4
+    elif state == "A PLASTIFIER":
+        return 5
+    elif state == "PERDU":
+        return 6
+    elif state == "NON RESTITUÉ":
+        return 7
+    elif state == "RÉASSORT":
+        return 8
+    elif state == "DON À UNE ASSOCIATION":
+        return 9
+    elif state == "RÉSERVÉ AIR DE JEUX":
+        return 10
+    elif state == "CASSÉ":
+        return 11
+    else:
+        return 12
 
 
 df1 = pd.read_csv("input.csv", sep=";", encoding="UTF-8")
@@ -147,11 +185,20 @@ df5.drop(columns=["old_title"], inplace=True)
 df5.nature = df5.nature.str.lower().str.strip().fillna("None")
 df5.location = df5.location.str.title().str.strip().fillna("None")
 df5.code_stat = df5.code_stat.str.lower().str.strip().fillna("None")
-df5.wear_condition = df5.wear_condition.str.title().str.strip().fillna("None")
-df5.general_state = df5.general_state.str.title().str.strip().fillna("None")
+
+df5.wear_condition = df5.wear_condition.str.strip().fillna("None")
+# wear condition string to enum
+df5.wear_condition = df5.wear_condition.apply(wear_str_to_int)
+
+df5.general_state = df5.general_state.str.strip().fillna("None")
+# general state string to enum
+df5.general_state = df5.general_state.apply(state_str_to_int)
+
 df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
 df5.date_of_purchase = df5.date_of_purchase.dt.date
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
+
+
 
 # both_auth_ill = pd.Series(list(set(illustrators).intersection(set(authors))))
 # only_auth = pd.Series(list(set(authors).difference(set(both_auth_ill))))
@@ -280,7 +327,7 @@ for index, row in df_copy.iterrows():
     fk_game = record[0]
 
     cursor.execute("SELECT public.insert_copy(%s,%s,%s,%s,%s,%s,%s);",
-                   (copy_id, str(row["code"]), fk_game, row["date_of_purchase"], 1, '', ''))
+                   (copy_id, str(row["code"]), fk_game, row["date_of_purchase"], row["general_state"], row["location"], row["wear_condition"]))
 
     wasInserted: bool = False
     for r in cursor.fetchone():

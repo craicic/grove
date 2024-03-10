@@ -82,12 +82,12 @@ create table public.game_copy
     date_of_purchase      date,
     date_of_registration  date         not null,
     edition_number        varchar(255),
-    general_state         smallint         not null,
+    general_state         smallint     not null,
     is_available_for_loan boolean,
     location              varchar(255),
     object_code           varchar(255) not null,
     price                 numeric(12, 2),
-    wear_condition        varchar(255) not null,
+    wear_condition        smallint     not null,
     fk_game               int8         not null,
     fk_publisher          int8,
     primary key (id)
@@ -174,9 +174,9 @@ create table public.publisher
 
 create table public.reservation
 (
-    id                      int8 not null,
+    id                      int8     not null,
     date_of_ending          date,
-    date_of_start           date not null,
+    date_of_start           date     not null,
     date_time_of_creation   timestamptz,
     date_time_of_return     timestamptz,
     date_time_of_withdrawal timestamptz,
