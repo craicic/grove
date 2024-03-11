@@ -2,7 +2,6 @@ import datetime
 import gc
 import math
 import re
-
 import pandas as pd
 import psycopg2 as ps
 from pandas import DataFrame
@@ -107,6 +106,9 @@ def state_str_to_int(state):
         return 12
 
 
+#######################################################################################################################
+# IMPORT CSS
+#######################################################################################################################
 df1 = pd.read_csv("input.csv", sep=";", encoding="UTF-8")
 config()
 df1 = replace_header(df1)
@@ -114,10 +116,13 @@ df1 = replace_header(df1)
 # only keep nature GRAND JEU
 # df1 = df1.loc[df1.nature == 'GRAND JEU']
 
+
 # removes two apparently useless columns
 df1.drop(columns=['unknown1', 'unknown2', "price", "seller"], inplace=True)
 
-# artist's name cleaning and filtering
+#######################################################################################################################
+# ARTIST'S NAME CLEANING AND FILTERING
+#######################################################################################################################
 a2 = df1.author2.apply(rewrite)
 df_a2 = (a2
          .str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
@@ -139,7 +144,9 @@ df2 = pd.concat([df1, df_a1, df_a2, df_ill], axis=1)
 del [df1, df_a1, df_a2, df_ill, a1, a2, ill]
 gc.collect()
 
-# age operations
+#######################################################################################################################
+# AGE OPERATIONS
+#######################################################################################################################
 age = df2.range.apply(rewrite_age)
 age = age.str.replace(r"(no_value)|(multiple_values)|(ignored_value)", "None", regex=True)
 df_age = pd.DataFrame({"age_min": age})
@@ -170,7 +177,9 @@ gc.collect()
 
 df4.rename(columns={"title": "old_title"}, inplace=True)
 
-# title processing
+#######################################################################################################################
+# TITLE PROCESSING
+#######################################################################################################################
 df_title: DataFrame = (df4.old_title
                        .str.strip()
                        .str.replace(r"\s+", " ", regex=True)
@@ -198,13 +207,13 @@ df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
 df5.date_of_purchase = df5.date_of_purchase.dt.date
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 
-
-
 # both_auth_ill = pd.Series(list(set(illustrators).intersection(set(authors))))
 # only_auth = pd.Series(list(set(authors).difference(set(both_auth_ill))))
 # only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
 
-# New dataframe with specific columns
+# #######################################################################################################################
+# NEW DATAFRAME WITH SPECIFIC COLUMNS
+#######################################################################################################################
 df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min"]].drop_duplicates().drop_duplicates(subset="title",
                                                                                                keep="first")
 df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase"]]
@@ -226,7 +235,14 @@ for line in lines:
     if line.startswith("spring.datasource.password"):
         pg_pwd = line.split("=")[1].strip()
 
+#######################################################################################################################
+# PERSISTENCE OPERATIONS
+#######################################################################################################################
 conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
+
+#######################################################################################################################
+# INSERTING NEW GAME COPY
+#######################################################################################################################
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_sequence;")
 game_id = int(cursor.fetchone()[0])
@@ -291,21 +307,24 @@ cursor.execute("SELECT setval('game_sequence', " + str(game_id) + ", true);")
 conn.commit()
 cursor.close()
 
+#######################################################################################################################
+# INSERTING NEW GAME
+#######################################################################################################################
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_copy_sequence;")
 copy_id = int(cursor.fetchone()[0])
 
 cursor.execute("""
 CREATE OR REPLACE FUNCTION public.insert_copy(c_id INT, c_code TEXT,c_fk_game INT, c_date_of_purchase DATE,
-                                        c_general_state INT, c_location TEXT, c_wear_condition TEXT)
+                                        c_general_state INT, c_location TEXT, c_wear_condition INT)
 RETURNS TEXT LANGUAGE plpgsql AS
 $$
 DECLARE 
     v_operation bool := false;
 BEGIN
    WITH ins AS (
-        INSERT INTO game_copy(id, object_code, fk_game, date_of_purchase, date_of_registration, general_state, location, wear_condition)
-        VALUES (c_id, c_code, c_fk_game, c_date_of_purchase, CURRENT_DATE, c_general_state, c_location, c_wear_condition)
+        INSERT INTO game_copy(id, object_code, fk_game, date_of_purchase, date_of_registration, general_state, location, wear_condition, is_available_for_loan)
+        VALUES (c_id, c_code, c_fk_game, c_date_of_purchase, CURRENT_DATE, c_general_state, c_location, c_wear_condition, true)
         ON CONFLICT(object_code) DO NOTHING
         RETURNING 'INSERTED'
     )
@@ -327,7 +346,8 @@ for index, row in df_copy.iterrows():
     fk_game = record[0]
 
     cursor.execute("SELECT public.insert_copy(%s,%s,%s,%s,%s,%s,%s);",
-                   (copy_id, str(row["code"]), fk_game, row["date_of_purchase"], row["general_state"], row["location"], row["wear_condition"]))
+                   (copy_id, str(row["code"]), fk_game, row["date_of_purchase"], row["general_state"], row["location"],
+                    row["wear_condition"]))
 
     wasInserted: bool = False
     for r in cursor.fetchone():
