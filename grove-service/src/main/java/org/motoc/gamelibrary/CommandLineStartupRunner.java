@@ -5,7 +5,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
-import org.motoc.gamelibrary.technical.csv.CSVImportService;
 import org.motoc.gamelibrary.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +24,10 @@ public class CommandLineStartupRunner
     private static final Logger logger = LoggerFactory.getLogger(CommandLineStartupRunner.class);
 
     private final ImageService imageService;
-    private final CSVImportService csvImportService;
-
     @Autowired
-    public CommandLineStartupRunner(CSVImportService csvImportService, ImageService imageService) {
+    public CommandLineStartupRunner(ImageService imageService) {
         logger.info("Starting CommandLineRunner");
         this.imageService = imageService;
-        this.csvImportService = csvImportService;
 
     }
 
@@ -45,8 +41,8 @@ public class CommandLineStartupRunner
         CommandLine cmd = parser.parse(o, args);
         int code = 0;
 
-        if (!cmd.hasOption('c') && !cmd.hasOption('i')) {
-            logger.debug("No parameter 'i' or 'c' passed in argument, now exiting parseArguments method.");
+        if (!cmd.hasOption('i')) {
+            logger.debug("No parameter passed in argument, now exiting parseArguments method.");
             return code;
         }
         if (cmd.hasOption('i')) {
@@ -61,25 +57,12 @@ public class CommandLineStartupRunner
             imageService.processImages(imageSourcePath);
             code += 1;
         }
-        if (cmd.hasOption('c')) {
-            logger.debug("CSV import enabled.");
-            String cArg = cmd.getOptionValue("c");
-            if (cArg == null) {
-                logger.debug("Using default source 'src/main/resources/static' folder.");
-            } else {
-                logger.debug("Found argument of 'c' : {}, using it as a source file.", cArg);
-                csvSourcePath = Path.of(cArg);
-            }
-            csvImportService.importCSV(csvSourcePath);
-            code += 2;
-        }
         return code;
     }
 
     private Options createOption() {
         Options options = new Options();
         options.addOption("i", true, "Insert image into the database, by default images in source folder 'src/main/resources/static' are inserted, but path can be edited by passing a String as argument of 'i'");
-        options.addOption("c", "csv-import", true, "Import a Kawa CSV file");
 
         return options;
     }
