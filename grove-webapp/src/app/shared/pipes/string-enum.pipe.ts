@@ -17,7 +17,7 @@ export class StringEnumPipe implements PipeTransform {
         return 'Jouet';
       case 'BOARD_GAME':
         return 'Jeu de société';
-      case 'BIG_GAME':
+      case 'LARGE_GAME':
         return 'Grand jeu';
       case 'OVERSIZE_GAME':
         return 'Jeu surdimensionné';
