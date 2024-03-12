@@ -105,6 +105,14 @@ def state_str_to_int(state):
         return 12
 
 
+def nature_str_to_int(nature):
+    if nature == "GRAND JEU":
+        return 3
+    if nature == "JEU / JOUET":
+        return 2
+    return 0
+
+
 #######################################################################################################################
 # IMPORT CSS
 #######################################################################################################################
@@ -190,9 +198,10 @@ df_title.where(~df_title.title.str.contains(r",\S", regex=True, na=True),
 
 df5 = pd.concat([df4, df_title], axis=1)
 df5.drop(columns=["old_title"], inplace=True)
-df5.nature = df5.nature.str.lower().str.strip().fillna("None")
-df5.location = df5.location.str.title().str.strip().fillna("None")
 df5.code_stat = df5.code_stat.str.lower().str.strip().fillna("None")
+df5.nature = df5.nature.str.strip().fillna("None").apply(nature_str_to_int)
+
+df5.location = df5.location.str.title().str.strip().fillna("None")
 
 df5.wear_condition = df5.wear_condition.str.strip().fillna("None")
 # wear condition string to enum
@@ -213,8 +222,8 @@ df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 # #######################################################################################################################
 # NEW DATAFRAME WITH SPECIFIC COLUMNS
 #######################################################################################################################
-df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min"]].drop_duplicates().drop_duplicates(subset="title",
-                                                                                               keep="first")
+df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min", "nature"]].drop_duplicates().drop_duplicates(subset="title",
+                                                                                                         keep="first")
 df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase"]]
 df_publisher = df5[["code", "publisher"]]
 
@@ -249,7 +258,7 @@ game_id = int(cursor.fetchone()[0])
 cursor.execute("""
 CREATE OR REPLACE FUNCTION public.insert_game(g_id INT, g_title TEXT, g_lower_case_title TEXT, g_min_age INT, g_min_month INT,
     g_max_age INT, g_min_number_of_player INT, g_max_number_of_player INT, g_nature INT)
-RETURNS TEXT LANGUAGE plpgsql AS
+RETURNS BOOLEAN LANGUAGE plpgsql AS
 $$
 DECLARE 
     v_operation bool := false;
@@ -286,23 +295,21 @@ for index, row in df_games.iterrows():
 
     cursor.execute(
         "SELECT public.insert_game(%s, %s, %s, %s, %s, %s, %s, %s, %s);",
-        (game_id, row["title"], row["title"].lower(), min_year, min_month, 0, row["nb_p_min"], row["nb_p_max"], 0))
+        (game_id, row["title"], row["title"].lower(), min_year,
+         min_month, 0, row["nb_p_min"], row["nb_p_max"], row["nature"]))
 
     wasInserted: bool = False
     for r in cursor.fetchone():
-        if str(r) == "true":
-            wasInserted = True
-        else:
-            wasInserted = False
+        wasInserted = r
 
     if wasInserted:
-        print("Successfully inserted : " + row["title"] + " of id=" + str(game_id))
+        print("Successfully inserted : {} of id={}".format(row["title"], game_id))
 
     else:
-        print("Ignored entry : " + row["title"] + " of id=" + str(game_id))
+        print("Ignored entry : {} of id={}".format(row["title"], game_id))
         game_id += -1
 
-cursor.execute("SELECT setval('game_sequence', " + str(game_id) + ", true);")
+cursor.execute("SELECT setval('game_sequence', %s, true);", [game_id])
 conn.commit()
 cursor.close()
 
@@ -316,7 +323,7 @@ copy_id = int(cursor.fetchone()[0])
 cursor.execute("""
 CREATE OR REPLACE FUNCTION public.insert_copy(c_id INT, c_code TEXT,c_fk_game INT, c_date_of_purchase DATE,
                                         c_general_state INT, c_location TEXT, c_wear_condition INT)
-RETURNS TEXT LANGUAGE plpgsql AS
+RETURNS BOOLEAN LANGUAGE plpgsql AS
 $$
 DECLARE 
     v_operation bool := false;
@@ -350,19 +357,16 @@ for index, row in df_copy.iterrows():
 
     wasInserted: bool = False
     for r in cursor.fetchone():
-        if str(r) == "true":
-            wasInserted = True
-        else:
-            wasInserted = False
+        wasInserted = r
 
     if wasInserted:
-        print("Successfully inserted : " + str(row["code"]) + " of id=" + str(copy_id))
+        print("Successfully inserted : {} of id={}".format(row["code"], copy_id))
 
     else:
-        print("Ignored entry : " + str(row["code"]) + " of id=" + str(copy_id))
+        print("Entry ignored : {} of id={}".format(row["code"], copy_id))
         copy_id += -1
 
-cursor.execute("SELECT setval('game_copy_sequence', " + str(copy_id) + ", true);")
+cursor.execute("SELECT setval('game_copy_sequence', %s, true);", [copy_id])
 conn.commit()
 cursor.close()
 conn.close()
