@@ -36,7 +36,6 @@ public class CommandLineStartupRunner
      */
     private int parseArguments(Options o, String... args) throws Exception {
         Path imageSourcePath = Path.of("grove-service/src/main/resources/static");
-        Path csvSourcePath = imageSourcePath;
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(o, args);
         int code = 0;
