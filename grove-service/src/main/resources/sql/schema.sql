@@ -188,22 +188,22 @@ create table public.reservation
 );
 
 alter table public.category
-    add constraint unique_cat unique (lower_case_title);
+    add constraint unique_category unique (lower_case_title);
 
 alter table public.creator
-    add constraint UKbt1nbhhd0wpddqp6xban3ht8s unique (lower_case_first_name, lower_case_last_name);
+    add constraint unique_name unique (lower_case_first_name, lower_case_last_name);
 
 alter table public.game
-    add constraint UKa2fnc5ur18i47ltl329kbx6ya unique (lower_case_title);
+    add constraint unique_title unique (lower_case_title);
 
 alter table public.game_copy
-    add constraint UK9l4nvuj260e8j0rcli5n9lkf2 unique (object_code);
+    add constraint unique_code unique (object_code);
 
 alter table public.mechanism
-    add constraint UK1axt2rwrabs9llw9d8em6xo6 unique (lower_case_title);
+    add constraint unique_mechanism unique (lower_case_title);
 
 alter table public.publisher
-    add constraint UKjn8ea0tdummnwy0crrueojpuv unique (lower_case_name);
+    add constraint unique_publisher unique (lower_case_name);
 create sequence adherent_sequence start 1 increment 50;
 create sequence administrator_sequence start 1 increment 50;
 create sequence category_sequence start 1 increment 50;

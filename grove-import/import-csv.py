@@ -1,6 +1,8 @@
 import gc
 import math
 import re
+
+import numpy as np
 import pandas as pd
 import psycopg2 as ps
 from pandas import DataFrame
@@ -215,16 +217,33 @@ df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
 df5.date_of_purchase = df5.date_of_purchase.dt.date
 df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
 
-# both_auth_ill = pd.Series(list(set(illustrators).intersection(set(authors))))
-# only_auth = pd.Series(list(set(authors).difference(set(both_auth_ill))))
-# only_ill = pd.Series(list(set(illustrators).difference(set(both_auth_ill))))
+# #####################################################################################################################
+# ARTISTS OPERATIONS
+#######################################################################################################################
+df_authors = pd.concat([df5.author, df5.coauthor]).to_frame("name").replace("None", np.NAN).dropna().drop_duplicates()
+df_illustrators = df5["illustrator"].to_frame("name").replace("None", np.NAN).dropna().drop_duplicates()
 
-# #######################################################################################################################
-# NEW DATAFRAME WITH SPECIFIC COLUMNS
+auth_ill = pd.Series(list(set(df_illustrators.name).intersection(set(df_authors.name))))
+exclusively_author = pd.Series(list(set(df_authors.name).difference(set(auth_ill))))
+exclusively_illustrator = pd.Series(list(set(df_illustrators.name).difference(set(auth_ill))))
+
+df_both_author_and_illustrator = auth_ill.to_frame("name")
+df_both_author_and_illustrator.insert(1, "role", 3)
+df_exclusively_author = exclusively_author.to_frame("name")
+df_exclusively_author.insert(1, "role", 0)
+df_exclusively_illustrator = exclusively_illustrator.to_frame("name")
+df_exclusively_illustrator.insert(1, "role", 2)
+
+df_distinct_artists = pd.concat([df_both_author_and_illustrator, df_exclusively_author, df_exclusively_illustrator])
+
+# #####################################################################################################################
+# NEW DATAFRAMES WITH SPECIFIC COLUMNS
 #######################################################################################################################
 df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min", "nature"]].drop_duplicates().drop_duplicates(subset="title",
                                                                                                          keep="first")
-df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase"]]
+df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase", "nature"]]
+df_artist = df5[["author", "coauthor", "illustrator", "title"]].drop_duplicates().drop_duplicates(subset="title",
+                                                                                                  keep="first")
 df_publisher = df5[["code", "publisher"]]
 
 df_games.to_csv("output/games.csv", sep=";")
@@ -249,7 +268,7 @@ for line in lines:
 conn = ps.connect("dbname=game-library-dev-db user=" + pg_usr + " password=" + pg_pwd)
 
 #######################################################################################################################
-# INSERTING NEW GAME COPY
+# INSERTING NEW GAME
 #######################################################################################################################
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_sequence;")
@@ -314,7 +333,7 @@ conn.commit()
 cursor.close()
 
 #######################################################################################################################
-# INSERTING NEW GAME
+# INSERTING NEW COPY
 #######################################################################################################################
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM game_copy_sequence;")
@@ -322,7 +341,7 @@ copy_id = int(cursor.fetchone()[0])
 
 cursor.execute("""
 CREATE OR REPLACE FUNCTION public.insert_copy(c_id INT, c_code TEXT,c_fk_game INT, c_date_of_purchase DATE,
-                                        c_general_state INT, c_location TEXT, c_wear_condition INT)
+                                        c_general_state INT, c_location TEXT, c_wear_condition INT, c_available BOOL)
 RETURNS BOOLEAN LANGUAGE plpgsql AS
 $$
 DECLARE 
@@ -330,7 +349,7 @@ DECLARE
 BEGIN
    WITH ins AS (
         INSERT INTO game_copy(id, object_code, fk_game, date_of_purchase, date_of_registration, general_state, location, wear_condition, is_available_for_loan)
-        VALUES (c_id, c_code, c_fk_game, c_date_of_purchase, CURRENT_DATE, c_general_state, c_location, c_wear_condition, true)
+        VALUES (c_id, c_code, c_fk_game, c_date_of_purchase, CURRENT_DATE, c_general_state, c_location, c_wear_condition, c_available)
         ON CONFLICT(object_code) DO NOTHING
         RETURNING 'INSERTED'
     )
@@ -351,9 +370,9 @@ for index, row in df_copy.iterrows():
     record = cursor.fetchone()
     fk_game = record[0]
 
-    cursor.execute("SELECT public.insert_copy(%s,%s,%s,%s,%s,%s,%s);",
+    cursor.execute("SELECT public.insert_copy(%s,%s,%s,%s,%s,%s,%s,%s);",
                    (copy_id, str(row["code"]), fk_game, row["date_of_purchase"], row["general_state"], row["location"],
-                    row["wear_condition"]))
+                    row["wear_condition"], False if row["nature"] == 0 else True))
 
     wasInserted: bool = False
     for r in cursor.fetchone():
@@ -367,6 +386,57 @@ for index, row in df_copy.iterrows():
         copy_id += -1
 
 cursor.execute("SELECT setval('game_copy_sequence', %s, true);", [copy_id])
+conn.commit()
+cursor.close()
+
+#######################################################################################################################
+# INSERTING DISTINCT ARTIST
+#######################################################################################################################
+cursor = conn.cursor()
+cursor.execute("SELECT last_value FROM creator_sequence;")
+artist_id = int(cursor.fetchone()[0])
+
+cursor.execute("""
+CREATE OR REPLACE FUNCTION public.insert_artist(c_id INT, c_last_name VARCHAR, c_role INT)
+RETURNS BOOLEAN LANGUAGE plpgsql AS
+$$
+DECLARE 
+    v_operation bool := false;
+BEGIN
+   WITH ins AS (
+        INSERT INTO creator(id, first_name, last_name, lower_case_first_name, lower_case_last_name, role)
+        VALUES (c_id, '', c_last_name, '', lower(c_last_name), c_role)
+        ON CONFLICT ON CONSTRAINT unique_name DO NOTHING
+        RETURNING 'INSERTED'
+    )
+    SELECT EXISTS(SELECT * FROM ins) INTO v_operation;
+
+    RETURN v_operation;
+END
+$$;
+""")
+conn.commit()
+cursor.close()
+
+cursor = conn.cursor()
+for index, row in df_distinct_artists.iterrows():
+    artist_id += 1
+
+    cursor.execute("SELECT public.insert_artist(%s,%s,%s);",
+                   (artist_id, row["name"], row["role"]))
+
+    wasInserted: bool = False
+    for r in cursor.fetchone():
+        wasInserted = r
+
+    if wasInserted:
+        print("Successfully inserted : {} of id={}".format(row["name"], artist_id))
+
+    else:
+        print("Entry ignored : {} of id={}".format(row["name"], artist_id))
+        artist_id += -1
+
+cursor.execute("SELECT setval('creator_sequence', %s, true);", [artist_id])
 conn.commit()
 cursor.close()
 conn.close()
