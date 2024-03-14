@@ -215,8 +215,9 @@ df5.general_state = df5.general_state.apply(state_str_to_int)
 
 df5.date_of_purchase = pd.to_datetime(df5.date_of_purchase, dayfirst=True)
 df5.date_of_purchase = df5.date_of_purchase.dt.date
-df5.publisher = df5.publisher.str.title().str.strip().fillna("None")
-
+df5.publisher = df5.publisher.str.title().str.strip()
+df_unique_publisher = df5.publisher.dropna().drop_duplicates().to_frame("publisher")
+df5.publisher = df5.publisher.fillna("None")
 # #####################################################################################################################
 # ARTISTS OPERATIONS
 #######################################################################################################################
@@ -239,9 +240,11 @@ df_distinct_artists = pd.concat([df_both_author_and_illustrator, df_exclusively_
 # #####################################################################################################################
 # NEW DATAFRAMES WITH SPECIFIC COLUMNS
 #######################################################################################################################
-df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min", "nature", "author", "coauthor", "illustrator"]].drop_duplicates().drop_duplicates(subset="title",
-                                                                                                         keep="first")
-df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase", "nature"]]
+df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min", "nature", "author", "coauthor",
+                "illustrator"]].drop_duplicates().drop_duplicates(subset="title",
+                                                                  keep="first")
+df_copy = df5[
+    ["code", "title", "location", "wear_condition", "general_state", "date_of_purchase", "nature", "publisher"]]
 df_artist = df5[["author", "coauthor", "illustrator", "title"]].drop_duplicates().drop_duplicates(subset="title",
                                                                                                   keep="first")
 df_publisher = df5[["code", "publisher"]]
@@ -390,7 +393,7 @@ conn.commit()
 cursor.close()
 
 #######################################################################################################################
-# INSERTING DISTINCT ARTIST
+# INSERTING DISTINCT ARTISTS
 #######################################################################################################################
 cursor = conn.cursor()
 cursor.execute("SELECT last_value FROM creator_sequence;")
@@ -459,7 +462,75 @@ for index, row in df_games.iterrows():
                 VALUES (%s, %s)
                 ON CONFLICT DO NOTHING
                 """, (fk_game, value))
+conn.commit()
+cursor.close()
+
+#######################################################################################################################
+# INSERTING DISTINCT PUBLISHERS
+#######################################################################################################################
+cursor = conn.cursor()
+cursor.execute("SELECT last_value FROM publisher_sequence")
+publisher_id = int(cursor.fetchone()[0])
+cursor.execute("""
+CREATE OR REPLACE FUNCTION public.insert_publisher(p_id INT, p_name VARCHAR)
+RETURNS BOOLEAN LANGUAGE plpgsql AS
+$$
+DECLARE 
+    v_operation bool := false;
+BEGIN
+   WITH ins AS (
+        INSERT INTO publisher(id, name, lower_case_name)
+        VALUES (p_id, p_name, lower(p_name))
+        ON CONFLICT DO NOTHING
+        RETURNING 'INSERTED'
+    )
+    SELECT EXISTS(SELECT * FROM ins) INTO v_operation;
+
+    RETURN v_operation;
+END
+$$;
+""")
+conn.commit()
+cursor.close()
+
+cursor = conn.cursor()
+for index, row in df_unique_publisher.iterrows():
+    publisher_id += 1
+
+    cursor.execute("SELECT public.insert_publisher(%s,%s);",
+                   (publisher_id, row["publisher"]))
+
+    wasInserted: bool = False
+    for r in cursor.fetchone():
+        wasInserted = r
+
+    if wasInserted:
+        print("Successfully inserted : {} of id={}".format(row["publisher"], publisher_id))
+
+    else:
+        print("Entry ignored : {} of id={}".format(row["publisher"], publisher_id))
+        publisher_id += -1
+cursor.execute("SELECT setval('publisher_sequence', %s, true);", [publisher_id])
+conn.commit()
+cursor.close()
+
+#######################################################################################################################
+# COPY <- MANY TO ONE -> PUBLISHER
+#######################################################################################################################
+cursor = conn.cursor()
+
+for index, row in df_copy.iterrows():
+    cursor.execute("SELECT id FROM publisher WHERE name LIKE %s", (row["publisher"],))
+    record = cursor.fetchone()
+    fk_publisher = record[0]
+
+    cursor.execute("""
+    UPDATE game_copy
+    SET fk_publisher = %s
+    WHERE object_code = %s
+    """, (fk_publisher, str(row["code"])))
 
 conn.commit()
 cursor.close()
+
 conn.close()
