@@ -239,7 +239,7 @@ df_distinct_artists = pd.concat([df_both_author_and_illustrator, df_exclusively_
 # #####################################################################################################################
 # NEW DATAFRAMES WITH SPECIFIC COLUMNS
 #######################################################################################################################
-df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min", "nature"]].drop_duplicates().drop_duplicates(subset="title",
+df_games = df5[["title", "nb_p_min", "nb_p_max", "age_min", "nature", "author", "coauthor", "illustrator"]].drop_duplicates().drop_duplicates(subset="title",
                                                                                                          keep="first")
 df_copy = df5[["code", "title", "location", "wear_condition", "general_state", "date_of_purchase", "nature"]]
 df_artist = df5[["author", "coauthor", "illustrator", "title"]].drop_duplicates().drop_duplicates(subset="title",
@@ -437,6 +437,29 @@ for index, row in df_distinct_artists.iterrows():
         artist_id += -1
 
 cursor.execute("SELECT setval('creator_sequence', %s, true);", [artist_id])
+conn.commit()
+cursor.close()
+
+#######################################################################################################################
+# GAME <- MANY TO MANY -> ARTIST
+#######################################################################################################################
+cursor = conn.cursor()
+for index, row in df_games.iterrows():
+    cursor.execute("SELECT id FROM game WHERE title LIKE %s", (row["title"],))
+    record = cursor.fetchone()
+    fk_game = record[0]
+
+    cursor.execute("""
+    SELECT id FROM creator 
+    WHERE last_name IN (%s, %s, %s)""", [row["author"], row["coauthor"], row["illustrator"]])
+    for value in cursor.fetchall():
+        if value is not None:
+            cursor.execute("""
+                INSERT INTO game_creator(fk_game, fk_creator)
+                VALUES (%s, %s)
+                ON CONFLICT DO NOTHING
+                """, (fk_game, value))
+
 conn.commit()
 cursor.close()
 conn.close()
