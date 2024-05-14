@@ -1,10 +1,9 @@
 import gc
 import math
-import re
-
 import numpy as np
 import pandas as pd
 import psycopg2 as ps
+import re
 from pandas import DataFrame
 
 
@@ -522,13 +521,14 @@ cursor = conn.cursor()
 for index, row in df_copy.iterrows():
     cursor.execute("SELECT id FROM publisher WHERE name LIKE %s", (row["publisher"],))
     record = cursor.fetchone()
-    fk_publisher = record[0]
+    if record is not None:
+        fk_publisher = record[0]
 
-    cursor.execute("""
-    UPDATE game_copy
-    SET fk_publisher = %s
-    WHERE object_code = %s
-    """, (fk_publisher, str(row["code"])))
+        cursor.execute("""
+        UPDATE game_copy
+        SET fk_publisher = %s
+        WHERE object_code = %s
+        """, (fk_publisher, str(row["code"])))
 
 conn.commit()
 cursor.close()
