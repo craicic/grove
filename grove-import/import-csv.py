@@ -77,41 +77,34 @@ def wear_str_to_int(wear_condition):
         return 2
 
 
+dict_state = {
+    "ACTIF": 0,
+    "HORS SERVICE": 1,
+    "PIÈCE MANQUANTE": 2,
+    "EN RÉPARATION": 3,
+    "PRET A JOUER": 4,
+    "A PLASTIFIER": 5,
+    "PERDU": 6,
+    "NON RESTITUÉ": 7,
+    "RÉASSORT": 8,
+    "DON À UNE ASSOCIATION": 9,
+    "RÉSERVÉ AIR DE JEUX": 10,
+    "CASSÉ": 11
+}
+
+
 def state_str_to_int(state):
-    if state == "ACTIF":
-        return 0
-    elif state == "HORS SERVICE":
-        return 1
-    elif state == "PIÈCE MANQUANTE":
-        return 2
-    elif state == "EN RÉPARATION":
-        return 3
-    elif state == "PRET A JOUER":
-        return 4
-    elif state == "A PLASTIFIER":
-        return 5
-    elif state == "PERDU":
-        return 6
-    elif state == "NON RESTITUÉ":
-        return 7
-    elif state == "RÉASSORT":
-        return 8
-    elif state == "DON À UNE ASSOCIATION":
-        return 9
-    elif state == "RÉSERVÉ AIR DE JEUX":
-        return 10
-    elif state == "CASSÉ":
-        return 11
-    else:
-        return 12
+    return dict_state.get(state, 12)
+
+
+dict_nature = {
+    "GRAND JEU": 3,
+    "JEU / JOUET": 2
+}
 
 
 def nature_str_to_int(nature):
-    if nature == "GRAND JEU":
-        return 3
-    if nature == "JEU / JOUET":
-        return 2
-    return 0
+    return dict_nature.get(nature, 0)
 
 
 #######################################################################################################################
