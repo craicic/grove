@@ -110,7 +110,7 @@ def nature_str_to_int(nature):
 #######################################################################################################################
 # IMPORT CSS
 #######################################################################################################################
-df1 = pd.read_csv("input/data.csv", sep=";", encoding="UTF-8")
+df1 = pd.read_csv("../../input/data.csv", sep=";", encoding="UTF-8")
 config()
 df1 = replace_header(df1)
 
@@ -241,15 +241,15 @@ df_artist = df5[["author", "coauthor", "illustrator", "title"]].drop_duplicates(
                                                                                                   keep="first")
 df_publisher = df5[["code", "publisher"]]
 
-df_games.to_csv("output/games.csv", sep=";")
-df_copy.to_csv("output/copy.csv", sep=";")
-df_publisher.to_csv("output/publisher.csv", sep=";")
-df5.to_csv("output/full_frame.csv", sep=";")
+df_games.to_csv("../../output/games.csv", sep=";")
+df_copy.to_csv("../../output/copy.csv", sep=";")
+df_publisher.to_csv("../../output/publisher.csv", sep=";")
+df5.to_csv("../../output/full_frame.csv", sep=";")
 
 pg_usr = ""
 pg_pwd = ""
 
-f = open("../grove-service/src/main/resources/secrets.properties")
+f = open("../../../grove-service/src/main/resources/secrets.properties")
 lines = f.readlines()
 for line in lines:
     if line.startswith("spring.datasource.username"):
